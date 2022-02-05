@@ -1,0 +1,14 @@
+{
+  "name": "openskool",
+  "version": "0.0.1",
+  "private": true,
+  "prettier": {
+    "arrowParens": "always",
+    "singleQuote": true,
+    "trailingComma": "all"
+  },
+  "devDependencies": {
+    "prettier": "^2.5.1",
+    "prettier-package-json": "^2.6.0"
+  }
+}
