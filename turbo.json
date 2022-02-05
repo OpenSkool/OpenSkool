@@ -1,0 +1,19 @@
+{
+  "baseBranch": "origin/main",
+  "pipeline": {
+    "build": {
+      "outputs": ["dist/**"]
+    },
+    "clean": {
+      "cache": false
+    },
+    "dev": {
+      "cache": false,
+      "dependsOn": ["^dev"]
+    },
+    "lint": {
+      "outputs": [".eslintcache"]
+    },
+    "test": {}
+  }
+}

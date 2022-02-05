@@ -1,0 +1,53 @@
+{
+  "name": "@os/api",
+  "version": "0.0.1",
+  "private": true,
+  "engines": {
+    "node": "16.13.2"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "nodemon src/index.ts | pino-pretty",
+    "lint": "eslint --cache .",
+    "start": "node dist/index.js",
+    "test": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@sinclair/typebox": "^0.23.3",
+    "fastify": "^3.27.1",
+    "fastify-env": "^2.1.1",
+    "fastify-plugin": "^3.0.1"
+  },
+  "devDependencies": {
+    "@os/eslint-config": "workspace:*",
+    "@os/tsconfig": "workspace:*",
+    "@types/dotenv-flow": "^3.2.0",
+    "dotenv-flow": "^3.2.0",
+    "esbuild-register": "^3.3.2",
+    "eslint": "^8.9.0",
+    "nodemon": "^2.0.15",
+    "pino-pretty": "^7.5.1",
+    "tsup": "^5.11.13",
+    "typescript": "~4.5.5"
+  },
+  "nodemonConfig": {
+    "execMap": {
+      "ts": "node -r dotenv-flow/config -r esbuild-register"
+    },
+    "ext": "lock,ts",
+    "watch": [
+      "src/",
+      "../yarn.lock"
+    ]
+  },
+  "tsup": {
+    "entry": [
+      "src/index.ts"
+    ],
+    "sourcemap": true,
+    "clean": true,
+    "format": [
+      "esm"
+    ]
+  }
+}

@@ -5,6 +5,13 @@
   "engines": {
     "node": "16.13.2"
   },
+  "scripts": {
+    "build": "yarn turbo run build",
+    "clean": "yarn turbo run clean",
+    "dev": "yarn turbo run dev",
+    "lint": "yarn turbo run lint",
+    "test": "yarn turbo run test"
+  },
   "prettier": {
     "arrowParens": "always",
     "singleQuote": true,
@@ -12,7 +19,12 @@
   },
   "devDependencies": {
     "prettier": "^2.5.1",
-    "prettier-package-json": "^2.6.0"
+    "prettier-package-json": "^2.6.0",
+    "turbo": "^1.1.2"
   },
+  "workspaces": [
+    "api",
+    "config/*"
+  ],
   "packageManager": "yarn@3.1.1"
 }
