@@ -1,6 +1,7 @@
 {
   "name": "@os/eslint-config",
   "version": "1.0.0",
+  "license": "AGPL-3.0",
   "private": true,
   "main": "index.js",
   "dependencies": {
