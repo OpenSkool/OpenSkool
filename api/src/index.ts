@@ -12,4 +12,4 @@ const app = createApp({ logger: true })
 (async (): Promise<void> => {
   await app.ready();
   await app.listen(app.config.PORT);
-})().catch(app.log.error);
+})().catch(app.log.error.bind(app.log));
