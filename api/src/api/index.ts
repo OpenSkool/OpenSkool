@@ -2,12 +2,13 @@ import * as Boom from '@hapi/boom';
 import { Static, Type } from '@sinclair/typebox';
 import type { FastifyInstance } from 'fastify';
 
-import prisma from './prisma';
+import graphqlPlugin from './graphql';
+import prismaPlugin from './prisma';
 
 const HTTP_NO_CONTENT = 204;
 
 export default async (app: FastifyInstance): Promise<void> => {
-  app.register(prisma);
+  app.register(prismaPlugin).register(graphqlPlugin);
 
   app.get('/', async (request, reply) => {
     reply.status(HTTP_NO_CONTENT);

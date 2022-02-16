@@ -1,13 +1,13 @@
 import createApp from 'fastify';
 
-import api from './api';
-import boom from './boom';
-import config from './config';
+import apiPlugin from './api';
+import boomPlugin from './boom';
+import configPlugin from './config';
 
 const app = createApp({ logger: true })
-  .register(config)
-  .register(boom)
-  .register(api, { prefix: 'api' });
+  .register(configPlugin)
+  .register(boomPlugin)
+  .register(apiPlugin);
 
 (async (): Promise<void> => {
   await app.ready();
