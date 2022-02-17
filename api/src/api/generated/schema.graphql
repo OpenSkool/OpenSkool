@@ -9,6 +9,16 @@ type Education implements Node {
   name: String!
 }
 
+input EducationInput {
+  name: String!
+}
+
+type Mutation {
+  createEducation(name: String!): Education!
+  deleteEducation(id: ID!): Education
+  updateEducation(id: ID!, name: String!): Education!
+}
+
 interface Node {
   """
   A CUID for a resource
