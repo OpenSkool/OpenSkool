@@ -1,15 +1,23 @@
 import path from 'path';
 
-import { makeSchema, objectType, queryType, list } from 'nexus';
+import { makeSchema, objectType, queryType, list, interfaceType } from 'nexus';
 import * as N from 'nexus-prisma';
 
 import { prisma } from './prisma';
+
+const Node = interfaceType({
+  name: 'Node',
+  nonNullDefaults: { output: true },
+  definition(t) {
+    t.id('id', { description: 'A CUID for a resource' });
+  },
+});
 
 const Education = objectType({
   name: N.Education.$name,
   description: N.Education.$description,
   definition(t) {
-    t.field(N.Education.id);
+    t.implements(Node);
     t.field(N.Education.name);
   },
 });
@@ -31,6 +39,11 @@ export default makeSchema({
     module: require.resolve('./context'),
     export: 'Context',
   },
+  features: {
+    abstractTypeStrategies: {
+      resolveType: false,
+    },
+  },
   outputs: {
     schema: path.join(__dirname, './generated/schema.graphql'),
     // typegen: path.join(__dirname, '/generated/nexus.ts'),
@@ -45,6 +58,7 @@ export default makeSchema({
   },
   types: {
     // Generics
+    Node,
     Query,
     // Models
     Education,
