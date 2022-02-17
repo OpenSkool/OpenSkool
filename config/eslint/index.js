@@ -10,5 +10,9 @@ module.exports = {
       files: ['**/*.ts'],
       extends: ['noise/typescript'],
     },
+    {
+      files: ['**/*.vue'],
+      extends: ['noise/typescript', 'noise/vue', 'noise/vue/ts'],
+    },
   ],
 };

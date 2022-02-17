@@ -10,6 +10,7 @@
     "build": "vite build",
     "clean": "rm -rf .eslintcache .turbo/ dist/",
     "dev": "vite",
+    "lint": "eslint --cache --ext .js,.ts,.vue .",
     "preview": "vite preview",
     "test": "vue-tsc --noEmit"
   },
@@ -17,7 +18,9 @@
     "vue": "^3.2.25"
   },
   "devDependencies": {
+    "@os/eslint-config": "workspace:*",
     "@vitejs/plugin-vue": "^2.2.0",
+    "eslint": "^8.9.0",
     "typescript": "^4.5.4",
     "vite": "^2.8.0",
     "vue-tsc": "^0.29.8"

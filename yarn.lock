@@ -330,7 +330,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@os/app@workspace:app"
   dependencies:
+    "@os/eslint-config": "workspace:*"
+    "@types/eslint": ^8
     "@vitejs/plugin-vue": ^2.2.0
+    eslint: ^8.9.0
     typescript: ^4.5.4
     vite: ^2.8.0
     vue: ^3.2.25
@@ -351,6 +354,7 @@ __metadata:
     eslint-plugin-node: ^11.1.0
     eslint-plugin-promise: ^6.0.0
     eslint-plugin-unicorn: ^40.1.0
+    eslint-plugin-vue: ^8.4.1
     typescript: ~4.5.5
   peerDependencies:
     eslint: ^8.8.0
@@ -478,6 +482,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/eslint@npm:^8":
+  version: 8.4.1
+  resolution: "@types/eslint@npm:8.4.1"
+  dependencies:
+    "@types/estree": "*"
+    "@types/json-schema": "*"
+  checksum: b5790997ee9d3820d16350192d41849b0e2448c9e93650acac672ddf502e35c0a5a25547172a9eec840a96687cd94ba1cee672cbd86640f8f4ff1b65960d2ab9
+  languageName: node
+  linkType: hard
+
+"@types/estree@npm:*":
+  version: 0.0.51
+  resolution: "@types/estree@npm:0.0.51"
+  checksum: e56a3bcf759fd9185e992e7fdb3c6a5f81e8ff120e871641607581fb3728d16c811702a7d40fa5f869b7f7b4437ab6a87eb8d98ffafeee51e85bbe955932a189
+  languageName: node
+  linkType: hard
+
 "@types/isomorphic-form-data@npm:^2.0.0":
   version: 2.0.0
   resolution: "@types/isomorphic-form-data@npm:2.0.0"
@@ -487,7 +508,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/json-schema@npm:^7.0.9":
+"@types/json-schema@npm:*, @types/json-schema@npm:^7.0.9":
   version: 7.0.9
   resolution: "@types/json-schema@npm:7.0.9"
   checksum: 259d0e25f11a21ba5c708f7ea47196bd396e379fddb79c76f9f4f62c945879dc21657904914313ec2754e443c5018ea8372362f323f30e0792897fdb2098a705
@@ -2803,6 +2824,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-plugin-vue@npm:^8.4.1":
+  version: 8.4.1
+  resolution: "eslint-plugin-vue@npm:8.4.1"
+  dependencies:
+    eslint-utils: ^3.0.0
+    natural-compare: ^1.4.0
+    semver: ^7.3.5
+    vue-eslint-parser: ^8.0.1
+  peerDependencies:
+    eslint: ^6.2.0 || ^7.0.0 || ^8.0.0
+  checksum: bd857d0c2f233615e8baf71be956c46ad74051301f84857a13ee079979d1aa65b59556ed7f3fe565ddffd38446b9a4dcc6fefb5b6ed5e6bd369b7c769c873002
+  languageName: node
+  linkType: hard
+
 "eslint-scope@npm:^5.1.1":
   version: 5.1.1
   resolution: "eslint-scope@npm:5.1.1"
@@ -2813,7 +2848,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-scope@npm:^7.1.1":
+"eslint-scope@npm:^7.0.0, eslint-scope@npm:^7.1.1":
   version: 7.1.1
   resolution: "eslint-scope@npm:7.1.1"
   dependencies:
@@ -2857,7 +2892,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-visitor-keys@npm:^3.0.0, eslint-visitor-keys@npm:^3.3.0":
+"eslint-visitor-keys@npm:^3.0.0, eslint-visitor-keys@npm:^3.1.0, eslint-visitor-keys@npm:^3.3.0":
   version: 3.3.0
   resolution: "eslint-visitor-keys@npm:3.3.0"
   checksum: d59e68a7c5a6d0146526b0eec16ce87fbf97fe46b8281e0d41384224375c4e52f5ffb9e16d48f4ea50785cde93f766b0c898e31ab89978d88b0e1720fbfb7808
@@ -2909,7 +2944,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"espree@npm:^9.3.1":
+"espree@npm:^9.0.0, espree@npm:^9.3.1":
   version: 9.3.1
   resolution: "espree@npm:9.3.1"
   dependencies:
@@ -7345,6 +7380,23 @@ __metadata:
     vscode-pug-languageservice: 0.29.8
     vscode-typescript-languageservice: 0.29.8
   checksum: 6e2f7a13013b3c32996fb889d5170c6141b023e57424db81fc6df0fa7cb6d7410d976b2f55f647d28b5896d8b5090db98bb3934f3a641ef624a47f026ce4114b
+  languageName: node
+  linkType: hard
+
+"vue-eslint-parser@npm:^8.0.1":
+  version: 8.2.0
+  resolution: "vue-eslint-parser@npm:8.2.0"
+  dependencies:
+    debug: ^4.3.2
+    eslint-scope: ^7.0.0
+    eslint-visitor-keys: ^3.1.0
+    espree: ^9.0.0
+    esquery: ^1.4.0
+    lodash: ^4.17.21
+    semver: ^7.3.5
+  peerDependencies:
+    eslint: ">=6.0.0"
+  checksum: 3a5bebd39cd576a07c188b47212255e023153ec151f4ea4d389c9374bf59847eb46d639ff33ee236ee89e3b9c437faf2dc97e4349246179738f86931fb66274a
   languageName: node
   linkType: hard
 
