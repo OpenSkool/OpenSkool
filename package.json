@@ -27,6 +27,7 @@
   },
   "workspaces": [
     "api",
+    "app",
     "config/*"
   ]
 }
