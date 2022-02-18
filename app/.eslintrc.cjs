@@ -5,6 +5,9 @@ module.exports = {
     extraFileExtensions: ['.vue'],
     tsconfigRootDir: __dirname,
   },
+  rules: {
+    'import/no-unresolved': 'off',
+  },
   overrides: [
     {
       files: 'src/',

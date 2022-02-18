@@ -3,7 +3,10 @@
   "extends": "@os/tsconfig/vite.json",
   "display": "app",
   "compilerOptions": {
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["src/*"]
+    }
   },
   "include": ["src", "vite.config.ts"]
 }
