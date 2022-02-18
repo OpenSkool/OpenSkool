@@ -1,5 +1,6 @@
 {
   "recommendations": [
+    "apollographql.vscode-apollo",
     "johnsoncodehk.volar",
     "antfu.iconify",
     "voorjaar.windicss-intellisense"

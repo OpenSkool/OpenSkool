@@ -15,7 +15,10 @@
     "test": "vue-tsc --noEmit"
   },
   "dependencies": {
+    "@apollo/client": "^3.5.9",
+    "@vue/apollo-composable": "^4.0.0-alpha.16",
     "@vueuse/core": "^7.6.2",
+    "graphql": "^16.3.0",
     "the-new-css-reset": "^1.4.9",
     "vue": "^3.2.25",
     "vue-router": "^4.0.12",

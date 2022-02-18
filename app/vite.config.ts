@@ -9,7 +9,19 @@ import WindiCSS from 'vite-plugin-windicss';
 export default defineConfig({
   plugins: [
     AutoImport({
-      imports: ['vue', 'vue-router'],
+      imports: [
+        'vue',
+        'vue-router',
+        {
+          '@apollo/client/core': ['gql'],
+          '@vue/apollo-composable': [
+            'useMutation',
+            'useQuery',
+            'useResult',
+            'useSubscription',
+          ],
+        },
+      ],
       dts: 'src/auto-imports.d.ts',
     }),
     Pages(),

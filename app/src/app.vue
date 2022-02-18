@@ -1,3 +1,11 @@
+<script setup lang="ts">
+import { DefaultApolloClient } from '@vue/apollo-composable';
+
+import { apolloClient } from './api';
+
+provide(DefaultApolloClient, apolloClient);
+</script>
+
 <template>
   <router-view />
 </template>

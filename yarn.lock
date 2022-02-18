@@ -21,7 +21,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client@npm:^3.3.20":
+"@apollo/client@npm:^3.3.20, @apollo/client@npm:^3.5.9":
   version: 3.5.9
   resolution: "@apollo/client@npm:3.5.9"
   dependencies:
@@ -347,11 +347,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@os/app@workspace:app"
   dependencies:
+    "@apollo/client": ^3.5.9
     "@os/eslint-config": "workspace:*"
     "@vitejs/plugin-vue": ^2.2.0
+    "@vue/apollo-composable": ^4.0.0-alpha.16
     "@vueuse/core": ^7.6.2
     autoprefixer: ^10.4.2
     eslint: ^8.9.0
+    graphql: ^16.3.0
     postcss-nested: ^5.0.6
     postcss-nesting: ^10.1.2
     the-new-css-reset: ^1.4.9
@@ -799,6 +802,25 @@ __metadata:
     vscode-nls: ^5.0.0
     vscode-uri: ^2.1.2
   checksum: 8a0c8fec803832bd7283c6c9d6f57d8cd8c88bcad598c104e3c0d6e1a7a02f785d9cc7bc39e8fe61823548410cd59b11ae11ee987c0c927fd657f52c73335cea
+  languageName: node
+  linkType: hard
+
+"@vue/apollo-composable@npm:^4.0.0-alpha.16":
+  version: 4.0.0-alpha.16
+  resolution: "@vue/apollo-composable@npm:4.0.0-alpha.16"
+  dependencies:
+    throttle-debounce: ^3.0.1
+    ts-essentials: ^9.0.0
+    vue-demi: ^0.12.1
+  peerDependencies:
+    "@apollo/client": ^3.4.13
+    "@vue/composition-api": ^1.0.0
+    graphql: ">=15"
+    vue: ^2.6.0 || ^3.1.0
+  peerDependenciesMeta:
+    "@vue/composition-api":
+      optional: true
+  checksum: 5b9ab147746e12894466b36ef4e1bfc5b5a7c84a1fcd4fca48ea81a0395ba1b52a2f67f367114ae67ba96717218cbe4935a97cdbf170cd7366b0261c08c6beb4
   languageName: node
   linkType: hard
 
@@ -6995,6 +7017,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"throttle-debounce@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "throttle-debounce@npm:3.0.1"
+  checksum: e34ef638e8df3a9154249101b68afcbf2652a139c803415ef8a2f6a8bc577bcd4d79e4bb914ad3cd206523ac78b9fb7e80885bfa049f64fbb1927f99d98b5736
+  languageName: node
+  linkType: hard
+
 "tiny-lru@npm:^7.0.0, tiny-lru@npm:^7.0.6":
   version: 7.0.6
   resolution: "tiny-lru@npm:7.0.6"
@@ -7056,6 +7085,15 @@ __metadata:
   bin:
     tree-kill: cli.js
   checksum: 49117f5f410d19c84b0464d29afb9642c863bc5ba40fcb9a245d474c6d5cc64d1b177a6e6713129eb346b40aebb9d4631d967517f9fbe8251c35b21b13cd96c7
+  languageName: node
+  linkType: hard
+
+"ts-essentials@npm:^9.0.0":
+  version: 9.1.2
+  resolution: "ts-essentials@npm:9.1.2"
+  peerDependencies:
+    typescript: ">=4.1.0"
+  checksum: 3b14d8511557bd1bdec068505074ee41d3b1cdb052d3c66a5046f00b483bd4722d529b32a99cca424a9d7db9caff7ba108acbf344a5477a741e0616af5649b47
   languageName: node
   linkType: hard
 
@@ -7794,7 +7832,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vue-demi@npm:*":
+"vue-demi@npm:*, vue-demi@npm:^0.12.1":
   version: 0.12.1
   resolution: "vue-demi@npm:0.12.1"
   peerDependencies:
