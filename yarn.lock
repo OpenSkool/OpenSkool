@@ -337,7 +337,7 @@ __metadata:
   dependencies:
     "@apollo/client": ^3.5.9
     "@os/eslint-config": "workspace:*"
-    "@vitejs/plugin-vue": ^2.2.0
+    "@vitejs/plugin-vue": ^2.2.2
     "@vue/apollo-composable": ^4.0.0-alpha.16
     "@vueuse/core": ^7.6.2
     autoprefixer: ^10.4.2
@@ -347,8 +347,8 @@ __metadata:
     postcss-nesting: ^10.1.2
     the-new-css-reset: ^1.4.9
     typescript: ^4.5.5
-    unplugin-auto-import: ^0.6.0
-    vite: ^2.8.0
+    unplugin-auto-import: ^0.6.1
+    vite: ^2.8.4
     vite-plugin-pages: ^0.20.2
     vite-plugin-windicss: ^1.7.1
     vue: ^3.2.25
@@ -702,13 +702,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitejs/plugin-vue@npm:^2.2.0":
-  version: 2.2.0
-  resolution: "@vitejs/plugin-vue@npm:2.2.0"
+"@vitejs/plugin-vue@npm:^2.2.2":
+  version: 2.2.2
+  resolution: "@vitejs/plugin-vue@npm:2.2.2"
   peerDependencies:
     vite: ^2.5.10
     vue: ^3.2.25
-  checksum: ab3e3c77c251eada60c8394f8cdce67430a7efdf9f8f7d98bbfc98dd1915c639db43228a2a95d5d43e41acc54a65573169ae23044e848a36c1e8bf609fe41acf
+  checksum: f05920e282569c3721dbbd730c83e40978134c0f53cd10f9429cc37b22152c494782f7b9541db937a2fd7ed324b819ec8aa0b54f136c3c6adbed7298c9c9e9da
   languageName: node
   linkType: hard
 
@@ -7439,9 +7439,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"unplugin-auto-import@npm:^0.6.0":
-  version: 0.6.0
-  resolution: "unplugin-auto-import@npm:0.6.0"
+"unplugin-auto-import@npm:^0.6.1":
+  version: 0.6.1
+  resolution: "unplugin-auto-import@npm:0.6.1"
   dependencies:
     "@antfu/utils": ^0.5.0
     "@rollup/pluginutils": ^4.1.2
@@ -7454,7 +7454,7 @@ __metadata:
   peerDependenciesMeta:
     "@vueuse/core":
       optional: true
-  checksum: 7cd7811f82c7215ddb5385d5e1ac0c4192f105546f22cfab37092de2aaaf6c717422229c123b2db6b992eb2eb6d5489b67b681c957e96ed65eb566fe2809678d
+  checksum: 6941b8e3ebf2dfc6d1ef8a26d7dd537aaf9ff56435b3ef67571a08b3fa4ef955a57bf57e8df7737c6d68b05c3a6c9356ec1793724e90cdf0aa3207bc7338f3e3
   languageName: node
   linkType: hard
 
@@ -7626,9 +7626,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^2.8.0":
-  version: 2.8.3
-  resolution: "vite@npm:2.8.3"
+"vite@npm:^2.8.4":
+  version: 2.8.4
+  resolution: "vite@npm:2.8.4"
   dependencies:
     esbuild: ^0.14.14
     fsevents: ~2.3.2
@@ -7651,7 +7651,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: f18f62037741ae8ac8b377da9ba4ed9556bebe9857531bbf33b2691cba15c5720264410385cd628bbccee5bfe105d3d0ead6286e3fbe0211de94ea061e2e876c
+  checksum: 0531ea17d354c35026c87e732d28c777492cc5165c4abdaa507c4894535ecbbfcf447fa3f270bbb160cd7cba8ad319cc86a221be18b2ccd40d8be139f9d7381d
   languageName: node
   linkType: hard
 
