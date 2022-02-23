@@ -20,9 +20,9 @@
     "@vueuse/core": "^7.6.2",
     "graphql": "^16.3.0",
     "the-new-css-reset": "^1.4.9",
-    "vue": "^3.2.25",
+    "vue": "^3.2.31",
     "vue-router": "^4.0.12",
-    "windicss": "^3.4.3"
+    "windicss": "^3.4.4"
   },
   "devDependencies": {
     "@os/eslint-config": "workspace:*",

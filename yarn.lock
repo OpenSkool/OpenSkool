@@ -351,10 +351,10 @@ __metadata:
     vite: ^2.8.4
     vite-plugin-pages: ^0.20.2
     vite-plugin-windicss: ^1.7.1
-    vue: ^3.2.25
+    vue: ^3.2.31
     vue-router: ^4.0.12
     vue-tsc: ^0.31.4
-    windicss: ^3.4.3
+    windicss: ^3.4.4
   languageName: unknown
   linkType: soft
 
@@ -7871,7 +7871,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vue@npm:^3.2.25":
+"vue@npm:^3.2.31":
   version: 3.2.31
   resolution: "vue@npm:3.2.31"
   dependencies:
@@ -7965,6 +7965,15 @@ __metadata:
   bin:
     windicss: cli/index.js
   checksum: 3029c69249a1f5676ce2b4a991830bf0f86f47098ff1d6fa78668cd165e0388800c8edf479fd3209deefa5b027de50fdc10f02f6ec0de0af55db1afdaf5df7f2
+  languageName: node
+  linkType: hard
+
+"windicss@npm:^3.4.4":
+  version: 3.4.4
+  resolution: "windicss@npm:3.4.4"
+  bin:
+    windicss: cli/index.js
+  checksum: 6f480eb199929af87bad679cb22e61a1538b1c4ad80a013d18ef226e36c2e10a2f357f7ebafb18c5c83c8e36a92f3591ece8f5d5afdd4104f641ed71712154d9
   languageName: node
   linkType: hard
 
