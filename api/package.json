@@ -34,7 +34,7 @@
   "devDependencies": {
     "@os/eslint-config": "workspace:*",
     "@os/tsconfig": "workspace:*",
-    "@types/cuid": "^2",
+    "@types/cuid": "^2.0.1",
     "@types/dotenv-flow": "^3.2.0",
     "dotenv-flow": "^3.2.0",
     "esbuild-register": "^3.3.2",
