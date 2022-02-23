@@ -251,18 +251,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nexus/logger@npm:^0.2.0":
-  version: 0.2.0
-  resolution: "@nexus/logger@npm:0.2.0"
-  dependencies:
-    chalk: ^4.0.0
-    fp-ts: ^2.6.1
-    lodash: ^4.17.15
-    strip-ansi: ^6.0.0
-  checksum: d2e7b51f898b4de12f9324aa5832d09b53edb4f636a9017edb5f9ec0285bde1639ed0ff26aed82c9afba563f33ffb7e6dd5cf5105bd7a1ddfbc0de99e1ec9195
-  languageName: node
-  linkType: hard
-
 "@nodelib/fs.scandir@npm:2.1.5":
   version: 2.1.5
   resolution: "@nodelib/fs.scandir@npm:2.1.5"
@@ -317,26 +305,26 @@ __metadata:
     "@hapi/boom": ^9.1.4
     "@os/eslint-config": "workspace:*"
     "@os/tsconfig": "workspace:*"
-    "@prisma/client": ^3.9.2
-    "@sinclair/typebox": ^0.23.3
+    "@prisma/client": ^3.10.0
+    "@sinclair/typebox": ^0.23.4
     "@types/cuid": ^2.0.1
     "@types/dotenv-flow": ^3.2.0
-    altair-fastify-plugin: 4.0.0
+    altair-fastify-plugin: 4.4.0
     cuid: ^2.1.8
     dotenv-flow: ^3.2.0
     esbuild-register: ^3.3.2
     eslint: ^8.9.0
-    fastify: ^3.27.1
-    fastify-cors: ^6.0.2
+    fastify: ^3.27.2
+    fastify-cors: ^6.0.3
     fastify-env: ^2.1.1
     fastify-plugin: ^3.0.1
     graphql: ^16.3.0
-    mercurius: ^9.3.2
+    mercurius: ^9.3.3
     nexus: ^1.2.0
-    nexus-prisma: 0.34.0
+    nexus-prisma: 0.35.0
     nodemon: ^2.0.15
     pino-pretty: ^7.5.1
-    prisma: ^3.9.2
+    prisma: ^3.10.0
     read-pkg-up: ^9.1.0
     tsup: ^5.11.13
     typescript: ~4.5.5
@@ -396,54 +384,54 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@prisma/client@npm:^3.9.2":
-  version: 3.9.2
-  resolution: "@prisma/client@npm:3.9.2"
+"@prisma/client@npm:^3.10.0":
+  version: 3.10.0
+  resolution: "@prisma/client@npm:3.10.0"
   dependencies:
-    "@prisma/engines-version": 3.9.0-58.bcc2ff906db47790ee902e7bbc76d7ffb1893009
+    "@prisma/engines-version": 3.10.0-50.73e60b76d394f8d37d8ebd1f8918c79029f0db86
   peerDependencies:
     prisma: "*"
   peerDependenciesMeta:
     prisma:
       optional: true
-  checksum: 5b4b8f252624250f609d57ed3939f3dbecb174c297691476050f48d6c24dd41ca2f70f9e5a52729a4e875527e56a2d564a116c0ada8f5fc935c558f09d2759e3
+  checksum: c9fe863abfbcecff6b26c2fc4c93de77fd11c8209e91b8e2cba13ba3f0866d228eb5e92fac43e1f75497b652db54cb5e309320c3d51e603a4ecb4125dbf3a872
   languageName: node
   linkType: hard
 
-"@prisma/debug@npm:3.9.2":
-  version: 3.9.2
-  resolution: "@prisma/debug@npm:3.9.2"
+"@prisma/debug@npm:3.10.0":
+  version: 3.10.0
+  resolution: "@prisma/debug@npm:3.10.0"
   dependencies:
     "@types/debug": 4.1.7
     ms: 2.1.3
     strip-ansi: 6.0.1
-  checksum: a3414f30e66bf7e9048f9d77672c69dc5d35f7e0f556524ede6c3db640614f5c0d5702b90628f5a1e00967ed4b8b4de528792d1f6831c603be44844fb0120b89
+  checksum: d04b7762539b20650f328b0016ca3fa12bd47f15afb3eae39afa4404420523da07f90133d9477759e6f77f52eaaae6b864b2fd56bc1649156e0c9d952e2bd15f
   languageName: node
   linkType: hard
 
-"@prisma/engines-version@npm:3.9.0-58.bcc2ff906db47790ee902e7bbc76d7ffb1893009":
-  version: 3.9.0-58.bcc2ff906db47790ee902e7bbc76d7ffb1893009
-  resolution: "@prisma/engines-version@npm:3.9.0-58.bcc2ff906db47790ee902e7bbc76d7ffb1893009"
-  checksum: 413d478fc1980604de1f46a0d53ae6c752965283a7d8c51d8fb3881c371b4a71ab4aa10002dba411d961286caf1141871c3c85d209a316421cdf1e1fdac71b4e
+"@prisma/engines-version@npm:3.10.0-50.73e60b76d394f8d37d8ebd1f8918c79029f0db86":
+  version: 3.10.0-50.73e60b76d394f8d37d8ebd1f8918c79029f0db86
+  resolution: "@prisma/engines-version@npm:3.10.0-50.73e60b76d394f8d37d8ebd1f8918c79029f0db86"
+  checksum: ddcb3bfdab61ac74e2df9e57562ccc7f0eb863955c8cf711f52f45572168f65e030e5070dfc9fc2e37d916b97b236576006b5cd56c813257a96b825c598e79fa
   languageName: node
   linkType: hard
 
-"@prisma/engines@npm:3.9.0-58.bcc2ff906db47790ee902e7bbc76d7ffb1893009":
-  version: 3.9.0-58.bcc2ff906db47790ee902e7bbc76d7ffb1893009
-  resolution: "@prisma/engines@npm:3.9.0-58.bcc2ff906db47790ee902e7bbc76d7ffb1893009"
-  checksum: f934a02f0d12b67a8b878da5b854a2df0b1d5adbedb9d6df552dddcb4f58af9401268c2066180a337daa0fd22d9005eae2197bf8a4cc7b9e1a20764fe93f1244
+"@prisma/engines@npm:3.10.0-50.73e60b76d394f8d37d8ebd1f8918c79029f0db86":
+  version: 3.10.0-50.73e60b76d394f8d37d8ebd1f8918c79029f0db86
+  resolution: "@prisma/engines@npm:3.10.0-50.73e60b76d394f8d37d8ebd1f8918c79029f0db86"
+  checksum: 7faa8659dd72e70f9b24be291e3660d086d5b2ee1b6557bf783100a2efaf4f7087882196191c845f96c3953a55ea8bcb03110af98a18e803b90084c0c2211444
   languageName: node
   linkType: hard
 
-"@prisma/generator-helper@npm:^3.0.2":
-  version: 3.9.2
-  resolution: "@prisma/generator-helper@npm:3.9.2"
+"@prisma/generator-helper@npm:^3.6.0":
+  version: 3.10.0
+  resolution: "@prisma/generator-helper@npm:3.10.0"
   dependencies:
-    "@prisma/debug": 3.9.2
+    "@prisma/debug": 3.10.0
     "@types/cross-spawn": 6.0.2
     chalk: 4.1.2
     cross-spawn: 7.0.3
-  checksum: 79b0d0253dc3a1eee7ff4226ec7e5ce1a6e566daa7213ac663cc71ec50268abceb601c26c9c0f494165be6479bc40b6627e34f847ea2d43539d553e757516e42
+  checksum: 401fb4c27be89a6219e07a25b69e78b5c221aef9c8e6501eb3bca0f6441c420e813ce554525bd5a382e7801f06cb981d8fcd30c2c13984c6664a972617534112
   languageName: node
   linkType: hard
 
@@ -457,10 +445,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sinclair/typebox@npm:^0.23.3":
-  version: 0.23.3
-  resolution: "@sinclair/typebox@npm:0.23.3"
-  checksum: c8d961c8af1b701e67641770376010634730076f0412dda34b01f1d6f54d98916414335b51929285ade43ab85bb14a372bbc287575ce4b1e0179d8af808ec4d7
+"@sinclair/typebox@npm:^0.23.4":
+  version: 0.23.4
+  resolution: "@sinclair/typebox@npm:0.23.4"
+  checksum: 98af5b70bf23a36061886966038058c22238d68bcd1bb2528b4470506f8a08ec5190f5f4190de17ce5fa54ebcaf7e150efbe96db6acab2696911391e4358ab39
   languageName: node
   linkType: hard
 
@@ -1154,16 +1142,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"altair-fastify-plugin@npm:4.0.0":
-  version: 4.0.0
-  resolution: "altair-fastify-plugin@npm:4.0.0"
+"altair-fastify-plugin@npm:4.4.0":
+  version: 4.4.0
+  resolution: "altair-fastify-plugin@npm:4.4.0"
   dependencies:
-    altair-static: ^4.0.0
+    altair-static: ^4.4.0
     fastify-plugin: ^2.3.4
-    fastify-static: ^3.2.1
+    fastify-static: ^4.4.1
   peerDependencies:
     fastify: ^3.1.1
-  checksum: 8f8c1b4dfebde6eb35de7cd003786e78d4c10d97e2a3b6f5dd28f2a8733a166d9acc4b9e9a03cd89d57dc82c0dd0de58a690824b839997956c13705d6461b5ea
+  checksum: e038818df1827fd4501ff58dea18b80c5c418e6cd25ec0145c84bc127a2d765453705ba3689fd5376ed9cf728567f94497ac36ed2ed80de2e66177d767cae66e
   languageName: node
   linkType: hard
 
@@ -1192,7 +1180,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"altair-static@npm:^4.0.0":
+"altair-static@npm:^4.4.0":
   version: 4.4.0
   resolution: "altair-static@npm:4.4.0"
   dependencies:
@@ -3337,13 +3325,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fastify-cors@npm:^6.0.2":
-  version: 6.0.2
-  resolution: "fastify-cors@npm:6.0.2"
+"fastify-cors@npm:^6.0.3":
+  version: 6.0.3
+  resolution: "fastify-cors@npm:6.0.3"
   dependencies:
     fastify-plugin: ^3.0.0
     vary: ^1.1.2
-  checksum: f600eb30d2259bf0277c3df72c73f09f6891f3984c62e1c9a7489f0d6b2ffb1749dbe9a79a05ad74b08a660c1a707c9fb7636c20b87d07eae0e6efd9c951fd03
+  checksum: 054cf4e1cf0b20778ac24d9995a99f44e9b026ca9a028db0cbb6093922bcc931dff5f5bb185d19e881014392bb5886a8b5f9da6af3d3ab5e62b7a68f4eca33c4
   languageName: node
   linkType: hard
 
@@ -3357,10 +3345,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fastify-error@npm:^0.3.0, fastify-error@npm:^0.3.1":
+"fastify-error@npm:^0.3.0":
   version: 0.3.1
   resolution: "fastify-error@npm:0.3.1"
   checksum: fd6a0f6f87b5e4ab59a4d3d66124bd13830a1cf85cf1987259dfb1175fc6a4bcae68b076ad78f6bb06654f72af133b44813090e9ce5502d2ef56ddcb2b0fa867
+  languageName: node
+  linkType: hard
+
+"fastify-error@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "fastify-error@npm:1.0.0"
+  checksum: cbd079a7dd96ae85546a5b665d4b368f4217d83aa4838663cc3958bb062aade780c8fae737cbe177a707b1903e348cd9d6065684a5c73b024bdbea841d68565f
   languageName: node
   linkType: hard
 
@@ -3380,19 +3375,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fastify-static@npm:^3.2.1":
-  version: 3.4.0
-  resolution: "fastify-static@npm:3.4.0"
-  dependencies:
-    fastify-plugin: ^3.0.0
-    glob: ^7.1.4
-    readable-stream: ^3.4.0
-    send: ^0.17.1
-  checksum: bbfd33ca898c0965e4f19d6f320826ab83d11703008c2680f5b7231d3c0b557b743f49c8db2435e4f3ef8a03277286d077704637b6df5d38a2199189a12d5436
-  languageName: node
-  linkType: hard
-
-"fastify-static@npm:^4.2.2":
+"fastify-static@npm:^4.2.2, fastify-static@npm:^4.4.1":
   version: 4.5.0
   resolution: "fastify-static@npm:4.5.0"
   dependencies:
@@ -3424,9 +3407,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fastify@npm:^3.27.1":
-  version: 3.27.1
-  resolution: "fastify@npm:3.27.1"
+"fastify@npm:^3.27.2":
+  version: 3.27.2
+  resolution: "fastify@npm:3.27.2"
   dependencies:
     "@fastify/ajv-compiler": ^1.0.0
     abstract-logging: ^2.0.0
@@ -3442,8 +3425,8 @@ __metadata:
     rfdc: ^1.1.4
     secure-json-parse: ^2.0.0
     semver: ^7.3.2
-    tiny-lru: ^7.0.0
-  checksum: a5ff30eac0ab882afe9cea9956b9b93d74c5e345eb6f6218a51d34df3b18dedc17551586aecb16524676d68238110dec7f14005a5c70b9f185a09a1a3ad34837
+    tiny-lru: ^8.0.1
+  checksum: cf52f1f0d9fd94ffc09c1cc0787df5454d806da1affc40f4823d6f252bc9ef79e7ed32cb84e6224bac7be05e51fee1d550695b6329d80e8afd454f25c88bb454
   languageName: node
   linkType: hard
 
@@ -3558,6 +3541,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"floggy@npm:^0.3.1":
+  version: 0.3.2
+  resolution: "floggy@npm:0.3.2"
+  dependencies:
+    fp-ts: ^2.11.3
+    kleur: ^4.1.4
+    lodash: ^4.17.21
+    strip-ansi: 6
+    tslib: ^2.3.1
+  checksum: d3e150b05875bd4ac96ef54e96de03bc137b65476be970e88668d7416ced9d9f32f6d40ba69ee7e298746b6c616a46ab5d2da650be66fbe06da36cdd5f669256
+  languageName: node
+  linkType: hard
+
 "foreach@npm:^2.0.5":
   version: 2.0.5
   resolution: "foreach@npm:2.0.5"
@@ -3583,7 +3579,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fp-ts@npm:^2.6.1":
+"fp-ts@npm:^2.11.3":
   version: 2.11.8
   resolution: "fp-ts@npm:2.11.8"
   checksum: 481b824797ba59f3f5549810e8f6688b27554790d11a470ccdf4fc086a1cb4993ffb9060131b054abccca703f2776993e12f649865143e178e9b7c9e5b295ea7
@@ -3604,7 +3600,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fs-jetpack@npm:^4.1.1":
+"fs-jetpack@npm:^4.3.0":
   version: 4.3.1
   resolution: "fs-jetpack@npm:4.3.1"
   dependencies:
@@ -3839,7 +3835,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graphql-jit@npm:^0.7.0":
+"graphql-jit@npm:^0.7.3":
   version: 0.7.3
   resolution: "graphql-jit@npm:0.7.3"
   dependencies:
@@ -3856,7 +3852,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graphql-scalars@npm:^1.10.1":
+"graphql-scalars@npm:^1.13.6":
   version: 1.14.1
   resolution: "graphql-scalars@npm:1.14.1"
   dependencies:
@@ -4828,7 +4824,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:^4.17.15, lodash@npm:^4.17.20, lodash@npm:^4.17.21":
+"lodash@npm:^4.17.20, lodash@npm:^4.17.21":
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: eb835a2e51d381e561e508ce932ea50a8e5a68f4ebdd771ea240d3048244a8d13658acbd502cd4829768c56f2e16bdd4340b9ea141297d472517b83868e677f7
@@ -4925,18 +4921,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mercurius@npm:^9.3.2":
-  version: 9.3.2
-  resolution: "mercurius@npm:9.3.2"
+"mercurius@npm:^9.3.3":
+  version: 9.3.3
+  resolution: "mercurius@npm:9.3.3"
   dependencies:
     "@types/isomorphic-form-data": ^2.0.0
     events.on: ^1.0.1
-    fastify-error: ^0.3.1
+    fastify-error: ^1.0.0
     fastify-plugin: ^3.0.0
     fastify-static: ^4.2.2
     fastify-websocket: ^4.0.0
     graphql: ^16.0.0
-    graphql-jit: ^0.7.0
+    graphql-jit: ^0.7.3
     mqemitter: ^4.4.1
     p-map: ^4.0.0
     promise.allsettled: ^1.0.4
@@ -4944,12 +4940,12 @@ __metadata:
     safe-stable-stringify: ^2.3.0
     secure-json-parse: ^2.4.0
     single-user-cache: ^0.6.0
-    tiny-lru: ^7.0.6
+    tiny-lru: ^8.0.1
     undici: ^4.8.0
     ws: ^8.2.2
   peerDependencies:
     graphql: ^16.0.0
-  checksum: ee92ba93782226770de64affe95270d2e2735d7e464630f2cfd13a21d31d119429b9b950bbfd41045e39eca74e90a1da8f0d3453e86ac4f9b2096a09fa949866
+  checksum: c00f984b24ffd32c2ff8fe64219ffc56c8655d465361b56c1ba6e558367c5e7c7964e74d779c3aa90293d3416a62f671d95d6d9eff1294647f40c6ca68c7e433
   languageName: node
   linkType: hard
 
@@ -5199,28 +5195,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nexus-prisma@npm:0.34.0":
-  version: 0.34.0
-  resolution: "nexus-prisma@npm:0.34.0"
+"nexus-prisma@npm:0.35.0":
+  version: 0.35.0
+  resolution: "nexus-prisma@npm:0.35.0"
   dependencies:
-    "@prisma/generator-helper": ^3.0.2
-    debug: ^4.3.2
+    "@prisma/generator-helper": ^3.6.0
+    debug: ^4.3.3
     decimal.js: ^10.3.1
     dindist: ^1.0.2
     expand-tilde: ^2.0.2
-    fs-jetpack: ^4.1.1
-    graphql-scalars: ^1.10.1
+    fs-jetpack: ^4.3.0
+    graphql-scalars: ^1.13.6
     kleur: ^4.1.4
     lodash: ^4.17.21
     ono: ^7.1.3
     pkg-up: ^3.1.0
     pluralize: ^8.0.0
     semver: ^7.3.5
-    setset: ^0.0.7
+    setset: ^0.0.8
     ts-replace-all: ^1.0.0
     tslib: ^2.3.1
   peerDependencies:
-    "@prisma/client": 2.29.x || 2.30.x || 3.x
+    "@prisma/client": ^3.5
     nexus: ^1.0.0
     ts-node: ^10.0.0
   peerDependenciesMeta:
@@ -5228,7 +5224,7 @@ __metadata:
       optional: true
   bin:
     nexus-prisma: dist-cjs/cli/nexus-prisma.js
-  checksum: 3de8a1de3e63c282a14fb85629b35f8239cb4c36b5d9fb7de054693d1a1debc24f77991991656bfaa92694a618301bb0f5be7115f0c7d6eb820cd817ce5c985c
+  checksum: e8fce03e1cdb1ca988358d23280558ae7dc2341d25bc89e59d2ac1b3d63b18e1ae99a586f76711aef0e525990a9580c752f3c803d6e0edfaf429d0d710a63fae
   languageName: node
   linkType: hard
 
@@ -5900,15 +5896,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prisma@npm:^3.9.2":
-  version: 3.9.2
-  resolution: "prisma@npm:3.9.2"
+"prisma@npm:^3.10.0":
+  version: 3.10.0
+  resolution: "prisma@npm:3.10.0"
   dependencies:
-    "@prisma/engines": 3.9.0-58.bcc2ff906db47790ee902e7bbc76d7ffb1893009
+    "@prisma/engines": 3.10.0-50.73e60b76d394f8d37d8ebd1f8918c79029f0db86
   bin:
     prisma: build/index.js
     prisma2: build/index.js
-  checksum: 4070b61b09f45229680e1beeb14a95716353493032abaac9f6664bc60eba8279e165d446e8a12457a6d6a0e80d100c09228d00e7e1986e504fc8ceb9a16316f2
+  checksum: da693ebd69ec5f5a8132a86f1c6e300033a5ea869016e19364f514fdda6143f0d6236982a26b431313f06fecfaa2d1bd82eac3ebbf5b58082271f1a65c8a683d
   languageName: node
   linkType: hard
 
@@ -6600,16 +6596,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"setset@npm:^0.0.7":
-  version: 0.0.7
-  resolution: "setset@npm:0.0.7"
+"setset@npm:^0.0.8":
+  version: 0.0.8
+  resolution: "setset@npm:0.0.8"
   dependencies:
     "@jsdevtools/ono": ^7.1.3
-    "@nexus/logger": ^0.2.0
+    floggy: ^0.3.1
     lodash: ^4.17.20
     tslib: ^2.2.0
     type-fest: ^0.20.0
-  checksum: a4c006f419aac75160ee83a3d59dd8f9339364559d1c052cf44f6a21710605992fa9b51b74a896d016b9e7db481786418cee8404a5fbdf80da7afb5a2b0eea94
+  checksum: 07c1327c05022f80c88a98f831dc386e762aa8e3e449b1a0f96396da8cb13cf362d1d890aab0cee2ff1a6574f1664aedc11bd995b6042c4b92e4de9c4c25d674
   languageName: node
   linkType: hard
 
@@ -6849,7 +6845,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"strip-ansi@npm:6.0.1, strip-ansi@npm:^6.0.0, strip-ansi@npm:^6.0.1":
+"strip-ansi@npm:6, strip-ansi@npm:6.0.1, strip-ansi@npm:^6.0.0, strip-ansi@npm:^6.0.1":
   version: 6.0.1
   resolution: "strip-ansi@npm:6.0.1"
   dependencies:
@@ -7019,10 +7015,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tiny-lru@npm:^7.0.0, tiny-lru@npm:^7.0.6":
-  version: 7.0.6
-  resolution: "tiny-lru@npm:7.0.6"
-  checksum: 36a786a9111a3a358a698c9404783ad3f5396f6ed891672ffa4cd7dec4617abb8dfed6af7611bbaf8a3942a9475534c8b80f9bd58d7efa9aa594f395c9805f09
+"tiny-lru@npm:^8.0.1":
+  version: 8.0.1
+  resolution: "tiny-lru@npm:8.0.1"
+  checksum: 189181b35992ff131f2947515bc53782aab1e39d50c6a8f102dc4c63a755609d39bf341c498a0cd6e4a1a6b24fbbee778e0de1ff5ded0ef8e243d66a38ee7f41
   languageName: node
   linkType: hard
 
