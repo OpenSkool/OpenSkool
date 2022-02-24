@@ -8,7 +8,6 @@ const schema = Type.Object({
     { default: 'development' },
   ),
   PORT: Type.String({ default: '3030' }),
-  SECRET: Type.String(),
 });
 
 type Config = Static<typeof schema>;
