@@ -13,6 +13,7 @@
     "generate": "prisma generate",
     "lint": "eslint --cache .",
     "preview": "node dist/index.js",
+    "start": "node dist/index.js",
     "test": "tsc --noEmit"
   },
   "dependencies": {
