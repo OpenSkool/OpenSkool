@@ -15,7 +15,7 @@ import {
 } from 'nexus';
 import * as N from 'nexus-prisma';
 
-import { Context } from './context';
+import type { Context } from './context';
 
 const Node = interfaceType({
   name: 'Node',
