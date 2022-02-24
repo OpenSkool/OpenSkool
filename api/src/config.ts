@@ -3,11 +3,12 @@ import env from 'fastify-env';
 import plugin from 'fastify-plugin';
 
 const schema = Type.Object({
+  HOST: Type.String(),
   NODE_ENV: Type.Union(
     [Type.Literal('development'), Type.Literal('production')],
     { default: 'development' },
   ),
-  PORT: Type.String({ default: '3030' }),
+  PORT: Type.String(),
 });
 
 type Config = Static<typeof schema>;

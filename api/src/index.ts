@@ -11,7 +11,7 @@ const app = createApp({ logger: true })
 
 (async (): Promise<void> => {
   await app.ready();
-  await app.listen(app.config.PORT);
+  await app.listen(app.config.PORT, app.config.HOST);
 
   const shutdown = () => void app.close();
   process.on('SIGINT', shutdown);
