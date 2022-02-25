@@ -1,6 +1,6 @@
 import createApp from 'fastify';
 
-import apiPlugin from './api';
+import apiPlugin from './api/module';
 import boomPlugin from './boom';
 import configPlugin from './config';
 
