@@ -12,6 +12,7 @@
     "dev": "yarn turbo run dev",
     "format": "yarn prettier --write .",
     "lint": "yarn turbo run lint",
+    "preview": "yarn turbo run preview",
     "test": "yarn turbo run test"
   },
   "devDependencies": {
