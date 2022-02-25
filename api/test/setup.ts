@@ -1,3 +1,3 @@
 import { config } from 'dotenv-flow';
 
-config();
+config({ silent: true });

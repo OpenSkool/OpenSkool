@@ -2,13 +2,14 @@ import * as Boom from '@hapi/boom';
 import { Static, Type } from '@sinclair/typebox';
 import type { FastifyInstance } from 'fastify';
 import cors from 'fastify-cors';
+import plugin from 'fastify-plugin';
 
 import graphqlPlugin from './graphql';
 import prismaPlugin from './prisma';
 
 const HTTP_NO_CONTENT = 204;
 
-export default async (app: FastifyInstance): Promise<void> => {
+export default plugin(async (app: FastifyInstance) => {
   app
     .register(cors, { origin: true })
     .register(prismaPlugin)
@@ -36,4 +37,4 @@ export default async (app: FastifyInstance): Promise<void> => {
   app.get('/internal-server-error', () => {
     throw new Error('big problem');
   });
-};
+});
