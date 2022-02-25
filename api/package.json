@@ -9,7 +9,7 @@
   "scripts": {
     "build": "etsc",
     "clean": "rm -rf .eslintcache .turbo/ dist/",
-    "dev": "nodemon src/index.ts | pino-pretty",
+    "dev": "NODE_ENV=development nodemon src/index.ts | pino-pretty",
     "generate": "prisma generate",
     "lint": "eslint --cache --ext .cjs,.ts .",
     "preview": "NODE_ENV=production node -r dotenv-flow/config dist/index.js",
