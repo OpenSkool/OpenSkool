@@ -6,6 +6,8 @@ module.exports = {
     tsconfigRootDir: __dirname,
   },
   rules: {
+    // Disabled because VSCode ESLint extension misrapports these two rules.
+    'import/extensions': 'off',
     'import/no-unresolved': 'off',
   },
   overrides: [

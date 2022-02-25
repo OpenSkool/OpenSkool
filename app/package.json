@@ -10,7 +10,7 @@
     "build": "vite build",
     "clean": "rm -rf .eslintcache .turbo/ dist/",
     "dev": "vite",
-    "lint": "eslint --cache --ext .js,.ts,.vue .",
+    "lint": "eslint --cache --ext .cjs,.js,.ts,.vue .",
     "preview": "vite preview",
     "test": "vue-tsc --noEmit"
   },
