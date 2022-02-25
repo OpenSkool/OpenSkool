@@ -1,4 +1,4 @@
-import { afterAll, beforeAll, expect, test } from 'vitest';
+import { beforeAll, expect, test } from 'vitest';
 
 import app from '../app';
 
@@ -12,5 +12,3 @@ test('echo request body', async () => {
   expect(response.statusCode).toBe(200);
   expect(response.json()).toEqual({ message: 'Hello World!' });
 });
-
-afterAll(async () => app.close());
