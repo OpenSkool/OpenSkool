@@ -4,7 +4,7 @@ const glob = require('fast-glob');
 
 esbuild.build({
   bundle: false,
-  entryPoints: glob.sync(['src/**/*.ts']),
+  entryPoints: glob.sync(['src/**/*.ts', '!**/*.spec.ts']),
   format: 'cjs',
   minify: false,
   outdir: 'dist/',
