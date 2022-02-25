@@ -5,7 +5,11 @@ import plugin from 'fastify-plugin';
 const schema = Type.Object({
   HOST: Type.String(),
   NODE_ENV: Type.Union(
-    [Type.Literal('development'), Type.Literal('production')],
+    [
+      Type.Literal('development'),
+      Type.Literal('production'),
+      Type.Literal('test'),
+    ],
     { default: 'development' },
   ),
   PORT: Type.String(),

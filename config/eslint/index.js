@@ -14,5 +14,11 @@ module.exports = {
       files: ['**/*.vue'],
       extends: ['noise/typescript', 'noise/vue', 'noise/vue/ts'],
     },
+    {
+      files: ['**/**.spec.ts'],
+      rules: {
+        'no-magic-numbers': 'off',
+      },
+    },
   ],
 };

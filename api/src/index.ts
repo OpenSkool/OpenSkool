@@ -1,13 +1,4 @@
-import createApp from 'fastify';
-
-import apiPlugin from './api';
-import boomPlugin from './boom';
-import configPlugin from './config';
-
-const app = createApp({ logger: true })
-  .register(configPlugin)
-  .register(boomPlugin)
-  .register(apiPlugin);
+import app from './app';
 
 (async (): Promise<void> => {
   await app.ready();
