@@ -2,6 +2,7 @@ import path from 'path';
 
 import Vue from '@vitejs/plugin-vue';
 import AutoImport from 'unplugin-auto-import/vite';
+import Icons from 'unplugin-icons/vite';
 import { defineConfig } from 'vite';
 import Pages from 'vite-plugin-pages';
 import WindiCSS from 'vite-plugin-windicss';
@@ -24,6 +25,7 @@ export default defineConfig({
       ],
       dts: 'src/auto-imports.d.ts',
     }),
+    Icons({ compiler: 'vue3' }),
     Pages(),
     Vue(),
     WindiCSS(),
