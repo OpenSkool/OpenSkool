@@ -12,3 +12,8 @@ test('echo request body', async () => {
   expect(response.statusCode).toBe(200);
   expect(response.json()).toEqual({ message: 'Hello World!' });
 });
+
+test('echo requires message', async () => {
+  const response = await app.inject().post('/echo').body({});
+  expect(response.statusCode).toBe(400);
+});
