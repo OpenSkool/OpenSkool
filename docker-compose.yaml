@@ -10,7 +10,22 @@ services:
       - 5432:5432
     restart: unless-stopped
     volumes:
-      - os-api-postgres:/var/lib/postgresql/data
+      - os-api-db:/var/lib/postgresql/data
+    networks:
+      - openskool
+
+  os-api-db-test:
+    image: postgres:12
+    container_name: os-api-db-test
+    environment:
+      POSTGRES_DB: openskool
+      POSTGRES_USER: openskool
+      POSTGRES_PASSWORD: openskool
+    ports:
+      - 5432:5432
+    restart: unless-stopped
+    volumes:
+      - os-api-db-test:/var/lib/postgresql/data
     networks:
       - openskool
 
@@ -19,4 +34,5 @@ networks:
     name: openskool
 
 volumes:
-  os-api-postgres:
+  os-api-db:
+  os-api-db-test:
