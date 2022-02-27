@@ -2,4 +2,7 @@
   "css.validate": false,
   "eslint.validate": ["javascript", "typescript"],
   "typescript.tsdk": "node_modules/typescript/lib"
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
+  }
 }

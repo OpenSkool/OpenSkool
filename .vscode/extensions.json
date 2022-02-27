@@ -3,6 +3,7 @@
     "antfu.iconify",
     "apollographql.vscode-apollo",
     "johnsoncodehk.volar",
+    "Prisma.prisma",
     "voorjaar.windicss-intellisense"
   ]
 }
