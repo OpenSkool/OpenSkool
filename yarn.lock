@@ -455,6 +455,7 @@ __metadata:
     typescript: ^4.5.5
     unplugin-auto-import: ^0.6.1
     unplugin-icons: ^0.13.2
+    unplugin-vue-components: ^0.17.21
     vite: ^2.8.4
     vite-plugin-pages: ^0.20.2
     vite-plugin-windicss: ^1.7.1
@@ -7114,7 +7115,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"resolve@npm:^1.10.0, resolve@npm:^1.10.1, resolve@npm:^1.15.1, resolve@npm:^1.20.0, resolve@npm:^1.22.0":
+"resolve@npm:^1.10.0, resolve@npm:^1.10.1, resolve@npm:^1.15.1, resolve@npm:^1.20.0, resolve@npm:^1.21.0, resolve@npm:^1.22.0":
   version: 1.22.0
   resolution: "resolve@npm:1.22.0"
   dependencies:
@@ -7127,7 +7128,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"resolve@patch:resolve@^1.10.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.10.1#~builtin<compat/resolve>, resolve@patch:resolve@^1.15.1#~builtin<compat/resolve>, resolve@patch:resolve@^1.20.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.22.0#~builtin<compat/resolve>":
+"resolve@patch:resolve@^1.10.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.10.1#~builtin<compat/resolve>, resolve@patch:resolve@^1.15.1#~builtin<compat/resolve>, resolve@patch:resolve@^1.20.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.21.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.22.0#~builtin<compat/resolve>":
   version: 1.22.0
   resolution: "resolve@patch:resolve@npm%3A1.22.0#~builtin<compat/resolve>::version=1.22.0&hash=07638b"
   dependencies:
@@ -8320,7 +8321,34 @@ __metadata:
   languageName: node
   linkType: hard
 
-"unplugin@npm:^0.3.2":
+"unplugin-vue-components@npm:^0.17.21":
+  version: 0.17.21
+  resolution: "unplugin-vue-components@npm:0.17.21"
+  dependencies:
+    "@antfu/utils": ^0.4.0
+    "@rollup/pluginutils": ^4.1.2
+    chokidar: ^3.5.2
+    debug: ^4.3.3
+    fast-glob: ^3.2.11
+    local-pkg: ^0.4.1
+    magic-string: ^0.25.7
+    minimatch: ^3.0.4
+    resolve: ^1.21.0
+    unplugin: ^0.3.0
+  peerDependencies:
+    "@babel/parser": ^7.15.8
+    "@babel/traverse": ^7.15.4
+    vue: 2 || 3
+  peerDependenciesMeta:
+    "@babel/parser":
+      optional: true
+    "@babel/traverse":
+      optional: true
+  checksum: 640ac1b5f5e3b62437c228ed11937c5ead06f0dfab43abea2ca0a8ea02f1ea256ff0e9d4dad7623cc1cfb4a0c3399881a4407a2ccd48a0e1c07274d74661517e
+  languageName: node
+  linkType: hard
+
+"unplugin@npm:^0.3.0, unplugin@npm:^0.3.2":
   version: 0.3.2
   resolution: "unplugin@npm:0.3.2"
   dependencies:
