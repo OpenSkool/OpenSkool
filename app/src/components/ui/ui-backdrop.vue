@@ -12,13 +12,6 @@ defineProps<{
 </template>
 
 <style scoped>
-/**
- * https://windicss.org/utilities/layout/display.html#hidden
- * WindiCSS has a hidden class but it doesn't work for some reason.
- */
-.hidden {
-  display: none;
-}
 .ui-backdrop {
   background: repeating-linear-gradient(
     45deg,
