@@ -16,5 +16,11 @@ module.exports = {
       files: 'src/',
       extends: 'noise/web-app',
     },
+    {
+      files: ['src/pages/**/*.vue', '!src/pages/**/components/**/*.vue'],
+      rules: {
+        'vue/multi-word-component-names': 'off',
+      },
+    },
   ],
 };
