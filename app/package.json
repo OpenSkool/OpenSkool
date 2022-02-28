@@ -17,7 +17,10 @@
   "dependencies": {
     "@apollo/client": "^3.5.9",
     "@vue/apollo-composable": "^4.0.0-alpha.16",
-    "@vueuse/core": "^7.6.2",
+    "@vueuse/components": "^7.7.0",
+    "@vueuse/core": "^7.7.0",
+    "@vueuse/integrations": "^7.7.0",
+    "focus-trap": "^6.7.3",
     "graphql": "^16.3.0",
     "the-new-css-reset": "^1.4.9",
     "vue": "^3.2.31",

@@ -443,9 +443,12 @@ __metadata:
     "@testing-library/vue": ^6.5.1
     "@vitejs/plugin-vue": ^2.2.2
     "@vue/apollo-composable": ^4.0.0-alpha.16
-    "@vueuse/core": ^7.6.2
+    "@vueuse/components": ^7.7.0
+    "@vueuse/core": ^7.7.0
+    "@vueuse/integrations": ^7.7.0
     autoprefixer: ^10.4.2
     eslint: ^8.9.0
+    focus-trap: ^6.7.3
     graphql: ^16.3.0
     happy-dom: ^2.41.0
     msw: ^0.38.1
@@ -1166,27 +1169,75 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vueuse/core@npm:^7.6.2":
-  version: 7.6.2
-  resolution: "@vueuse/core@npm:7.6.2"
+"@vueuse/components@npm:^7.7.0":
+  version: 7.7.0
+  resolution: "@vueuse/components@npm:7.7.0"
   dependencies:
-    "@vueuse/shared": 7.6.2
+    "@vueuse/core": 7.7.0
+    "@vueuse/shared": 7.7.0
     vue-demi: "*"
-  peerDependencies:
-    "@vue/composition-api": ^1.1.0
-    vue: ^2.6.0 || ^3.2.0
-  peerDependenciesMeta:
-    "@vue/composition-api":
-      optional: true
-    vue:
-      optional: true
-  checksum: 60ed01a9bcfdd949149fe0048cab9a00df445712334e9f7923094f9569b59b5ff97f15f827e32cf2143a85d930369067970a8993e7043787151e0e4a767fbf80
+  checksum: ac6e8641e36b58248f1c96069f0c30d38c7fcdf3aab6a49b702f1582954c7282b7508ed18a15aff3c5eb6a414179ab0003cc49080771ee3591547a3457053fe6
   languageName: node
   linkType: hard
 
-"@vueuse/shared@npm:7.6.2":
-  version: 7.6.2
-  resolution: "@vueuse/shared@npm:7.6.2"
+"@vueuse/core@npm:7.7.0, @vueuse/core@npm:^7.7.0":
+  version: 7.7.0
+  resolution: "@vueuse/core@npm:7.7.0"
+  dependencies:
+    "@vueuse/shared": 7.7.0
+    vue-demi: "*"
+  peerDependencies:
+    "@vue/composition-api": ^1.1.0
+    vue: ^2.6.0 || ^3.2.0
+  peerDependenciesMeta:
+    "@vue/composition-api":
+      optional: true
+    vue:
+      optional: true
+  checksum: 80a0db33cb8171fa314c2cf9bcccabc2939fd16e858257c851b6e2c813202f88db57c958f64309f3fffb21b5c8d9c58321d842665498524d4df8209637300225
+  languageName: node
+  linkType: hard
+
+"@vueuse/integrations@npm:^7.7.0":
+  version: 7.7.0
+  resolution: "@vueuse/integrations@npm:7.7.0"
+  dependencies:
+    "@vueuse/core": 7.7.0
+    "@vueuse/shared": 7.7.0
+    vue-demi: "*"
+  peerDependencies:
+    axios: "*"
+    drauu: "*"
+    focus-trap: "*"
+    fuse.js: "*"
+    jwt-decode: "*"
+    nprogress: "*"
+    qrcode: "*"
+    universal-cookie: "*"
+  peerDependenciesMeta:
+    axios:
+      optional: true
+    drauu:
+      optional: true
+    focus-trap:
+      optional: true
+    fuse.js:
+      optional: true
+    jwt-decode:
+      optional: true
+    nprogress:
+      optional: true
+    qrcode:
+      optional: true
+    universal-cookie:
+      optional: true
+  checksum: b8f5600d00c6fdd496efdfe540ffb6cc4fa2222a2500f03311d528b89071dd78c5a56fed7505a1dd7c84a07344c5b8094d4f13765017828ba5b997105b923368
+  languageName: node
+  linkType: hard
+
+"@vueuse/shared@npm:7.7.0":
+  version: 7.7.0
+  resolution: "@vueuse/shared@npm:7.7.0"
   dependencies:
     vue-demi: "*"
   peerDependencies:
@@ -1197,7 +1248,7 @@ __metadata:
       optional: true
     vue:
       optional: true
-  checksum: 824043ef06f71090220f2a053430c124e283a0cfa381e2f780b4b27390353d503d6f9d8bc68323136922b9585eabd1c9b9588c3c921b64e5042a0ba4b0587cd1
+  checksum: fabb815853121e5a53130a53835d5eb9bc89c370155d5518e4d5629051004bfedcb33814c924639b15f2f89596593aaae9188911ae99d329f5bff33abe5da99b
   languageName: node
   linkType: hard
 
@@ -4021,6 +4072,15 @@ __metadata:
     strip-ansi: 6
     tslib: ^2.3.1
   checksum: d3e150b05875bd4ac96ef54e96de03bc137b65476be970e88668d7416ced9d9f32f6d40ba69ee7e298746b6c616a46ab5d2da650be66fbe06da36cdd5f669256
+  languageName: node
+  linkType: hard
+
+"focus-trap@npm:^6.7.3":
+  version: 6.7.3
+  resolution: "focus-trap@npm:6.7.3"
+  dependencies:
+    tabbable: ^5.2.1
+  checksum: 900c8fe94a7e0bcda7f0bf2c86dff174e997a1101f685833484cde721c8893729260b7a9f1f2c3a2c8560f5f84c332ba7d45695c7d4862f8f9340f6caceace3a
   languageName: node
   linkType: hard
 
@@ -7773,6 +7833,13 @@ __metadata:
   dependencies:
     get-port: ^3.1.0
   checksum: 4340974fb5641c2cadb9df18d6b791ed2327f28cf6d8a00c99ebc2278e37391e3f5e237596da2ff83d14d2147594c6f5b3b98a93b9327644db425d239dea172f
+  languageName: node
+  linkType: hard
+
+"tabbable@npm:^5.2.1":
+  version: 5.2.1
+  resolution: "tabbable@npm:5.2.1"
+  checksum: d26e9eeb880c4c78b59244bac2c931ad46f6c64a01e5c15ba6da348dc86442222912733846a9e63373342a81fa15d4afb31267606b38431510d10b0fb9ec9bba
   languageName: node
   linkType: hard
 
