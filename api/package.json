@@ -44,15 +44,15 @@
     "esbuild": "^0.14.23",
     "esbuild-node-externals": "^1.4.1",
     "esbuild-register": "^3.3.2",
-    "eslint": "^8.9.0",
+    "eslint": "^8.10.0",
     "fast-glob": "^3.2.11",
     "graphql-tag": "^2.12.6",
     "mercurius-integration-testing": "^4.0.0",
     "nodemon": "^2.0.15",
     "pino-pretty": "^7.5.1",
     "prisma": "^3.10.0",
-    "typescript": "~4.5.5",
-    "vitest": "0.5.4"
+    "typescript": "~4.6.2",
+    "vitest": "0.5.9"
   },
   "nodemonConfig": {
     "execMap": {
