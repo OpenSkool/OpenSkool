@@ -76,15 +76,14 @@ const createEducation = mutationField('createEducation', {
     data: EducationInput,
   },
   async resolve(root, { data: { title } }, ctx) {
-    const { id } = await ctx.prisma.education.create({
+    const education = await ctx.prisma.education.create({
       data: {
         translations: {
           create: { languageCode: Language.EN, title },
         },
       },
-      select: { id: true },
     });
-    return { id, title };
+    return { ...education, title };
   },
 });
 
@@ -95,11 +94,31 @@ const updateEducation = mutationField('updateEducation', {
     data: EducationInput,
   },
   async resolve(root, { id, data: { title } }, ctx) {
-    await ctx.prisma.educationTranslation.updateMany({
-      data: { title },
-      where: { educationId: id, languageCode: Language.EN },
+    const upsert = {
+      languageCode: Language.EN,
+      title,
+    };
+    const education = await ctx.prisma.education.update({
+      data: {
+        translations: {
+          upsert: {
+            create: upsert,
+            update: upsert,
+            where: {
+              educationId_languageCode: {
+                educationId: id,
+                languageCode: Language.EN,
+              },
+            },
+          },
+        },
+      },
+      where: { id },
     });
-    return { id, title };
+    return {
+      ...education,
+      title,
+    };
   },
 });
 
