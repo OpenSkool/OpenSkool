@@ -3,7 +3,7 @@
  * Do not make changes to this file directly
  */
 
-import type { Context } from './../context';
+import type { Context } from './../api/context';
 import type { core } from 'nexus';
 declare global {
   interface NexusGenCustomInputMethods<TypeName extends string> {

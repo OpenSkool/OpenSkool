@@ -1,5 +1,5 @@
 documents: app/src/**/*.vue
-schema: api/src/api/generated/schema.graphql
+schema: api/src/generated/schema.graphql
 
 extensions:
   codegen:

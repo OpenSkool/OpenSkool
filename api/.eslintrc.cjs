@@ -1,7 +1,7 @@
 module.exports = {
   root: true,
   extends: '@os',
-  ignorePatterns: ['src/api/generated/**'],
+  ignorePatterns: ['src/generated/**'],
   parserOptions: {
     tsconfigRootDir: __dirname,
   },
