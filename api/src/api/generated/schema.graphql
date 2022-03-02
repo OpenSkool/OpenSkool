@@ -36,6 +36,6 @@ interface Node {
 }
 
 type Query {
-  competencies: [Competency!]!
-  educations: [Education!]!
+  allCompetencies: [Competency!]!
+  allEducations: [Education!]!
 }

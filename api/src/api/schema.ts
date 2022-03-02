@@ -118,13 +118,13 @@ const deleteEducation = mutationField('deleteEducation', {
 const Query = queryType({
   nonNullDefaults: { output: true },
   definition(t) {
-    t.field('competencies', {
+    t.field('allCompetencies', {
       async resolve(parent, argumentz, ctx: Context, info) {
         return ctx.prisma.competency.findMany();
       },
       type: list(Competency),
     });
-    t.field('educations', {
+    t.field('allEducations', {
       async resolve(parent, argumentz, ctx: Context, info) {
         return ctx.prisma.education.findMany();
       },
