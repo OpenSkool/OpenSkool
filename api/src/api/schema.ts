@@ -1,6 +1,7 @@
 import path from 'path';
 
 import { Language } from '@prisma/client';
+import { Kind } from 'graphql';
 import {
   idArg,
   inputObjectType,
@@ -10,10 +11,34 @@ import {
   mutationField,
   objectType,
   queryType,
+  scalarType,
 } from 'nexus';
 import * as N from 'nexus-prisma';
 
 import type { Context } from './context';
+
+const DateScalar = scalarType({
+  asNexusMethod: 'date',
+  name: 'Date',
+  parseLiteral(ast) {
+    if (ast.kind === Kind.STRING) {
+      return new Date(ast.value);
+    }
+    return null;
+  },
+  parseValue(value) {
+    if (typeof value === 'string') {
+      return new Date(value);
+    }
+    throw new Error(`could not parse date: ${String(value)}`);
+  },
+  serialize(value) {
+    if (value instanceof Date) {
+      return value.toISOString();
+    }
+    throw new Error(`could not serialize date: ${String(value)}`);
+  },
+});
 
 const Node = interfaceType({
   name: 'Node',
@@ -22,11 +47,20 @@ const Node = interfaceType({
   },
 });
 
+const Accountable = interfaceType({
+  name: 'Accountable',
+  definition(t) {
+    t.date('createdAt');
+    t.date('updatedAt');
+  },
+});
+
 const Competency = objectType({
   name: N.Competency.$name,
   description: N.Competency.$description,
   definition(t) {
     t.implements(Node);
+    t.implements(Accountable);
     t.field(N.Competency.parentCompetencyId);
     t.field({
       ...N.CompetencyTranslation.title,
@@ -48,6 +82,7 @@ const Education = objectType({
   description: N.Education.$description,
   definition(t) {
     t.implements(Node);
+    t.implements(Accountable);
     t.field({
       ...N.EducationTranslation.title,
       resolve: async (education, argumentz, ctx) => {
@@ -174,15 +209,18 @@ export default makeSchema({
     modules: [{ alias: 'prisma', module: '@prisma/client' }],
   },
   types: {
-    // Root
-    Query,
-    // Generics
+    // Scalars
+    DateScalar,
+    // Interfaces
+    Accountable,
     Node,
     // -- Education --//
     // Models
     Competency,
     Education,
     EducationInput,
+    // Root
+    Query,
     // Mutations
     createEducation,
     updateEducation,
