@@ -18,7 +18,7 @@ enum Language {
 model Competency {
   id                 String                  @id @default(cuid())
   createdAt          DateTime                @default(now())
-  updatedAt          DateTime                @default(now())
+  updatedAt          DateTime                @updatedAt
   subCompetencies    Competency[]            @relation("CompetencyToCompetency")
   parentCompetencies Competency?             @relation("CompetencyToCompetency", fields: [parentCompetencyId], references: [id])
   parentCompetencyId String?
@@ -37,6 +37,8 @@ model CompetencyTranslation {
 
 model Education {
   id           String                 @id @default(cuid())
+  createdAt    DateTime               @default(now())
+  updatedAt    DateTime               @updatedAt
   translations EducationTranslation[]
 }
 

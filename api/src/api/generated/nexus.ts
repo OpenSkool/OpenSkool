@@ -4,6 +4,23 @@
  */
 
 import type { Context } from './../context';
+import type { core } from 'nexus';
+declare global {
+  interface NexusGenCustomInputMethods<TypeName extends string> {
+    date<FieldName extends string>(
+      fieldName: FieldName,
+      opts?: core.CommonInputFieldConfig<TypeName, FieldName>,
+    ): void; // "Date";
+  }
+}
+declare global {
+  interface NexusGenCustomOutputMethods<TypeName extends string> {
+    date<FieldName extends string>(
+      fieldName: FieldName,
+      ...opts: core.ScalarOutSpread<TypeName, FieldName>
+    ): void; // "Date";
+  }
+}
 
 declare global {
   interface NexusGen extends NexusGenTypes {}
@@ -24,23 +41,29 @@ export interface NexusGenScalars {
   Float: number;
   Boolean: boolean;
   ID: string;
+  Date: any;
 }
 
 export interface NexusGenObjects {
   Competency: {
     // root type
+    createdAt: NexusGenScalars['Date']; // Date!
     id: string; // ID!
     parentCompetencyId?: string | null; // String
+    updatedAt: NexusGenScalars['Date']; // Date!
   };
   Education: {
     // root type
+    createdAt: NexusGenScalars['Date']; // Date!
     id: string; // ID!
+    updatedAt: NexusGenScalars['Date']; // Date!
   };
   Mutation: {};
   Query: {};
 }
 
 export interface NexusGenInterfaces {
+  Accountable: NexusGenRootTypes['Competency'] | NexusGenRootTypes['Education'];
   Node: NexusGenRootTypes['Competency'] | NexusGenRootTypes['Education'];
 }
 
@@ -53,14 +76,18 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars;
 export interface NexusGenFieldTypes {
   Competency: {
     // field return type
+    createdAt: NexusGenScalars['Date']; // Date!
     id: string; // ID!
     parentCompetencyId: string | null; // String
     title: string; // String!
+    updatedAt: NexusGenScalars['Date']; // Date!
   };
   Education: {
     // field return type
+    createdAt: NexusGenScalars['Date']; // Date!
     id: string; // ID!
     title: string; // String!
+    updatedAt: NexusGenScalars['Date']; // Date!
   };
   Mutation: {
     // field return type
@@ -73,6 +100,11 @@ export interface NexusGenFieldTypes {
     allCompetencies: NexusGenRootTypes['Competency'][]; // [Competency!]!
     allEducations: NexusGenRootTypes['Education'][]; // [Education!]!
   };
+  Accountable: {
+    // field return type
+    createdAt: NexusGenScalars['Date']; // Date!
+    updatedAt: NexusGenScalars['Date']; // Date!
+  };
   Node: {
     // field return type
     id: string; // ID!
@@ -82,14 +114,18 @@ export interface NexusGenFieldTypes {
 export interface NexusGenFieldTypeNames {
   Competency: {
     // field return type name
+    createdAt: 'Date';
     id: 'ID';
     parentCompetencyId: 'String';
     title: 'String';
+    updatedAt: 'Date';
   };
   Education: {
     // field return type name
+    createdAt: 'Date';
     id: 'ID';
     title: 'String';
+    updatedAt: 'Date';
   };
   Mutation: {
     // field return type name
@@ -101,6 +137,11 @@ export interface NexusGenFieldTypeNames {
     // field return type name
     allCompetencies: 'Competency';
     allEducations: 'Education';
+  };
+  Accountable: {
+    // field return type name
+    createdAt: 'Date';
+    updatedAt: 'Date';
   };
   Node: {
     // field return type name
@@ -127,12 +168,13 @@ export interface NexusGenArgTypes {
 }
 
 export interface NexusGenAbstractTypeMembers {
+  Accountable: 'Competency' | 'Education';
   Node: 'Competency' | 'Education';
 }
 
 export interface NexusGenTypeInterfaces {
-  Competency: 'Node';
-  Education: 'Node';
+  Competency: 'Accountable' | 'Node';
+  Education: 'Accountable' | 'Node';
 }
 
 export type NexusGenObjectNames = keyof NexusGenObjects;
