@@ -1,16 +1,18 @@
 <script lang="ts" setup>
 defineProps<{ msg: string }>();
 
-const { result } = useQuery(gql`
+const { result } = useQuery<{
+  allEducations: Array<{ id: string; title: string }>;
+}>(gql`
   query getEducations {
-    educations {
+    allEducations {
       id
       title
     }
   }
 `);
 
-const educations = useResult(result, null, (data) => data.educations);
+const educations = useResult(result, null, (data) => data.allEducations);
 
 const dialogIsOpen = ref(false);
 const alertDialogIsOpen = ref(false);

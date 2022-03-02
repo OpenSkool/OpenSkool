@@ -70,8 +70,8 @@ export interface NexusGenFieldTypes {
   };
   Query: {
     // field return type
-    competencies: NexusGenRootTypes['Competency'][]; // [Competency!]!
-    educations: NexusGenRootTypes['Education'][]; // [Education!]!
+    allCompetencies: NexusGenRootTypes['Competency'][]; // [Competency!]!
+    allEducations: NexusGenRootTypes['Education'][]; // [Education!]!
   };
   Node: {
     // field return type
@@ -99,8 +99,8 @@ export interface NexusGenFieldTypeNames {
   };
   Query: {
     // field return type name
-    competencies: 'Competency';
-    educations: 'Education';
+    allCompetencies: 'Competency';
+    allEducations: 'Education';
   };
   Node: {
     // field return type name
