@@ -5,9 +5,9 @@ export default [
     return res(
       ctx.data({
         educations: [
-          { __typename: 'Education', id: 'chemistry', name: 'Chemistry' },
-          { __typename: 'Education', id: 'informatics', name: 'Informatics' },
-          { __typename: 'Education', id: 'medicine', name: 'Medicine' },
+          { __typename: 'Education', id: 'chemistry', title: 'Chemistry' },
+          { __typename: 'Education', id: 'informatics', title: 'Informatics' },
+          { __typename: 'Education', id: 'medicine', title: 'Medicine' },
         ],
       }),
     );

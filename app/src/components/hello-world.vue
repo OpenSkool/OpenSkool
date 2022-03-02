@@ -5,7 +5,7 @@ const { result } = useQuery(gql`
   query getEducations {
     educations {
       id
-      name
+      title
     }
   }
 `);
@@ -23,7 +23,7 @@ const alertDialogIsOpen = ref(false);
   </div>
   <ul class="my-3">
     <li v-for="education of educations" :key="education.id">
-      {{ education.name }}
+      {{ education.title }}
     </li>
   </ul>
   <button
