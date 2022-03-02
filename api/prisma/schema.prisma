@@ -15,6 +15,24 @@ enum Language {
   EN
 }
 
+model Competency {
+  id                 String                  @id @default(cuid())
+  createdAt          DateTime                @default(now())
+  updatedAt          DateTime                @default(now())
+  subCompetencies    Competency[]            @relation("CompetencyToCompetency")
+  parentCompetencies Competency?             @relation("CompetencyToCompetency", fields: [parentCompetencyId], references: [id])
+  parentCompetencyId String?
+  translations       CompetencyTranslation[]
+}
+
+model CompetencyTranslation {
+  id           String     @id @default(cuid())
+  competency   Competency @relation(fields: [competencyId], onDelete: Cascade, references: [id])
+  competencyId String
+  languageCode Language
+  title        String
+}
+
 model Education {
   id           String                 @id @default(cuid())
   translations EducationTranslation[]

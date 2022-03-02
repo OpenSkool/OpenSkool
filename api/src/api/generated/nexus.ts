@@ -27,6 +27,11 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
+  Competency: {
+    // root type
+    id: string; // ID!
+    parentCompetencyId?: string | null; // String
+  };
   Education: {
     // root type
     id: string; // ID!
@@ -36,7 +41,7 @@ export interface NexusGenObjects {
 }
 
 export interface NexusGenInterfaces {
-  Node: NexusGenRootTypes['Education'];
+  Node: NexusGenRootTypes['Competency'] | NexusGenRootTypes['Education'];
 }
 
 export interface NexusGenUnions {}
@@ -46,6 +51,12 @@ export type NexusGenRootTypes = NexusGenInterfaces & NexusGenObjects;
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars;
 
 export interface NexusGenFieldTypes {
+  Competency: {
+    // field return type
+    id: string; // ID!
+    parentCompetencyId: string | null; // String
+    title: string; // String!
+  };
   Education: {
     // field return type
     id: string; // ID!
@@ -59,6 +70,7 @@ export interface NexusGenFieldTypes {
   };
   Query: {
     // field return type
+    competencies: NexusGenRootTypes['Competency'][]; // [Competency!]!
     educations: NexusGenRootTypes['Education'][]; // [Education!]!
   };
   Node: {
@@ -68,6 +80,12 @@ export interface NexusGenFieldTypes {
 }
 
 export interface NexusGenFieldTypeNames {
+  Competency: {
+    // field return type name
+    id: 'ID';
+    parentCompetencyId: 'String';
+    title: 'String';
+  };
   Education: {
     // field return type name
     id: 'ID';
@@ -81,6 +99,7 @@ export interface NexusGenFieldTypeNames {
   };
   Query: {
     // field return type name
+    competencies: 'Competency';
     educations: 'Education';
   };
   Node: {
@@ -108,10 +127,11 @@ export interface NexusGenArgTypes {
 }
 
 export interface NexusGenAbstractTypeMembers {
-  Node: 'Education';
+  Node: 'Competency' | 'Education';
 }
 
 export interface NexusGenTypeInterfaces {
+  Competency: 'Node';
   Education: 'Node';
 }
 

@@ -22,6 +22,27 @@ const Node = interfaceType({
   },
 });
 
+const Competency = objectType({
+  name: N.Competency.$name,
+  description: N.Competency.$description,
+  definition(t) {
+    t.implements(Node);
+    t.field(N.Competency.parentCompetencyId);
+    t.field({
+      ...N.CompetencyTranslation.title,
+      async resolve(competency, argumentz, ctx) {
+        const translations = await ctx.prisma.competencyTranslation.findMany({
+          where: {
+            competencyId: competency.id,
+            languageCode: Language.EN,
+          },
+        });
+        return translations[0]?.title ?? 'Untitled';
+      },
+    });
+  },
+});
+
 const Education = objectType({
   name: N.Education.$name,
   description: N.Education.$description,
@@ -97,6 +118,12 @@ const deleteEducation = mutationField('deleteEducation', {
 const Query = queryType({
   nonNullDefaults: { output: true },
   definition(t) {
+    t.field('competencies', {
+      async resolve(parent, argumentz, ctx: Context, info) {
+        return ctx.prisma.competency.findMany();
+      },
+      type: list(Competency),
+    });
     t.field('educations', {
       async resolve(parent, argumentz, ctx: Context, info) {
         return ctx.prisma.education.findMany();
@@ -134,6 +161,7 @@ export default makeSchema({
     Node,
     // -- Education --//
     // Models
+    Competency,
     Education,
     EducationInput,
     // Mutations
