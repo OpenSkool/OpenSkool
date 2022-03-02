@@ -90,23 +90,19 @@ test('delete education', async () => {
     },
   });
   const client = createMercuriusTestClient(app);
-  const {
-    data: { deleteEducation },
-  } = await client.mutate<
-    { deleteEducation: Pick<NexusGenFieldTypes['Education'], 'id' | 'title'> },
+  await client.mutate<
+    { deleteEducation: Pick<NexusGenFieldTypes['Education'], 'id'> },
     { id: string }
   >(
     gql`
       mutation ($id: ID!) {
         deleteEducation(id: $id) {
           id
-          title
         }
       }
     `,
     { variables: { id: education.id } },
   );
-  expect(deleteEducation).toMatchObject(education);
   expect(
     await app.prisma.education.findUnique({ where: { id: education.id } }),
   ).toBe(null);

@@ -158,7 +158,7 @@ const updateEducation = mutationField('updateEducation', {
 });
 
 const deleteEducation = mutationField('deleteEducation', {
-  type: Education,
+  type: Node,
   args: {
     id: idArg(),
   },
