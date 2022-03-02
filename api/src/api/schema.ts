@@ -197,8 +197,8 @@ export default makeSchema({
   },
   nonNullDefaults: { input: true, output: true },
   outputs: {
-    schema: path.join(__dirname, './generated/schema.graphql'),
-    typegen: path.join(__dirname, '/generated/nexus.ts'),
+    schema: path.join(__dirname, '../generated/schema.graphql'),
+    typegen: path.join(__dirname, '../generated/nexus.ts'),
   },
   prettierConfig: {
     arrowParens: 'always',

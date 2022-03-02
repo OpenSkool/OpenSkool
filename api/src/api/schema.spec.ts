@@ -6,7 +6,7 @@ import { createMercuriusTestClient } from 'mercurius-integration-testing';
 import { expect, test } from 'vitest';
 
 import app from '../app';
-import { NexusGenFieldTypes } from './generated/nexus';
+import { NexusGenFieldTypes } from '../generated/nexus';
 
 test('create educations', async () => {
   const title = faker.commerce.productName();

@@ -25,10 +25,10 @@ export default defineConfig({
           ],
         },
       ],
-      dts: 'src/auto-imports.d.ts',
+      dts: 'src/generated/auto-imports.d.ts',
     }),
     Components({
-      dts: 'src/components.d.ts',
+      dts: 'src/generated/components.d.ts',
       resolvers: [
         IconsResolver({
           enabledCollections: ['ri'],
