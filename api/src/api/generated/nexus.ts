@@ -92,7 +92,7 @@ export interface NexusGenFieldTypes {
   Mutation: {
     // field return type
     createEducation: NexusGenRootTypes['Education']; // Education!
-    deleteEducation: NexusGenRootTypes['Education']; // Education!
+    deleteEducation: NexusGenRootTypes['Node']; // Node!
     updateEducation: NexusGenRootTypes['Education']; // Education!
   };
   Query: {
@@ -130,7 +130,7 @@ export interface NexusGenFieldTypeNames {
   Mutation: {
     // field return type name
     createEducation: 'Education';
-    deleteEducation: 'Education';
+    deleteEducation: 'Node';
     updateEducation: 'Education';
   };
   Query: {
