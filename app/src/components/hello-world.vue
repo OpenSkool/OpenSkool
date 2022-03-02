@@ -1,9 +1,9 @@
 <script lang="ts" setup>
+import { GetEducationsQuery } from '~/generated/graphql';
+
 defineProps<{ msg: string }>();
 
-const { result } = useQuery<{
-  allEducations: Array<{ id: string; title: string }>;
-}>(gql`
+const { result } = useQuery<GetEducationsQuery>(gql`
   query getEducations {
     allEducations {
       id
