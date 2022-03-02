@@ -1,6 +1,6 @@
 import path from 'path';
 
-import cuid from 'cuid';
+import { Language } from '@prisma/client';
 import {
   idArg,
   inputObjectType,
@@ -8,10 +8,8 @@ import {
   list,
   makeSchema,
   mutationField,
-  nonNull,
   objectType,
   queryType,
-  stringArg,
 } from 'nexus';
 import * as N from 'nexus-prisma';
 
@@ -19,7 +17,6 @@ import type { Context } from './context';
 
 const Node = interfaceType({
   name: 'Node',
-  nonNullDefaults: { output: true },
   definition(t) {
     t.id('id', { description: 'A CUID for a resource' });
   },
@@ -30,57 +27,67 @@ const Education = objectType({
   description: N.Education.$description,
   definition(t) {
     t.implements(Node);
-    t.field(N.Education.name);
+    t.field({
+      ...N.EducationTranslation.title,
+      resolve: async (education, argumentz, ctx) => {
+        const translations = await ctx.prisma.educationTranslation.findMany({
+          where: {
+            educationId: education.id,
+            languageCode: Language.EN,
+          },
+        });
+        return translations[0]?.title ?? 'Untitled';
+      },
+    });
   },
 });
 
 const EducationInput = inputObjectType({
   name: 'EducationInput',
-  nonNullDefaults: { input: true },
   definition(t) {
-    t.field(N.Education.name.name, {
-      description: N.Education.name.description,
-      type: 'String',
-    });
+    t.field(N.EducationTranslation.title);
   },
 });
 
 const createEducation = mutationField('createEducation', {
-  type: nonNull(Education),
+  type: Education,
   args: {
-    name: nonNull(stringArg()),
+    data: EducationInput,
   },
-  async resolve(parent, { name }: { name: string }, ctx: Context) {
-    return ctx.prisma.education.create({
-      data: { id: cuid(), name },
+  async resolve(root, { data: { title } }, ctx) {
+    const { id } = await ctx.prisma.education.create({
+      data: {
+        translations: {
+          create: { languageCode: Language.EN, title },
+        },
+      },
+      select: { id: true },
     });
+    return { id, title };
   },
 });
 
 const updateEducation = mutationField('updateEducation', {
-  type: nonNull(Education),
+  type: Education,
   args: {
-    id: nonNull(idArg()),
-    name: nonNull(stringArg()),
+    id: idArg(),
+    data: EducationInput,
   },
-  async resolve(
-    parent,
-    { id, name }: { id: string; name: string },
-    ctx: Context,
-  ) {
-    return ctx.prisma.education.update({
-      data: { name },
-      where: { id },
+  async resolve(root, { id, data: { title } }, ctx) {
+    await ctx.prisma.educationTranslation.updateMany({
+      data: { title },
+      where: { educationId: id, languageCode: Language.EN },
     });
+    return { id, title };
   },
 });
 
 const deleteEducation = mutationField('deleteEducation', {
   type: Education,
   args: {
-    id: nonNull(idArg()),
+    id: idArg(),
   },
-  async resolve(parent, { id }: { id: string }, ctx: Context) {
+  async resolve(root, { id }, ctx) {
     return ctx.prisma.education.delete({
       where: { id },
     });
@@ -101,15 +108,16 @@ const Query = queryType({
 
 export default makeSchema({
   contextType: {
-    module: require.resolve('./context'),
     export: 'Context',
+    module: require.resolve('./context'),
   },
   features: {
     abstractTypeStrategies: { resolveType: false },
   },
+  nonNullDefaults: { input: true, output: true },
   outputs: {
     schema: path.join(__dirname, './generated/schema.graphql'),
-    // typegen: path.join(__dirname, '/generated/nexus.ts'),
+    typegen: path.join(__dirname, '/generated/nexus.ts'),
   },
   prettierConfig: {
     arrowParens: 'always',

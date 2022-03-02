@@ -404,10 +404,8 @@ __metadata:
     "@os/tsconfig": "workspace:*"
     "@prisma/client": ^3.10.0
     "@sinclair/typebox": ^0.23.4
-    "@types/cuid": ^2.0.1
     "@types/dotenv-flow": ^3.2.0
     altair-fastify-plugin: 4.4.0
-    cuid: ^2.1.8
     dotenv-flow: ^3.2.0
     esbuild: ^0.14.23
     esbuild-node-externals: ^1.4.1
@@ -662,15 +660,6 @@ __metadata:
   dependencies:
     "@types/node": "*"
   checksum: fa9edd32178878cab3ea8d6d0260639e0fe4860ddb3887b8de53d6e8036e154fc5f313c653f690975aa25025aea8beb83fb0870b931bf8d9202c3ac530a24c9d
-  languageName: node
-  linkType: hard
-
-"@types/cuid@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "@types/cuid@npm:2.0.1"
-  dependencies:
-    cuid: "*"
-  checksum: 54eef4216441081cb3e6159315a353da7b72d6fda02830af68dc4fd2a4d95908673f32304cbf522ad032053e7bbe4ecb03be94983bdc15e47348cdc982d85b3f
   languageName: node
   linkType: hard
 
@@ -2410,13 +2399,6 @@ __metadata:
   version: 2.6.19
   resolution: "csstype@npm:2.6.19"
   checksum: 72b51ddd30ba308d08373cd890e79526efdc19a9762941845040055f75353992f2d8d4cf4db282a8e1d3d9d2a39c989c65fe32b7b2655f08d313660c4048d2d6
-  languageName: node
-  linkType: hard
-
-"cuid@npm:*, cuid@npm:^2.1.8":
-  version: 2.1.8
-  resolution: "cuid@npm:2.1.8"
-  checksum: 12b85b3f5150a6f0b9e4f345c8d98299d74647419151751fa1132f6702fe2b5388ceceb1c9b49bad7cab1b3ac033c7cedea8ffc034930f90005b8a4345025288
   languageName: node
   linkType: hard
 

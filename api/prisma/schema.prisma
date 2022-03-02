@@ -11,7 +11,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Language {
+  EN
+}
+
 model Education {
-  id   String @id @default(cuid())
-  name String
+  id           String                 @id @default(cuid())
+  translations EducationTranslation[]
+}
+
+model EducationTranslation {
+  id           String    @id @default(cuid())
+  education    Education @relation(fields: [educationId], onDelete: Cascade, references: [id])
+  educationId  String
+  languageCode Language
+  title        String
 }
