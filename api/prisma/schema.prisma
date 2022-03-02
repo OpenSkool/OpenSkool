@@ -31,6 +31,8 @@ model CompetencyTranslation {
   competencyId String
   languageCode Language
   title        String
+
+  @@unique([competencyId, languageCode])
 }
 
 model Education {
@@ -44,4 +46,6 @@ model EducationTranslation {
   educationId  String
   languageCode Language
   title        String
+
+  @@unique([educationId, languageCode])
 }
