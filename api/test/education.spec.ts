@@ -5,8 +5,8 @@ import gql from 'graphql-tag';
 import { createMercuriusTestClient } from 'mercurius-integration-testing';
 import { expect, test } from 'vitest';
 
-import app from '../app';
-import { NexusGenFieldTypes } from '../generated/nexus';
+import app from '../src/app';
+import { NexusGenFieldTypes } from '../src/generated/nexus';
 
 test('create educations', async () => {
   const title = faker.commerce.productName();
