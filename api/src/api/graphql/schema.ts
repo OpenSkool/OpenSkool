@@ -167,20 +167,36 @@ const Query = queryType({
     t.field('rootCompetency', {
       args: { id: idArg() },
       async resolve(parent, { id }, ctx: Context, info) {
-        return ctx.prisma.competency.findUnique({
+        const competency = ctx.prisma.competency.findUnique({
           include: {
-            nestedCompetencies: { include: { translations: true } },
+            nestedCompetencies: {
+              include: {
+                translations: { where: { languageCode: Db.Language.EN } },
+              },
+              where: {
+                translations: { some: { languageCode: Db.Language.EN } },
+              },
+            },
             translations: true,
           },
           where: { id },
         });
+        if (competency.translations.length === 0) {
+          return null;
+        }
+        return competency;
       },
       type: nullable(RootCompetency),
     });
     t.field('allEducations', {
       async resolve(parent, argumentz, ctx: Context, info) {
         return ctx.prisma.education.findMany({
-          include: { translations: true },
+          include: {
+            translations: { where: { languageCode: Db.Language.EN } },
+          },
+          where: {
+            translations: { some: { languageCode: Db.Language.EN } },
+          },
         });
       },
       type: list(Education),
