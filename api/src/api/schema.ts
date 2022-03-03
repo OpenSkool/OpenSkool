@@ -61,14 +61,8 @@ const Competency = objectType({
     t.implements(Accountable);
     t.nullable.string('parentCompetencyId');
     t.string('title', {
-      async resolve(competency, argumentz, ctx) {
-        const translations = await ctx.prisma.competencyTranslation.findMany({
-          where: {
-            competencyId: competency.id,
-            languageCode: Language.EN,
-          },
-        });
-        return translations[0]?.title ?? 'Untitled';
+      resolve(competency, argumentz, ctx) {
+        return competency.translations[0].title;
       },
     });
   },
@@ -81,13 +75,7 @@ const Education = objectType({
     t.implements(Accountable);
     t.string('title', {
       resolve: async (education, argumentz, ctx) => {
-        const translations = await ctx.prisma.educationTranslation.findMany({
-          where: {
-            educationId: education.id,
-            languageCode: Language.EN,
-          },
-        });
-        return translations[0]?.title ?? 'Untitled';
+        return education.translations[0].title;
       },
     });
   },
@@ -112,6 +100,7 @@ const createEducation = mutationField('createEducation', {
           create: { languageCode: Language.EN, title },
         },
       },
+      include: { translations: true },
     });
     return { ...education, title };
   },
@@ -143,6 +132,7 @@ const updateEducation = mutationField('updateEducation', {
           },
         },
       },
+      include: { translations: true },
       where: { id },
     });
     return {
@@ -169,13 +159,17 @@ const Query = queryType({
   definition(t) {
     t.field('allCompetencies', {
       async resolve(parent, argumentz, ctx: Context, info) {
-        return ctx.prisma.competency.findMany();
+        return ctx.prisma.competency.findMany({
+          include: { translations: true },
+        });
       },
       type: list(Competency),
     });
     t.field('allEducations', {
       async resolve(parent, argumentz, ctx: Context, info) {
-        return ctx.prisma.education.findMany();
+        return ctx.prisma.education.findMany({
+          include: { translations: true },
+        });
       },
       type: list(Education),
     });
@@ -201,7 +195,7 @@ export default makeSchema({
     trailingComma: 'all',
   },
   sourceTypes: {
-    modules: [{ alias: 'prisma', module: '@prisma/client' }],
+    modules: [{ alias: 'db', module: path.join(__dirname, 'source-types.ts') }],
   },
   types: {
     // Scalars

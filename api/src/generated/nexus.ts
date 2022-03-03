@@ -3,6 +3,7 @@
  * Do not make changes to this file directly
  */
 
+import type * as db from './../api/source-types';
 import type { Context } from './../api/context';
 import type { core } from 'nexus';
 declare global {
@@ -45,26 +46,15 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
-  Competency: {
-    // root type
-    createdAt: NexusGenScalars['Date']; // Date!
-    id: string; // ID!
-    parentCompetencyId?: string | null; // String
-    updatedAt: NexusGenScalars['Date']; // Date!
-  };
-  Education: {
-    // root type
-    createdAt: NexusGenScalars['Date']; // Date!
-    id: string; // ID!
-    updatedAt: NexusGenScalars['Date']; // Date!
-  };
+  Competency: db.Competency;
+  Education: db.Education;
   Mutation: {};
   Query: {};
 }
 
 export interface NexusGenInterfaces {
   Accountable: NexusGenRootTypes['Competency'] | NexusGenRootTypes['Education'];
-  Node: NexusGenRootTypes['Competency'] | NexusGenRootTypes['Education'];
+  Node: db.Node;
 }
 
 export interface NexusGenUnions {}
