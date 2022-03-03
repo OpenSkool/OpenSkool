@@ -16,17 +16,17 @@
     "test": "vue-tsc --noEmit && vitest run"
   },
   "dependencies": {
-    "@apollo/client": "^3.5.9",
+    "@apollo/client": "^3.5.10",
     "@vue/apollo-composable": "^4.0.0-alpha.16",
     "@vueuse/components": "^7.7.0",
     "@vueuse/core": "^7.7.0",
     "@vueuse/integrations": "^7.7.0",
     "focus-trap": "^6.7.3",
     "graphql": "^16.3.0",
-    "the-new-css-reset": "^1.4.9",
+    "the-new-css-reset": "^1.5.1",
     "vue": "^3.2.31",
-    "vue-router": "^4.0.12",
-    "windicss": "^3.4.4"
+    "vue-router": "^4.0.13",
+    "windicss": "^3.5.1"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "2.6.2",
