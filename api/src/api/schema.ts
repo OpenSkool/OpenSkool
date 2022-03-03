@@ -1,8 +1,9 @@
 import path from 'path';
 
 import * as Db from '@prisma/client';
-import { Kind } from 'graphql';
+import { GraphQLDateTime } from 'graphql-scalars';
 import {
+  asNexusMethod,
   idArg,
   inputObjectType,
   interfaceType,
@@ -12,33 +13,11 @@ import {
   nullable,
   objectType,
   queryType,
-  scalarType,
 } from 'nexus';
 
 import type { Context } from './context';
 
-const DateScalar = scalarType({
-  asNexusMethod: 'date',
-  name: 'Date',
-  parseLiteral(ast) {
-    if (ast.kind === Kind.STRING) {
-      return new Date(ast.value);
-    }
-    return null;
-  },
-  parseValue(value) {
-    if (typeof value === 'string') {
-      return new Date(value);
-    }
-    throw new Error(`could not parse date: ${String(value)}`);
-  },
-  serialize(value) {
-    if (value instanceof Date) {
-      return value.toISOString();
-    }
-    throw new Error(`could not serialize date: ${String(value)}`);
-  },
-});
+export const DateTime = asNexusMethod(GraphQLDateTime, 'dateTime');
 
 const Node = interfaceType({
   name: 'Node',
@@ -53,8 +32,8 @@ const Accountable = interfaceType({
   description:
     'An accountable resource tracks when and by whom it was created and last updated.',
   definition(t) {
-    t.date('createdAt');
-    t.date('updatedAt');
+    t.dateTime('createdAt');
+    t.dateTime('updatedAt');
   },
 });
 
@@ -229,7 +208,7 @@ export default makeSchema({
   },
   types: {
     // Scalars
-    DateScalar,
+    DateTime,
     // Interfaces
     Accountable,
     Node,
