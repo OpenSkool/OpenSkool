@@ -30,7 +30,6 @@
     "graphql": "^16.3.0",
     "mercurius": "^9.3.3",
     "nexus": "^1.2.0",
-    "nexus-prisma": "0.35.0",
     "read-pkg-up": "^9.1.0"
   },
   "devDependencies": {

@@ -13,7 +13,6 @@ import {
   queryType,
   scalarType,
 } from 'nexus';
-import * as N from 'nexus-prisma';
 
 import type { Context } from './context';
 
@@ -56,14 +55,12 @@ const Accountable = interfaceType({
 });
 
 const Competency = objectType({
-  name: N.Competency.$name,
-  description: N.Competency.$description,
+  name: 'Competency',
   definition(t) {
     t.implements(Node);
     t.implements(Accountable);
-    t.field(N.Competency.parentCompetencyId);
-    t.field({
-      ...N.CompetencyTranslation.title,
+    t.nullable.string('parentCompetencyId');
+    t.string('title', {
       async resolve(competency, argumentz, ctx) {
         const translations = await ctx.prisma.competencyTranslation.findMany({
           where: {
@@ -78,13 +75,11 @@ const Competency = objectType({
 });
 
 const Education = objectType({
-  name: N.Education.$name,
-  description: N.Education.$description,
+  name: 'Education',
   definition(t) {
     t.implements(Node);
     t.implements(Accountable);
-    t.field({
-      ...N.EducationTranslation.title,
+    t.string('title', {
       resolve: async (education, argumentz, ctx) => {
         const translations = await ctx.prisma.educationTranslation.findMany({
           where: {
@@ -101,7 +96,7 @@ const Education = objectType({
 const EducationInput = inputObjectType({
   name: 'EducationInput',
   definition(t) {
-    t.field(N.EducationTranslation.title);
+    t.string('title');
   },
 });
 
