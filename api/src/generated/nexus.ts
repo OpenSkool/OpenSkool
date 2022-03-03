@@ -46,14 +46,19 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
-  Competency: db.Competency;
   Education: db.Education;
   Mutation: {};
+  NestedCompetency: db.NestedCompetency;
   Query: {};
+  RootCompetency: db.RootCompetency;
 }
 
 export interface NexusGenInterfaces {
-  Accountable: NexusGenRootTypes['Competency'] | NexusGenRootTypes['Education'];
+  Accountable:
+    | NexusGenRootTypes['Education']
+    | NexusGenRootTypes['NestedCompetency']
+    | NexusGenRootTypes['RootCompetency'];
+  Competency: db.Competency;
   Node: db.Node;
 }
 
@@ -64,14 +69,6 @@ export type NexusGenRootTypes = NexusGenInterfaces & NexusGenObjects;
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars;
 
 export interface NexusGenFieldTypes {
-  Competency: {
-    // field return type
-    createdAt: NexusGenScalars['Date']; // Date!
-    id: string; // ID!
-    parentCompetencyId: string | null; // String
-    title: string; // String!
-    updatedAt: NexusGenScalars['Date']; // Date!
-  };
   Education: {
     // field return type
     createdAt: NexusGenScalars['Date']; // Date!
@@ -85,14 +82,37 @@ export interface NexusGenFieldTypes {
     deleteEducation: NexusGenRootTypes['Node']; // Node!
     updateEducation: NexusGenRootTypes['Education']; // Education!
   };
+  NestedCompetency: {
+    // field return type
+    createdAt: NexusGenScalars['Date']; // Date!
+    id: string; // ID!
+    parentId: string; // ID!
+    title: string; // String!
+    updatedAt: NexusGenScalars['Date']; // Date!
+  };
   Query: {
     // field return type
-    allCompetencies: NexusGenRootTypes['Competency'][]; // [Competency!]!
     allEducations: NexusGenRootTypes['Education'][]; // [Education!]!
+    rootCompetency: NexusGenRootTypes['RootCompetency'] | null; // RootCompetency
+  };
+  RootCompetency: {
+    // field return type
+    createdAt: NexusGenScalars['Date']; // Date!
+    id: string; // ID!
+    nestedCompetencies: NexusGenRootTypes['NestedCompetency'][]; // [NestedCompetency!]!
+    title: string; // String!
+    updatedAt: NexusGenScalars['Date']; // Date!
   };
   Accountable: {
     // field return type
     createdAt: NexusGenScalars['Date']; // Date!
+    updatedAt: NexusGenScalars['Date']; // Date!
+  };
+  Competency: {
+    // field return type
+    createdAt: NexusGenScalars['Date']; // Date!
+    id: string; // ID!
+    title: string; // String!
     updatedAt: NexusGenScalars['Date']; // Date!
   };
   Node: {
@@ -102,14 +122,6 @@ export interface NexusGenFieldTypes {
 }
 
 export interface NexusGenFieldTypeNames {
-  Competency: {
-    // field return type name
-    createdAt: 'Date';
-    id: 'ID';
-    parentCompetencyId: 'String';
-    title: 'String';
-    updatedAt: 'Date';
-  };
   Education: {
     // field return type name
     createdAt: 'Date';
@@ -123,14 +135,37 @@ export interface NexusGenFieldTypeNames {
     deleteEducation: 'Node';
     updateEducation: 'Education';
   };
+  NestedCompetency: {
+    // field return type name
+    createdAt: 'Date';
+    id: 'ID';
+    parentId: 'ID';
+    title: 'String';
+    updatedAt: 'Date';
+  };
   Query: {
     // field return type name
-    allCompetencies: 'Competency';
     allEducations: 'Education';
+    rootCompetency: 'RootCompetency';
+  };
+  RootCompetency: {
+    // field return type name
+    createdAt: 'Date';
+    id: 'ID';
+    nestedCompetencies: 'NestedCompetency';
+    title: 'String';
+    updatedAt: 'Date';
   };
   Accountable: {
     // field return type name
     createdAt: 'Date';
+    updatedAt: 'Date';
+  };
+  Competency: {
+    // field return type name
+    createdAt: 'Date';
+    id: 'ID';
+    title: 'String';
     updatedAt: 'Date';
   };
   Node: {
@@ -155,16 +190,25 @@ export interface NexusGenArgTypes {
       id: string; // ID!
     };
   };
+  Query: {
+    rootCompetency: {
+      // args
+      id: string; // ID!
+    };
+  };
 }
 
 export interface NexusGenAbstractTypeMembers {
-  Accountable: 'Competency' | 'Education';
-  Node: 'Competency' | 'Education';
+  Accountable: 'Education' | 'NestedCompetency' | 'RootCompetency';
+  Competency: 'NestedCompetency' | 'RootCompetency';
+  Node: 'Education' | 'NestedCompetency' | 'RootCompetency';
 }
 
 export interface NexusGenTypeInterfaces {
-  Competency: 'Accountable' | 'Node';
   Education: 'Accountable' | 'Node';
+  NestedCompetency: 'Accountable' | 'Competency' | 'Node';
+  RootCompetency: 'Accountable' | 'Competency' | 'Node';
+  Competency: 'Accountable' | 'Node';
 }
 
 export type NexusGenObjectNames = keyof NexusGenObjects;

@@ -13,17 +13,17 @@ export type Scalars = {
   Date: any;
 };
 
+/** An accountable resource tracks when and by whom it was created and last updated. */
 export type Accountable = {
   createdAt: Scalars['Date'];
   updatedAt: Scalars['Date'];
 };
 
-export type Competency = Accountable & Node & {
-  __typename?: 'Competency';
+/** A competency can be an individual competence or a grouping of competences. */
+export type Competency = {
   createdAt: Scalars['Date'];
   /** A CUID for a resource */
   id: Scalars['ID'];
-  parentCompetencyId?: Maybe<Scalars['String']>;
   title: Scalars['String'];
   updatedAt: Scalars['Date'];
 };
@@ -64,6 +64,18 @@ export type MutationUpdateEducationArgs = {
   id: Scalars['ID'];
 };
 
+/** A competency with a parent. */
+export type NestedCompetency = Accountable & Competency & Node & {
+  __typename?: 'NestedCompetency';
+  createdAt: Scalars['Date'];
+  /** A CUID for a resource */
+  id: Scalars['ID'];
+  parentId: Scalars['ID'];
+  title: Scalars['String'];
+  updatedAt: Scalars['Date'];
+};
+
+/** A node is any resource that can be identified via an ID. */
 export type Node = {
   /** A CUID for a resource */
   id: Scalars['ID'];
@@ -71,8 +83,24 @@ export type Node = {
 
 export type Query = {
   __typename?: 'Query';
-  allCompetencies: Array<Competency>;
   allEducations: Array<Education>;
+  rootCompetency?: Maybe<RootCompetency>;
+};
+
+
+export type QueryRootCompetencyArgs = {
+  id: Scalars['ID'];
+};
+
+/** A competency without a parent. */
+export type RootCompetency = Accountable & Competency & Node & {
+  __typename?: 'RootCompetency';
+  createdAt: Scalars['Date'];
+  /** A CUID for a resource */
+  id: Scalars['ID'];
+  nestedCompetencies: Array<NestedCompetency>;
+  title: Scalars['String'];
+  updatedAt: Scalars['Date'];
 };
 
 export type GetEducationsQueryVariables = Exact<{ [key: string]: never; }>;

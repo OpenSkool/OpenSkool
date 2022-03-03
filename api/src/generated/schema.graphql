@@ -12,14 +12,13 @@ interface Accountable {
 """
 A competency can be an individual competence or a grouping of competences.
 """
-type Competency implements Accountable & Node {
+interface Competency implements Accountable & Node {
   createdAt: Date!
 
   """
   A CUID for a resource
   """
   id: ID!
-  parentCompetencyId: String
   title: String!
   updatedAt: Date!
 }
@@ -48,6 +47,21 @@ type Mutation {
 }
 
 """
+A competency with a parent.
+"""
+type NestedCompetency implements Accountable & Competency & Node {
+  createdAt: Date!
+
+  """
+  A CUID for a resource
+  """
+  id: ID!
+  parentId: ID!
+  title: String!
+  updatedAt: Date!
+}
+
+"""
 A node is any resource that can be identified via an ID.
 """
 interface Node {
@@ -58,6 +72,21 @@ interface Node {
 }
 
 type Query {
-  allCompetencies: [Competency!]!
   allEducations: [Education!]!
+  rootCompetency(id: ID!): RootCompetency
+}
+
+"""
+A competency without a parent.
+"""
+type RootCompetency implements Accountable & Competency & Node {
+  createdAt: Date!
+
+  """
+  A CUID for a resource
+  """
+  id: ID!
+  nestedCompetencies: [NestedCompetency!]!
+  title: String!
+  updatedAt: Date!
 }

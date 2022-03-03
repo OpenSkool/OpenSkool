@@ -1,6 +1,6 @@
 import path from 'path';
 
-import { Language } from '@prisma/client';
+import * as Db from '@prisma/client';
 import { Kind } from 'graphql';
 import {
   idArg,
@@ -9,6 +9,7 @@ import {
   list,
   makeSchema,
   mutationField,
+  nullable,
   objectType,
   queryType,
   scalarType,
@@ -57,18 +58,41 @@ const Accountable = interfaceType({
   },
 });
 
-const Competency = objectType({
+const Competency = interfaceType({
   name: 'Competency',
   description:
     'A competency can be an individual competence or a grouping of competences.',
   definition(t) {
     t.implements(Node);
     t.implements(Accountable);
-    t.nullable.string('parentCompetencyId');
     t.string('title', {
       resolve(competency, argumentz, ctx) {
         return competency.translations[0].title;
       },
+    });
+  },
+});
+
+const NestedCompetency = objectType({
+  name: 'NestedCompetency',
+  description: 'A competency with a parent.',
+  definition(t) {
+    t.implements(Competency);
+    t.id('parentId', {
+      resolve(competency, argumentz, ctx): string {
+        return competency.parentCompetencyId!;
+      },
+    });
+  },
+});
+
+const RootCompetency = objectType({
+  name: 'RootCompetency',
+  description: 'A competency without a parent.',
+  definition(t) {
+    t.implements(Competency);
+    t.field('nestedCompetencies', {
+      type: list('NestedCompetency'),
     });
   },
 });
@@ -102,7 +126,7 @@ const createEducation = mutationField('createEducation', {
     const education = await ctx.prisma.education.create({
       data: {
         translations: {
-          create: { languageCode: Language.EN, title },
+          create: { languageCode: Db.Language.EN, title },
         },
       },
       include: { translations: true },
@@ -119,7 +143,7 @@ const updateEducation = mutationField('updateEducation', {
   },
   async resolve(root, { id, data: { title } }, ctx) {
     const upsert = {
-      languageCode: Language.EN,
+      languageCode: Db.Language.EN,
       title,
     };
     const education = await ctx.prisma.education.update({
@@ -131,7 +155,7 @@ const updateEducation = mutationField('updateEducation', {
             where: {
               educationId_languageCode: {
                 educationId: id,
-                languageCode: Language.EN,
+                languageCode: Db.Language.EN,
               },
             },
           },
@@ -160,15 +184,16 @@ const deleteEducation = mutationField('deleteEducation', {
 });
 
 const Query = queryType({
-  nonNullDefaults: { output: true },
   definition(t) {
-    t.field('allCompetencies', {
-      async resolve(parent, argumentz, ctx: Context, info) {
-        return ctx.prisma.competency.findMany({
-          include: { translations: true },
+    t.field('rootCompetency', {
+      args: { id: idArg() },
+      async resolve(parent, { id }, ctx: Context, info) {
+        return ctx.prisma.competency.findUnique({
+          include: { nestedCompetencies: true, translations: true },
+          where: { id },
         });
       },
-      type: list(Competency),
+      type: nullable(RootCompetency),
     });
     t.field('allEducations', {
       async resolve(parent, argumentz, ctx: Context, info) {
@@ -208,9 +233,12 @@ export default makeSchema({
     // Interfaces
     Accountable,
     Node,
-    // -- Education --//
     // Models
+    // -- Competency --//
     Competency,
+    NestedCompetency,
+    RootCompetency,
+    // -- Education --//
     Education,
     EducationInput,
     // Root
