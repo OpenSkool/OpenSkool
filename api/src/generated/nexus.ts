@@ -8,18 +8,24 @@ import type { Context } from './../api/context';
 import type { core } from 'nexus';
 declare global {
   interface NexusGenCustomInputMethods<TypeName extends string> {
-    date<FieldName extends string>(
+    /**
+     * A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+     */
+    dateTime<FieldName extends string>(
       fieldName: FieldName,
       opts?: core.CommonInputFieldConfig<TypeName, FieldName>,
-    ): void; // "Date";
+    ): void; // "DateTime";
   }
 }
 declare global {
   interface NexusGenCustomOutputMethods<TypeName extends string> {
-    date<FieldName extends string>(
+    /**
+     * A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+     */
+    dateTime<FieldName extends string>(
       fieldName: FieldName,
       ...opts: core.ScalarOutSpread<TypeName, FieldName>
-    ): void; // "Date";
+    ): void; // "DateTime";
   }
 }
 
@@ -42,7 +48,7 @@ export interface NexusGenScalars {
   Float: number;
   Boolean: boolean;
   ID: string;
-  Date: any;
+  DateTime: any;
 }
 
 export interface NexusGenObjects {
@@ -71,10 +77,10 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars;
 export interface NexusGenFieldTypes {
   Education: {
     // field return type
-    createdAt: NexusGenScalars['Date']; // Date!
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: string; // ID!
     title: string; // String!
-    updatedAt: NexusGenScalars['Date']; // Date!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
   };
   Mutation: {
     // field return type
@@ -84,11 +90,11 @@ export interface NexusGenFieldTypes {
   };
   NestedCompetency: {
     // field return type
-    createdAt: NexusGenScalars['Date']; // Date!
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: string; // ID!
     parentId: string; // ID!
     title: string; // String!
-    updatedAt: NexusGenScalars['Date']; // Date!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
   };
   Query: {
     // field return type
@@ -97,23 +103,23 @@ export interface NexusGenFieldTypes {
   };
   RootCompetency: {
     // field return type
-    createdAt: NexusGenScalars['Date']; // Date!
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: string; // ID!
     nestedCompetencies: NexusGenRootTypes['NestedCompetency'][]; // [NestedCompetency!]!
     title: string; // String!
-    updatedAt: NexusGenScalars['Date']; // Date!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
   };
   Accountable: {
     // field return type
-    createdAt: NexusGenScalars['Date']; // Date!
-    updatedAt: NexusGenScalars['Date']; // Date!
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
   };
   Competency: {
     // field return type
-    createdAt: NexusGenScalars['Date']; // Date!
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: string; // ID!
     title: string; // String!
-    updatedAt: NexusGenScalars['Date']; // Date!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
   };
   Node: {
     // field return type
@@ -124,10 +130,10 @@ export interface NexusGenFieldTypes {
 export interface NexusGenFieldTypeNames {
   Education: {
     // field return type name
-    createdAt: 'Date';
+    createdAt: 'DateTime';
     id: 'ID';
     title: 'String';
-    updatedAt: 'Date';
+    updatedAt: 'DateTime';
   };
   Mutation: {
     // field return type name
@@ -137,11 +143,11 @@ export interface NexusGenFieldTypeNames {
   };
   NestedCompetency: {
     // field return type name
-    createdAt: 'Date';
+    createdAt: 'DateTime';
     id: 'ID';
     parentId: 'ID';
     title: 'String';
-    updatedAt: 'Date';
+    updatedAt: 'DateTime';
   };
   Query: {
     // field return type name
@@ -150,23 +156,23 @@ export interface NexusGenFieldTypeNames {
   };
   RootCompetency: {
     // field return type name
-    createdAt: 'Date';
+    createdAt: 'DateTime';
     id: 'ID';
     nestedCompetencies: 'NestedCompetency';
     title: 'String';
-    updatedAt: 'Date';
+    updatedAt: 'DateTime';
   };
   Accountable: {
     // field return type name
-    createdAt: 'Date';
-    updatedAt: 'Date';
+    createdAt: 'DateTime';
+    updatedAt: 'DateTime';
   };
   Competency: {
     // field return type name
-    createdAt: 'Date';
+    createdAt: 'DateTime';
     id: 'ID';
     title: 'String';
-    updatedAt: 'Date';
+    updatedAt: 'DateTime';
   };
   Node: {
     // field return type name

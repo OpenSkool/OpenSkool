@@ -10,31 +10,32 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  Date: any;
+  /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
+  DateTime: any;
 };
 
 /** An accountable resource tracks when and by whom it was created and last updated. */
 export type Accountable = {
-  createdAt: Scalars['Date'];
-  updatedAt: Scalars['Date'];
+  createdAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
 };
 
 /** A competency can be an individual competence or a grouping of competences. */
 export type Competency = {
-  createdAt: Scalars['Date'];
+  createdAt: Scalars['DateTime'];
   /** A CUID for a resource */
   id: Scalars['ID'];
   title: Scalars['String'];
-  updatedAt: Scalars['Date'];
+  updatedAt: Scalars['DateTime'];
 };
 
 export type Education = Accountable & Node & {
   __typename?: 'Education';
-  createdAt: Scalars['Date'];
+  createdAt: Scalars['DateTime'];
   /** A CUID for a resource */
   id: Scalars['ID'];
   title: Scalars['String'];
-  updatedAt: Scalars['Date'];
+  updatedAt: Scalars['DateTime'];
 };
 
 export type EducationInput = {
@@ -67,12 +68,12 @@ export type MutationUpdateEducationArgs = {
 /** A competency with a parent. */
 export type NestedCompetency = Accountable & Competency & Node & {
   __typename?: 'NestedCompetency';
-  createdAt: Scalars['Date'];
+  createdAt: Scalars['DateTime'];
   /** A CUID for a resource */
   id: Scalars['ID'];
   parentId: Scalars['ID'];
   title: Scalars['String'];
-  updatedAt: Scalars['Date'];
+  updatedAt: Scalars['DateTime'];
 };
 
 /** A node is any resource that can be identified via an ID. */
@@ -95,12 +96,12 @@ export type QueryRootCompetencyArgs = {
 /** A competency without a parent. */
 export type RootCompetency = Accountable & Competency & Node & {
   __typename?: 'RootCompetency';
-  createdAt: Scalars['Date'];
+  createdAt: Scalars['DateTime'];
   /** A CUID for a resource */
   id: Scalars['ID'];
   nestedCompetencies: Array<NestedCompetency>;
   title: Scalars['String'];
-  updatedAt: Scalars['Date'];
+  updatedAt: Scalars['DateTime'];
 };
 
 export type GetEducationsQueryVariables = Exact<{ [key: string]: never; }>;

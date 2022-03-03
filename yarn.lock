@@ -1486,6 +1486,7 @@ __metadata:
     fastify-env: ^2.1.1
     fastify-plugin: ^3.0.1
     graphql: ^16.3.0
+    graphql-scalars: ^1.15.0
     graphql-tag: ^2.12.6
     mercurius: ^9.3.3
     mercurius-integration-testing: ^4.0.0
@@ -5795,6 +5796,17 @@ __metadata:
   peerDependencies:
     graphql: 14 - 16
   checksum: 0d16c7f06360679c022faaa19554c2693e200263beae0dec920b0668f6c48b0d08de6e1155a50a050283a58a878b29b04db129a2d932a645bfadbe8d55530243
+  languageName: node
+  linkType: hard
+
+"graphql-scalars@npm:^1.15.0":
+  version: 1.15.0
+  resolution: "graphql-scalars@npm:1.15.0"
+  dependencies:
+    tslib: ~2.3.0
+  peerDependencies:
+    graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
+  checksum: 8b86efeb6f11ddd55ee9020b4d59961b13dccb1ea441a78827d30423a8b3485249b0fb3c27e69c0771ffa38c3085fdb97e017502cdc80abe366f74d64cff0c27
   languageName: node
   linkType: hard
 

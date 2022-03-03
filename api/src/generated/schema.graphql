@@ -5,35 +5,38 @@
 An accountable resource tracks when and by whom it was created and last updated.
 """
 interface Accountable {
-  createdAt: Date!
-  updatedAt: Date!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 """
 A competency can be an individual competence or a grouping of competences.
 """
 interface Competency implements Accountable & Node {
-  createdAt: Date!
+  createdAt: DateTime!
 
   """
   A CUID for a resource
   """
   id: ID!
   title: String!
-  updatedAt: Date!
+  updatedAt: DateTime!
 }
 
-scalar Date
+"""
+A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar DateTime
 
 type Education implements Accountable & Node {
-  createdAt: Date!
+  createdAt: DateTime!
 
   """
   A CUID for a resource
   """
   id: ID!
   title: String!
-  updatedAt: Date!
+  updatedAt: DateTime!
 }
 
 input EducationInput {
@@ -50,7 +53,7 @@ type Mutation {
 A competency with a parent.
 """
 type NestedCompetency implements Accountable & Competency & Node {
-  createdAt: Date!
+  createdAt: DateTime!
 
   """
   A CUID for a resource
@@ -58,7 +61,7 @@ type NestedCompetency implements Accountable & Competency & Node {
   id: ID!
   parentId: ID!
   title: String!
-  updatedAt: Date!
+  updatedAt: DateTime!
 }
 
 """
@@ -80,7 +83,7 @@ type Query {
 A competency without a parent.
 """
 type RootCompetency implements Accountable & Competency & Node {
-  createdAt: Date!
+  createdAt: DateTime!
 
   """
   A CUID for a resource
@@ -88,5 +91,5 @@ type RootCompetency implements Accountable & Competency & Node {
   id: ID!
   nestedCompetencies: [NestedCompetency!]!
   title: String!
-  updatedAt: Date!
+  updatedAt: DateTime!
 }
