@@ -61,5 +61,8 @@
       "src/",
       "../yarn.lock"
     ]
+  },
+  "prisma": {
+    "seed": "node -r esbuild-register prisma/seed.ts"
   }
 }
