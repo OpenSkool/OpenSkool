@@ -10,5 +10,9 @@ module.exports = {
       files: 'src/',
       extends: 'noise/node',
     },
+    {
+      files: 'prisma/',
+      extends: ['noise/node', 'noise/node/script'],
+    },
   ],
 };
