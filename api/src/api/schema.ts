@@ -41,6 +41,7 @@ const DateScalar = scalarType({
 
 const Node = interfaceType({
   name: 'Node',
+  description: 'A node is any resource that can be identified via an ID.',
   definition(t) {
     t.id('id', { description: 'A CUID for a resource' });
   },
@@ -48,6 +49,8 @@ const Node = interfaceType({
 
 const Accountable = interfaceType({
   name: 'Accountable',
+  description:
+    'An accountable resource tracks when and by whom it was created and last updated.',
   definition(t) {
     t.date('createdAt');
     t.date('updatedAt');
@@ -56,6 +59,8 @@ const Accountable = interfaceType({
 
 const Competency = objectType({
   name: 'Competency',
+  description:
+    'A competency can be an individual competence or a grouping of competences.',
   definition(t) {
     t.implements(Node);
     t.implements(Accountable);
