@@ -168,7 +168,10 @@ const Query = queryType({
       args: { id: idArg() },
       async resolve(parent, { id }, ctx: Context, info) {
         return ctx.prisma.competency.findUnique({
-          include: { nestedCompetencies: true, translations: true },
+          include: {
+            nestedCompetencies: { include: { translations: true } },
+            translations: true,
+          },
           where: { id },
         });
       },
