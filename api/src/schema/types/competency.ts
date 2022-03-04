@@ -23,6 +23,21 @@ export const Competency = interfaceType({
         return competency.translations[0].title;
       },
     });
+    t.nonNull.field('subCompetencies', {
+      type: nonNull(list(nonNull('NestedCompetency'))),
+      async resolve(parent, argumentz, ctx) {
+        const subCompetencies = await ctx.prisma.competency
+          .findUnique({ where: { id: parent.id } })
+          .subCompetencies({
+            include: {
+              translations: { where: { languageCode: Db.Language.EN } },
+            },
+          });
+        return subCompetencies.filter(
+          (competency) => competency.translations.length > 0,
+        );
+      },
+    });
   },
 });
 

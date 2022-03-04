@@ -19,6 +19,7 @@ interface Competency implements Accountable & Node {
   A CUID for a resource
   """
   id: ID!
+  subCompetencies: [NestedCompetency!]!
   title: String!
   updatedAt: DateTime!
 }
@@ -60,6 +61,7 @@ type NestedCompetency implements Accountable & Competency & Node {
   """
   id: ID!
   parentId: ID!
+  subCompetencies: [NestedCompetency!]!
   title: String!
   updatedAt: DateTime!
 }
@@ -101,6 +103,7 @@ type RootCompetency implements Accountable & Competency & Node {
   """
   id: ID!
   nestedCompetencies: [NestedCompetency!]!
+  subCompetencies: [NestedCompetency!]!
   title: String!
   updatedAt: DateTime!
 }

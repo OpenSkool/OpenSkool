@@ -95,6 +95,7 @@ export interface NexusGenFieldTypes {
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: string; // ID!
     parentId: string; // ID!
+    subCompetencies: NexusGenRootTypes['NestedCompetency'][]; // [NestedCompetency!]!
     title: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   };
@@ -109,6 +110,7 @@ export interface NexusGenFieldTypes {
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: string; // ID!
     nestedCompetencies: NexusGenRootTypes['NestedCompetency'][]; // [NestedCompetency!]!
+    subCompetencies: NexusGenRootTypes['NestedCompetency'][]; // [NestedCompetency!]!
     title: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   };
@@ -127,6 +129,7 @@ export interface NexusGenFieldTypes {
     // field return type
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: string; // ID!
+    subCompetencies: NexusGenRootTypes['NestedCompetency'][]; // [NestedCompetency!]!
     title: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   };
@@ -161,6 +164,7 @@ export interface NexusGenFieldTypeNames {
     createdAt: 'DateTime';
     id: 'ID';
     parentId: 'ID';
+    subCompetencies: 'NestedCompetency';
     title: 'String';
     updatedAt: 'DateTime';
   };
@@ -175,6 +179,7 @@ export interface NexusGenFieldTypeNames {
     createdAt: 'DateTime';
     id: 'ID';
     nestedCompetencies: 'NestedCompetency';
+    subCompetencies: 'NestedCompetency';
     title: 'String';
     updatedAt: 'DateTime';
   };
@@ -193,6 +198,7 @@ export interface NexusGenFieldTypeNames {
     // field return type name
     createdAt: 'DateTime';
     id: 'ID';
+    subCompetencies: 'NestedCompetency';
     title: 'String';
     updatedAt: 'DateTime';
   };
