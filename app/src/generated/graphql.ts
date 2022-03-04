@@ -82,9 +82,17 @@ export type Node = {
   id: Scalars['ID'];
 };
 
+export type Person = {
+  firstName?: Maybe<Scalars['String']>;
+  /** A CUID for a resource */
+  id: Scalars['ID'];
+  lastName?: Maybe<Scalars['String']>;
+};
+
 export type Query = {
   __typename?: 'Query';
   allEducations: Array<Education>;
+  allPeople: Array<Person>;
   rootCompetency?: Maybe<RootCompetency>;
 };
 
@@ -102,6 +110,14 @@ export type RootCompetency = Accountable & Competency & Node & {
   nestedCompetencies: Array<NestedCompetency>;
   title: Scalars['String'];
   updatedAt: Scalars['DateTime'];
+};
+
+export type Teacher = Node & Person & {
+  __typename?: 'Teacher';
+  firstName?: Maybe<Scalars['String']>;
+  /** A CUID for a resource */
+  id: Scalars['ID'];
+  lastName?: Maybe<Scalars['String']>;
 };
 
 export type GetEducationsQueryVariables = Exact<{ [key: string]: never; }>;

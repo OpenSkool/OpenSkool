@@ -11,6 +11,13 @@ enum Language {
   EN
 }
 
+enum Role {
+  ADMIN
+  EXTERNAL
+  STUDENT
+  TEACHER
+}
+
 model Competency {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
@@ -52,4 +59,11 @@ model EducationTranslation {
   title        String
 
   @@unique([educationId, languageCode])
+}
+
+model Person {
+  id        String @id @default(cuid())
+  firstName String
+  lastName  String
+  role      Role
 }

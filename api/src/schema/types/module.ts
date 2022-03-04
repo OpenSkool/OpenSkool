@@ -6,3 +6,4 @@ export const DateTime = asNexusMethod(GraphQLDateTime, 'dateTime');
 export * from './competency';
 export * from './education';
 export * from './interfaces';
+export * from './person';

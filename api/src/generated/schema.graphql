@@ -74,8 +74,19 @@ interface Node {
   id: ID!
 }
 
+interface Person implements Node {
+  firstName: String
+
+  """
+  A CUID for a resource
+  """
+  id: ID!
+  lastName: String
+}
+
 type Query {
   allEducations: [Education!]!
+  allPeople: [Person!]!
   rootCompetency(id: ID!): RootCompetency
 }
 
@@ -92,4 +103,14 @@ type RootCompetency implements Accountable & Competency & Node {
   nestedCompetencies: [NestedCompetency!]!
   title: String!
   updatedAt: DateTime!
+}
+
+type Teacher implements Node & Person {
+  firstName: String
+
+  """
+  A CUID for a resource
+  """
+  id: ID!
+  lastName: String
 }
