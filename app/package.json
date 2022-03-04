@@ -9,10 +9,10 @@
   "scripts": {
     "build": "vite build",
     "clean": "rm -rf .eslintcache .turbo/ dist/",
-    "codegen": "graphql-codegen --config ../.graphqlrc.yaml",
     "dev": "concurrently 'yarn:dev:*'",
-    "dev:codegen": "yarn run codegen --watch 'src/**/*.vue'",
+    "dev:generate": "yarn run generate --watch 'src/**/*.vue'",
     "dev:vite": "vite",
+    "generate": "graphql-codegen --config ../.graphqlrc.yaml",
     "lint": "eslint --cache --ext .cjs,.js,.ts,.vue .",
     "preview": "vite preview",
     "test": "vue-tsc --noEmit && vitest run"
