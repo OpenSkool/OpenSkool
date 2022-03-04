@@ -95,6 +95,7 @@ export type Query = {
   __typename?: 'Query';
   allEducations: Array<Education>;
   allPeople: Array<Person>;
+  randomRootCompetency?: Maybe<RootCompetency>;
   rootCompetency?: Maybe<RootCompetency>;
 };
 
