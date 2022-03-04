@@ -57,6 +57,7 @@ export interface NexusGenObjects {
   NestedCompetency: db.NestedCompetency;
   Query: {};
   RootCompetency: db.RootCompetency;
+  Teacher: db.Teacher;
 }
 
 export interface NexusGenInterfaces {
@@ -66,6 +67,7 @@ export interface NexusGenInterfaces {
     | NexusGenRootTypes['RootCompetency'];
   Competency: db.Competency;
   Node: db.Node;
+  Person: db.Person;
 }
 
 export interface NexusGenUnions {}
@@ -99,6 +101,7 @@ export interface NexusGenFieldTypes {
   Query: {
     // field return type
     allEducations: NexusGenRootTypes['Education'][]; // [Education!]!
+    allPeople: NexusGenRootTypes['Person'][]; // [Person!]!
     rootCompetency: NexusGenRootTypes['RootCompetency'] | null; // RootCompetency
   };
   RootCompetency: {
@@ -108,6 +111,12 @@ export interface NexusGenFieldTypes {
     nestedCompetencies: NexusGenRootTypes['NestedCompetency'][]; // [NestedCompetency!]!
     title: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
+  };
+  Teacher: {
+    // field return type
+    firstName: string | null; // String
+    id: string; // ID!
+    lastName: string | null; // String
   };
   Accountable: {
     // field return type
@@ -124,6 +133,12 @@ export interface NexusGenFieldTypes {
   Node: {
     // field return type
     id: string; // ID!
+  };
+  Person: {
+    // field return type
+    firstName: string | null; // String
+    id: string; // ID!
+    lastName: string | null; // String
   };
 }
 
@@ -152,6 +167,7 @@ export interface NexusGenFieldTypeNames {
   Query: {
     // field return type name
     allEducations: 'Education';
+    allPeople: 'Person';
     rootCompetency: 'RootCompetency';
   };
   RootCompetency: {
@@ -161,6 +177,12 @@ export interface NexusGenFieldTypeNames {
     nestedCompetencies: 'NestedCompetency';
     title: 'String';
     updatedAt: 'DateTime';
+  };
+  Teacher: {
+    // field return type name
+    firstName: 'String';
+    id: 'ID';
+    lastName: 'String';
   };
   Accountable: {
     // field return type name
@@ -177,6 +199,12 @@ export interface NexusGenFieldTypeNames {
   Node: {
     // field return type name
     id: 'ID';
+  };
+  Person: {
+    // field return type name
+    firstName: 'String';
+    id: 'ID';
+    lastName: 'String';
   };
 }
 
@@ -207,14 +235,17 @@ export interface NexusGenArgTypes {
 export interface NexusGenAbstractTypeMembers {
   Accountable: 'Education' | 'NestedCompetency' | 'RootCompetency';
   Competency: 'NestedCompetency' | 'RootCompetency';
-  Node: 'Education' | 'NestedCompetency' | 'RootCompetency';
+  Node: 'Education' | 'NestedCompetency' | 'RootCompetency' | 'Teacher';
+  Person: 'Teacher';
 }
 
 export interface NexusGenTypeInterfaces {
   Education: 'Accountable' | 'Node';
   NestedCompetency: 'Accountable' | 'Competency' | 'Node';
   RootCompetency: 'Accountable' | 'Competency' | 'Node';
+  Teacher: 'Node' | 'Person';
   Competency: 'Accountable' | 'Node';
+  Person: 'Node';
 }
 
 export type NexusGenObjectNames = keyof NexusGenObjects;
@@ -231,7 +262,7 @@ export type NexusGenUnionNames = never;
 
 export type NexusGenObjectsUsingAbstractStrategyIsTypeOf = never;
 
-export type NexusGenAbstractsUsingStrategyResolveType = never;
+export type NexusGenAbstractsUsingStrategyResolveType = 'Person';
 
 export type NexusGenFeaturesConfig = {
   abstractTypeStrategies: {

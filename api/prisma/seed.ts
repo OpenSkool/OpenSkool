@@ -35,6 +35,7 @@ async function createCompetencies(
 async function main(): Promise<void> {
   await prisma.competency.deleteMany({ where: {} });
   await createCompetencies(competencyFixtures);
+
   await prisma.education.deleteMany({ where: {} });
   for (const educationTitle of ['Informatics', 'Chemistry', 'Medicine']) {
     await prisma.education.create({
@@ -43,6 +44,18 @@ async function main(): Promise<void> {
       },
     });
   }
+
+  await prisma.person.deleteMany({});
+  await prisma.person.createMany({
+    data: [
+      { firstName: 'Sam', lastName: 'Bossant', role: 'TEACHER' },
+      { firstName: 'Peter', lastName: 'Buytaert', role: 'TEACHER' },
+      { firstName: 'Yannick', lastName: 'Gils', role: 'TEACHER' },
+      { firstName: 'Dieter', lastName: 'Luypaert ', role: 'TEACHER' },
+      { firstName: 'Stijn', lastName: 'Van Vlierberghe', role: 'TEACHER' },
+      { firstName: 'Alexander', lastName: 'Vandoren', role: 'TEACHER' },
+    ],
+  });
 }
 
 (async (): Promise<void> => {
