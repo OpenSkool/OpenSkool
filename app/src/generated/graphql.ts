@@ -34,6 +34,23 @@ export type Competency = {
   updatedBy: Person;
 };
 
+export type CreateCompetencyErrorPayload = {
+  __typename?: 'CreateCompetencyErrorPayload';
+  error: UserError;
+};
+
+export type CreateCompetencyInput = {
+  parentId?: InputMaybe<Scalars['String']>;
+  title: Scalars['String'];
+};
+
+export type CreateCompetencyPayload = CreateCompetencyErrorPayload | CreateCompetencySuccessPayload;
+
+export type CreateCompetencySuccessPayload = {
+  __typename?: 'CreateCompetencySuccessPayload';
+  competency: Competency;
+};
+
 export type Education = Accountable & Node & {
   __typename?: 'Education';
   createdAt: Scalars['DateTime'];
@@ -51,9 +68,16 @@ export type EducationInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createCompetency: CreateCompetencyPayload;
   createEducation?: Maybe<Education>;
   deleteEducation?: Maybe<Node>;
   updateEducation?: Maybe<Education>;
+};
+
+
+export type MutationCreateCompetencyArgs = {
+  currentUserId: Scalars['ID'];
+  data: CreateCompetencyInput;
 };
 
 
@@ -134,6 +158,13 @@ export type Teacher = Node & Person & {
   /** A CUID for a resource */
   id: Scalars['ID'];
   lastName?: Maybe<Scalars['String']>;
+};
+
+export type UserError = {
+  __typename?: 'UserError';
+  code: Scalars['String'];
+  message: Scalars['String'];
+  path: Array<Scalars['String']>;
 };
 
 export type GetEducationsQueryVariables = Exact<{ [key: string]: never; }>;

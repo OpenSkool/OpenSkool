@@ -3,7 +3,9 @@ import { asNexusMethod } from 'nexus';
 
 export const DateTime = asNexusMethod(GraphQLDateTime, 'dateTime');
 
+export * from './errors';
+export * from './interfaces';
+
 export * from './competency';
 export * from './education';
-export * from './interfaces';
 export * from './person';
