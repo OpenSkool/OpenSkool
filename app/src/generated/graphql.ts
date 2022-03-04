@@ -17,26 +17,32 @@ export type Scalars = {
 /** An accountable resource tracks when and by whom it was created and last updated. */
 export type Accountable = {
   createdAt: Scalars['DateTime'];
+  createdBy: Person;
   updatedAt: Scalars['DateTime'];
+  updatedBy: Person;
 };
 
 /** A competency can be an individual competence or a grouping of competences. */
 export type Competency = {
   createdAt: Scalars['DateTime'];
+  createdBy: Person;
   /** A CUID for a resource */
   id: Scalars['ID'];
   subCompetencies: Array<NestedCompetency>;
   title: Scalars['String'];
   updatedAt: Scalars['DateTime'];
+  updatedBy: Person;
 };
 
 export type Education = Accountable & Node & {
   __typename?: 'Education';
   createdAt: Scalars['DateTime'];
+  createdBy: Person;
   /** A CUID for a resource */
   id: Scalars['ID'];
   title: Scalars['String'];
   updatedAt: Scalars['DateTime'];
+  updatedBy: Person;
 };
 
 export type EducationInput = {
@@ -70,12 +76,14 @@ export type MutationUpdateEducationArgs = {
 export type NestedCompetency = Accountable & Competency & Node & {
   __typename?: 'NestedCompetency';
   createdAt: Scalars['DateTime'];
+  createdBy: Person;
   /** A CUID for a resource */
   id: Scalars['ID'];
   parentId: Scalars['ID'];
   subCompetencies: Array<NestedCompetency>;
   title: Scalars['String'];
   updatedAt: Scalars['DateTime'];
+  updatedBy: Person;
 };
 
 /** A node is any resource that can be identified via an ID. */
@@ -110,12 +118,14 @@ export type QueryRootCompetencyArgs = {
 export type RootCompetency = Accountable & Competency & Node & {
   __typename?: 'RootCompetency';
   createdAt: Scalars['DateTime'];
+  createdBy: Person;
   /** A CUID for a resource */
   id: Scalars['ID'];
   nestedCompetencies: Array<NestedCompetency>;
   subCompetencies: Array<NestedCompetency>;
   title: Scalars['String'];
   updatedAt: Scalars['DateTime'];
+  updatedBy: Person;
 };
 
 export type Teacher = Node & Person & {

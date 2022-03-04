@@ -6,7 +6,9 @@ An accountable resource tracks when and by whom it was created and last updated.
 """
 interface Accountable {
   createdAt: DateTime!
+  createdBy: Person!
   updatedAt: DateTime!
+  updatedBy: Person!
 }
 
 """
@@ -14,6 +16,7 @@ A competency can be an individual competence or a grouping of competences.
 """
 interface Competency implements Accountable & Node {
   createdAt: DateTime!
+  createdBy: Person!
 
   """
   A CUID for a resource
@@ -22,6 +25,7 @@ interface Competency implements Accountable & Node {
   subCompetencies: [NestedCompetency!]!
   title: String!
   updatedAt: DateTime!
+  updatedBy: Person!
 }
 
 """
@@ -31,6 +35,7 @@ scalar DateTime
 
 type Education implements Accountable & Node {
   createdAt: DateTime!
+  createdBy: Person!
 
   """
   A CUID for a resource
@@ -38,6 +43,7 @@ type Education implements Accountable & Node {
   id: ID!
   title: String!
   updatedAt: DateTime!
+  updatedBy: Person!
 }
 
 input EducationInput {
@@ -55,6 +61,7 @@ A competency with a parent.
 """
 type NestedCompetency implements Accountable & Competency & Node {
   createdAt: DateTime!
+  createdBy: Person!
 
   """
   A CUID for a resource
@@ -64,6 +71,7 @@ type NestedCompetency implements Accountable & Competency & Node {
   subCompetencies: [NestedCompetency!]!
   title: String!
   updatedAt: DateTime!
+  updatedBy: Person!
 }
 
 """
@@ -100,6 +108,7 @@ A competency without a parent.
 """
 type RootCompetency implements Accountable & Competency & Node {
   createdAt: DateTime!
+  createdBy: Person!
 
   """
   A CUID for a resource
@@ -109,6 +118,7 @@ type RootCompetency implements Accountable & Competency & Node {
   subCompetencies: [NestedCompetency!]!
   title: String!
   updatedAt: DateTime!
+  updatedBy: Person!
 }
 
 type Teacher implements Node & Person {
