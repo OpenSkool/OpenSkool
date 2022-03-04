@@ -32,7 +32,7 @@ export const EducationInput = inputObjectType({
   },
 });
 
-export const createEducation = mutationField('createEducation', {
+export const CreateEducation = mutationField('createEducation', {
   type: Education,
   args: {
     data: EducationInput,
@@ -50,7 +50,7 @@ export const createEducation = mutationField('createEducation', {
   },
 });
 
-export const updateEducation = mutationField('updateEducation', {
+export const UpdateEducation = mutationField('updateEducation', {
   type: Education,
   args: {
     id: idArg(),
@@ -86,7 +86,7 @@ export const updateEducation = mutationField('updateEducation', {
   },
 });
 
-export const deleteEducation = mutationField('deleteEducation', {
+export const DeleteEducation = mutationField('deleteEducation', {
   type: Node,
   args: {
     id: idArg(),
