@@ -19,9 +19,15 @@ enum Role {
 }
 
 model Competency {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id String @id @default(cuid())
+
+  createdAt   DateTime @default(now())
+  createdBy   Person?  @relation("CompetencyToPersonCreated", fields: [createdById], references: [id])
+  createdById String?
+
+  updatedAt   DateTime @updatedAt
+  updatedBy   Person?  @relation("CompetencyToPersonUpdated", fields: [updatedById], references: [id])
+  updatedById String?
 
   nestedCompetencies Competency[] @relation("RootCompetencyToCompetency")
   rootCompetency     Competency?  @relation("RootCompetencyToCompetency", fields: [rootCompetencyId], references: [id])
@@ -45,9 +51,16 @@ model CompetencyTranslation {
 }
 
 model Education {
-  id           String                 @id @default(cuid())
-  createdAt    DateTime               @default(now())
-  updatedAt    DateTime               @updatedAt
+  id String @id @default(cuid())
+
+  createdAt   DateTime @default(now())
+  createdBy   Person?  @relation("EducationToPersonCreated", fields: [createdById], references: [id])
+  createdById String?
+
+  updatedAt   DateTime @updatedAt
+  updatedBy   Person?  @relation("EducationToPersonUpdated", fields: [updatedById], references: [id])
+  updatedById String?
+
   translations EducationTranslation[]
 }
 
@@ -62,7 +75,14 @@ model EducationTranslation {
 }
 
 model Person {
-  id        String @id @default(cuid())
+  id String @id @default(cuid())
+
+  competenciesCreated Competency[] @relation("CompetencyToPersonCreated")
+  competenciesUpdated Competency[] @relation("CompetencyToPersonUpdated")
+
+  educationsCreated Education[] @relation("EducationToPersonCreated")
+  educationsUpdated Education[] @relation("EducationToPersonUpdated")
+
   firstName String
   lastName  String
   role      Role

@@ -18,11 +18,6 @@ export const Competency = interfaceType({
   definition(t) {
     t.implements(Node);
     t.implements(Accountable);
-    t.nonNull.string('title', {
-      resolve(competency, argumentz, ctx) {
-        return competency.translations[0].title;
-      },
-    });
     t.nonNull.field('subCompetencies', {
       type: nonNull(list(nonNull('NestedCompetency'))),
       async resolve(parent, argumentz, ctx) {
@@ -36,6 +31,11 @@ export const Competency = interfaceType({
         return subCompetencies.filter(
           (competency) => competency.translations.length > 0,
         );
+      },
+    });
+    t.nonNull.string('title', {
+      resolve(competency, argumentz, ctx) {
+        return competency.translations[0].title;
       },
     });
   },

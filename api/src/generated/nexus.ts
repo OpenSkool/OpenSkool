@@ -80,9 +80,11 @@ export interface NexusGenFieldTypes {
   Education: {
     // field return type
     createdAt: NexusGenScalars['DateTime']; // DateTime!
+    createdBy: NexusGenRootTypes['Person']; // Person!
     id: string; // ID!
     title: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
+    updatedBy: NexusGenRootTypes['Person']; // Person!
   };
   Mutation: {
     // field return type
@@ -93,11 +95,13 @@ export interface NexusGenFieldTypes {
   NestedCompetency: {
     // field return type
     createdAt: NexusGenScalars['DateTime']; // DateTime!
+    createdBy: NexusGenRootTypes['Person']; // Person!
     id: string; // ID!
     parentId: string; // ID!
     subCompetencies: NexusGenRootTypes['NestedCompetency'][]; // [NestedCompetency!]!
     title: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
+    updatedBy: NexusGenRootTypes['Person']; // Person!
   };
   Query: {
     // field return type
@@ -113,11 +117,13 @@ export interface NexusGenFieldTypes {
   RootCompetency: {
     // field return type
     createdAt: NexusGenScalars['DateTime']; // DateTime!
+    createdBy: NexusGenRootTypes['Person']; // Person!
     id: string; // ID!
     nestedCompetencies: NexusGenRootTypes['NestedCompetency'][]; // [NestedCompetency!]!
     subCompetencies: NexusGenRootTypes['NestedCompetency'][]; // [NestedCompetency!]!
     title: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
+    updatedBy: NexusGenRootTypes['Person']; // Person!
   };
   Teacher: {
     // field return type
@@ -128,15 +134,19 @@ export interface NexusGenFieldTypes {
   Accountable: {
     // field return type
     createdAt: NexusGenScalars['DateTime']; // DateTime!
+    createdBy: NexusGenRootTypes['Person']; // Person!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
+    updatedBy: NexusGenRootTypes['Person']; // Person!
   };
   Competency: {
     // field return type
     createdAt: NexusGenScalars['DateTime']; // DateTime!
+    createdBy: NexusGenRootTypes['Person']; // Person!
     id: string; // ID!
     subCompetencies: NexusGenRootTypes['NestedCompetency'][]; // [NestedCompetency!]!
     title: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
+    updatedBy: NexusGenRootTypes['Person']; // Person!
   };
   Node: {
     // field return type
@@ -154,9 +164,11 @@ export interface NexusGenFieldTypeNames {
   Education: {
     // field return type name
     createdAt: 'DateTime';
+    createdBy: 'Person';
     id: 'ID';
     title: 'String';
     updatedAt: 'DateTime';
+    updatedBy: 'Person';
   };
   Mutation: {
     // field return type name
@@ -167,11 +179,13 @@ export interface NexusGenFieldTypeNames {
   NestedCompetency: {
     // field return type name
     createdAt: 'DateTime';
+    createdBy: 'Person';
     id: 'ID';
     parentId: 'ID';
     subCompetencies: 'NestedCompetency';
     title: 'String';
     updatedAt: 'DateTime';
+    updatedBy: 'Person';
   };
   Query: {
     // field return type name
@@ -185,11 +199,13 @@ export interface NexusGenFieldTypeNames {
   RootCompetency: {
     // field return type name
     createdAt: 'DateTime';
+    createdBy: 'Person';
     id: 'ID';
     nestedCompetencies: 'NestedCompetency';
     subCompetencies: 'NestedCompetency';
     title: 'String';
     updatedAt: 'DateTime';
+    updatedBy: 'Person';
   };
   Teacher: {
     // field return type name
@@ -200,15 +216,19 @@ export interface NexusGenFieldTypeNames {
   Accountable: {
     // field return type name
     createdAt: 'DateTime';
+    createdBy: 'Person';
     updatedAt: 'DateTime';
+    updatedBy: 'Person';
   };
   Competency: {
     // field return type name
     createdAt: 'DateTime';
+    createdBy: 'Person';
     id: 'ID';
     subCompetencies: 'NestedCompetency';
     title: 'String';
     updatedAt: 'DateTime';
+    updatedBy: 'Person';
   };
   Node: {
     // field return type name
