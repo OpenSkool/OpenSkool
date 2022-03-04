@@ -1,6 +1,6 @@
 import { beforeAll, expect, test } from 'vitest';
 
-import app from '../app';
+import app from './app';
 
 beforeAll(() => app.ready());
 

@@ -1,8 +1,8 @@
 import createApp from 'fastify';
 
-import apiPlugin from './api/module';
-import boomPlugin from './boom';
-import configPlugin from './config';
+import apiPlugin from './api';
+import boomPlugin from './plugins/boom';
+import configPlugin from './plugins/config';
 
 const app = createApp({
   logger: {

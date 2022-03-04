@@ -4,8 +4,8 @@ import type { FastifyInstance } from 'fastify';
 import cors from 'fastify-cors';
 import plugin from 'fastify-plugin';
 
-import graphqlPlugin from './graphql/module';
-import prismaPlugin from './prisma';
+import prismaPlugin from './plugins/prisma';
+import graphqlPlugin from './schema/plugin';
 
 const HTTP_NO_CONTENT = 204;
 
