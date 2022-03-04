@@ -18,8 +18,8 @@ export const Competency = interfaceType({
   definition(t) {
     t.implements(Node);
     t.implements(Accountable);
-    t.nonNull.field('subCompetencies', {
-      type: nonNull(list(nonNull('NestedCompetency'))),
+    t.field('subCompetencies', {
+      type: list(nonNull('NestedCompetency')),
       async resolve(parent, argumentz, ctx) {
         const subCompetencies = await ctx.prisma.competency
           .findUnique({ where: { id: parent.id } })
@@ -28,6 +28,9 @@ export const Competency = interfaceType({
               translations: { where: { languageCode: Db.Language.EN } },
             },
           });
+        if (subCompetencies.length === 0) {
+          return null;
+        }
         return subCompetencies.filter(
           (competency) => competency.translations.length > 0,
         );

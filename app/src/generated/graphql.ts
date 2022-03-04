@@ -28,7 +28,7 @@ export type Competency = {
   createdBy: Person;
   /** A CUID for a resource */
   id: Scalars['ID'];
-  subCompetencies: Array<NestedCompetency>;
+  subCompetencies?: Maybe<Array<NestedCompetency>>;
   title: Scalars['String'];
   updatedAt: Scalars['DateTime'];
   updatedBy: Person;
@@ -80,7 +80,7 @@ export type NestedCompetency = Accountable & Competency & Node & {
   /** A CUID for a resource */
   id: Scalars['ID'];
   parentId: Scalars['ID'];
-  subCompetencies: Array<NestedCompetency>;
+  subCompetencies?: Maybe<Array<NestedCompetency>>;
   title: Scalars['String'];
   updatedAt: Scalars['DateTime'];
   updatedBy: Person;
@@ -122,7 +122,7 @@ export type RootCompetency = Accountable & Competency & Node & {
   /** A CUID for a resource */
   id: Scalars['ID'];
   nestedCompetencies: Array<NestedCompetency>;
-  subCompetencies: Array<NestedCompetency>;
+  subCompetencies?: Maybe<Array<NestedCompetency>>;
   title: Scalars['String'];
   updatedAt: Scalars['DateTime'];
   updatedBy: Person;
