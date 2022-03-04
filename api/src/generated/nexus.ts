@@ -98,7 +98,7 @@ export interface NexusGenFieldTypes {
     createdBy: NexusGenRootTypes['Person']; // Person!
     id: string; // ID!
     parentId: string; // ID!
-    subCompetencies: NexusGenRootTypes['NestedCompetency'][]; // [NestedCompetency!]!
+    subCompetencies: NexusGenRootTypes['NestedCompetency'][] | null; // [NestedCompetency!]
     title: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
     updatedBy: NexusGenRootTypes['Person']; // Person!
@@ -120,7 +120,7 @@ export interface NexusGenFieldTypes {
     createdBy: NexusGenRootTypes['Person']; // Person!
     id: string; // ID!
     nestedCompetencies: NexusGenRootTypes['NestedCompetency'][]; // [NestedCompetency!]!
-    subCompetencies: NexusGenRootTypes['NestedCompetency'][]; // [NestedCompetency!]!
+    subCompetencies: NexusGenRootTypes['NestedCompetency'][] | null; // [NestedCompetency!]
     title: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
     updatedBy: NexusGenRootTypes['Person']; // Person!
@@ -143,7 +143,7 @@ export interface NexusGenFieldTypes {
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     createdBy: NexusGenRootTypes['Person']; // Person!
     id: string; // ID!
-    subCompetencies: NexusGenRootTypes['NestedCompetency'][]; // [NestedCompetency!]!
+    subCompetencies: NexusGenRootTypes['NestedCompetency'][] | null; // [NestedCompetency!]
     title: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
     updatedBy: NexusGenRootTypes['Person']; // Person!
