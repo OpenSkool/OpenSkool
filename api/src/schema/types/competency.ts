@@ -48,7 +48,12 @@ export const NestedCompetency = objectType({
     t.implements(Competency);
     t.nonNull.id('parentId', {
       resolve(competency, argumentz, ctx): string {
-        return competency.parentCompetencyId!;
+        if (competency.parentCompetencyId == null) {
+          throw new Error(
+            'A resolver tried to create a NestedCompetency of a Db.Competency without it having a parentCompetencyId',
+          );
+        }
+        return competency.parentCompetencyId;
       },
     });
   },
