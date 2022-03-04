@@ -3,8 +3,8 @@
  * Do not make changes to this file directly
  */
 
-import type * as db from '../schema/source-types';
-import type { Context } from '../schema/context';
+import type * as db from './../schema/source-types';
+import type { Context } from './../schema/context';
 import type { core } from 'nexus';
 declare global {
   interface NexusGenCustomInputMethods<TypeName extends string> {
