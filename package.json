@@ -11,6 +11,7 @@
     "clean": "yarn turbo run clean",
     "dev": "yarn turbo run dev",
     "format": "yarn prettier --write .",
+    "generate": "yarn turbo run generate",
     "lint": "yarn turbo run lint",
     "preview": "yarn turbo run preview",
     "test": "yarn turbo run test"

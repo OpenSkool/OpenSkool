@@ -6,6 +6,9 @@
     "build": {
       "outputs": ["dist/**"]
     },
+    "generate": {
+      "cache": false
+    },
     "clean": {
       "cache": false
     },

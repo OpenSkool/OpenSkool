@@ -1475,6 +1475,7 @@ __metadata:
     "@sinclair/typebox": ^0.23.4
     "@types/dotenv-flow": ^3.2.0
     altair-fastify-plugin: 4.4.0
+    concurrently: ^7.0.0
     dotenv-flow: ^3.2.0
     esbuild: ^0.14.24
     esbuild-node-externals: ^1.4.1
