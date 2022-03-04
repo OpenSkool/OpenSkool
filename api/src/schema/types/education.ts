@@ -5,6 +5,7 @@ import {
   inputObjectType,
   list,
   mutationField,
+  nonNull,
   objectType,
 } from 'nexus';
 
@@ -16,7 +17,7 @@ export const Education = objectType({
   definition(t) {
     t.implements(Node);
     t.implements(Accountable);
-    t.string('title', {
+    t.nonNull.string('title', {
       resolve: async (education, argumentz, ctx) => {
         return education.translations[0].title;
       },
@@ -111,7 +112,7 @@ export const educationQueries = extendType({
           },
         });
       },
-      type: list('Education'),
+      type: nonNull(list(nonNull('Education'))),
     });
   },
 });

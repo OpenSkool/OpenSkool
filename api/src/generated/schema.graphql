@@ -44,9 +44,9 @@ input EducationInput {
 }
 
 type Mutation {
-  createEducation(data: EducationInput!): Education!
-  deleteEducation(id: ID!): Node!
-  updateEducation(data: EducationInput!, id: ID!): Education!
+  createEducation(data: EducationInput!): Education
+  deleteEducation(id: ID!): Node
+  updateEducation(data: EducationInput!, id: ID!): Education
 }
 
 """

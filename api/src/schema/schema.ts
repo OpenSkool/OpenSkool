@@ -12,7 +12,7 @@ export default makeSchema({
   features: {
     abstractTypeStrategies: { resolveType: false },
   },
-  nonNullDefaults: { input: true, output: true },
+  nonNullDefaults: { input: true, output: false },
   outputs: {
     schema: path.resolve('src/generated/schema.graphql'),
     typegen: path.resolve('src/generated/nexus.ts'),
