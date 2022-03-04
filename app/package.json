@@ -10,7 +10,7 @@
     "build": "vite build",
     "clean": "rm -rf .eslintcache .turbo/ dist/",
     "codegen": "graphql-codegen --config ../.graphqlrc.yaml",
-    "dev": "concurrently -r codegen,vite 'yarn:dev:*'",
+    "dev": "concurrently 'yarn:dev:*'",
     "dev:codegen": "yarn run codegen --watch 'src/**/*.vue'",
     "dev:vite": "vite",
     "lint": "eslint --cache --ext .cjs,.js,.ts,.vue .",
