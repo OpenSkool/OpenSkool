@@ -4,7 +4,7 @@ import {
   idArg,
   interfaceType,
   list,
-  nullable,
+  nonNull,
   objectType,
 } from 'nexus';
 
@@ -18,7 +18,7 @@ export const Competency = interfaceType({
   definition(t) {
     t.implements(Node);
     t.implements(Accountable);
-    t.string('title', {
+    t.nonNull.string('title', {
       resolve(competency, argumentz, ctx) {
         return competency.translations[0].title;
       },
@@ -31,7 +31,7 @@ export const NestedCompetency = objectType({
   description: 'A competency with a parent.',
   definition(t) {
     t.implements(Competency);
-    t.id('parentId', {
+    t.nonNull.id('parentId', {
       resolve(competency, argumentz, ctx): string {
         return competency.parentCompetencyId!;
       },
@@ -44,8 +44,8 @@ export const RootCompetency = objectType({
   description: 'A competency without a parent.',
   definition(t) {
     t.implements(Competency);
-    t.field('nestedCompetencies', {
-      type: list('NestedCompetency'),
+    t.nonNull.field('nestedCompetencies', {
+      type: list(nonNull('NestedCompetency')),
     });
   },
 });
@@ -75,7 +75,7 @@ export const competencyQueries = extendType({
         }
         return competency;
       },
-      type: nullable('RootCompetency'),
+      type: 'RootCompetency',
     });
   },
 });

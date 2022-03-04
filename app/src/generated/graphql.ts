@@ -44,9 +44,9 @@ export type EducationInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createEducation: Education;
-  deleteEducation: Node;
-  updateEducation: Education;
+  createEducation?: Maybe<Education>;
+  deleteEducation?: Maybe<Node>;
+  updateEducation?: Maybe<Education>;
 };
 
 

@@ -84,9 +84,9 @@ export interface NexusGenFieldTypes {
   };
   Mutation: {
     // field return type
-    createEducation: NexusGenRootTypes['Education']; // Education!
-    deleteEducation: NexusGenRootTypes['Node']; // Node!
-    updateEducation: NexusGenRootTypes['Education']; // Education!
+    createEducation: NexusGenRootTypes['Education'] | null; // Education
+    deleteEducation: NexusGenRootTypes['Node'] | null; // Node
+    updateEducation: NexusGenRootTypes['Education'] | null; // Education
   };
   NestedCompetency: {
     // field return type
