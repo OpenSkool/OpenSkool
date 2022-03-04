@@ -2,13 +2,17 @@ import * as Db from '@prisma/client';
 import {
   extendType,
   idArg,
+  inputObjectType,
   interfaceType,
   list,
+  mutationField,
   nonNull,
   objectType,
+  unionType,
 } from 'nexus';
 
 import { Context } from '../context';
+import { UserErrorCode } from './errors';
 import { Accountable, Node } from './interfaces';
 
 export const Competency = interfaceType({
@@ -77,7 +81,7 @@ export const RootCompetency = objectType({
       async resolve(parent, argumentz, ctx) {
         const nestedCompetencies = await ctx.prisma.competency
           .findUnique({ where: { id: parent.id } })
-          .subCompetencies({
+          .nestedCompetencies({
             include: {
               translations: { where: { languageCode: Db.Language.EN } },
             },
@@ -163,5 +167,81 @@ export const CompetencyQueries = extendType({
       },
       type: 'RootCompetency',
     });
+  },
+});
+
+export const CreateCompetencyInput = inputObjectType({
+  name: 'CreateCompetencyInput',
+  definition(t) {
+    t.string('title');
+    t.nullable.string('parentId');
+  },
+});
+
+export const CreateCompetencyPayload = unionType({
+  name: 'CreateCompetencyPayload',
+  definition(t) {
+    t.members('CreateCompetencyErrorPayload', 'CreateCompetencySuccessPayload');
+  },
+  resolveType: (item) => {
+    return 'error' in item
+      ? 'CreateCompetencyErrorPayload'
+      : 'CreateCompetencySuccessPayload';
+  },
+});
+
+export const CreateCompetencyErrorPayload = objectType({
+  name: 'CreateCompetencyErrorPayload',
+  definition(t) {
+    t.nonNull.field('error', { type: 'UserError' });
+  },
+});
+
+export const CreateCompetencySuccessPayload = objectType({
+  name: 'CreateCompetencySuccessPayload',
+  definition(t) {
+    t.nonNull.field('competency', { type: 'Competency' });
+  },
+});
+
+export const CreateCompetency = mutationField('createCompetency', {
+  type: nonNull('CreateCompetencyPayload'),
+  args: {
+    currentUserId: idArg(),
+    data: CreateCompetencyInput,
+  },
+  async resolve(root, { currentUserId, data }, ctx) {
+    if (data.title.trim() === '') {
+      return {
+        error: {
+          code: UserErrorCode.VALUE_INVALID,
+          message: 'Title cannot be empty',
+          path: ['data', 'title'],
+        },
+      };
+    }
+    let rootId: string | undefined;
+    if (data.parentId != null) {
+      const parentCompetency = await ctx.prisma.competency.findUnique({
+        where: { id: data.parentId },
+      });
+      if (parentCompetency == null) {
+        throw new Error('parent competency was not found');
+      }
+      rootId = parentCompetency.rootCompetencyId ?? parentCompetency.id;
+    }
+    const competency = await ctx.prisma.competency.create({
+      data: {
+        createdById: currentUserId,
+        updatedById: currentUserId,
+        parentCompetencyId: data.parentId,
+        rootCompetencyId: rootId,
+        translations: { create: { languageCode: 'EN', title: data.title } },
+      },
+      include: {
+        translations: true,
+      },
+    });
+    return { competency };
   },
 });

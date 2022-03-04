@@ -28,6 +28,23 @@ interface Competency implements Accountable & Node {
   updatedBy: Person!
 }
 
+type CreateCompetencyErrorPayload {
+  error: UserError!
+}
+
+input CreateCompetencyInput {
+  parentId: String
+  title: String!
+}
+
+union CreateCompetencyPayload =
+    CreateCompetencyErrorPayload
+  | CreateCompetencySuccessPayload
+
+type CreateCompetencySuccessPayload {
+  competency: Competency!
+}
+
 """
 A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
 """
@@ -51,6 +68,10 @@ input EducationInput {
 }
 
 type Mutation {
+  createCompetency(
+    currentUserId: ID!
+    data: CreateCompetencyInput!
+  ): CreateCompetencyPayload!
   createEducation(data: EducationInput!): Education
   deleteEducation(id: ID!): Node
   updateEducation(data: EducationInput!, id: ID!): Education
@@ -129,4 +150,10 @@ type Teacher implements Node & Person {
   """
   id: ID!
   lastName: String
+}
+
+type UserError {
+  code: String!
+  message: String!
+  path: [String!]!
 }
