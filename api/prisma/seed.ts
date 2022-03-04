@@ -35,6 +35,14 @@ async function createCompetencies(
 async function main(): Promise<void> {
   await prisma.competency.deleteMany({ where: {} });
   await createCompetencies(competencyFixtures);
+  await prisma.education.deleteMany({ where: {} });
+  for (const educationTitle of ['Informatics', 'Chemistry', 'Medicine']) {
+    await prisma.education.create({
+      data: {
+        translations: { create: { languageCode: 'EN', title: educationTitle } },
+      },
+    });
+  }
 }
 
 (async (): Promise<void> => {
