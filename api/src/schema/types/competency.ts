@@ -45,7 +45,19 @@ export const RootCompetency = objectType({
   definition(t) {
     t.implements(Competency);
     t.nonNull.field('nestedCompetencies', {
-      type: list(nonNull('NestedCompetency')),
+      type: nonNull(list(nonNull('NestedCompetency'))),
+      async resolve(parent, argumentz, ctx) {
+        const nestedCompetencies = await ctx.prisma.competency
+          .findUnique({ where: { id: parent.id } })
+          .subCompetencies({
+            include: {
+              translations: { where: { languageCode: Db.Language.EN } },
+            },
+          });
+        return nestedCompetencies.filter(
+          (competency) => competency.translations.length > 0,
+        );
+      },
     });
   },
 });
@@ -55,18 +67,10 @@ export const competencyQueries = extendType({
   definition: (t) => {
     t.field('rootCompetency', {
       args: { id: idArg() },
-      async resolve(parent, { id }, ctx: Context, info) {
+      async resolve(root, { id }, ctx: Context, info) {
         const competency = ctx.prisma.competency.findUnique({
           include: {
-            nestedCompetencies: {
-              include: {
-                translations: { where: { languageCode: Db.Language.EN } },
-              },
-              where: {
-                translations: { some: { languageCode: Db.Language.EN } },
-              },
-            },
-            translations: true,
+            translations: { where: { languageCode: Db.Language.EN } },
           },
           where: { id },
         });
