@@ -89,6 +89,7 @@ interface Person implements Node {
 type Query {
   allEducations: [Education!]!
   allPeople: [Person!]!
+  randomRootCompetency: RootCompetency
   rootCompetency(id: ID!): RootCompetency
 }
 

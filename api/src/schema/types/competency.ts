@@ -80,6 +80,27 @@ export const RootCompetency = objectType({
 export const competencyQueries = extendType({
   type: 'Query',
   definition: (t) => {
+    t.field('randomRootCompetency', {
+      async resolve(root, argumentz, ctx) {
+        const rootCompetencyCount = await ctx.prisma.competency.count({
+          where: { parentCompetencyId: null },
+        });
+        const skip = Math.floor(Math.random() * rootCompetencyCount);
+        const competencies = await ctx.prisma.competency.findMany({
+          skip,
+          take: 1,
+
+          include: {
+            translations: { where: { languageCode: Db.Language.EN } },
+          },
+          where: {
+            translations: { some: { languageCode: Db.Language.EN } },
+          },
+        });
+        return competencies.length === 0 ? null : competencies[0];
+      },
+      type: 'RootCompetency',
+    });
     t.field('rootCompetency', {
       args: { id: idArg() },
       async resolve(root, { id }, ctx: Context, info) {
