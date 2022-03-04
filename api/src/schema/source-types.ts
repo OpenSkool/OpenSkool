@@ -5,7 +5,6 @@ export interface Node {
 }
 
 export interface Competency extends Db.Competency {
-  nestedCompetencies?: Db.Competency[];
   translations: Db.CompetencyTranslation[];
 }
 
