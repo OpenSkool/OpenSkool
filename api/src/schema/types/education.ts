@@ -102,7 +102,7 @@ export const educationQueries = extendType({
   type: 'Query',
   definition: (t) => {
     t.field('allEducations', {
-      async resolve(parent, argumentz, ctx: Context, info) {
+      async resolve(root, argumentz, ctx: Context, info) {
         return ctx.prisma.education.findMany({
           include: {
             translations: { where: { languageCode: Db.Language.EN } },
