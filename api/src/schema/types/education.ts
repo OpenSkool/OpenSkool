@@ -25,6 +25,25 @@ export const Education = objectType({
   },
 });
 
+export const EducationQueries = extendType({
+  type: 'Query',
+  definition: (t) => {
+    t.field('allEducations', {
+      async resolve(root, argumentz, ctx: Context, info) {
+        return ctx.prisma.education.findMany({
+          include: {
+            translations: { where: { languageCode: Db.Language.EN } },
+          },
+          where: {
+            translations: { some: { languageCode: Db.Language.EN } },
+          },
+        });
+      },
+      type: nonNull(list(nonNull('Education'))),
+    });
+  },
+});
+
 export const EducationInput = inputObjectType({
   name: 'EducationInput',
   definition(t) {
@@ -94,25 +113,6 @@ export const DeleteEducation = mutationField('deleteEducation', {
   async resolve(root, { id }, ctx) {
     return ctx.prisma.education.delete({
       where: { id },
-    });
-  },
-});
-
-export const educationQueries = extendType({
-  type: 'Query',
-  definition: (t) => {
-    t.field('allEducations', {
-      async resolve(root, argumentz, ctx: Context, info) {
-        return ctx.prisma.education.findMany({
-          include: {
-            translations: { where: { languageCode: Db.Language.EN } },
-          },
-          where: {
-            translations: { some: { languageCode: Db.Language.EN } },
-          },
-        });
-      },
-      type: nonNull(list(nonNull('Education'))),
     });
   },
 });
