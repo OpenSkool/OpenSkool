@@ -82,7 +82,7 @@ export const RootCompetency = objectType({
   },
 });
 
-export const competencyQueries = extendType({
+export const CompetencyQueries = extendType({
   type: 'Query',
   definition: (t) => {
     t.field('allRootCompetencies', {
