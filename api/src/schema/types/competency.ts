@@ -248,3 +248,13 @@ export const CreateCompetency = mutationField('createCompetency', {
     }, ctx);
   },
 });
+
+export const DeleteCompetency = mutationField('DeleteCompetency', {
+  type: 'Node',
+  args: {
+    id: idArg(),
+  },
+  async resolve(root, { id }, ctx) {
+    return ctx.prisma.competency.delete({ where: { id } });
+  },
+});

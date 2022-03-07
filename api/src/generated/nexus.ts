@@ -114,6 +114,7 @@ export interface NexusGenFieldTypes {
   };
   Mutation: {
     // field return type
+    DeleteCompetency: NexusGenRootTypes['Node'] | null; // Node
     createCompetency: NexusGenRootTypes['CreateCompetencyPayload']; // CreateCompetencyPayload!
     createEducation: NexusGenRootTypes['Education'] | null; // Education
     deleteEducation: NexusGenRootTypes['Node'] | null; // Node
@@ -213,6 +214,7 @@ export interface NexusGenFieldTypeNames {
   };
   Mutation: {
     // field return type name
+    DeleteCompetency: 'Node';
     createCompetency: 'CreateCompetencyPayload';
     createEducation: 'Education';
     deleteEducation: 'Node';
@@ -292,6 +294,10 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    DeleteCompetency: {
+      // args
+      id: string; // ID!
+    };
     createCompetency: {
       // args
       currentUserId: string; // ID!

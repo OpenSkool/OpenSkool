@@ -68,6 +68,7 @@ input EducationInput {
 }
 
 type Mutation {
+  DeleteCompetency(id: ID!): Node
   createCompetency(
     currentUserId: ID!
     data: CreateCompetencyInput!
