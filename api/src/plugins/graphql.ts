@@ -3,8 +3,8 @@ import plugin from 'fastify-plugin';
 import { GraphQLSchema } from 'graphql';
 import mercurius from 'mercurius';
 
-import { Context } from './context';
-import schema from './schema';
+import { Context } from '../schema/context';
+import schema from '../schema/module';
 
 export default plugin(async (app) => {
   app

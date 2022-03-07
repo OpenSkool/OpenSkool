@@ -12,7 +12,7 @@
     "clean": "rm -rf .eslintcache .turbo/ dist/",
     "dev": "NODE_ENV=development nodemon src/server.ts",
     "generate": "concurrently 'yarn:generate:*'",
-    "generate:nexus": "node -r esbuild-register src/schema/schema.ts",
+    "generate:nexus": "node -r esbuild-register src/schema/module.ts",
     "generate:prisma": "prisma generate",
     "lint": "eslint --cache --ext .cjs,.ts .",
     "preview": "NODE_ENV=production node -r dotenv-flow/config dist/server.js",
