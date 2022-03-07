@@ -9,9 +9,6 @@ export default makeSchema({
     export: 'Context',
     module: require.resolve('./context'),
   },
-  features: {
-    abstractTypeStrategies: { resolveType: false },
-  },
   nonNullDefaults: { input: true, output: false },
   outputs: {
     schema: path.resolve('src/generated/schema.graphql'),

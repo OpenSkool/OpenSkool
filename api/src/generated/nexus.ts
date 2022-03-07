@@ -296,13 +296,17 @@ export type NexusGenUnionNames = never;
 
 export type NexusGenObjectsUsingAbstractStrategyIsTypeOf = never;
 
-export type NexusGenAbstractsUsingStrategyResolveType = 'Person';
+export type NexusGenAbstractsUsingStrategyResolveType =
+  | 'Accountable'
+  | 'Competency'
+  | 'Node'
+  | 'Person';
 
 export type NexusGenFeaturesConfig = {
   abstractTypeStrategies: {
-    resolveType: false;
-    __typename: false;
     isTypeOf: false;
+    resolveType: true;
+    __typename: false;
   };
 };
 
