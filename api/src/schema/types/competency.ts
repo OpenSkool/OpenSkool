@@ -42,6 +42,11 @@ export const Competency = interfaceType({
       },
     });
   },
+  resolveType(competency) {
+    return competency.rootCompetencyId == null
+      ? 'NestedCompetency'
+      : 'RootCompetency';
+  },
 });
 
 export const NestedCompetency = objectType({

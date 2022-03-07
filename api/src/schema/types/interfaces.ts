@@ -40,6 +40,11 @@ export const Accountable = interfaceType({
       },
     });
   },
+  resolveType(data) {
+    // Not necessary to implement as long as we don't return this interface
+    // type in a resolver.
+    throw new Error('Cannot discriminate accountable type');
+  },
 });
 
 export const Node = interfaceType({
@@ -47,5 +52,10 @@ export const Node = interfaceType({
   description: 'A node is any resource that can be identified via an ID.',
   definition(t) {
     t.nonNull.id('id', { description: 'A CUID for a resource' });
+  },
+  resolveType(data) {
+    // Not necessary to implement as long as we don't return this interface
+    // type in a resolver.
+    throw new Error('Cannot discriminate node type');
   },
 });
