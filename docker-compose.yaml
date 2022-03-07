@@ -22,7 +22,7 @@ services:
       POSTGRES_USER: openskool
       POSTGRES_PASSWORD: openskool
     ports:
-      - 5432:5432
+      - 5433:5432
     restart: unless-stopped
     volumes:
       - os-api-db-test:/var/lib/postgresql/data
