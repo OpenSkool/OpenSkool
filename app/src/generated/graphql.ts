@@ -68,10 +68,16 @@ export type EducationInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  DeleteCompetency?: Maybe<Node>;
   createCompetency: CreateCompetencyPayload;
   createEducation?: Maybe<Education>;
   deleteEducation?: Maybe<Node>;
   updateEducation?: Maybe<Education>;
+};
+
+
+export type MutationDeleteCompetencyArgs = {
+  id: Scalars['ID'];
 };
 
 
