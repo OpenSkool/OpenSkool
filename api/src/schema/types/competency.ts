@@ -12,6 +12,7 @@ import {
 } from 'nexus';
 
 import { Context } from '../context';
+import { handleResolverErrors, UserError } from '../utils';
 import { UserErrorCode } from './errors';
 import { Accountable, Node } from './interfaces';
 
@@ -220,28 +221,30 @@ export const CreateCompetency = mutationField('createCompetency', {
         },
       };
     }
-    let rootId: string | undefined;
-    if (data.parentId != null) {
-      const parentCompetency = await ctx.prisma.competency.findUnique({
-        where: { id: data.parentId },
-      });
-      if (parentCompetency == null) {
-        throw new Error('parent competency was not found');
+    return handleResolverErrors(async () => {
+      let rootId: string | undefined;
+      if (data.parentId != null) {
+        const parentCompetency = await ctx.prisma.competency.findUnique({
+          where: { id: data.parentId },
+        });
+        if (parentCompetency == null) {
+          throw new UserError('Foreign key constraint failed');
+        }
+        rootId = parentCompetency.rootCompetencyId ?? parentCompetency.id;
       }
-      rootId = parentCompetency.rootCompetencyId ?? parentCompetency.id;
-    }
-    const competency = await ctx.prisma.competency.create({
-      data: {
-        createdById: currentUserId,
-        updatedById: currentUserId,
-        parentCompetencyId: data.parentId,
-        rootCompetencyId: rootId,
-        translations: { create: { languageCode: 'EN', title: data.title } },
-      },
-      include: {
-        translations: true,
-      },
-    });
-    return { competency };
+      const competency = await ctx.prisma.competency.create({
+        data: {
+          createdById: currentUserId,
+          updatedById: currentUserId,
+          parentCompetencyId: data.parentId,
+          rootCompetencyId: rootId,
+          translations: { create: { languageCode: 'EN', title: data.title } },
+        },
+        include: {
+          translations: true,
+        },
+      });
+      return { competency };
+    }, ctx);
   },
 });

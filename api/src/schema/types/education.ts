@@ -10,6 +10,7 @@ import {
 } from 'nexus';
 
 import { Context } from '../context';
+import { handleResolverErrors } from '../utils';
 import { Accountable, Node } from './interfaces';
 
 export const Education = objectType({
@@ -76,32 +77,34 @@ export const UpdateEducation = mutationField('updateEducation', {
     data: EducationInput,
   },
   async resolve(root, { id, data: { title } }, ctx) {
-    const upsert = {
-      languageCode: Db.Language.EN,
-      title,
-    };
-    const education = await ctx.prisma.education.update({
-      data: {
-        translations: {
-          upsert: {
-            create: upsert,
-            update: upsert,
-            where: {
-              educationId_languageCode: {
-                educationId: id,
-                languageCode: Db.Language.EN,
+    return handleResolverErrors(async () => {
+      const upsert = {
+        languageCode: Db.Language.EN,
+        title,
+      };
+      const education = await ctx.prisma.education.update({
+        data: {
+          translations: {
+            upsert: {
+              create: upsert,
+              update: upsert,
+              where: {
+                educationId_languageCode: {
+                  educationId: id,
+                  languageCode: Db.Language.EN,
+                },
               },
             },
           },
         },
-      },
-      include: { translations: true },
-      where: { id },
-    });
-    return {
-      ...education,
-      title,
-    };
+        include: { translations: true },
+        where: { id },
+      });
+      return {
+        ...education,
+        title,
+      };
+    }, ctx);
   },
 });
 
@@ -111,8 +114,10 @@ export const DeleteEducation = mutationField('deleteEducation', {
     id: idArg(),
   },
   async resolve(root, { id }, ctx) {
-    return ctx.prisma.education.delete({
-      where: { id },
-    });
+    return handleResolverErrors(() => {
+      return ctx.prisma.education.delete({
+        where: { id },
+      });
+    }, ctx);
   },
 });
