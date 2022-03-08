@@ -12,7 +12,7 @@
     "clean": "rm -rf .eslintcache .turbo/ dist/",
     "dev": "FORCE_COLOR=1 NODE_ENV=development nodemon src/server.ts",
     "generate": "yarn run generate:prisma && yarn run generate:nexus",
-    "generate:nexus": "node -r esbuild-register src/schema/module.ts",
+    "generate:nexus": "node -r dotenv-flow/config -r esbuild-register src/schema/module.ts",
     "generate:prisma": "prisma generate",
     "lint": "eslint --cache --ext .cjs,.ts .",
     "preview": "NODE_ENV=production node -r dotenv-flow/config dist/server.js",
@@ -33,6 +33,7 @@
     "graphql-scalars": "^1.15.0",
     "mercurius": "^9.3.3",
     "nexus": "^1.2.0",
+    "pino": "^6.13.0",
     "read-pkg-up": "^9.1.0"
   },
   "devDependencies": {
@@ -40,6 +41,7 @@
     "@os/eslint-config": "workspace:*",
     "@os/tsconfig": "workspace:*",
     "@types/dotenv-flow": "^3.2.0",
+    "@types/pino": "^6.3.12",
     "dotenv-flow": "^3.2.0",
     "esbuild": "^0.14.24",
     "esbuild-node-externals": "^1.4.1",

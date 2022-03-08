@@ -1,4 +1,3 @@
-import * as Db from '@prisma/client';
 import {
   extendType,
   idArg,
@@ -11,9 +10,10 @@ import {
   unionType,
 } from 'nexus';
 
+import { ValidationError } from '../../errors';
+import { CompetencyService } from '../../services/module';
 import { Context } from '../context';
-import { handleResolverErrors, UserError } from '../utils';
-import { UserErrorCode } from './errors';
+import { handleResolverError } from '../utils';
 import { Accountable, Node } from './interfaces';
 
 export const Competency = interfaceType({
@@ -26,19 +26,13 @@ export const Competency = interfaceType({
     t.field('subCompetencies', {
       type: list(nonNull('NestedCompetency')),
       async resolve(parent, argumentz, ctx) {
-        const subCompetencies = await ctx.prisma.competency
-          .findUnique({ where: { id: parent.id } })
-          .subCompetencies({
-            include: {
-              translations: { where: { languageCode: Db.Language.EN } },
-            },
-          });
-        if (subCompetencies.length === 0) {
-          return null;
+        try {
+          return await CompetencyService.findSubCompetenciesByParentId(
+            parent.id,
+          );
+        } catch (error) {
+          handleResolverError(error, ctx);
         }
-        return subCompetencies.filter(
-          (competency) => competency.translations.length > 0,
-        );
       },
     });
     t.nonNull.string('title', {
@@ -80,16 +74,13 @@ export const RootCompetency = objectType({
     t.nonNull.field('nestedCompetencies', {
       type: nonNull(list(nonNull('NestedCompetency'))),
       async resolve(parent, argumentz, ctx) {
-        const nestedCompetencies = await ctx.prisma.competency
-          .findUnique({ where: { id: parent.id } })
-          .nestedCompetencies({
-            include: {
-              translations: { where: { languageCode: Db.Language.EN } },
-            },
-          });
-        return nestedCompetencies.filter(
-          (competency) => competency.translations.length > 0,
-        );
+        try {
+          return await CompetencyService.getNestedCompetenciesByRootId(
+            parent.id,
+          );
+        } catch (error) {
+          handleResolverError(error, ctx);
+        }
       },
     });
   },
@@ -100,71 +91,42 @@ export const CompetencyQueries = extendType({
   definition: (t) => {
     t.field('allRootCompetencies', {
       async resolve(root, argumentz, ctx) {
-        return ctx.prisma.competency.findMany({
-          include: {
-            translations: { where: { languageCode: Db.Language.EN } },
-          },
-          where: {
-            parentCompetencyId: null,
-            translations: { some: { languageCode: Db.Language.EN } },
-          },
-        });
+        try {
+          return await CompetencyService.getAllRootCompetencies();
+        } catch (error) {
+          handleResolverError(error, ctx);
+        }
       },
       type: list('RootCompetency'),
     });
     t.field('randomCompetency', {
       async resolve(root, argumentz, ctx) {
-        const competencyCount = await ctx.prisma.competency.count();
-        const skip = Math.floor(Math.random() * competencyCount);
-        const competencies = await ctx.prisma.competency.findMany({
-          skip,
-          take: 1,
-
-          include: {
-            translations: { where: { languageCode: Db.Language.EN } },
-          },
-          where: {
-            translations: { some: { languageCode: Db.Language.EN } },
-          },
-        });
-        return competencies.length === 0 ? null : competencies[0];
+        try {
+          return await CompetencyService.findRandomCompetency();
+        } catch (error) {
+          handleResolverError(error, ctx);
+        }
       },
       type: 'Competency',
     });
     t.field('randomRootCompetency', {
       async resolve(root, argumentz, ctx) {
-        const rootCompetencyCount = await ctx.prisma.competency.count({
-          where: { parentCompetencyId: null },
-        });
-        const skip = Math.floor(Math.random() * rootCompetencyCount);
-        const competencies = await ctx.prisma.competency.findMany({
-          skip,
-          take: 1,
-
-          include: {
-            translations: { where: { languageCode: Db.Language.EN } },
-          },
-          where: {
-            translations: { some: { languageCode: Db.Language.EN } },
-          },
-        });
-        return competencies.length === 0 ? null : competencies[0];
+        try {
+          return await CompetencyService.findRandomRootCompetency();
+        } catch (error) {
+          handleResolverError(error, ctx);
+        }
       },
       type: 'RootCompetency',
     });
     t.field('rootCompetency', {
       args: { id: idArg() },
       async resolve(root, { id }, ctx: Context, info) {
-        const competency = ctx.prisma.competency.findUnique({
-          include: {
-            translations: { where: { languageCode: Db.Language.EN } },
-          },
-          where: { id },
-        });
-        if (competency.translations.length === 0) {
-          return null;
+        try {
+          return await CompetencyService.findRootCompetencyById(id);
+        } catch (error) {
+          handleResolverError(error, ctx);
         }
-        return competency;
       },
       type: 'RootCompetency',
     });
@@ -212,40 +174,23 @@ export const CreateCompetency = mutationField('createCompetency', {
     data: CreateCompetencyInput,
   },
   async resolve(root, { currentUserId, data }, ctx) {
-    if (data.title.trim() === '') {
-      return {
-        error: {
-          code: UserErrorCode.VALUE_INVALID,
-          message: 'Title cannot be empty',
-          path: ['data', 'title'],
-        },
-      };
-    }
-    return handleResolverErrors(async () => {
-      let rootId: string | undefined;
-      if (data.parentId != null) {
-        const parentCompetency = await ctx.prisma.competency.findUnique({
-          where: { id: data.parentId },
-        });
-        if (parentCompetency == null) {
-          throw new UserError('Foreign key constraint failed');
-        }
-        rootId = parentCompetency.rootCompetencyId ?? parentCompetency.id;
-      }
-      const competency = await ctx.prisma.competency.create({
-        data: {
-          createdById: currentUserId,
-          updatedById: currentUserId,
-          parentCompetencyId: data.parentId,
-          rootCompetencyId: rootId,
-          translations: { create: { languageCode: 'EN', title: data.title } },
-        },
-        include: {
-          translations: true,
-        },
+    try {
+      const competency = await CompetencyService.createCompetency(data, {
+        currentUserId,
       });
       return { competency };
-    }, ctx);
+    } catch (error) {
+      if (error instanceof ValidationError) {
+        return {
+          error: {
+            code: error.extensions.code,
+            message: error.message,
+            path: error.extensions.path,
+          },
+        };
+      }
+      handleResolverError(error, ctx);
+    }
   },
 });
 
@@ -255,6 +200,6 @@ export const DeleteCompetency = mutationField('deleteCompetency', {
     id: idArg(),
   },
   async resolve(root, { id }, ctx) {
-    return ctx.prisma.competency.delete({ where: { id } });
+    return CompetencyService.deleteCompetency(id);
   },
 });

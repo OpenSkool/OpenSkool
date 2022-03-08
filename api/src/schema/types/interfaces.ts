@@ -1,6 +1,8 @@
 import * as Db from '@prisma/client';
 import { interfaceType } from 'nexus';
 
+import { PersonService } from '../../services/module';
+
 const DELETED_USER: Db.Person = {
   id: '__DELETED_USER__',
   firstName: 'Deleted',
@@ -20,10 +22,8 @@ export const Accountable = interfaceType({
         if (parent.createdById == null) {
           return DELETED_USER;
         }
-        const user = await ctx.prisma.person.findUnique({
-          where: { id: parent.createdById },
-        });
-        return user ?? DELETED_USER;
+        const person = await PersonService.findPersonById(parent.createdById);
+        return person ?? DELETED_USER;
       },
     });
     t.nonNull.dateTime('updatedAt');
@@ -33,10 +33,8 @@ export const Accountable = interfaceType({
         if (parent.updatedById == null) {
           return DELETED_USER;
         }
-        const user = await ctx.prisma.person.findUnique({
-          where: { id: parent.updatedById },
-        });
-        return user ?? DELETED_USER;
+        const person = await PersonService.findPersonById(parent.updatedById);
+        return person ?? DELETED_USER;
       },
     });
   },
