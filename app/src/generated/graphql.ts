@@ -134,7 +134,7 @@ export type Query = {
   allEducations: Array<Education>;
   allPeople: Array<Person>;
   allRootCompetencies?: Maybe<Array<Maybe<RootCompetency>>>;
-  randomCompetency?: Maybe<RootCompetency>;
+  randomCompetency?: Maybe<Competency>;
   randomRootCompetency?: Maybe<RootCompetency>;
   rootCompetency?: Maybe<RootCompetency>;
 };

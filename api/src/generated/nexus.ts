@@ -138,7 +138,7 @@ export interface NexusGenFieldTypes {
     allRootCompetencies: Array<
       NexusGenRootTypes['RootCompetency'] | null
     > | null; // [RootCompetency]
-    randomCompetency: NexusGenRootTypes['RootCompetency'] | null; // RootCompetency
+    randomCompetency: NexusGenRootTypes['Competency'] | null; // Competency
     randomRootCompetency: NexusGenRootTypes['RootCompetency'] | null; // RootCompetency
     rootCompetency: NexusGenRootTypes['RootCompetency'] | null; // RootCompetency
   };
@@ -236,7 +236,7 @@ export interface NexusGenFieldTypeNames {
     allEducations: 'Education';
     allPeople: 'Person';
     allRootCompetencies: 'RootCompetency';
-    randomCompetency: 'RootCompetency';
+    randomCompetency: 'Competency';
     randomRootCompetency: 'RootCompetency';
     rootCompetency: 'RootCompetency';
   };
