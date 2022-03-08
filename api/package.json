@@ -10,7 +10,7 @@
     "bootstrap": "yarn run generate",
     "build": "node scripts/build.cjs",
     "clean": "rm -rf .eslintcache .turbo/ dist/",
-    "dev": "NODE_ENV=development nodemon src/server.ts",
+    "dev": "FORCE_COLOR=1 NODE_ENV=development nodemon src/server.ts",
     "generate": "concurrently 'yarn:generate:*'",
     "generate:nexus": "node -r esbuild-register src/schema/module.ts",
     "generate:prisma": "prisma generate",
