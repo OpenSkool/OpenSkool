@@ -1,7 +1,5 @@
-import * as Db from '@prisma/client';
 import { extendType, interfaceType, list, nonNull, objectType } from 'nexus';
 
-import { NexusGenFieldTypeNames } from '../../generated/nexus';
 import { Node } from './interfaces';
 
 export const Person = interfaceType({
@@ -11,9 +9,7 @@ export const Person = interfaceType({
     t.string('firstName');
     t.string('lastName');
   },
-  // @ts-expect-error "Nexus types are wrong here. this code works fine."
-  // https://nexusjs.org/docs/guides/abstract-types#centralized-strategy-resolvetype
-  resolveType(person: Db.Person): keyof NexusGenFieldTypeNames {
+  resolveType(person) {
     switch (person.role) {
       default:
         throw new Error(
