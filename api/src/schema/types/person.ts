@@ -1,5 +1,6 @@
 import { extendType, interfaceType, list, nonNull, objectType } from 'nexus';
 
+import { PersonService } from '../../services/module';
 import { Node } from './interfaces';
 
 export const Person = interfaceType({
@@ -34,7 +35,7 @@ export const peopleQueries = extendType({
     t.field('allPeople', {
       type: nonNull(list(nonNull(Person))),
       async resolve(root, argumentz, ctx) {
-        return ctx.prisma.person.findMany();
+        return PersonService.getAllPeople();
       },
     });
   },

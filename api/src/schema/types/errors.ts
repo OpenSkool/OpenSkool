@@ -1,9 +1,5 @@
 import { list, nonNull, objectType } from 'nexus';
 
-export enum UserErrorCode {
-  VALUE_INVALID = 'valueInvalid',
-}
-
 export const UserError = objectType({
   name: 'UserError',
   definition(t) {

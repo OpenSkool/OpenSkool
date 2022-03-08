@@ -7,6 +7,7 @@ import { expect, test } from 'vitest';
 
 import app from '../src/app';
 import { NexusGenFieldTypes } from '../src/generated/nexus';
+import { prisma } from '../src/prisma';
 
 test('create educations', async () => {
   const title = faker.commerce.productName();
@@ -29,7 +30,7 @@ test('create educations', async () => {
   );
   expect(createEducation).toMatchObject({ title });
   expect(
-    await app.prisma.education.findUnique({
+    await prisma.education.findUnique({
       where: { id: createEducation.id },
       include: { translations: true },
     }),
@@ -39,7 +40,7 @@ test('create educations', async () => {
 });
 
 test('update education', async () => {
-  const education = await app.prisma.education.create({
+  const education = await prisma.education.create({
     data: {
       translations: {
         create: {
@@ -69,7 +70,7 @@ test('update education', async () => {
   );
   expect(updateEducation).toMatchObject({ title });
   expect(
-    await app.prisma.education.findUnique({
+    await prisma.education.findUnique({
       where: { id: updateEducation.id },
       include: { translations: true },
     }),
@@ -79,7 +80,7 @@ test('update education', async () => {
 });
 
 test('delete education', async () => {
-  const education = await app.prisma.education.create({
+  const education = await prisma.education.create({
     data: {
       translations: {
         create: {
@@ -104,6 +105,6 @@ test('delete education', async () => {
     { variables: { id: education.id } },
   );
   expect(
-    await app.prisma.education.findUnique({ where: { id: education.id } }),
+    await prisma.education.findUnique({ where: { id: education.id } }),
   ).toBe(null);
 });

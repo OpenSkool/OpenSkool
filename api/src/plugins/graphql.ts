@@ -15,7 +15,7 @@ export default plugin(async (app) => {
     })
     .register(mercurius, {
       context: (request, reply): Context => {
-        return { prisma: app.prisma, request, reply };
+        return { request, reply };
       },
       schema: schema as unknown as GraphQLSchema,
     });

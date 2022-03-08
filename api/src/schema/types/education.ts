@@ -1,4 +1,3 @@
-import * as Db from '@prisma/client';
 import {
   extendType,
   idArg,
@@ -9,8 +8,9 @@ import {
   objectType,
 } from 'nexus';
 
+import { EducationService } from '../../services/module';
 import { Context } from '../context';
-import { handleResolverErrors } from '../utils';
+import { handleResolverError } from '../utils';
 import { Accountable, Node } from './interfaces';
 
 export const Education = objectType({
@@ -31,14 +31,11 @@ export const EducationQueries = extendType({
   definition: (t) => {
     t.field('allEducations', {
       async resolve(root, argumentz, ctx: Context, info) {
-        return ctx.prisma.education.findMany({
-          include: {
-            translations: { where: { languageCode: Db.Language.EN } },
-          },
-          where: {
-            translations: { some: { languageCode: Db.Language.EN } },
-          },
-        });
+        try {
+          return await EducationService.getAllEducations();
+        } catch (error) {
+          handleResolverError(error, ctx);
+        }
       },
       type: nonNull(list(nonNull('Education'))),
     });
@@ -57,16 +54,12 @@ export const CreateEducation = mutationField('createEducation', {
   args: {
     data: EducationInput,
   },
-  async resolve(root, { data: { title } }, ctx) {
-    const education = await ctx.prisma.education.create({
-      data: {
-        translations: {
-          create: { languageCode: Db.Language.EN, title },
-        },
-      },
-      include: { translations: true },
-    });
-    return { ...education, title };
+  async resolve(root, { data }, ctx) {
+    try {
+      return await EducationService.createEducation(data);
+    } catch (error) {
+      handleResolverError(error, ctx);
+    }
   },
 });
 
@@ -76,35 +69,12 @@ export const UpdateEducation = mutationField('updateEducation', {
     id: idArg(),
     data: EducationInput,
   },
-  async resolve(root, { id, data: { title } }, ctx) {
-    return handleResolverErrors(async () => {
-      const upsert = {
-        languageCode: Db.Language.EN,
-        title,
-      };
-      const education = await ctx.prisma.education.update({
-        data: {
-          translations: {
-            upsert: {
-              create: upsert,
-              update: upsert,
-              where: {
-                educationId_languageCode: {
-                  educationId: id,
-                  languageCode: Db.Language.EN,
-                },
-              },
-            },
-          },
-        },
-        include: { translations: true },
-        where: { id },
-      });
-      return {
-        ...education,
-        title,
-      };
-    }, ctx);
+  async resolve(root, { id, data }, ctx) {
+    try {
+      return await EducationService.updateEducation(id, data);
+    } catch (error) {
+      handleResolverError(error, ctx);
+    }
   },
 });
 
@@ -114,10 +84,10 @@ export const DeleteEducation = mutationField('deleteEducation', {
     id: idArg(),
   },
   async resolve(root, { id }, ctx) {
-    return handleResolverErrors(() => {
-      return ctx.prisma.education.delete({
-        where: { id },
-      });
-    }, ctx);
+    try {
+      return await EducationService.deleteEducation(id);
+    } catch (error) {
+      handleResolverError(error, ctx);
+    }
   },
 });
