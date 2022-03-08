@@ -120,7 +120,7 @@ type Query {
   allEducations: [Education!]!
   allPeople: [Person!]!
   allRootCompetencies: [RootCompetency]
-  randomCompetency: RootCompetency
+  randomCompetency: Competency
   randomRootCompetency: RootCompetency
   rootCompetency(id: ID!): RootCompetency
 }

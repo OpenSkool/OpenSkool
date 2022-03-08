@@ -129,7 +129,7 @@ export const CompetencyQueries = extendType({
         });
         return competencies.length === 0 ? null : competencies[0];
       },
-      type: 'RootCompetency',
+      type: 'Competency',
     });
     t.field('randomRootCompetency', {
       async resolve(root, argumentz, ctx) {
