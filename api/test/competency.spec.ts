@@ -218,3 +218,30 @@ describe('CreateCompetency', () => {
     );
   });
 });
+
+describe('DeleteCompetency', () => {
+  test('should delete competency', async () => {
+    const person = await prisma.person.create({
+      data: { firstName: 'Jos', lastName: 'Vermeulen', role: 'TEACHER' },
+      select: { id: true },
+    });
+    const competency = await CompetencyService.createCompetency(
+      { title: 'Hello World!' },
+      { currentUserId: person.id },
+    );
+    const client = createMercuriusTestClient(app);
+    await client.mutate<{ deleteCompetency: { id: string } }, { id: string }>(
+      gql`
+        mutation ($id: ID!) {
+          deleteCompetency(id: $id) {
+            id
+          }
+        }
+      `,
+      { variables: { id: competency.id } },
+    );
+    expect(
+      await prisma.competency.findUnique({ where: { id: competency.id } }),
+    ).toBe(null);
+  });
+});
