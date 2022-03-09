@@ -3,11 +3,46 @@ import { createMercuriusTestClient } from 'mercurius-integration-testing';
 import { describe, expect, test } from 'vitest';
 
 import app from '../src/app';
-import { NexusGenFieldTypes } from '../src/generated/nexus';
 import { prisma } from '../src/prisma';
+import { UserErrorModel } from '../src/schema/types/errors';
 import { CompetencyService } from '../src/services/module';
 
 describe('createCompetency', () => {
+  test('error on invalid title', async () => {
+    const person = await prisma.person.create({
+      data: { firstName: 'Jos', lastName: 'Vermeulen', role: 'TEACHER' },
+      select: { id: true },
+    });
+    const client = createMercuriusTestClient(app);
+    const {
+      data: { createCompetency },
+    } = await client.mutate<
+      { createCompetency: { error?: UserErrorModel } },
+      { currentUserId: string; title: string }
+    >(
+      gql`
+        mutation ($currentUserId: ID!, $title: String!) {
+          createCompetency(
+            currentUserId: $currentUserId
+            data: { title: $title }
+          ) {
+            ... on CreateCompetencyErrorPayload {
+              error {
+                code
+                path
+              }
+            }
+          }
+        }
+      `,
+      { variables: { currentUserId: person.id, title: '  ' } },
+    );
+    expect(createCompetency.error).toMatchObject({
+      code: 'valueInvalid',
+      path: ['title'],
+    });
+  });
+
   test('should create root competency', async () => {
     const person = await prisma.person.create({
       data: { firstName: 'Jos', lastName: 'Vermeulen', role: 'TEACHER' },
@@ -163,6 +198,52 @@ describe('deleteCompetency', () => {
 });
 
 describe('renameCompetency', () => {
+  test('error on invalid title', async () => {
+    const person = await prisma.person.create({
+      data: { firstName: 'Jos', lastName: 'Vermeulen', role: 'TEACHER' },
+      select: { id: true },
+    });
+    const competency = await CompetencyService.createCompetency(
+      { title: 'Hello World!' },
+      { currentUserId: person.id },
+    );
+    const client = createMercuriusTestClient(app);
+    const {
+      data: { renameCompetency },
+    } = await client.mutate<
+      { renameCompetency: { error?: UserErrorModel } },
+      { currentUserId: string; id: string; title: string }
+    >(
+      gql`
+        mutation ($id: ID!, $currentUserId: ID!, $title: String!) {
+          renameCompetency(
+            currentUserId: $currentUserId
+            id: $id
+            data: { title: $title }
+          ) {
+            ... on RenameCompetencyErrorPayload {
+              error {
+                code
+                path
+              }
+            }
+          }
+        }
+      `,
+      {
+        variables: {
+          currentUserId: person.id,
+          id: competency.id,
+          title: '  ',
+        },
+      },
+    );
+    expect(renameCompetency.error).toMatchObject({
+      code: 'valueInvalid',
+      path: ['title'],
+    });
+  });
+
   test('should rename competency', async () => {
     const person = await prisma.person.create({
       data: { firstName: 'Jos', lastName: 'Vermeulen', role: 'TEACHER' },
