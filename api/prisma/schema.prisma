@@ -34,7 +34,7 @@ model Competency {
   rootCompetencyId   String?
 
   subCompetencies    Competency[] @relation("CompetencyToCompetency")
-  parentCompetency   Competency?  @relation("CompetencyToCompetency", fields: [parentCompetencyId], references: [id])
+  parentCompetency   Competency?  @relation("CompetencyToCompetency", fields: [parentCompetencyId], onDelete: Cascade, references: [id])
   parentCompetencyId String?
 
   translations CompetencyTranslation[]
