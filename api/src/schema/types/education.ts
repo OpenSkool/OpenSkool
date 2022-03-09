@@ -83,7 +83,7 @@ export const UpdateEducation = mutationField('updateEducation', {
 });
 
 export const DeleteEducation = mutationField('deleteEducation', {
-  type: Node,
+  type: 'Education',
   args: {
     id: idArg(),
   },

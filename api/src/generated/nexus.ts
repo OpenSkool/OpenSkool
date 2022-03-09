@@ -5,7 +5,7 @@
 
 import type { Context } from './../schema/context';
 import type { UserErrorModel } from './../schema/types/errors';
-import type { Node } from './../services/types';
+import type { NodeModel } from './../schema/types/interfaces';
 import type { CreateCompetencyPayloadModel } from './../schema/types/competency';
 import type { CompetencyModel } from './../services/competency';
 import type { EducationModel } from './../services/education';
@@ -87,7 +87,7 @@ export interface NexusGenInterfaces {
   Competency:
     | NexusGenRootTypes['NestedCompetency']
     | NexusGenRootTypes['RootCompetency'];
-  Node: Node;
+  Node: NodeModel;
   Person: NexusGenRootTypes['Teacher'];
 }
 
@@ -123,8 +123,8 @@ export interface NexusGenFieldTypes {
     // field return type
     createCompetency: NexusGenRootTypes['CreateCompetencyPayload']; // CreateCompetencyPayload!
     createEducation: NexusGenRootTypes['Education'] | null; // Education
-    deleteCompetency: NexusGenRootTypes['Node'] | null; // Node
-    deleteEducation: NexusGenRootTypes['Node'] | null; // Node
+    deleteCompetency: NexusGenRootTypes['Competency'] | null; // Competency
+    deleteEducation: NexusGenRootTypes['Education'] | null; // Education
     updateEducation: NexusGenRootTypes['Education'] | null; // Education
   };
   NestedCompetency: {
@@ -223,8 +223,8 @@ export interface NexusGenFieldTypeNames {
     // field return type name
     createCompetency: 'CreateCompetencyPayload';
     createEducation: 'Education';
-    deleteCompetency: 'Node';
-    deleteEducation: 'Node';
+    deleteCompetency: 'Competency';
+    deleteEducation: 'Education';
     updateEducation: 'Education';
   };
   NestedCompetency: {

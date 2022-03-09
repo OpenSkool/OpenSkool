@@ -213,7 +213,7 @@ export const CreateCompetency = mutationField('createCompetency', {
 });
 
 export const DeleteCompetency = mutationField('deleteCompetency', {
-  type: 'Node',
+  type: 'Competency',
   args: {
     id: idArg(),
   },

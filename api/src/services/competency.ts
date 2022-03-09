@@ -2,7 +2,6 @@ import { Competency, CompetencyTranslation, Language } from '@prisma/client';
 
 import { UserError, UserErrorCode, ValidationError } from '../errors';
 import { prisma } from '../prisma';
-import { Node } from './types';
 
 export interface CompetencyModel extends Competency {
   translations: CompetencyTranslation[];
@@ -52,9 +51,9 @@ export async function createCompetency(
   return competency;
 }
 
-export function deleteCompetency(id: string): Promise<Node> {
+export function deleteCompetency(id: string): Promise<CompetencyModel> {
   return prisma.competency.delete({
-    select: { id: true },
+    include: { translations: true },
     where: { id },
   });
 }

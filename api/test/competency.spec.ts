@@ -230,7 +230,10 @@ describe('DeleteCompetency', () => {
       { currentUserId: person.id },
     );
     const client = createMercuriusTestClient(app);
-    await client.mutate<{ deleteCompetency: { id: string } }, { id: string }>(
+    const deletedCompetency = await client.mutate<
+      { deleteCompetency: { id: string } },
+      { id: string }
+    >(
       gql`
         mutation ($id: ID!) {
           deleteCompetency(id: $id) {
@@ -239,6 +242,10 @@ describe('DeleteCompetency', () => {
         }
       `,
       { variables: { id: competency.id } },
+    );
+    expect(deletedCompetency.data).toHaveProperty(
+      'deleteCompetency.id',
+      competency.id,
     );
     expect(
       await prisma.competency.findUnique({ where: { id: competency.id } }),

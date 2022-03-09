@@ -73,8 +73,8 @@ type Mutation {
     data: CreateCompetencyInput!
   ): CreateCompetencyPayload!
   createEducation(data: EducationInput!): Education
-  deleteCompetency(id: ID!): Node
-  deleteEducation(id: ID!): Node
+  deleteCompetency(id: ID!): Competency
+  deleteEducation(id: ID!): Education
   updateEducation(data: EducationInput!, id: ID!): Education
 }
 

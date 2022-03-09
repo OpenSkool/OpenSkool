@@ -45,6 +45,10 @@ export const Accountable = interfaceType({
   },
 });
 
+export interface NodeModel {
+  id: string;
+}
+
 export const Node = interfaceType({
   name: 'Node',
   description: 'A node is any resource that can be identified via an ID.',
@@ -57,7 +61,7 @@ export const Node = interfaceType({
     throw new Error('Cannot discriminate node type');
   },
   sourceType: {
-    export: 'Node',
-    module: require.resolve('../../services/types'),
+    export: 'NodeModel',
+    module: __filename,
   },
 });

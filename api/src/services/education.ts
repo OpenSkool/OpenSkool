@@ -1,7 +1,6 @@
 import { Education, EducationTranslation, Language } from '@prisma/client';
 
 import { prisma } from '../prisma';
-import { Node } from './types';
 
 export interface EducationModel extends Education {
   translations: EducationTranslation[];
@@ -31,9 +30,9 @@ export async function createEducation(data: {
   });
 }
 
-export async function deleteEducation(id: string): Promise<Node> {
+export async function deleteEducation(id: string): Promise<EducationModel> {
   return prisma.education.delete({
-    select: { id: true },
+    include: { translations: true },
     where: { id },
   });
 }

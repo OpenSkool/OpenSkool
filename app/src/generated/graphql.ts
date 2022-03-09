@@ -70,8 +70,8 @@ export type Mutation = {
   __typename?: 'Mutation';
   createCompetency: CreateCompetencyPayload;
   createEducation?: Maybe<Education>;
-  deleteCompetency?: Maybe<Node>;
-  deleteEducation?: Maybe<Node>;
+  deleteCompetency?: Maybe<Competency>;
+  deleteEducation?: Maybe<Education>;
   updateEducation?: Maybe<Education>;
 };
 
