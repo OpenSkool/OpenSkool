@@ -189,7 +189,7 @@ export const CreateCompetency = mutationField('createCompetency', {
   type: nonNull('CreateCompetencyPayload'),
   args: {
     currentUserId: idArg(),
-    data: CreateCompetencyInput,
+    data: 'CreateCompetencyInput',
   },
   async resolve(root, { currentUserId, data }, ctx) {
     try {
@@ -219,5 +219,76 @@ export const DeleteCompetency = mutationField('deleteCompetency', {
   },
   async resolve(root, { id }, ctx) {
     return CompetencyService.deleteCompetency(id);
+  },
+});
+
+export const RenameCompetencyInput = inputObjectType({
+  name: 'RenameCompetencyInput',
+  definition(t) {
+    t.string('title');
+  },
+});
+
+export type RenameCompetencyPayloadModel =
+  | { error: UserErrorModel }
+  | { competency: CompetencyModel };
+
+export const RenameCompetencyPayload = unionType({
+  name: 'RenameCompetencyPayload',
+  definition(t) {
+    t.members('RenameCompetencyErrorPayload', 'RenameCompetencySuccessPayload');
+  },
+  resolveType: (item) => {
+    return 'error' in item
+      ? 'RenameCompetencyErrorPayload'
+      : 'RenameCompetencySuccessPayload';
+  },
+  sourceType: {
+    export: 'RenameCompetencyPayloadModel',
+    module: __filename,
+  },
+});
+
+export const RenameCompetencyErrorPayload = objectType({
+  name: 'RenameCompetencyErrorPayload',
+  definition(t) {
+    t.nonNull.field('error', { type: 'UserError' });
+  },
+});
+
+export const RenameCompetencySuccessPayload = objectType({
+  name: 'RenameCompetencySuccessPayload',
+  definition(t) {
+    t.nonNull.field('competency', { type: 'Competency' });
+  },
+});
+
+export const RenameCompetency = mutationField('renameCompetency', {
+  type: nonNull('RenameCompetencyPayload'),
+  args: {
+    currentUserId: idArg(),
+    id: idArg(),
+    data: 'RenameCompetencyInput',
+  },
+  async resolve(root, { currentUserId, id, data }, ctx) {
+    try {
+      const competency = await CompetencyService.updateCompetencyTranslations(
+        id,
+        data,
+        { currentUserId },
+      );
+      return { competency };
+    } catch (error) {
+      if (error instanceof ValidationError) {
+        return {
+          error: {
+            code: error.extensions.code,
+            message: error.message,
+            path: error.extensions.path,
+          },
+        };
+      }
+      handleResolverError(error, ctx);
+    }
   },
 });

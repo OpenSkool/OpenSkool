@@ -6,7 +6,10 @@
 import type { Context } from './../schema/context';
 import type { UserErrorModel } from './../schema/types/errors';
 import type { NodeModel } from './../schema/types/interfaces';
-import type { CreateCompetencyPayloadModel } from './../schema/types/competency';
+import type {
+  CreateCompetencyPayloadModel,
+  RenameCompetencyPayloadModel,
+} from './../schema/types/competency';
 import type { CompetencyModel } from './../services/competency';
 import type { EducationModel } from './../services/education';
 import type { Person } from '@prisma/client';
@@ -48,6 +51,10 @@ export interface NexusGenInputs {
     // input type
     title: string; // String!
   };
+  RenameCompetencyInput: {
+    // input type
+    title: string; // String!
+  };
 }
 
 export interface NexusGenEnums {}
@@ -74,6 +81,14 @@ export interface NexusGenObjects {
   Mutation: {};
   NestedCompetency: CompetencyModel;
   Query: {};
+  RenameCompetencyErrorPayload: {
+    // root type
+    error: NexusGenRootTypes['UserError']; // UserError!
+  };
+  RenameCompetencySuccessPayload: {
+    // root type
+    competency: NexusGenRootTypes['Competency']; // Competency!
+  };
   RootCompetency: CompetencyModel;
   Teacher: Person;
   UserError: UserErrorModel;
@@ -93,6 +108,7 @@ export interface NexusGenInterfaces {
 
 export interface NexusGenUnions {
   CreateCompetencyPayload: CreateCompetencyPayloadModel;
+  RenameCompetencyPayload: RenameCompetencyPayloadModel;
 }
 
 export type NexusGenRootTypes = NexusGenInterfaces &
@@ -125,6 +141,7 @@ export interface NexusGenFieldTypes {
     createEducation: NexusGenRootTypes['Education'] | null; // Education
     deleteCompetency: NexusGenRootTypes['Competency'] | null; // Competency
     deleteEducation: NexusGenRootTypes['Education'] | null; // Education
+    renameCompetency: NexusGenRootTypes['RenameCompetencyPayload']; // RenameCompetencyPayload!
     updateEducation: NexusGenRootTypes['Education'] | null; // Education
   };
   NestedCompetency: {
@@ -148,6 +165,14 @@ export interface NexusGenFieldTypes {
     randomCompetency: NexusGenRootTypes['Competency'] | null; // Competency
     randomRootCompetency: NexusGenRootTypes['RootCompetency'] | null; // RootCompetency
     rootCompetency: NexusGenRootTypes['RootCompetency'] | null; // RootCompetency
+  };
+  RenameCompetencyErrorPayload: {
+    // field return type
+    error: NexusGenRootTypes['UserError']; // UserError!
+  };
+  RenameCompetencySuccessPayload: {
+    // field return type
+    competency: NexusGenRootTypes['Competency']; // Competency!
   };
   RootCompetency: {
     // field return type
@@ -225,6 +250,7 @@ export interface NexusGenFieldTypeNames {
     createEducation: 'Education';
     deleteCompetency: 'Competency';
     deleteEducation: 'Education';
+    renameCompetency: 'RenameCompetencyPayload';
     updateEducation: 'Education';
   };
   NestedCompetency: {
@@ -246,6 +272,14 @@ export interface NexusGenFieldTypeNames {
     randomCompetency: 'Competency';
     randomRootCompetency: 'RootCompetency';
     rootCompetency: 'RootCompetency';
+  };
+  RenameCompetencyErrorPayload: {
+    // field return type name
+    error: 'UserError';
+  };
+  RenameCompetencySuccessPayload: {
+    // field return type name
+    competency: 'Competency';
   };
   RootCompetency: {
     // field return type name
@@ -318,6 +352,12 @@ export interface NexusGenArgTypes {
       // args
       id: string; // ID!
     };
+    renameCompetency: {
+      // args
+      currentUserId: string; // ID!
+      data: NexusGenInputs['RenameCompetencyInput']; // RenameCompetencyInput!
+      id: string; // ID!
+    };
     updateEducation: {
       // args
       data: NexusGenInputs['EducationInput']; // EducationInput!
@@ -336,6 +376,9 @@ export interface NexusGenAbstractTypeMembers {
   CreateCompetencyPayload:
     | 'CreateCompetencyErrorPayload'
     | 'CreateCompetencySuccessPayload';
+  RenameCompetencyPayload:
+    | 'RenameCompetencyErrorPayload'
+    | 'RenameCompetencySuccessPayload';
   Accountable: 'Education' | 'NestedCompetency' | 'RootCompetency';
   Competency: 'NestedCompetency' | 'RootCompetency';
   Node: 'Education' | 'NestedCompetency' | 'RootCompetency' | 'Teacher';
@@ -370,7 +413,8 @@ export type NexusGenAbstractsUsingStrategyResolveType =
   | 'Competency'
   | 'CreateCompetencyPayload'
   | 'Node'
-  | 'Person';
+  | 'Person'
+  | 'RenameCompetencyPayload';
 
 export type NexusGenFeaturesConfig = {
   abstractTypeStrategies: {

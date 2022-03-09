@@ -7,7 +7,7 @@ import { NexusGenFieldTypes } from '../src/generated/nexus';
 import { prisma } from '../src/prisma';
 import { CompetencyService } from '../src/services/module';
 
-describe('CreateCompetency', () => {
+describe('createCompetency', () => {
   test('should trim leading and trailing whitespace', async () => {
     const person = await prisma.person.create({
       data: { firstName: 'Jos', lastName: 'Vermeulen', role: 'TEACHER' },
@@ -219,7 +219,7 @@ describe('CreateCompetency', () => {
   });
 });
 
-describe('DeleteCompetency', () => {
+describe('deleteCompetency', () => {
   test('should delete competency', async () => {
     const person = await prisma.person.create({
       data: { firstName: 'Jos', lastName: 'Vermeulen', role: 'TEACHER' },
@@ -283,5 +283,56 @@ describe('DeleteCompetency', () => {
     expect(
       await prisma.competency.findUnique({ where: { id: competencyLeaf.id } }),
     ).toBe(null);
+  });
+});
+
+describe('renameCompetency', () => {
+  test('should rename competency', async () => {
+    const person = await prisma.person.create({
+      data: { firstName: 'Jos', lastName: 'Vermeulen', role: 'TEACHER' },
+      select: { id: true },
+    });
+    const competency = await CompetencyService.createCompetency(
+      { title: 'Hello World!' },
+      { currentUserId: person.id },
+    );
+    const client = createMercuriusTestClient(app);
+    const {
+      data: { renameCompetency },
+    } = await client.mutate<
+      {
+        renameCompetency: {
+          competency?: { title: string };
+        };
+      },
+      { currentUserId: string; id: string; title: string }
+    >(
+      gql`
+        mutation ($id: ID!, $currentUserId: ID!, $title: String!) {
+          renameCompetency(
+            currentUserId: $currentUserId
+            id: $id
+            data: { title: $title }
+          ) {
+            ... on RenameCompetencySuccessPayload {
+              competency {
+                title
+              }
+            }
+          }
+        }
+      `,
+      {
+        variables: {
+          currentUserId: person.id,
+          id: competency.id,
+          title: 'Hello Universe!',
+        },
+      },
+    );
+    expect(renameCompetency).toHaveProperty(
+      'competency.title',
+      'Hello Universe!',
+    );
   });
 });

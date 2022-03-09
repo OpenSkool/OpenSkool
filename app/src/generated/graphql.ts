@@ -72,6 +72,7 @@ export type Mutation = {
   createEducation?: Maybe<Education>;
   deleteCompetency?: Maybe<Competency>;
   deleteEducation?: Maybe<Education>;
+  renameCompetency: RenameCompetencyPayload;
   updateEducation?: Maybe<Education>;
 };
 
@@ -93,6 +94,13 @@ export type MutationDeleteCompetencyArgs = {
 
 
 export type MutationDeleteEducationArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type MutationRenameCompetencyArgs = {
+  currentUserId: Scalars['ID'];
+  data: RenameCompetencyInput;
   id: Scalars['ID'];
 };
 
@@ -142,6 +150,22 @@ export type Query = {
 
 export type QueryRootCompetencyArgs = {
   id: Scalars['ID'];
+};
+
+export type RenameCompetencyErrorPayload = {
+  __typename?: 'RenameCompetencyErrorPayload';
+  error: UserError;
+};
+
+export type RenameCompetencyInput = {
+  title: Scalars['String'];
+};
+
+export type RenameCompetencyPayload = RenameCompetencyErrorPayload | RenameCompetencySuccessPayload;
+
+export type RenameCompetencySuccessPayload = {
+  __typename?: 'RenameCompetencySuccessPayload';
+  competency: Competency;
 };
 
 /** A competency without a parent. */

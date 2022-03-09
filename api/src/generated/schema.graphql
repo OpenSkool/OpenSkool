@@ -75,6 +75,11 @@ type Mutation {
   createEducation(data: EducationInput!): Education
   deleteCompetency(id: ID!): Competency
   deleteEducation(id: ID!): Education
+  renameCompetency(
+    currentUserId: ID!
+    data: RenameCompetencyInput!
+    id: ID!
+  ): RenameCompetencyPayload!
   updateEducation(data: EducationInput!, id: ID!): Education
 }
 
@@ -123,6 +128,22 @@ type Query {
   randomCompetency: Competency
   randomRootCompetency: RootCompetency
   rootCompetency(id: ID!): RootCompetency
+}
+
+type RenameCompetencyErrorPayload {
+  error: UserError!
+}
+
+input RenameCompetencyInput {
+  title: String!
+}
+
+union RenameCompetencyPayload =
+    RenameCompetencyErrorPayload
+  | RenameCompetencySuccessPayload
+
+type RenameCompetencySuccessPayload {
+  competency: Competency!
 }
 
 """

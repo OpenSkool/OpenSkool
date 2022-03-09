@@ -1,31 +1,22 @@
 import { Competency, CompetencyTranslation, Language } from '@prisma/client';
 
-import { UserError, UserErrorCode, ValidationError } from '../errors';
+import { UserError } from '../errors';
 import { prisma } from '../prisma';
+import { validateSingleLineString } from './validators';
 
 export interface CompetencyModel extends Competency {
   translations: CompetencyTranslation[];
 }
 
-const CHAR_CONTROL = '\u0000-\u001F\u007F-\u009F';
-const CHAR_ZERO_WIDTH = '\u200B-\u200D\uFEFF';
-const CHAR_REMOVE = new RegExp(`[${CHAR_CONTROL}${CHAR_ZERO_WIDTH}]`, 'g');
-const CHARS_MULTIPLE_SEQUENTIAL_SPACES = /\s\s+/g;
+interface Accountancy {
+  currentUserId: string;
+}
 
 export async function createCompetency(
   data: { parentId?: string | null; title: string },
-  { currentUserId }: { currentUserId: string },
+  accountancy: Accountancy,
 ): Promise<CompetencyModel> {
-  const title = data.title
-    .replace(CHAR_REMOVE, '')
-    .replace(CHARS_MULTIPLE_SEQUENTIAL_SPACES, ' ')
-    .trim();
-  if (title === '') {
-    throw new ValidationError('Title cannot be empty', {
-      code: UserErrorCode.VALUE_INVALID,
-      path: ['title'],
-    });
-  }
+  const title = validateSingleLineString(data.title);
   let rootId: string | undefined;
   if (data.parentId != null) {
     const parentCompetency = await prisma.competency.findUnique({
@@ -38,8 +29,8 @@ export async function createCompetency(
   }
   const competency = await prisma.competency.create({
     data: {
-      createdById: currentUserId,
-      updatedById: currentUserId,
+      createdById: accountancy.currentUserId,
+      updatedById: accountancy.currentUserId,
       parentCompetencyId: data.parentId,
       rootCompetencyId: rootId,
       translations: { create: { languageCode: 'EN', title } },
@@ -156,4 +147,29 @@ export async function findSubCompetenciesByParentId(
   return subCompetencies.filter(
     (competency) => competency.translations.length > 0,
   );
+}
+
+export async function updateCompetencyTranslations(
+  id: string,
+  data: Pick<CompetencyTranslation, 'title'>,
+  accountancy: Accountancy,
+): Promise<CompetencyModel> {
+  const title = validateSingleLineString(data.title);
+  return prisma.competency.update({
+    data: {
+      updatedById: accountancy.currentUserId,
+      translations: {
+        updateMany: {
+          data: { title },
+          where: { languageCode: Language.EN },
+        },
+      },
+    },
+    include: {
+      translations: {
+        where: { languageCode: Language.EN },
+      },
+    },
+    where: { id },
+  });
 }
