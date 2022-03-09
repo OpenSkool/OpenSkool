@@ -20,8 +20,5 @@ export default makeSchema({
     trailingComma: 'all',
   },
   shouldGenerateArtifacts: process.env.NODE_ENV === 'development',
-  sourceTypes: {
-    modules: [{ alias: 'db', module: path.join(__dirname, 'source-types.ts') }],
-  },
   types,
 });

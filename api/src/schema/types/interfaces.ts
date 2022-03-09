@@ -56,4 +56,8 @@ export const Node = interfaceType({
     // type in a resolver.
     throw new Error('Cannot discriminate node type');
   },
+  sourceType: {
+    export: 'Node',
+    module: require.resolve('../../services/types'),
+  },
 });

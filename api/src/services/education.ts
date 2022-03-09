@@ -1,9 +1,13 @@
-import { Language } from '@prisma/client';
+import { Education, EducationTranslation, Language } from '@prisma/client';
 
 import { prisma } from '../prisma';
-import { Education } from '../schema/source-types';
+import { Node } from './types';
 
-export async function getAllEducations(): Promise<Education[]> {
+export interface EducationModel extends Education {
+  translations: EducationTranslation[];
+}
+
+export async function getAllEducations(): Promise<EducationModel[]> {
   return prisma.education.findMany({
     include: {
       translations: { where: { languageCode: Language.EN } },
@@ -16,7 +20,7 @@ export async function getAllEducations(): Promise<Education[]> {
 
 export async function createEducation(data: {
   title: string;
-}): Promise<Education> {
+}): Promise<EducationModel> {
   return prisma.education.create({
     data: {
       translations: {
@@ -27,9 +31,9 @@ export async function createEducation(data: {
   });
 }
 
-export async function deleteEducation(id: string): Promise<Education> {
+export async function deleteEducation(id: string): Promise<Node> {
   return prisma.education.delete({
-    include: { translations: true },
+    select: { id: true },
     where: { id },
   });
 }
@@ -37,7 +41,7 @@ export async function deleteEducation(id: string): Promise<Education> {
 export async function updateEducation(
   id: string,
   data: { title: string },
-): Promise<Education> {
+): Promise<EducationModel> {
   const upsert = {
     languageCode: Language.EN,
     ...data,
