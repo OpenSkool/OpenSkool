@@ -8,11 +8,20 @@ export interface CompetencyModel extends Competency {
   translations: CompetencyTranslation[];
 }
 
+const CHAR_CONTROL = '\u0000-\u001F\u007F-\u009F';
+const CHAR_ZERO_WIDTH = '\u200B-\u200D\uFEFF';
+const CHAR_REMOVE = new RegExp(`[${CHAR_CONTROL}${CHAR_ZERO_WIDTH}]`, 'g');
+const CHARS_MULTIPLE_SEQUENTIAL_SPACES = /\s\s+/g;
+
 export async function createCompetency(
   data: { parentId?: string | null; title: string },
   { currentUserId }: { currentUserId: string },
 ): Promise<CompetencyModel> {
-  if (data.title.trim() === '') {
+  const title = data.title
+    .replace(CHAR_REMOVE, '')
+    .replace(CHARS_MULTIPLE_SEQUENTIAL_SPACES, ' ')
+    .trim();
+  if (title === '') {
     throw new ValidationError('Title cannot be empty', {
       code: UserErrorCode.VALUE_INVALID,
       path: ['title'],
@@ -34,7 +43,7 @@ export async function createCompetency(
       updatedById: currentUserId,
       parentCompetencyId: data.parentId,
       rootCompetencyId: rootId,
-      translations: { create: { languageCode: 'EN', title: data.title } },
+      translations: { create: { languageCode: 'EN', title } },
     },
     include: {
       translations: true,
