@@ -26,7 +26,7 @@ export const Education = objectType({
   },
   sourceType: {
     export: 'EducationModel',
-    module: require.resolve('../../services/education.ts'),
+    module: require.resolve('../../services/education'),
   },
 });
 

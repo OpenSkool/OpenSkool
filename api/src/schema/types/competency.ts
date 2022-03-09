@@ -68,7 +68,7 @@ export const NestedCompetency = objectType({
   },
   sourceType: {
     export: 'CompetencyModel',
-    module: require.resolve('../../services/competency.ts'),
+    module: require.resolve('../../services/competency'),
   },
 });
 
@@ -92,7 +92,7 @@ export const RootCompetency = objectType({
   },
   sourceType: {
     export: 'CompetencyModel',
-    module: require.resolve('../../services/competency.ts'),
+    module: require.resolve('../../services/competency'),
   },
 });
 
