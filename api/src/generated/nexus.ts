@@ -41,7 +41,7 @@ declare global {
 export interface NexusGenInputs {
   CreateCompetencyInput: {
     // input type
-    parentId?: string | null; // String
+    parentId?: string | null; // ID
     title: string; // String!
   };
   EducationInput: {

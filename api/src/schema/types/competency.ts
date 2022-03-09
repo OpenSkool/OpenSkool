@@ -147,7 +147,7 @@ export const CreateCompetencyInput = inputObjectType({
   name: 'CreateCompetencyInput',
   definition(t) {
     t.string('title');
-    t.nullable.string('parentId');
+    t.nullable.id('parentId');
   },
 });
 
