@@ -27,6 +27,7 @@ export const Teacher = objectType({
   definition(t) {
     t.implements(Person);
   },
+  sourceType: { export: 'Person', module: '@prisma/client' },
 });
 
 export const peopleQueries = extendType({

@@ -1,5 +1,11 @@
 import { list, nonNull, objectType } from 'nexus';
 
+export interface UserErrorModel {
+  code: string;
+  message: string;
+  path: string[];
+}
+
 export const UserError = objectType({
   name: 'UserError',
   definition(t) {
@@ -8,5 +14,9 @@ export const UserError = objectType({
     t.nonNull.field('path', {
       type: list(nonNull('String')),
     });
+  },
+  sourceType: {
+    export: 'UserErrorModel',
+    module: __filename,
   },
 });

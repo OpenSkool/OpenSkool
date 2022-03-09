@@ -24,6 +24,10 @@ export const Education = objectType({
       },
     });
   },
+  sourceType: {
+    export: 'EducationModel',
+    module: require.resolve('../../services/education.ts'),
+  },
 });
 
 export const EducationQueries = extendType({

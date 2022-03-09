@@ -11,9 +11,11 @@ import {
 } from 'nexus';
 
 import { ValidationError } from '../../errors';
+import { CompetencyModel } from '../../services/competency';
 import { CompetencyService } from '../../services/module';
 import { Context } from '../context';
 import { handleResolverError } from '../utils';
+import { UserErrorModel } from './errors';
 import { Accountable, Node } from './interfaces';
 
 export const Competency = interfaceType({
@@ -64,6 +66,10 @@ export const NestedCompetency = objectType({
       },
     });
   },
+  sourceType: {
+    export: 'CompetencyModel',
+    module: require.resolve('../../services/competency.ts'),
+  },
 });
 
 export const RootCompetency = objectType({
@@ -83,6 +89,10 @@ export const RootCompetency = objectType({
         }
       },
     });
+  },
+  sourceType: {
+    export: 'CompetencyModel',
+    module: require.resolve('../../services/competency.ts'),
   },
 });
 
@@ -141,6 +151,10 @@ export const CreateCompetencyInput = inputObjectType({
   },
 });
 
+export type CreateCompetencyPayloadModel =
+  | { error: UserErrorModel }
+  | { competency: CompetencyModel };
+
 export const CreateCompetencyPayload = unionType({
   name: 'CreateCompetencyPayload',
   definition(t) {
@@ -150,6 +164,10 @@ export const CreateCompetencyPayload = unionType({
     return 'error' in item
       ? 'CreateCompetencyErrorPayload'
       : 'CreateCompetencySuccessPayload';
+  },
+  sourceType: {
+    export: 'CreateCompetencyPayloadModel',
+    module: __filename,
   },
 });
 

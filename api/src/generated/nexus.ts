@@ -3,8 +3,13 @@
  * Do not make changes to this file directly
  */
 
-import type * as db from './../schema/source-types';
 import type { Context } from './../schema/context';
+import type { UserErrorModel } from './../schema/types/errors';
+import type { Node } from './../services/types';
+import type { CreateCompetencyPayloadModel } from './../schema/types/competency';
+import type { CompetencyModel } from './../services/competency';
+import type { EducationModel } from './../services/education';
+import type { Person } from '@prisma/client';
 import type { core } from 'nexus';
 declare global {
   interface NexusGenCustomInputMethods<TypeName extends string> {
@@ -65,13 +70,13 @@ export interface NexusGenObjects {
     // root type
     competency: NexusGenRootTypes['Competency']; // Competency!
   };
-  Education: db.Education;
+  Education: EducationModel;
   Mutation: {};
-  NestedCompetency: db.NestedCompetency;
+  NestedCompetency: CompetencyModel;
   Query: {};
-  RootCompetency: db.RootCompetency;
-  Teacher: db.Teacher;
-  UserError: db.UserError;
+  RootCompetency: CompetencyModel;
+  Teacher: Person;
+  UserError: UserErrorModel;
 }
 
 export interface NexusGenInterfaces {
@@ -79,13 +84,15 @@ export interface NexusGenInterfaces {
     | NexusGenRootTypes['Education']
     | NexusGenRootTypes['NestedCompetency']
     | NexusGenRootTypes['RootCompetency'];
-  Competency: db.Competency;
-  Node: db.Node;
-  Person: db.Person;
+  Competency:
+    | NexusGenRootTypes['NestedCompetency']
+    | NexusGenRootTypes['RootCompetency'];
+  Node: Node;
+  Person: NexusGenRootTypes['Teacher'];
 }
 
 export interface NexusGenUnions {
-  CreateCompetencyPayload: db.CreateCompetencyPayload;
+  CreateCompetencyPayload: CreateCompetencyPayloadModel;
 }
 
 export type NexusGenRootTypes = NexusGenInterfaces &

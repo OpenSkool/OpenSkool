@@ -1,13 +1,17 @@
-import { Language } from '@prisma/client';
+import { Competency, CompetencyTranslation, Language } from '@prisma/client';
 
 import { UserError, UserErrorCode, ValidationError } from '../errors';
 import { prisma } from '../prisma';
-import { Competency, Node } from '../schema/source-types';
+import { Node } from './types';
+
+export interface CompetencyModel extends Competency {
+  translations: CompetencyTranslation[];
+}
 
 export async function createCompetency(
   data: { parentId?: string | null; title: string },
   { currentUserId }: { currentUserId: string },
-): Promise<Competency> {
+): Promise<CompetencyModel> {
   if (data.title.trim() === '') {
     throw new ValidationError('Title cannot be empty', {
       code: UserErrorCode.VALUE_INVALID,
@@ -46,7 +50,7 @@ export function deleteCompetency(id: string): Promise<Node> {
   });
 }
 
-export async function getAllRootCompetencies(): Promise<Competency[]> {
+export async function getAllRootCompetencies(): Promise<CompetencyModel[]> {
   return prisma.competency.findMany({
     include: {
       translations: { where: { languageCode: Language.EN } },
@@ -60,7 +64,7 @@ export async function getAllRootCompetencies(): Promise<Competency[]> {
 
 export async function getNestedCompetenciesByRootId(
   id: string,
-): Promise<Competency[]> {
+): Promise<CompetencyModel[]> {
   const nestedCompetencies = await prisma.competency
     .findUnique({ where: { id } })
     .nestedCompetencies({
@@ -73,7 +77,7 @@ export async function getNestedCompetenciesByRootId(
   );
 }
 
-export async function findRandomCompetency(): Promise<Competency | null> {
+export async function findRandomCompetency(): Promise<CompetencyModel | null> {
   const competencyCount = await prisma.competency.count();
   const skip = Math.floor(Math.random() * competencyCount);
   const competencies = await prisma.competency.findMany({
@@ -90,7 +94,7 @@ export async function findRandomCompetency(): Promise<Competency | null> {
   return competencies.length === 0 ? null : competencies[0];
 }
 
-export async function findRandomRootCompetency(): Promise<Competency | null> {
+export async function findRandomRootCompetency(): Promise<CompetencyModel | null> {
   const rootCompetencyCount = await prisma.competency.count({
     where: { parentCompetencyId: null },
   });
@@ -111,7 +115,7 @@ export async function findRandomRootCompetency(): Promise<Competency | null> {
 
 export async function findRootCompetencyById(
   id: string,
-): Promise<Competency | null> {
+): Promise<CompetencyModel | null> {
   const competency = await prisma.competency.findUnique({
     include: {
       translations: { where: { languageCode: Language.EN } },
@@ -130,7 +134,7 @@ export async function findRootCompetencyById(
 
 export async function findSubCompetenciesByParentId(
   id: string,
-): Promise<Competency[] | null> {
+): Promise<CompetencyModel[] | null> {
   const subCompetencies = await prisma.competency
     .findUnique({ where: { id } })
     .subCompetencies({
