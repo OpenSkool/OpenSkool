@@ -33,7 +33,7 @@ type CreateCompetencyErrorPayload {
 }
 
 input CreateCompetencyInput {
-  parentId: String
+  parentId: ID
   title: String!
 }
 

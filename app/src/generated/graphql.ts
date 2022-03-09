@@ -40,7 +40,7 @@ export type CreateCompetencyErrorPayload = {
 };
 
 export type CreateCompetencyInput = {
-  parentId?: InputMaybe<Scalars['String']>;
+  parentId?: InputMaybe<Scalars['ID']>;
   title: Scalars['String'];
 };
 
