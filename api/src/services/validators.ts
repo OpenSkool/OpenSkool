@@ -12,7 +12,7 @@ export function validateSingleLineString(input: string): string {
     .trim();
   if (output === '') {
     throw new ValidationError('Title cannot be empty', {
-      code: UserErrorCode.VALUE_INVALID,
+      code: UserErrorCode.VALUE_NOT_VALID,
       path: ['title'],
     });
   }

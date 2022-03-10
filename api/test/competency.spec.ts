@@ -42,7 +42,7 @@ describe('createCompetency', () => {
       { variables: { currentUserId: person.id, title: '  ' } },
     );
     expect(createCompetency.error).toMatchObject({
-      code: 'valueInvalid',
+      code: 'valueNotValid',
       path: ['title'],
     });
   });
@@ -417,7 +417,7 @@ describe('renameCompetency', () => {
       },
     );
     expect(renameCompetency.error).toMatchObject({
-      code: 'valueInvalid',
+      code: 'valueNotValid',
       path: ['title'],
     });
   });
