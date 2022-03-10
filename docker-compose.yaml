@@ -1,33 +1,33 @@
 services:
-  os-api-db:
-    image: postgres:12
+  api-db:
     container_name: os-api-db
     environment:
       POSTGRES_DB: openskool
       POSTGRES_USER: openskool
       POSTGRES_PASSWORD: openskool
+    image: postgres:12
+    networks:
+      - openskool
     ports:
       - 5432:5432
     restart: unless-stopped
     volumes:
       - os-api-db:/var/lib/postgresql/data
-    networks:
-      - openskool
 
-  os-api-db-test:
-    image: postgres:12
+  api-db-test:
     container_name: os-api-db-test
     environment:
       POSTGRES_DB: openskool
       POSTGRES_USER: openskool
       POSTGRES_PASSWORD: openskool
+    image: postgres:12
+    networks:
+      - openskool
     ports:
       - 5433:5432
     restart: unless-stopped
     volumes:
       - os-api-db-test:/var/lib/postgresql/data
-    networks:
-      - openskool
 
 networks:
   openskool:
