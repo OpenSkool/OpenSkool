@@ -12,6 +12,9 @@ export default plugin(async (app) => {
       initialEnvironments: {
         base: { title: 'Local' },
       },
+      initialSettings: {
+        theme: 'dracula',
+      },
     })
     .register(mercurius, {
       context: (request, reply): Context => {
