@@ -1,19 +1,19 @@
 import * as Boom from '@hapi/boom';
 import { Static, Type } from '@sinclair/typebox';
 import type { FastifyInstance } from 'fastify';
-import cors from 'fastify-cors';
+import corsPlugin from 'fastify-cors';
 import plugin from 'fastify-plugin';
 
 import graphqlPlugin from './plugins/graphql';
-import { prisma } from './prisma';
+import prismaPlugin from './plugins/prisma';
 
 const HTTP_NO_CONTENT = 204;
 
 export default plugin(async (app: FastifyInstance) => {
-  app.register(cors, { origin: true }).register(graphqlPlugin);
-
-  await prisma.$connect();
-  app.addHook('onClose', (server) => prisma.$disconnect());
+  app
+    .register(corsPlugin, { origin: true })
+    .register(graphqlPlugin)
+    .register(prismaPlugin);
 
   app.get('/', async (request, reply) => {
     reply.status(HTTP_NO_CONTENT);
