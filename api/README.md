@@ -83,7 +83,7 @@ flowchart
 - `node_modules/@prisma/client`: The Prisma client used for type-safe access to the database data.
 - `prisma/migrations/**/*.sql`: Migrations managed by `prisma migrate`.
 - `src/generated/nexus.ts`: Types generated and subsequently used by Nexus to provide a type-safe GraphQL API.
-- `src/generated/graphql.schema`: Graphql schema used by our IDE for Graphql Intellisense, and by the App for type-safe API access.
+- `src/generated/graphql.schema`: GraphQL schema used by our IDE for Intellisense, and by the App for type-safe API access.
 
 #### Command reference
 

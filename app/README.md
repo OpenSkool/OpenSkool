@@ -47,7 +47,7 @@ flowchart
 #### Source files
 
 - `src/**/*.vue`: Our App code which contains GraphQL Documents that describe how we query the API.
-  - Use `dev:generate` to generate TypeScript types that match our documents. This is done automatically and continuously when running the Api during development.
+  - Use `dev:generate` to generate TypeScript types that match our documents. This is done automatically and continuously when running the App during development.
 
 #### Generated files
 
