@@ -1,6 +1,6 @@
 import { Competency, CompetencyTranslation, Language } from '@prisma/client';
 
-import { UserError } from '../errors';
+import { UserError, UserErrorCode, ValidationError } from '../errors';
 import { prisma } from '../prisma';
 import { validateSingleLineString } from './validators';
 
@@ -13,10 +13,11 @@ interface Accountancy {
 }
 
 export async function createCompetency(
-  data: { parentId?: string | null; title: string },
+  data: { parentId?: string; title: string },
   accountancy: Accountancy,
 ): Promise<CompetencyModel> {
   const title = validateSingleLineString(data.title);
+  await assertUniqueTitle(title, { parentId: data.parentId });
   let rootId: string | undefined;
   if (data.parentId != null) {
     const parentCompetency = await prisma.competency.findUnique({
@@ -155,6 +156,10 @@ export async function updateCompetencyTranslations(
   accountancy: Accountancy,
 ): Promise<CompetencyModel> {
   const title = validateSingleLineString(data.title);
+  const parent = await prisma.competency
+    .findUnique({ where: { id } })
+    .parentCompetency({ select: { id: true } });
+  await assertUniqueTitle(title, { id, parentId: parent?.id });
   return prisma.competency.update({
     data: {
       updatedById: accountancy.currentUserId,
@@ -172,4 +177,53 @@ export async function updateCompetencyTranslations(
     },
     where: { id },
   });
+}
+
+async function assertUniqueTitle(
+  title: string,
+  { id, parentId }: { id?: string; parentId?: string },
+): Promise<void> | never {
+  let siblingTitles: string[];
+  if (parentId == null) {
+    const siblings = await prisma.competency.findMany({
+      select: {
+        translations: {
+          select: { title: true },
+          where: { languageCode: Language.EN },
+        },
+      },
+      where: {
+        id: { not: id },
+        parentCompetencyId: null,
+        translations: { some: { languageCode: Language.EN } },
+      },
+    });
+    siblingTitles = siblings.map(
+      (competency) => competency.translations[0].title,
+    );
+  } else {
+    const siblings = await prisma.competency
+      .findUnique({ where: { id: parentId } })
+      .subCompetencies({
+        select: {
+          translations: {
+            select: { title: true },
+            where: { languageCode: Language.EN },
+          },
+        },
+        where: {
+          id: { not: id },
+          translations: { some: { languageCode: Language.EN } },
+        },
+      });
+    siblingTitles = siblings.map(
+      (competency) => competency.translations[0].title,
+    );
+  }
+  if (siblingTitles.includes(title)) {
+    throw new ValidationError('Title is not unique', {
+      code: UserErrorCode.VALUE_NOT_UNIQUE,
+      path: ['title'],
+    });
+  }
 }
