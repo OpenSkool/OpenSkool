@@ -18,6 +18,5 @@ jobs:
       - name: Yarn
         run: |
           yarn install --immutable
-          yarn workspace @os/api run bootstrap
           yarn run build
           yarn turbo run lint test
