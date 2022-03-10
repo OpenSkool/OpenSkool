@@ -193,9 +193,10 @@ export const CreateCompetency = mutationField('createCompetency', {
   },
   async resolve(root, { currentUserId, data }, ctx) {
     try {
-      const competency = await CompetencyService.createCompetency(data, {
-        currentUserId,
-      });
+      const competency = await CompetencyService.createCompetency(
+        { title: data.title, parentId: data.parentId ?? undefined },
+        { currentUserId },
+      );
       return { competency };
     } catch (error) {
       if (error instanceof ValidationError) {

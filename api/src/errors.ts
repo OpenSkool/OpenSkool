@@ -4,6 +4,7 @@ export const HTTP_STATUS_NOT_FOUND = 404;
 
 export enum UserErrorCode {
   VALUE_INVALID = 'valueInvalid',
+  VALUE_NOT_UNIQUE = 'valueNotUnique',
 }
 
 export class UserError extends Error {
