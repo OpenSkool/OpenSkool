@@ -19,3 +19,36 @@ import Home4Line from '~icons/ri/home-4-line';
   <home-4-line />
 </template>
 ```
+
+### Type-safety
+
+Thanks to GraphQL we have end-to-end type-safety.
+
+```mermaid
+flowchart
+  subgraph Api
+    apisch[[GraphQL Schema]]
+  end
+
+  subgraph App
+    srcdoc{{GraphQL Documents}}
+    srcvue[src/**/*.vue]
+    srcvue --> srcdoc
+    typegen{ }
+    srcdoc -.-> typegen
+    gents[["src/generated/graphql.ts"]]
+    typegen -.-> |dev:generate| gents
+    srcvue --> gents
+  end
+
+  apisch -.-> typegen
+```
+
+#### Source files
+
+- `src/**/*.vue`: Our App code which contains GraphQL Documents that describe how we query the API.
+  - Use `dev:generate` to generate TypeScript types that match our documents. This is done automatically and continuously when running the Api during development.
+
+#### Generated files
+
+- `src/generated/graphql.ts`: TypeScript types based on the Api's GraphQL Schema and our App's GraphQL Documents.
