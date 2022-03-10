@@ -3,7 +3,7 @@ export const HTTP_STATUS_BAD_REQUEST = 400;
 export const HTTP_STATUS_NOT_FOUND = 404;
 
 export enum UserErrorCode {
-  VALUE_INVALID = 'valueInvalid',
+  VALUE_NOT_VALID = 'valueNotValid',
   VALUE_NOT_UNIQUE = 'valueNotUnique',
 }
 
