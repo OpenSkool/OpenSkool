@@ -29,7 +29,7 @@ export const Teacher = objectType({
   sourceType: { export: 'Person', module: '@prisma/client' },
 });
 
-export const peopleQueries = extendType({
+export const PeopleQueries = extendType({
   type: 'Query',
   definition(t) {
     t.field('allPeople', {
