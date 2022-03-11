@@ -16,15 +16,14 @@ import { CompetencyService } from '../../services/module';
 import { Context } from '../context';
 import { handleResolverError } from '../utils';
 import { UserErrorModel } from './errors';
-import { Accountable, Node } from './interfaces';
 
 export const Competency = interfaceType({
   name: 'Competency',
   description:
     'A competency can be an individual competence or a grouping of competences.',
   definition(t) {
-    t.implements(Node);
-    t.implements(Accountable);
+    t.implements('Node');
+    t.implements('Accountable');
     t.field('subCompetencies', {
       type: list(nonNull('NestedCompetency')),
       async resolve(parent, argumentz, ctx) {
@@ -54,7 +53,7 @@ export const NestedCompetency = objectType({
   name: 'NestedCompetency',
   description: 'A competency with a parent.',
   definition(t) {
-    t.implements(Competency);
+    t.implements('Competency');
     t.nonNull.id('parentId', {
       resolve(competency, argumentz, ctx): string {
         if (competency.parentCompetencyId == null) {
@@ -76,7 +75,7 @@ export const RootCompetency = objectType({
   name: 'RootCompetency',
   description: 'A competency without a parent.',
   definition(t) {
-    t.implements(Competency);
+    t.implements('Competency');
     t.nonNull.field('nestedCompetencies', {
       type: nonNull(list(nonNull('NestedCompetency'))),
       async resolve(parent, argumentz, ctx) {

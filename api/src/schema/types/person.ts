@@ -1,12 +1,11 @@
 import { extendType, interfaceType, list, nonNull, objectType } from 'nexus';
 
 import { PersonService } from '../../services/module';
-import { Node } from './interfaces';
 
 export const Person = interfaceType({
   name: 'Person',
   definition(t) {
-    t.implements(Node);
+    t.implements('Node');
     t.string('firstName');
     t.string('lastName');
   },
@@ -25,7 +24,7 @@ export const Person = interfaceType({
 export const Teacher = objectType({
   name: 'Teacher',
   definition(t) {
-    t.implements(Person);
+    t.implements('Person');
   },
   sourceType: { export: 'Person', module: '@prisma/client' },
 });

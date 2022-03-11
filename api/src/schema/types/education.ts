@@ -11,13 +11,12 @@ import {
 import { EducationService } from '../../services/module';
 import { Context } from '../context';
 import { handleResolverError } from '../utils';
-import { Accountable, Node } from './interfaces';
 
 export const Education = objectType({
   name: 'Education',
   definition(t) {
-    t.implements(Node);
-    t.implements(Accountable);
+    t.implements('Node');
+    t.implements('Accountable');
     t.nonNull.string('title', {
       resolve: async (education, argumentz, ctx) => {
         return education.translations[0].title;
@@ -56,7 +55,7 @@ export const EducationInput = inputObjectType({
 export const CreateEducation = mutationField('createEducation', {
   type: Education,
   args: {
-    data: EducationInput,
+    data: 'EducationInput',
   },
   async resolve(root, { data }, ctx) {
     try {
@@ -71,7 +70,7 @@ export const UpdateEducation = mutationField('updateEducation', {
   type: Education,
   args: {
     id: idArg(),
-    data: EducationInput,
+    data: 'EducationInput',
   },
   async resolve(root, { id, data }, ctx) {
     try {
