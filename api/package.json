@@ -43,7 +43,7 @@
     "@types/dotenv-flow": "^3.2.0",
     "@types/pino": "^6.3.12",
     "dotenv-flow": "^3.2.0",
-    "esbuild": "^0.14.24",
+    "esbuild": "^0.14.27",
     "esbuild-node-externals": "^1.4.1",
     "esbuild-register": "^3.3.2",
     "eslint": "^8.11.0",
