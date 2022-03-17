@@ -24,7 +24,7 @@
     "@hapi/boom": "^9.1.4",
     "@prisma/client": "^3.10.0",
     "@sinclair/typebox": "^0.23.4",
-    "altair-fastify-plugin": "4.4.0",
+    "altair-fastify-plugin": "4.4.1",
     "fastify": "^3.27.2",
     "fastify-cors": "^6.0.3",
     "fastify-env": "^2.1.1",
@@ -37,7 +37,7 @@
     "read-pkg-up": "^9.1.0"
   },
   "devDependencies": {
-    "@faker-js/faker": "^6.0.0-alpha.7",
+    "@faker-js/faker": "^6.0.0",
     "@os/eslint-config": "workspace:*",
     "@os/tsconfig": "workspace:*",
     "@types/dotenv-flow": "^3.2.0",
@@ -46,15 +46,15 @@
     "esbuild": "^0.14.24",
     "esbuild-node-externals": "^1.4.1",
     "esbuild-register": "^3.3.2",
-    "eslint": "^8.10.0",
+    "eslint": "^8.11.0",
     "fast-glob": "^3.2.11",
     "graphql-tag": "^2.12.6",
     "mercurius-integration-testing": "^4.0.0",
     "nodemon": "^2.0.15",
-    "pino-pretty": "^7.5.3",
-    "prisma": "^3.10.0",
+    "pino-pretty": "^7.5.4",
+    "prisma": "^3.11.0",
     "typescript": "~4.6.2",
-    "vitest": "0.5.9"
+    "vitest": "0.7.0"
   },
   "nodemonConfig": {
     "execMap": {
