@@ -1481,9 +1481,9 @@ __metadata:
     "@testing-library/vue": ^6.5.1
     "@vitejs/plugin-vue": ^2.2.4
     "@vue/apollo-composable": ^4.0.0-alpha.16
-    "@vueuse/components": ^7.7.0
-    "@vueuse/core": ^7.7.0
-    "@vueuse/integrations": ^7.7.0
+    "@vueuse/components": ^8.1.1
+    "@vueuse/core": ^8.1.1
+    "@vueuse/integrations": ^8.1.1
     autoprefixer: ^10.4.4
     concurrently: ^7.0.0
     eslint: ^8.11.0
@@ -1503,7 +1503,7 @@ __metadata:
     vite-plugin-windicss: ^1.8.3
     vitest: 0.7.0
     vue: ^3.2.31
-    vue-router: ^4.0.13
+    vue-router: ^4.0.14
     vue-tsc: ^0.33.2
     windicss: ^3.5.1
   languageName: unknown
@@ -2269,22 +2269,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vueuse/components@npm:^7.7.0":
-  version: 7.7.0
-  resolution: "@vueuse/components@npm:7.7.0"
+"@vueuse/components@npm:^8.1.1":
+  version: 8.1.1
+  resolution: "@vueuse/components@npm:8.1.1"
   dependencies:
-    "@vueuse/core": 7.7.0
-    "@vueuse/shared": 7.7.0
+    "@vueuse/core": 8.1.1
+    "@vueuse/shared": 8.1.1
     vue-demi: "*"
-  checksum: ac6e8641e36b58248f1c96069f0c30d38c7fcdf3aab6a49b702f1582954c7282b7508ed18a15aff3c5eb6a414179ab0003cc49080771ee3591547a3457053fe6
+  checksum: 2155e5e4569a91ce1a99e85584bf7348ae45b74afdf8fce19e229d7d8f50bbf3f4cbc6d134187782ca7eceef8718edaeacd05b3b537df9d76ac00775d6e3cddd
   languageName: node
   linkType: hard
 
-"@vueuse/core@npm:7.7.0, @vueuse/core@npm:^7.7.0":
-  version: 7.7.0
-  resolution: "@vueuse/core@npm:7.7.0"
+"@vueuse/core@npm:8.1.1, @vueuse/core@npm:^8.1.1":
+  version: 8.1.1
+  resolution: "@vueuse/core@npm:8.1.1"
   dependencies:
-    "@vueuse/shared": 7.7.0
+    "@vueuse/metadata": 8.1.1
+    "@vueuse/shared": 8.1.1
     vue-demi: "*"
   peerDependencies:
     "@vue/composition-api": ^1.1.0
@@ -2294,19 +2295,20 @@ __metadata:
       optional: true
     vue:
       optional: true
-  checksum: 80a0db33cb8171fa314c2cf9bcccabc2939fd16e858257c851b6e2c813202f88db57c958f64309f3fffb21b5c8d9c58321d842665498524d4df8209637300225
+  checksum: 1235df57c728a29aa5017c224600977f4613a835cf16630f9ff376dda39d560c899b88bb36e45a007b694f05f6f0cf6680599a26bd3093f15e8de514d7f8f37e
   languageName: node
   linkType: hard
 
-"@vueuse/integrations@npm:^7.7.0":
-  version: 7.7.0
-  resolution: "@vueuse/integrations@npm:7.7.0"
+"@vueuse/integrations@npm:^8.1.1":
+  version: 8.1.1
+  resolution: "@vueuse/integrations@npm:8.1.1"
   dependencies:
-    "@vueuse/core": 7.7.0
-    "@vueuse/shared": 7.7.0
+    "@vueuse/core": 8.1.1
+    "@vueuse/shared": 8.1.1
     vue-demi: "*"
   peerDependencies:
     axios: "*"
+    change-case: "*"
     drauu: "*"
     focus-trap: "*"
     fuse.js: "*"
@@ -2331,13 +2333,20 @@ __metadata:
       optional: true
     universal-cookie:
       optional: true
-  checksum: b8f5600d00c6fdd496efdfe540ffb6cc4fa2222a2500f03311d528b89071dd78c5a56fed7505a1dd7c84a07344c5b8094d4f13765017828ba5b997105b923368
+  checksum: ff17e25529da09f951a3ce7c50a97ffde3648e7760cc0022e63d60ae8a0c6febc885e03a61534b6c330eea335640998d4d3c0eaadf3d52b869852189d396b004
   languageName: node
   linkType: hard
 
-"@vueuse/shared@npm:7.7.0":
-  version: 7.7.0
-  resolution: "@vueuse/shared@npm:7.7.0"
+"@vueuse/metadata@npm:8.1.1":
+  version: 8.1.1
+  resolution: "@vueuse/metadata@npm:8.1.1"
+  checksum: b1669f018448fbf78abc690ff15c77977c3b4ced1965a331536cf4699d255333cf8f007d80e5494faf455fa7eb4b137f7342723ceb56ec747a127bcf5ec9a815
+  languageName: node
+  linkType: hard
+
+"@vueuse/shared@npm:8.1.1":
+  version: 8.1.1
+  resolution: "@vueuse/shared@npm:8.1.1"
   dependencies:
     vue-demi: "*"
   peerDependencies:
@@ -2348,7 +2357,7 @@ __metadata:
       optional: true
     vue:
       optional: true
-  checksum: fabb815853121e5a53130a53835d5eb9bc89c370155d5518e4d5629051004bfedcb33814c924639b15f2f89596593aaae9188911ae99d329f5bff33abe5da99b
+  checksum: 9083fb9a0e238d5935c39f7bae695ed1d018e09246c25632fde2ac9e219fe503d111104316072a8c82bb68586f3eebcdedc8fad7560dee5571058451742bd0a5
   languageName: node
   linkType: hard
 
@@ -11024,14 +11033,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vue-router@npm:^4.0.13":
-  version: 4.0.13
-  resolution: "vue-router@npm:4.0.13"
+"vue-router@npm:^4.0.14":
+  version: 4.0.14
+  resolution: "vue-router@npm:4.0.14"
   dependencies:
     "@vue/devtools-api": ^6.0.0
   peerDependencies:
     vue: ^3.2.0
-  checksum: c1a4345e05af7e45d4808b89a92c6083891383759bba5f27a0e63840b19dbb4743fdaada48191445c652d6194792563dc76edf85557ae612a4908befa9148a57
+  checksum: 694f6a85f82c11321ecbbb181db9b1a63fe99f781f33feab56c6ed1924370553b9d4325a9bdc1fbd3bfacb4cea12ef37cee77bc91974c1c6314e07fe8193941b
   languageName: node
   linkType: hard
 

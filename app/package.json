@@ -20,14 +20,14 @@
   "dependencies": {
     "@apollo/client": "^3.5.10",
     "@vue/apollo-composable": "^4.0.0-alpha.16",
-    "@vueuse/components": "^7.7.0",
-    "@vueuse/core": "^7.7.0",
-    "@vueuse/integrations": "^7.7.0",
+    "@vueuse/components": "^8.1.1",
+    "@vueuse/core": "^8.1.1",
+    "@vueuse/integrations": "^8.1.1",
     "focus-trap": "^6.7.3",
     "graphql": "^16.3.0",
     "the-new-css-reset": "^1.5.1",
     "vue": "^3.2.31",
-    "vue-router": "^4.0.13",
+    "vue-router": "^4.0.14",
     "windicss": "^3.5.1"
   },
   "devDependencies": {
