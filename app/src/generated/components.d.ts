@@ -4,13 +4,15 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
+    Dialog: typeof import('@headlessui/vue')['Dialog']
+    DialogDescription: typeof import('@headlessui/vue')['DialogDescription']
+    DialogOverlay: typeof import('@headlessui/vue')['DialogOverlay']
+    DialogTitle: typeof import('@headlessui/vue')['DialogTitle']
     HelloWorld: typeof import('./../components/hello-world.vue')['default']
-    RiCloseLine: typeof import('~icons/ri/close-line')['default']
     RiHome4Line: typeof import('~icons/ri/home4-line')['default']
-    UiAlertDialog: typeof import('./../components/ui/ui-alert-dialog.vue')['default']
-    UiBackdrop: typeof import('./../components/ui/ui-backdrop.vue')['default']
-    UiDialog: typeof import('./../components/ui/ui-dialog.vue')['default']
-    UiVisuallyHidden: typeof import('./../components/ui/ui-visually-hidden.vue')['default']
+    TransitionChild: typeof import('@headlessui/vue')['TransitionChild']
+    TransitionRoot: typeof import('@headlessui/vue')['TransitionRoot']
+    UiDialog: typeof import('./../components/dialog/ui-dialog.vue')['default']
   }
 }
 

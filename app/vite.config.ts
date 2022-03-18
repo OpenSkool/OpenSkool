@@ -4,6 +4,7 @@ import Vue from '@vitejs/plugin-vue';
 import AutoImport from 'unplugin-auto-import/vite';
 import IconsResolver from 'unplugin-icons/resolver';
 import Icons from 'unplugin-icons/vite';
+import { HeadlessUiResolver } from 'unplugin-vue-components/resolvers';
 import Components from 'unplugin-vue-components/vite';
 import { defineConfig } from 'vite';
 import Pages from 'vite-plugin-pages';
@@ -30,6 +31,7 @@ export default defineConfig({
     Components({
       dts: 'src/generated/components.d.ts',
       resolvers: [
+        HeadlessUiResolver(),
         IconsResolver({
           enabledCollections: ['ri'],
           prefix: false,

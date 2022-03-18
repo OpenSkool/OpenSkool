@@ -1263,6 +1263,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@headlessui/vue@npm:^1.5.0":
+  version: 1.5.0
+  resolution: "@headlessui/vue@npm:1.5.0"
+  peerDependencies:
+    vue: ^3.2.0
+  checksum: 0aab7484326ae4a4bea379618ad08a8b03408edf8d48500bfcf6cad433dd29735687073ba3518be6a37da3c84fdee049fc3f68bf9e6870d67bb2ed508a93f548
+  languageName: node
+  linkType: hard
+
 "@humanwhocodes/config-array@npm:^0.9.2":
   version: 0.9.3
   resolution: "@humanwhocodes/config-array@npm:0.9.3"
@@ -1476,14 +1485,12 @@ __metadata:
     "@graphql-codegen/cli": 2.6.2
     "@graphql-codegen/typescript": 2.4.8
     "@graphql-codegen/typescript-operations": 2.3.5
+    "@headlessui/vue": ^1.5.0
     "@iconify-json/ri": ^1.1.1
     "@os/eslint-config": "workspace:*"
     "@testing-library/vue": ^6.5.1
     "@vitejs/plugin-vue": ^2.2.4
     "@vue/apollo-composable": ^4.0.0-alpha.16
-    "@vueuse/components": ^8.1.1
-    "@vueuse/core": ^8.1.1
-    "@vueuse/integrations": ^8.1.1
     autoprefixer: ^10.4.4
     concurrently: ^7.0.0
     eslint: ^8.11.0
@@ -2266,98 +2273,6 @@ __metadata:
   peerDependencies:
     vue: ^3.0.1
   checksum: 23b02701193b0d10ce5d06c9c1bf1ef7916cb874b39143fb1651d7ad12dff5c48ea8a7a0d953dc25cea709062aab96fdbfd0355176cbaed811b0e087da2ae49f
-  languageName: node
-  linkType: hard
-
-"@vueuse/components@npm:^8.1.1":
-  version: 8.1.1
-  resolution: "@vueuse/components@npm:8.1.1"
-  dependencies:
-    "@vueuse/core": 8.1.1
-    "@vueuse/shared": 8.1.1
-    vue-demi: "*"
-  checksum: 2155e5e4569a91ce1a99e85584bf7348ae45b74afdf8fce19e229d7d8f50bbf3f4cbc6d134187782ca7eceef8718edaeacd05b3b537df9d76ac00775d6e3cddd
-  languageName: node
-  linkType: hard
-
-"@vueuse/core@npm:8.1.1, @vueuse/core@npm:^8.1.1":
-  version: 8.1.1
-  resolution: "@vueuse/core@npm:8.1.1"
-  dependencies:
-    "@vueuse/metadata": 8.1.1
-    "@vueuse/shared": 8.1.1
-    vue-demi: "*"
-  peerDependencies:
-    "@vue/composition-api": ^1.1.0
-    vue: ^2.6.0 || ^3.2.0
-  peerDependenciesMeta:
-    "@vue/composition-api":
-      optional: true
-    vue:
-      optional: true
-  checksum: 1235df57c728a29aa5017c224600977f4613a835cf16630f9ff376dda39d560c899b88bb36e45a007b694f05f6f0cf6680599a26bd3093f15e8de514d7f8f37e
-  languageName: node
-  linkType: hard
-
-"@vueuse/integrations@npm:^8.1.1":
-  version: 8.1.1
-  resolution: "@vueuse/integrations@npm:8.1.1"
-  dependencies:
-    "@vueuse/core": 8.1.1
-    "@vueuse/shared": 8.1.1
-    vue-demi: "*"
-  peerDependencies:
-    axios: "*"
-    change-case: "*"
-    drauu: "*"
-    focus-trap: "*"
-    fuse.js: "*"
-    jwt-decode: "*"
-    nprogress: "*"
-    qrcode: "*"
-    universal-cookie: "*"
-  peerDependenciesMeta:
-    axios:
-      optional: true
-    drauu:
-      optional: true
-    focus-trap:
-      optional: true
-    fuse.js:
-      optional: true
-    jwt-decode:
-      optional: true
-    nprogress:
-      optional: true
-    qrcode:
-      optional: true
-    universal-cookie:
-      optional: true
-  checksum: ff17e25529da09f951a3ce7c50a97ffde3648e7760cc0022e63d60ae8a0c6febc885e03a61534b6c330eea335640998d4d3c0eaadf3d52b869852189d396b004
-  languageName: node
-  linkType: hard
-
-"@vueuse/metadata@npm:8.1.1":
-  version: 8.1.1
-  resolution: "@vueuse/metadata@npm:8.1.1"
-  checksum: b1669f018448fbf78abc690ff15c77977c3b4ced1965a331536cf4699d255333cf8f007d80e5494faf455fa7eb4b137f7342723ceb56ec747a127bcf5ec9a815
-  languageName: node
-  linkType: hard
-
-"@vueuse/shared@npm:8.1.1":
-  version: 8.1.1
-  resolution: "@vueuse/shared@npm:8.1.1"
-  dependencies:
-    vue-demi: "*"
-  peerDependencies:
-    "@vue/composition-api": ^1.1.0
-    vue: ^2.6.0 || ^3.2.0
-  peerDependenciesMeta:
-    "@vue/composition-api":
-      optional: true
-    vue:
-      optional: true
-  checksum: 9083fb9a0e238d5935c39f7bae695ed1d018e09246c25632fde2ac9e219fe503d111104316072a8c82bb68586f3eebcdedc8fad7560dee5571058451742bd0a5
   languageName: node
   linkType: hard
 
@@ -11000,7 +10915,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vue-demi@npm:*, vue-demi@npm:^0.12.1":
+"vue-demi@npm:^0.12.1":
   version: 0.12.1
   resolution: "vue-demi@npm:0.12.1"
   peerDependencies:
