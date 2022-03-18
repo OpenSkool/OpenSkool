@@ -8,6 +8,7 @@ declare module 'vue' {
     DialogDescription: typeof import('@headlessui/vue')['DialogDescription']
     DialogOverlay: typeof import('@headlessui/vue')['DialogOverlay']
     DialogTitle: typeof import('@headlessui/vue')['DialogTitle']
+    RiLoaderFill: typeof import('~icons/ri/loader-fill')['default']
     TransitionChild: typeof import('@headlessui/vue')['TransitionChild']
     TransitionRoot: typeof import('@headlessui/vue')['TransitionRoot']
     UiDialog: typeof import('./../components/dialog/ui-dialog.vue')['default']
