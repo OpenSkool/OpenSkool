@@ -39,7 +39,9 @@ export default defineConfig({
       ],
     }),
     Icons({ compiler: 'vue3' }),
-    Pages(),
+    Pages({
+      exclude: ['**/*.spec.ts'],
+    }),
     Vue(),
     WindiCSS(),
   ],

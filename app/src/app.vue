@@ -7,28 +7,31 @@ provide(DefaultApolloClient, apolloClient);
 </script>
 
 <template>
-  <router-view />
+  <div class="container mx-auto px-5">
+    <h1 class="text-4xl my-5 text-orange-700">OpenSkool</h1>
+    <nav class="my-5">
+      <ol class="flex gap-5">
+        <li>
+          <router-link to="/">Home</router-link>
+        </li>
+        <li>
+          <router-link to="/demo/data-fetching">Data-fetching</router-link>
+        </li>
+        <li>
+          <router-link to="/demo/design/components">Components</router-link>
+        </li>
+      </ol>
+    </nav>
+    <router-view />
+  </div>
 </template>
 
-<style>
-html,
-body {
-  @apply antialiased font-sans bg-warm-gray-200;
+<style scoped>
+:global(html, body) {
+  @apply antialiased font-sans bg-blue-gray-100;
 }
 
-a {
-  @apply text-orange-500;
-}
-
-code {
-  @apply bg-orange-100 text-orange-900 px-2 py-1 rounded-md;
-}
-
-h1 {
-  @apply text-6xl;
-}
-
-label {
-  @apply mx-2 font-bold;
+:global(a) {
+  @apply text-orange-900;
 }
 </style>
