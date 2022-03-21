@@ -22,5 +22,31 @@ const isModalOpen = ref(false);
         </div>
       </ui-dialog>
     </div>
+    <div>
+      <h2 class="text-xl mb-3">Menu</h2>
+      <ui-menu label="Options">
+        <ui-menu-item v-slot="{ active }">
+          <ui-menu-item-button v-bind="{ active }">
+            <ri-pencil-fill
+              aria-hidden="true"
+              :class="[active ? 'text-white' : 'text-amber-400']"
+            />
+            Edit
+          </ui-menu-item-button>
+        </ui-menu-item>
+        <ui-menu-item v-slot="{ active }">
+          <ui-menu-item-button
+            v-bind="{ active }"
+            :class="active ? 'bg-red-500 text-white' : 'text-gray-900'"
+          >
+            <ri-delete-bin-fill
+              aria-hidden="true"
+              :class="[active ? 'text-white' : 'text-amber-400']"
+            />
+            Delete
+          </ui-menu-item-button>
+        </ui-menu-item>
+      </ui-menu>
+    </div>
   </div>
 </template>

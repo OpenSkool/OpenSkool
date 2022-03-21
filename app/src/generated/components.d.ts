@@ -8,11 +8,21 @@ declare module 'vue' {
     DialogDescription: typeof import('@headlessui/vue')['DialogDescription']
     DialogOverlay: typeof import('@headlessui/vue')['DialogOverlay']
     DialogTitle: typeof import('@headlessui/vue')['DialogTitle']
+    Menu: typeof import('@headlessui/vue')['Menu']
+    MenuButton: typeof import('@headlessui/vue')['MenuButton']
+    MenuItem: typeof import('@headlessui/vue')['MenuItem']
+    MenuItems: typeof import('@headlessui/vue')['MenuItems']
+    RiArrowDropDownLine: typeof import('~icons/ri/arrow-drop-down-line')['default']
+    RiDeleteBinFill: typeof import('~icons/ri/delete-bin-fill')['default']
     RiLoaderFill: typeof import('~icons/ri/loader-fill')['default']
+    RiPencilFill: typeof import('~icons/ri/pencil-fill')['default']
     TransitionChild: typeof import('@headlessui/vue')['TransitionChild']
     TransitionRoot: typeof import('@headlessui/vue')['TransitionRoot']
     UiButton: typeof import('./../components/button/ui-button.vue')['default']
     UiDialog: typeof import('./../components/dialog/ui-dialog.vue')['default']
+    UiMenu: typeof import('./../components/menu/ui-menu.vue')['default']
+    UiMenuItem: typeof import('./../components/menu/ui-menu-item.vue')['default']
+    UiMenuItemButton: typeof import('./../components/menu/ui-menu-item-button.vue')['default']
   }
 }
 
