@@ -3,28 +3,24 @@ const isModalOpen = ref(false);
 </script>
 
 <template>
-  <h2 class="text-xl mb-3">Dialog</h2>
-  <button
-    type="button"
-    class="px-4 py-2 text-sm font-medium text-white bg-black rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-    @click="isModalOpen = true"
-  >
-    Open dialog
-  </button>
-  <ui-dialog :open="isModalOpen" @close="isModalOpen = false">
-    <template #title>Payment successful</template>
-    <p class="text-sm text-gray-500">
-      Your payment has been successfully submitted. We’ve sent you an email with
-      all of the details of your order.
-    </p>
-    <div class="mt-4">
-      <button
-        type="button"
-        class="inline-flex justify-center px-4 py-2 text-sm font-medium text-amber-900 bg-amber-100 border border-transparent rounded-md hover:bg-amber-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-amber-500"
-        @click="isModalOpen = false"
-      >
-        Got it, thanks!
-      </button>
+  <div class="flex gap-10 flex-col items-start">
+    <div>
+      <h2 class="text-xl mb-3">Buttons</h2>
+      <ui-button>Button</ui-button>
     </div>
-  </ui-dialog>
+    <div>
+      <h2 class="text-xl mb-3">Dialog</h2>
+      <ui-button @click="isModalOpen = true">Open dialog</ui-button>
+      <ui-dialog :open="isModalOpen" @close="isModalOpen = false">
+        <template #title>Payment successful</template>
+        <p class="text-gray-500">
+          Your payment has been successfully submitted. We’ve sent you an email
+          with all of the details of your order.
+        </p>
+        <div class="mt-4">
+          <ui-button @click="isModalOpen = false">Got it, thanks!</ui-button>
+        </div>
+      </ui-dialog>
+    </div>
+  </div>
 </template>
