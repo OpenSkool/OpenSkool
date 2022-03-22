@@ -1,5 +1,18 @@
 <script lang="ts" setup>
 const isModalOpen = ref(false);
+
+interface Education {
+  id: number;
+  name: string;
+}
+
+const educations: Education[] = [
+  { id: 1, name: 'Informatics' },
+  { id: 2, name: 'Chemistry' },
+  { id: 3, name: 'Medicine' },
+];
+
+const selectedEducation = ref<Education>(educations[0]);
 </script>
 
 <template>
@@ -21,6 +34,21 @@ const isModalOpen = ref(false);
           <ui-button @click="isModalOpen = false">Got it, thanks!</ui-button>
         </div>
       </ui-dialog>
+    </div>
+    <div>
+      <h2 class="text-xl mb-3">Listbox (select)</h2>
+      <ui-listbox
+        v-model="selectedEducation"
+        :selected-label="selectedEducation?.name"
+      >
+        <ui-listbox-option
+          v-for="education in educations"
+          :key="education.id"
+          :value="education"
+        >
+          {{ education.name }}
+        </ui-listbox-option>
+      </ui-listbox>
     </div>
     <div>
       <h2 class="text-xl mb-3">Menu</h2>
