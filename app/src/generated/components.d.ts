@@ -21,6 +21,7 @@ declare module 'vue' {
     RiDeleteBinFill: typeof import('~icons/ri/delete-bin-fill')['default']
     RiLoaderFill: typeof import('~icons/ri/loader-fill')['default']
     RiPencilFill: typeof import('~icons/ri/pencil-fill')['default']
+    Switch: typeof import('@headlessui/vue')['Switch']
     TransitionChild: typeof import('@headlessui/vue')['TransitionChild']
     TransitionRoot: typeof import('@headlessui/vue')['TransitionRoot']
     UiButton: typeof import('./../components/button/ui-button.vue')['default']
@@ -30,6 +31,7 @@ declare module 'vue' {
     UiMenu: typeof import('./../components/menu/ui-menu.vue')['default']
     UiMenuItem: typeof import('./../components/menu/ui-menu-item.vue')['default']
     UiMenuItemButton: typeof import('./../components/menu/ui-menu-item-button.vue')['default']
+    UiSwitch: typeof import('./../components/switch/ui-switch.vue')['default']
   }
 }
 
