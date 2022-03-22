@@ -21,7 +21,12 @@ const isProjectAwesome = ref<boolean>(true);
   <div class="flex gap-10 flex-col items-start">
     <div>
       <h2 class="text-xl mb-3">Buttons</h2>
-      <ui-button>Button</ui-button>
+      <div class="flex gap-3">
+        <ui-button>Button</ui-button>
+        <ui-icon-button label="Bug">
+          <ri-edit-2-fill />
+        </ui-icon-button>
+      </div>
     </div>
     <div>
       <h2 class="text-xl mb-3">Dialog</h2>
