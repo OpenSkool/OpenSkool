@@ -19,7 +19,9 @@ defineEmits<
     <div class="relative min-w-50">
       <ListboxButton
         :disabled="disabled"
-        class="listbox-button relative w-full px-3 py-2 flex items-center justify-between rounded-lg shadow-md cursor-default"
+        class="listbox-button relative w-full flex items-center justify-between rounded-lg shadow-md cursor-default bg-white focus:outline-none"
+        p="x-3 y-2"
+        focus-visible:ring="2 offset-2 primary1-500"
       >
         <div class="truncate">{{ selectedLabel ?? '–' }}</div>
         <ri-arrow-drop-down-line aria-hidden="true" />
@@ -31,7 +33,9 @@ defineEmits<
       >
         <ListboxOptions
           v-slot="{ open }"
-          class="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-10"
+          class="absolute w-full py-1 mt-1 overflow-auto bg-white rounded-md shadow-lg max-h-60 focus:outline-none z-10"
+          ring="1 black opacity-5"
+          text="base sm:sm"
         >
           <slot v-bind="{ open }"></slot>
         </ListboxOptions>
@@ -39,10 +43,3 @@ defineEmits<
     </div>
   </Listbox>
 </template>
-
-<style scoped>
-.listbox-button {
-  @apply bg-white;
-  @apply focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-primary1-500);
-}
-</style>
