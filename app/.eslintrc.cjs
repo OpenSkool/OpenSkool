@@ -22,5 +22,14 @@ module.exports = {
         'vue/multi-word-component-names': 'off',
       },
     },
+    {
+      files: ['themes/*'],
+      rules: {
+        'import/no-extraneous-dependencies': [
+          'error',
+          { devDependencies: true },
+        ],
+      },
+    },
   ],
 };

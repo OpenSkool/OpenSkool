@@ -64,7 +64,7 @@ const isProjectAwesome = ref<boolean>(true);
           <ui-menu-item-button v-bind="{ active }">
             <ri-pencil-fill
               aria-hidden="true"
-              :class="[active ? 'text-white' : 'text-amber-400']"
+              :class="[active ? 'text-white' : 'text-primary1-400']"
             />
             Edit
           </ui-menu-item-button>
@@ -76,7 +76,7 @@ const isProjectAwesome = ref<boolean>(true);
           >
             <ri-delete-bin-fill
               aria-hidden="true"
-              :class="[active ? 'text-white' : 'text-amber-400']"
+              :class="[active ? 'text-white' : 'text-primary1-400']"
             />
             Delete
           </ui-menu-item-button>

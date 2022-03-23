@@ -36,10 +36,10 @@ provide(DefaultApolloClient, apolloClient);
           leave-from="opacity-100"
           leave-to="opacity-0"
         >
-          <ri-loader-fill class="text-2xl text-orange-500 spin" />
+          <ri-loader-fill class="text-2xl text-secondary-500 spin" />
         </TransitionRoot>
       </div>
-      <h1 class="text-4xl my-5 text-orange-700">OpenSkool</h1>
+      <h1 class="text-4xl my-5 text-primary1-700">OpenSkool</h1>
     </div>
     <nav class="my-5">
       <ol class="flex gap-5">
@@ -64,7 +64,7 @@ provide(DefaultApolloClient, apolloClient);
 }
 
 :global(a) {
-  @apply text-orange-900;
+  @apply text-primary2-900;
 }
 
 .spin {
