@@ -50,7 +50,7 @@ provide(DefaultApolloClient, apolloClient);
           <router-link to="/demo/data-fetching">Data-fetching</router-link>
         </li>
         <li>
-          <router-link to="/demo/design/components">Components</router-link>
+          <router-link to="/demo/ui">UI</router-link>
         </li>
       </ol>
     </nav>
