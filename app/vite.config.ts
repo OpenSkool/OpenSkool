@@ -1,3 +1,4 @@
+import fs from 'fs';
 import path from 'path';
 
 import Vue from '@vitejs/plugin-vue';
@@ -9,6 +10,14 @@ import Components from 'unplugin-vue-components/vite';
 import { defineConfig } from 'vite';
 import Pages from 'vite-plugin-pages';
 import WindiCSS from 'vite-plugin-windicss';
+
+const windiConfigFilepath =
+  process.env.WINDI_THEME == null
+    ? undefined
+    : `themes/${process.env.WINDI_THEME}.ts`;
+if (windiConfigFilepath != null) {
+  fs.accessSync(windiConfigFilepath);
+}
 
 export default defineConfig({
   plugins: [
@@ -43,7 +52,9 @@ export default defineConfig({
       exclude: ['**/*.spec.ts'],
     }),
     Vue(),
-    WindiCSS(),
+    WindiCSS({
+      config: windiConfigFilepath,
+    }),
   ],
   resolve: {
     alias: {

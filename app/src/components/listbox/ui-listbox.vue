@@ -43,6 +43,6 @@ defineEmits<
 <style scoped>
 .listbox-button {
   @apply bg-white;
-  @apply focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-amber-500);
+  @apply focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-primary1-500);
 }
 </style>
