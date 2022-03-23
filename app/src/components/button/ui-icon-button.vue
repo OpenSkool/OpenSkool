@@ -5,15 +5,16 @@ defineProps<{
 </script>
 
 <template>
-  <button>
+  <button
+    class="inline-flex items-center p-2 rounded-lg text-primary1-900 font-medium select-none hover:bg-primary1-200 focus:outline-none"
+    focus-visible:ring="2 offset-2 primary1-500"
+  >
     <slot></slot>
   </button>
 </template>
 
 <style scoped>
 button {
-  @apply inline-flex items-center p-2 rounded-lg text-primary1-900 font-medium select-none;
-  @apply hover:bg-primary1-200;
-  @apply focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-primary1-500);
+  @apply focus:outline-none;
 }
 </style>

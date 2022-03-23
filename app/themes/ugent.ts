@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite-plugin-windicss';
 import colors from 'windicss/colors';
 
-import { ExtendedColors } from './types';
+import { baseConfig, ExtendedColors } from '.';
 
 const extendedColor: ExtendedColors = {
   primary1: colors.blue,
@@ -12,6 +12,7 @@ const extendedColor: ExtendedColors = {
 };
 
 export default defineConfig({
+  ...baseConfig,
   theme: {
     extend: {
       colors: extendedColor,

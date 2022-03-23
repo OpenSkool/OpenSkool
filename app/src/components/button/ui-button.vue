@@ -1,13 +1,10 @@
 <template>
-  <button type="button">
+  <button
+    type="button"
+    class="inline-flex rounded-lg text-primary1-900 font-medium select-none px-10 py-2 focus:outline-none"
+    bg="primary1-100 hover:primary1-200"
+    focus-visible:ring="2 offset-2 primary1-500"
+  >
     <slot></slot>
   </button>
 </template>
-
-<style scoped>
-button {
-  @apply inline-flex px-10 py-2 rounded-lg text-primary1-900 bg-primary1-100 font-medium select-none;
-  @apply hover:bg-primary1-200;
-  @apply focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-primary1-500);
-}
-</style>
