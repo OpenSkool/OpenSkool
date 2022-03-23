@@ -17,6 +17,7 @@
     "preview": "vite preview",
     "test": "vue-tsc --noEmit && vitest run"
   },
+  "files": [],
   "dependencies": {
     "@apollo/client": "^3.5.10",
     "@headlessui/vue": "^1.5.0",

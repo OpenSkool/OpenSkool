@@ -13,7 +13,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: 'src/',
+      files: ['src/**/*'],
       extends: 'noise/web-app',
     },
     {
