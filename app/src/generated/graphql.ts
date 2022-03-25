@@ -141,7 +141,7 @@ export type Query = {
   __typename?: 'Query';
   allEducations: Array<Education>;
   allPeople: Array<Person>;
-  allRootCompetencies?: Maybe<Array<Maybe<RootCompetency>>>;
+  allRootCompetencies: Array<RootCompetency>;
   randomCompetency?: Maybe<Competency>;
   randomRootCompetency?: Maybe<RootCompetency>;
   rootCompetency?: Maybe<RootCompetency>;
