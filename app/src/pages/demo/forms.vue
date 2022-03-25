@@ -12,8 +12,8 @@ const educations: Education[] = [
 
 const values = reactive<{
   competencyTitle: string;
-  education1: Education | undefined;
-  education2: Education | undefined;
+  education1: string | undefined;
+  education2: number | undefined;
 }>({
   competencyTitle: '',
   education1: undefined,
