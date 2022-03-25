@@ -55,6 +55,11 @@ provide(DefaultApolloClient, apolloClient);
         <li>
           <router-link to="/demo/ui">UI</router-link>
         </li>
+        <li>
+          <router-link to="/manage/competencies">
+            Manage competencies
+          </router-link>
+        </li>
       </ol>
     </nav>
     <router-view />
