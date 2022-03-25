@@ -1,3 +1,4 @@
+import { createPinia } from 'pinia';
 import routes from 'virtual:generated-pages';
 import { createApp } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router';
@@ -13,4 +14,4 @@ const router = createRouter({
   routes,
 });
 
-createApp(App).use(router).use(formkit).mount('#app');
+createApp(App).use(router).use(formkit).use(createPinia()).mount('#app');

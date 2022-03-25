@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { useDemoStore } from '~/demo-store';
 import { GetPeopleQuery } from '~/generated/graphql';
 
 const { result } = useQuery<GetPeopleQuery>(gql`
@@ -13,7 +14,11 @@ const { result } = useQuery<GetPeopleQuery>(gql`
 
 const people = useResult(result, [], (data) => data.allPeople);
 
+const demoStore = useDemoStore();
 const selectedPersonId = ref<string>();
+watchEffect(() => {
+  demoStore.setActiveUserId(selectedPersonId.value);
+});
 
 const selectedPerson = computed(() =>
   people.value.find((item) => item.id === selectedPersonId.value),
