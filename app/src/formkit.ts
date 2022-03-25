@@ -1,6 +1,8 @@
 import type { FormKitNode } from '@formkit/core';
-import { plugin, defaultConfig } from '@formkit/vue';
+import { plugin, defaultConfig, createInput } from '@formkit/vue';
 import type { App } from 'vue';
+
+import Listbox from '~/components/listbox/fk-listbox.vue';
 
 const BOX = {
   fieldset: 'max-w-md border border-gray-400 rounded-md px-4 pb-2',
@@ -52,6 +54,11 @@ export default function formkit(app: App): void {
             input: BOX.input.replace('rounded-sm', 'rounded-full'),
           },
           text: TEXT,
+        }),
+      },
+      inputs: {
+        listbox: createInput(Listbox, {
+          props: ['options'],
         }),
       },
     }),

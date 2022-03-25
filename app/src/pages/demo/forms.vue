@@ -13,9 +13,11 @@ const educations: Education[] = [
 const values = reactive<{
   competencyTitle: string;
   education1: Education | undefined;
+  education2: Education | undefined;
 }>({
   competencyTitle: '',
   education1: undefined,
+  education2: undefined,
 });
 </script>
 
@@ -40,6 +42,17 @@ const values = reactive<{
         }))
       "
       help="Which is your education?"
+    />
+    <FormKit
+      name="education2"
+      label="Education Listbox"
+      type="listbox"
+      :options="
+        educations.map((education) => ({
+          label: education.name,
+          value: education.id,
+        }))
+      "
     />
     <FormKit type="submit">Create competency</FormKit>
   </FormKit>

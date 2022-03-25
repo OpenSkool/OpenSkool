@@ -31,5 +31,11 @@ module.exports = {
         ],
       },
     },
+    {
+      files: ['src/components/**/fk-*.vue'],
+      rules: {
+        'no-underscore-dangle': 'off',
+      },
+    },
   ],
 };
