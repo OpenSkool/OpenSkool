@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { useDemoStore } from '~/demo-store';
 import { GetPeopleQuery } from '~/generated/graphql';
+import { sample } from '~/utils';
 
 const { result } = useQuery<GetPeopleQuery>(gql`
   query getPeople {
@@ -12,12 +13,17 @@ const { result } = useQuery<GetPeopleQuery>(gql`
   }
 `);
 
-const people = useResult(result, [], (data) => data.allPeople);
+const people = computed(() => result.value?.allPeople ?? []);
 
 const demoStore = useDemoStore();
 const selectedPersonId = ref<string>();
 watchEffect(() => {
   demoStore.setActiveUserId(selectedPersonId.value);
+});
+watchEffect(() => {
+  if (people.value.length > 0 && selectedPersonId.value == null) {
+    selectedPersonId.value = sample(people.value).id;
+  }
 });
 
 const selectedPerson = computed(() =>
