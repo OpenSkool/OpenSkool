@@ -24,7 +24,7 @@ const values = reactive<{
 <template>
   <h2 class="text-xl mb-3">Forms</h2>
   <h3 class="text-lg mb-3">Create competency</h3>
-  <FormKit v-model="values" type="group">
+  <FormKit v-model="values" type="form" submit-label="Create competency">
     <FormKit
       name="competencyTitle"
       label="Title"
@@ -54,6 +54,5 @@ const values = reactive<{
         }))
       "
     />
-    <FormKit type="submit">Create competency</FormKit>
   </FormKit>
 </template>
