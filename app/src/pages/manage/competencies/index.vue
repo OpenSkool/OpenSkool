@@ -1,14 +1,20 @@
 <script lang="ts" setup>
 import { GetAllRootCompetenciesQuery } from '~/generated/graphql';
 
-const { result } = useQuery<GetAllRootCompetenciesQuery>(gql`
-  query GetAllRootCompetencies {
-    allRootCompetencies {
-      id
-      title
+const { result } = useQuery<GetAllRootCompetenciesQuery>(
+  gql`
+    query GetAllRootCompetencies {
+      allRootCompetencies {
+        id
+        title
+      }
     }
-  }
-`);
+  `,
+  null,
+  {
+    fetchPolicy: 'cache-and-network',
+  },
+);
 </script>
 
 <template>
