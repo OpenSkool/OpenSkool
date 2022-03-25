@@ -20,6 +20,8 @@
   "files": [],
   "dependencies": {
     "@apollo/client": "^3.5.10",
+    "@formkit/core": "^1.0.0-beta.6",
+    "@formkit/vue": "^1.0.0-beta.6",
     "@headlessui/vue": "^1.5.0",
     "@vue/apollo-composable": "^4.0.0-alpha.16",
     "focus-trap": "^6.7.3",

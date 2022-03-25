@@ -787,6 +787,101 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@formkit/core@npm:1.0.0-beta.7-f27a0f7, @formkit/core@npm:^1.0.0-beta.6":
+  version: 1.0.0-beta.7-f27a0f7
+  resolution: "@formkit/core@npm:1.0.0-beta.7-f27a0f7"
+  dependencies:
+    "@formkit/utils": 1.0.0-beta.7-f27a0f7
+  checksum: 23a22edf4c59e7377cfa13197bf44007049d52c0547dcc398b961adea89defd02c5c0847aa8b386eb0602e16102f6958083711816db7a3adefc9c76078e5c00f
+  languageName: node
+  linkType: hard
+
+"@formkit/dev@npm:1.0.0-beta.7-f27a0f7":
+  version: 1.0.0-beta.7-f27a0f7
+  resolution: "@formkit/dev@npm:1.0.0-beta.7-f27a0f7"
+  dependencies:
+    "@formkit/core": 1.0.0-beta.7-f27a0f7
+    "@formkit/utils": 1.0.0-beta.7-f27a0f7
+  checksum: e82e6574b9d720988422e12678fdd7dc30d17514dd2086335a2de2c75606a6e784275e67dc9d1cd9e2946112f2e14781bd616bf50e96c6b25d2bf02fc2980ac2
+  languageName: node
+  linkType: hard
+
+"@formkit/i18n@npm:1.0.0-beta.7-f27a0f7":
+  version: 1.0.0-beta.7-f27a0f7
+  resolution: "@formkit/i18n@npm:1.0.0-beta.7-f27a0f7"
+  dependencies:
+    "@formkit/core": 1.0.0-beta.7-f27a0f7
+    "@formkit/utils": 1.0.0-beta.7-f27a0f7
+    "@formkit/validation": 1.0.0-beta.7-f27a0f7
+  checksum: 4bd960d4a439c26a4e5e022b8ca797c4984f629e2224774f461446b1d8b80d07fb84fbb31d86a63d81a6f6da242e9b97b684e411016bbf3507649652790aa21f
+  languageName: node
+  linkType: hard
+
+"@formkit/inputs@npm:1.0.0-beta.7-f27a0f7":
+  version: 1.0.0-beta.7-f27a0f7
+  resolution: "@formkit/inputs@npm:1.0.0-beta.7-f27a0f7"
+  dependencies:
+    "@formkit/core": 1.0.0-beta.7-f27a0f7
+  checksum: 329e967646ae180fbdcb1b9b2d27ef4e926aa21eb684eea81d353b21f25eb73907a4c856137d16ea8c14b74be74ac62605abe4dd657be91d56e7c0dec9c0f2b3
+  languageName: node
+  linkType: hard
+
+"@formkit/observer@npm:1.0.0-beta.7-f27a0f7":
+  version: 1.0.0-beta.7-f27a0f7
+  resolution: "@formkit/observer@npm:1.0.0-beta.7-f27a0f7"
+  dependencies:
+    "@formkit/core": 1.0.0-beta.7-f27a0f7
+    "@formkit/utils": 1.0.0-beta.7-f27a0f7
+  checksum: 88c1bf4763a156dc4d2d263929c93973e531984bce1755b00b88ea96abb766a87b9cc767c2484ff0c7486f456f6d986bc8bd8ebaa5536bac616eb924a99bba68
+  languageName: node
+  linkType: hard
+
+"@formkit/rules@npm:1.0.0-beta.7-f27a0f7":
+  version: 1.0.0-beta.7-f27a0f7
+  resolution: "@formkit/rules@npm:1.0.0-beta.7-f27a0f7"
+  dependencies:
+    "@formkit/core": 1.0.0-beta.7-f27a0f7
+    "@formkit/utils": 1.0.0-beta.7-f27a0f7
+    "@formkit/validation": 1.0.0-beta.7-f27a0f7
+  checksum: 99443578ce8f5863d83d984434d00ac96f4669b2b5e77da95249abe84be6945ecd6e637f00800c01177995cd2588ad4387b75b3327c1bd868f590b9ce1a710c2
+  languageName: node
+  linkType: hard
+
+"@formkit/utils@npm:1.0.0-beta.7-f27a0f7":
+  version: 1.0.0-beta.7-f27a0f7
+  resolution: "@formkit/utils@npm:1.0.0-beta.7-f27a0f7"
+  checksum: 5d9976a7efbfcb02df9052c055fc46aa65793f57cd9cdacd633d0155fd6cd1f776326bbfb108d8db1601ff7cf72aa68b513d4139a70fdb2a4ccf6e7be615bffb
+  languageName: node
+  linkType: hard
+
+"@formkit/validation@npm:1.0.0-beta.7-f27a0f7":
+  version: 1.0.0-beta.7-f27a0f7
+  resolution: "@formkit/validation@npm:1.0.0-beta.7-f27a0f7"
+  dependencies:
+    "@formkit/core": 1.0.0-beta.7-f27a0f7
+    "@formkit/observer": 1.0.0-beta.7-f27a0f7
+  checksum: 7b3532f825c8b886991d467177ba2818d9c7cb0e2ad01d16f293d88aae40d83dc499807c4693f8afa7b8d069f417568e76f44854de115b0fbc96fc762c7b443c
+  languageName: node
+  linkType: hard
+
+"@formkit/vue@npm:^1.0.0-beta.6":
+  version: 1.0.0-beta.7-f27a0f7
+  resolution: "@formkit/vue@npm:1.0.0-beta.7-f27a0f7"
+  dependencies:
+    "@formkit/core": 1.0.0-beta.7-f27a0f7
+    "@formkit/dev": 1.0.0-beta.7-f27a0f7
+    "@formkit/i18n": 1.0.0-beta.7-f27a0f7
+    "@formkit/inputs": 1.0.0-beta.7-f27a0f7
+    "@formkit/observer": 1.0.0-beta.7-f27a0f7
+    "@formkit/rules": 1.0.0-beta.7-f27a0f7
+    "@formkit/utils": 1.0.0-beta.7-f27a0f7
+    "@formkit/validation": 1.0.0-beta.7-f27a0f7
+  peerDependencies:
+    vue: ^3.2.1
+  checksum: 07a07b0c0eb711d252e396f56e1f622a9cfce6d25b18715fd0aec3f565263b25d29ede7f135011e3c099e478f4ae1745c550113ae3425a5b2379265a28eefde3
+  languageName: node
+  linkType: hard
+
 "@gar/promisify@npm:^1.0.1":
   version: 1.1.2
   resolution: "@gar/promisify@npm:1.1.2"
@@ -1482,6 +1577,8 @@ __metadata:
   resolution: "@os/app@workspace:app"
   dependencies:
     "@apollo/client": ^3.5.10
+    "@formkit/core": ^1.0.0-beta.6
+    "@formkit/vue": ^1.0.0-beta.6
     "@graphql-codegen/cli": 2.6.2
     "@graphql-codegen/typescript": 2.4.8
     "@graphql-codegen/typescript-operations": 2.3.5

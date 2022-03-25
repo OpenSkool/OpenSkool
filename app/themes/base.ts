@@ -1,7 +1,10 @@
 import type { Config } from 'windicss/types/interfaces';
 
+import formkit from './plugin-formkit';
+
 const base: Config = {
   attributify: true,
+  plugins: [formkit],
   shortcuts: {
     btn: 'inline-flex rounded-lg font-medium select-none px-10 py-2',
     'btn-primary': `
