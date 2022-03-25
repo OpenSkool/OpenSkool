@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 import Vue from '@vitejs/plugin-vue';
+import visualizer from 'rollup-plugin-visualizer';
 import AutoImport from 'unplugin-auto-import/vite';
 import IconsResolver from 'unplugin-icons/resolver';
 import Icons from 'unplugin-icons/vite';
@@ -20,6 +21,13 @@ if (windiConfigFilepath != null) {
 }
 
 export default defineConfig({
+  build: {
+    rollupOptions: {
+      plugins: [
+        visualizer({ filename: path.join(__dirname, 'dist/stats.html') }),
+      ],
+    },
+  },
   plugins: [
     AutoImport({
       imports: [
