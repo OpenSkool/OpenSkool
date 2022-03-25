@@ -201,3 +201,8 @@ export type GetEducationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetEducationsQuery = { __typename?: 'Query', allEducations: Array<{ __typename?: 'Education', id: string, title: string }> };
+
+export type GetAllRootCompetenciesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllRootCompetenciesQuery = { __typename?: 'Query', allRootCompetencies: Array<{ __typename?: 'RootCompetency', id: string, title: string }> };
