@@ -197,6 +197,11 @@ export type UserError = {
   path: Array<Scalars['String']>;
 };
 
+export type GetPeopleQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetPeopleQuery = { __typename?: 'Query', allPeople: Array<{ __typename?: 'Teacher', id: string, firstName?: string | null, lastName?: string | null }> };
+
 export type GetEducationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 

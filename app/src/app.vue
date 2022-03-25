@@ -39,7 +39,10 @@ provide(DefaultApolloClient, apolloClient);
           <ri-loader-fill class="text-2xl text-secondary-500 spin" />
         </TransitionRoot>
       </div>
-      <h1 class="text-4xl my-5 text-primary1-700">OpenSkool</h1>
+      <div class="flex items-center justify-between">
+        <h1 class="text-4xl my-5 text-primary1-700">OpenSkool</h1>
+        <user-select></user-select>
+      </div>
     </div>
     <nav class="my-5">
       <ol class="flex gap-5">
