@@ -25,7 +25,6 @@ declare module 'vue' {
     Switch: typeof import('@headlessui/vue')['Switch']
     TransitionChild: typeof import('@headlessui/vue')['TransitionChild']
     TransitionRoot: typeof import('@headlessui/vue')['TransitionRoot']
-    UiButton: typeof import('./../components/button/ui-button.vue')['default']
     UiDialog: typeof import('./../components/dialog/ui-dialog.vue')['default']
     UiIconButton: typeof import('./../components/button/ui-icon-button.vue')['default']
     UiListbox: typeof import('./../components/listbox/ui-listbox.vue')['default']

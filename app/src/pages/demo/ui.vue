@@ -22,7 +22,7 @@ const isProjectAwesome = ref<boolean>(true);
     <div>
       <h2 class="text-xl mb-3">Buttons</h2>
       <div class="flex gap-3">
-        <ui-button>Button</ui-button>
+        <button class="btn btn-primary">Button</button>
         <ui-icon-button label="Bug">
           <ri-edit-2-fill />
         </ui-icon-button>
@@ -30,7 +30,9 @@ const isProjectAwesome = ref<boolean>(true);
     </div>
     <div>
       <h2 class="text-xl mb-3">Dialog</h2>
-      <ui-button @click="isModalOpen = true">Open dialog</ui-button>
+      <button class="btn btn-primary" type="button" @click="isModalOpen = true">
+        Open dialog
+      </button>
       <ui-dialog :open="isModalOpen" @close="isModalOpen = false">
         <template #title>Payment successful</template>
         <p class="text-gray-500">
@@ -38,7 +40,13 @@ const isProjectAwesome = ref<boolean>(true);
           with all of the details of your order.
         </p>
         <div class="mt-4">
-          <ui-button @click="isModalOpen = false">Got it, thanks!</ui-button>
+          <button
+            class="btn btn-primary"
+            type="button"
+            @click="isModalOpen = false"
+          >
+            Got it, thanks!
+          </button>
         </div>
       </ui-dialog>
     </div>
