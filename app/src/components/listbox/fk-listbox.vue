@@ -5,12 +5,11 @@ const props = defineProps<{
   context: FormKitFrameworkContext;
 }>();
 
-const value = computed(() => props.context._value as string | number);
-
 const selectedLabel = computed(
   () =>
-    props.context.options?.find((option) => option.value === value.value)
-      ?.label,
+    props.context.options?.find(
+      (option) => option.value === props.context._value,
+    )?.label,
 );
 
 function handleUpdate(changedValue: unknown): void {
@@ -20,7 +19,7 @@ function handleUpdate(changedValue: unknown): void {
 
 <template>
   <ui-listbox
-    :model-value="value"
+    :model-value="props.context._value"
     :selected-label="selectedLabel"
     @update:model-value="handleUpdate"
   >
