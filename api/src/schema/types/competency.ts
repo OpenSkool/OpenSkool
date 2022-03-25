@@ -106,7 +106,7 @@ export const CompetencyQueries = extendType({
           handleResolverError(error, ctx);
         }
       },
-      type: list('RootCompetency'),
+      type: nonNull(list(nonNull('RootCompetency'))),
     });
     t.field('randomCompetency', {
       async resolve(root, argumentz, ctx) {
