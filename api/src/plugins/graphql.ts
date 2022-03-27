@@ -20,6 +20,6 @@ export default plugin(async (app) => {
       context: (request, reply): Context => {
         return { request, reply };
       },
-      schema: schema as unknown as GraphQLSchema,
+      schema: schema as GraphQLSchema,
     });
 });
