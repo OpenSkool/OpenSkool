@@ -12,7 +12,7 @@ const { result } = useQuery<GetPeopleQuery>(gql`
   }
 `);
 
-const people = computed(() => result.value?.allPeople ?? []);
+const people = useResult(result, []);
 
 const demoStore = useDemoStore();
 const selectedPersonId = ref<string>();

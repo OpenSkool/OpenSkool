@@ -11,10 +11,10 @@ const { result } = useQuery<GetAllRootCompetenciesQuery>(
     }
   `,
   null,
-  {
-    fetchPolicy: 'cache-and-network',
-  },
+  { fetchPolicy: 'cache-and-network' },
 );
+
+const competencies = useResult(result);
 </script>
 
 <template>
@@ -27,7 +27,7 @@ const { result } = useQuery<GetAllRootCompetenciesQuery>(
     Create competency
   </router-link>
   <ol class="list-decimal">
-    <li v-for="competency of result?.allRootCompetencies" :key="competency.id">
+    <li v-for="competency of competencies" :key="competency.id">
       {{ competency?.title }}
       <router-link
         class="inline-block"
