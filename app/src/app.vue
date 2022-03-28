@@ -26,20 +26,20 @@ provide(DefaultApolloClient, apolloClient);
 <template>
   <div class="container mx-auto px-5">
     <div class="relative">
-      <div class="absolute -ml-10 mt-1">
-        <TransitionRoot
-          :show="status.isPending"
-          enter="duration-100 ease-out"
-          enter-from="opacity-0"
-          enter-to="opacity-100"
-          leave="delay-300 duration-100 ease-in"
-          leave-from="opacity-100"
-          leave-to="opacity-0"
-        >
-          <ri-loader-fill class="text-2xl text-secondary-500 spin" />
-        </TransitionRoot>
-      </div>
       <div class="flex items-center justify-between">
+        <div class="absolute -ml-10 mt-1">
+          <TransitionRoot
+            :show="status.isPending"
+            enter="duration-100 ease-out"
+            enter-from="opacity-0"
+            enter-to="opacity-100"
+            leave="delay-300 duration-100 ease-in"
+            leave-from="opacity-100"
+            leave-to="opacity-0"
+          >
+            <ri-loader-fill class="text-2xl text-secondary-500 spin" />
+          </TransitionRoot>
+        </div>
         <h1 class="text-4xl my-5 text-primary1-700">OpenSkool</h1>
         <user-select></user-select>
       </div>
