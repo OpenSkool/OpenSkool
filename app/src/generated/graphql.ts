@@ -207,6 +207,22 @@ export type GetEducationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetEducationsQuery = { __typename?: 'Query', allEducations: Array<{ __typename?: 'Education', id: string, title: string }> };
 
+export type GetRootCompetencyQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetRootCompetencyQuery = { __typename?: 'Query', rootCompetency?: { __typename?: 'RootCompetency', id: string, title: string } | null };
+
+export type RenameCompetencyMutationVariables = Exact<{
+  currentUserId: Scalars['ID'];
+  id: Scalars['ID'];
+  title: Scalars['String'];
+}>;
+
+
+export type RenameCompetencyMutation = { __typename?: 'Mutation', renameCompetency: { __typename?: 'RenameCompetencyErrorPayload', error: { __typename?: 'UserError', code: string, message: string } } | { __typename?: 'RenameCompetencySuccessPayload', competency: { __typename?: 'NestedCompetency', id: string } | { __typename?: 'RootCompetency', id: string } } };
+
 export type CreateCompetencyMutationVariables = Exact<{
   currentUserId: Scalars['ID'];
   title: Scalars['String'];
