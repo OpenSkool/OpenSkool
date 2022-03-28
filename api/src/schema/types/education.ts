@@ -8,9 +8,8 @@ import {
   objectType,
 } from 'nexus';
 
-import { EducationService } from '../../services/module';
+import { EducationService } from '../../domain';
 import { Context } from '../context';
-import { handleResolverError } from '../utils';
 
 export const Education = objectType({
   name: 'Education',
@@ -25,7 +24,7 @@ export const Education = objectType({
   },
   sourceType: {
     export: 'EducationModel',
-    module: require.resolve('../../services/education'),
+    module: require.resolve('../../domain/source-types'),
   },
 });
 
@@ -34,11 +33,7 @@ export const EducationQueries = extendType({
   definition: (t) => {
     t.field('allEducations', {
       async resolve(root, argumentz, ctx: Context, info) {
-        try {
-          return await EducationService.getAllEducations();
-        } catch (error) {
-          handleResolverError(error, ctx);
-        }
+        return EducationService.getAllEducations();
       },
       type: nonNull(list(nonNull('Education'))),
     });
@@ -58,11 +53,7 @@ export const CreateEducation = mutationField('createEducation', {
     data: 'EducationInput',
   },
   async resolve(root, { data }, ctx) {
-    try {
-      return await EducationService.createEducation(data);
-    } catch (error) {
-      handleResolverError(error, ctx);
-    }
+    return EducationService.createEducation(data);
   },
 });
 
@@ -73,11 +64,7 @@ export const UpdateEducation = mutationField('updateEducation', {
     data: 'EducationInput',
   },
   async resolve(root, { id, data }, ctx) {
-    try {
-      return await EducationService.updateEducation(id, data);
-    } catch (error) {
-      handleResolverError(error, ctx);
-    }
+    return EducationService.updateEducation(id, data);
   },
 });
 
@@ -87,10 +74,6 @@ export const DeleteEducation = mutationField('deleteEducation', {
     id: idArg(),
   },
   async resolve(root, { id }, ctx) {
-    try {
-      return await EducationService.deleteEducation(id);
-    } catch (error) {
-      handleResolverError(error, ctx);
-    }
+    return EducationService.deleteEducation(id);
   },
 });

@@ -1,6 +1,6 @@
 import { extendType, interfaceType, list, nonNull, objectType } from 'nexus';
 
-import { PersonService } from '../../services/module';
+import { PersonService } from '../../domain';
 
 export const Person = interfaceType({
   name: 'Person',

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "license": "AGPL-3.0",
-  "main": "module.js",
+  "main": "index.js",
   "peerDependencies": {
     "eslint": "^8.8.0"
   },

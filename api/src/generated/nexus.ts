@@ -10,8 +10,7 @@ import type {
   CreateCompetencyPayloadModel,
   RenameCompetencyPayloadModel,
 } from './../schema/types/competency';
-import type { CompetencyModel } from './../services/competency';
-import type { EducationModel } from './../services/education';
+import type { CompetencyModel, EducationModel } from './../domain/source-types';
 import type { Person } from '@prisma/client';
 import type { core } from 'nexus';
 declare global {

@@ -2,7 +2,7 @@ import path from 'path';
 
 import { makeSchema } from 'nexus';
 
-import * as types from './types/module';
+import * as types from './types';
 
 export default makeSchema({
   contextType: {

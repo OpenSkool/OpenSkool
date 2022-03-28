@@ -10,11 +10,10 @@ import {
   unionType,
 } from 'nexus';
 
-import { ValidationError } from '../../errors';
-import { CompetencyModel } from '../../services/competency';
-import { CompetencyService } from '../../services/module';
+import { CompetencyService } from '../../domain';
+import type { CompetencyModel } from '../../domain/competency';
+import { AppValidationError } from '../../errors';
 import { Context } from '../context';
-import { handleResolverError } from '../utils';
 import { UserErrorModel } from './errors';
 
 export const Competency = interfaceType({
@@ -27,13 +26,7 @@ export const Competency = interfaceType({
     t.field('subCompetencies', {
       type: list(nonNull('NestedCompetency')),
       async resolve(parent, argumentz, ctx) {
-        try {
-          return await CompetencyService.findSubCompetenciesByParentId(
-            parent.id,
-          );
-        } catch (error) {
-          handleResolverError(error, ctx);
-        }
+        return CompetencyService.findSubCompetenciesByParentId(parent.id);
       },
     });
     t.nonNull.string('title', {
@@ -67,7 +60,7 @@ export const NestedCompetency = objectType({
   },
   sourceType: {
     export: 'CompetencyModel',
-    module: require.resolve('../../services/competency'),
+    module: require.resolve('../../domain/source-types'),
   },
 });
 
@@ -79,19 +72,13 @@ export const RootCompetency = objectType({
     t.nonNull.field('nestedCompetencies', {
       type: nonNull(list(nonNull('NestedCompetency'))),
       async resolve(parent, argumentz, ctx) {
-        try {
-          return await CompetencyService.getNestedCompetenciesByRootId(
-            parent.id,
-          );
-        } catch (error) {
-          handleResolverError(error, ctx);
-        }
+        return CompetencyService.getNestedCompetenciesByRootId(parent.id);
       },
     });
   },
   sourceType: {
     export: 'CompetencyModel',
-    module: require.resolve('../../services/competency'),
+    module: require.resolve('../../domain/source-types'),
   },
 });
 
@@ -100,42 +87,26 @@ export const CompetencyQueries = extendType({
   definition: (t) => {
     t.field('allRootCompetencies', {
       async resolve(root, argumentz, ctx) {
-        try {
-          return await CompetencyService.getAllRootCompetencies();
-        } catch (error) {
-          handleResolverError(error, ctx);
-        }
+        return CompetencyService.getAllRootCompetencies();
       },
       type: nonNull(list(nonNull('RootCompetency'))),
     });
     t.field('randomCompetency', {
       async resolve(root, argumentz, ctx) {
-        try {
-          return await CompetencyService.findRandomCompetency();
-        } catch (error) {
-          handleResolverError(error, ctx);
-        }
+        return CompetencyService.findRandomCompetency();
       },
       type: 'Competency',
     });
     t.field('randomRootCompetency', {
       async resolve(root, argumentz, ctx) {
-        try {
-          return await CompetencyService.findRandomRootCompetency();
-        } catch (error) {
-          handleResolverError(error, ctx);
-        }
+        return CompetencyService.findRandomRootCompetency();
       },
       type: 'RootCompetency',
     });
     t.field('rootCompetency', {
       args: { id: idArg() },
       async resolve(root, { id }, ctx: Context, info) {
-        try {
-          return await CompetencyService.findRootCompetencyById(id);
-        } catch (error) {
-          handleResolverError(error, ctx);
-        }
+        return CompetencyService.findRootCompetencyById(id);
       },
       type: 'RootCompetency',
     });
@@ -198,7 +169,7 @@ export const CreateCompetency = mutationField('createCompetency', {
       );
       return { competency };
     } catch (error) {
-      if (error instanceof ValidationError) {
+      if (error instanceof AppValidationError) {
         return {
           error: {
             code: error.extensions.code,
@@ -207,7 +178,7 @@ export const CreateCompetency = mutationField('createCompetency', {
           },
         };
       }
-      handleResolverError(error, ctx);
+      throw error as Error;
     }
   },
 });
@@ -279,7 +250,7 @@ export const RenameCompetency = mutationField('renameCompetency', {
       );
       return { competency };
     } catch (error) {
-      if (error instanceof ValidationError) {
+      if (error instanceof AppValidationError) {
         return {
           error: {
             code: error.extensions.code,
@@ -288,7 +259,7 @@ export const RenameCompetency = mutationField('renameCompetency', {
           },
         };
       }
-      handleResolverError(error, ctx);
+      throw error as Error;
     }
   },
 });

@@ -3,9 +3,9 @@ import { createMercuriusTestClient } from 'mercurius-integration-testing';
 import { beforeEach, describe, expect, test } from 'vitest';
 
 import app from '../src/app';
+import { CompetencyService } from '../src/domain';
 import { prisma } from '../src/prisma';
 import { UserErrorModel } from '../src/schema/types/errors';
-import { CompetencyService } from '../src/services/module';
 
 beforeEach(async () => {
   await prisma.competency.deleteMany();

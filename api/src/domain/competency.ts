@@ -1,8 +1,9 @@
 import { Competency, CompetencyTranslation, Language } from '@prisma/client';
 
-import { UserError, UserErrorCode, ValidationError } from '../errors';
+import { AppValidationError } from '../errors';
 import { prisma } from '../prisma';
-import { validateSingleLineString } from './validators';
+import { SchemaValidationErrorCode } from '../schema/constants';
+import { handleServiceError, validateSingleLineString } from './helpers';
 
 export interface CompetencyModel extends Competency {
   translations: CompetencyTranslation[];
@@ -24,57 +25,77 @@ export async function createCompetency(
       where: { id: data.parentId },
     });
     if (parentCompetency == null) {
-      throw new UserError('Foreign key constraint failed');
+      throw new AppValidationError('Foreign key constraint failed', {
+        extensions: {
+          code: SchemaValidationErrorCode.VALUE_NOT_VALID,
+          path: ['parentId'],
+        },
+      });
     }
     rootId = parentCompetency.rootCompetencyId ?? parentCompetency.id;
   }
-  const competency = await prisma.competency.create({
-    data: {
-      createdById: accountancy.currentUserId,
-      updatedById: accountancy.currentUserId,
-      parentCompetencyId: data.parentId,
-      rootCompetencyId: rootId,
-      translations: { create: { languageCode: 'EN', title } },
-    },
-    include: {
-      translations: true,
-    },
-  });
-  return competency;
+  try {
+    return await prisma.competency.create({
+      data: {
+        createdById: accountancy.currentUserId,
+        updatedById: accountancy.currentUserId,
+        parentCompetencyId: data.parentId,
+        rootCompetencyId: rootId,
+        translations: { create: { languageCode: 'EN', title } },
+      },
+      include: {
+        translations: true,
+      },
+    });
+  } catch (error) {
+    handleServiceError(error);
+  }
 }
 
-export function deleteCompetency(id: string): Promise<CompetencyModel> {
-  return prisma.competency.delete({
-    include: { translations: true },
-    where: { id },
-  });
+export async function deleteCompetency(id: string): Promise<CompetencyModel> {
+  try {
+    return await prisma.competency.delete({
+      include: { translations: true },
+      where: { id },
+    });
+  } catch (error) {
+    handleServiceError(error);
+  }
 }
 
 export async function getAllRootCompetencies(): Promise<CompetencyModel[]> {
-  return prisma.competency.findMany({
-    include: {
-      translations: { where: { languageCode: Language.EN } },
-    },
-    where: {
-      parentCompetencyId: null,
-      translations: { some: { languageCode: Language.EN } },
-    },
-  });
+  try {
+    return await prisma.competency.findMany({
+      include: {
+        translations: { where: { languageCode: Language.EN } },
+      },
+      where: {
+        parentCompetencyId: null,
+        translations: { some: { languageCode: Language.EN } },
+      },
+    });
+  } catch (error) {
+    handleServiceError(error);
+  }
 }
 
 export async function getNestedCompetenciesByRootId(
   id: string,
 ): Promise<CompetencyModel[]> {
-  const nestedCompetencies = await prisma.competency
-    .findUnique({ where: { id } })
-    .nestedCompetencies({
-      include: {
-        translations: { where: { languageCode: Language.EN } },
-      },
-    });
-  return nestedCompetencies.filter(
-    (competency) => competency.translations.length > 0,
-  );
+  try {
+    const nestedCompetencies = await prisma.competency
+      .findUnique({ where: { id } })
+      .nestedCompetencies({
+        include: {
+          translations: { where: { languageCode: Language.EN } },
+        },
+      });
+    return nestedCompetencies.filter(
+      (competency) => competency.translations.length > 0,
+    );
+  } catch (error) {
+    handleServiceError(error);
+  }
 }
 
 export async function findRandomCompetency(): Promise<CompetencyModel | null> {
@@ -116,38 +137,46 @@ export async function findRandomRootCompetency(): Promise<CompetencyModel | null
 export async function findRootCompetencyById(
   id: string,
 ): Promise<CompetencyModel | null> {
-  const competency = await prisma.competency.findUnique({
-    include: {
-      translations: { where: { languageCode: Language.EN } },
-    },
-    where: { id },
-  });
-  if (
-    competency == null ||
-    competency.parentCompetencyId != null ||
-    competency.translations.length === 0
-  ) {
-    return null;
+  try {
+    const competency = await prisma.competency.findUnique({
+      include: {
+        translations: { where: { languageCode: Language.EN } },
+      },
+      where: { id },
+    });
+    if (
+      competency == null ||
+      competency.parentCompetencyId != null ||
+      competency.translations.length === 0
+    ) {
+      return null;
+    }
+    return competency;
+  } catch (error) {
+    handleServiceError(error);
   }
-  return competency;
 }
 
 export async function findSubCompetenciesByParentId(
   id: string,
 ): Promise<CompetencyModel[] | null> {
-  const subCompetencies = await prisma.competency
-    .findUnique({ where: { id } })
-    .subCompetencies({
-      include: {
-        translations: { where: { languageCode: Language.EN } },
-      },
-    });
-  if (subCompetencies.length === 0) {
-    return null;
+  try {
+    const subCompetencies = await prisma.competency
+      .findUnique({ where: { id } })
+      .subCompetencies({
+        include: {
+          translations: { where: { languageCode: Language.EN } },
+        },
+      });
+    if (subCompetencies.length === 0) {
+      return null;
+    }
+    return subCompetencies.filter(
+      (competency) => competency.translations.length > 0,
+    );
+  } catch (error) {
+    handleServiceError(error);
   }
-  return subCompetencies.filter(
-    (competency) => competency.translations.length > 0,
-  );
 }
 
 export async function updateCompetencyTranslations(
@@ -156,27 +185,32 @@ export async function updateCompetencyTranslations(
   accountancy: Accountancy,
 ): Promise<CompetencyModel> {
   const title = validateSingleLineString(data.title);
-  const parent = await prisma.competency
-    .findUnique({ where: { id } })
-    .parentCompetency({ select: { id: true } });
-  await assertUniqueTitle(title, { id, parentId: parent?.id });
-  return prisma.competency.update({
-    data: {
-      updatedById: accountancy.currentUserId,
-      translations: {
-        updateMany: {
-          data: { title },
+
+  try {
+    const parent = await prisma.competency
+      .findUnique({ where: { id } })
+      .parentCompetency({ select: { id: true } });
+    await assertUniqueTitle(title, { id, parentId: parent?.id });
+    return prisma.competency.update({
+      data: {
+        updatedById: accountancy.currentUserId,
+        translations: {
+          updateMany: {
+            data: { title },
+            where: { languageCode: Language.EN },
+          },
+        },
+      },
+      include: {
+        translations: {
           where: { languageCode: Language.EN },
         },
       },
-    },
-    include: {
-      translations: {
-        where: { languageCode: Language.EN },
-      },
-    },
-    where: { id },
-  });
+      where: { id },
+    });
+  } catch (error) {
+    handleServiceError(error);
+  }
 }
 
 async function assertUniqueTitle(
@@ -221,9 +255,11 @@ async function assertUniqueTitle(
     );
   }
   if (siblingTitles.includes(title)) {
-    throw new ValidationError('Title is not unique', {
-      code: UserErrorCode.VALUE_NOT_UNIQUE,
-      path: ['title'],
+    throw new AppValidationError('Title is not unique', {
+      extensions: {
+        code: SchemaValidationErrorCode.VALUE_NOT_UNIQUE,
+        path: ['title'],
+      },
     });
   }
 }

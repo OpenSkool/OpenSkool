@@ -1,4 +1,5 @@
-import { UserErrorCode, ValidationError } from '../errors';
+import { AppValidationError } from '../../errors';
+import { SchemaValidationErrorCode } from '../../schema/constants';
 
 const CHAR_CONTROL = '\u0000-\u001F\u007F-\u009F';
 const CHAR_ZERO_WIDTH = '\u200B-\u200D\uFEFF';
@@ -11,9 +12,11 @@ export function validateSingleLineString(input: string): string {
     .replace(CHARS_MULTIPLE_SEQUENTIAL_SPACES, ' ')
     .trim();
   if (output === '') {
-    throw new ValidationError('Title cannot be empty', {
-      code: UserErrorCode.VALUE_NOT_VALID,
-      path: ['title'],
+    throw new AppValidationError('Title cannot be empty', {
+      extensions: {
+        code: SchemaValidationErrorCode.VALUE_NOT_VALID,
+        path: ['title'],
+      },
     });
   }
   return output;

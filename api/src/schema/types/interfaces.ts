@@ -1,7 +1,7 @@
 import * as Db from '@prisma/client';
 import { interfaceType } from 'nexus';
 
-import { PersonService } from '../../services/module';
+import { PersonService } from '../../domain';
 
 const DELETED_USER: Db.Person = {
   id: '__DELETED_USER__',
