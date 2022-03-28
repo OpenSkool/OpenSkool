@@ -112,13 +112,13 @@ interface Node {
 }
 
 interface Person implements Node {
-  firstName: String
+  firstName: String!
 
   """
   A CUID for a resource
   """
   id: ID!
-  lastName: String
+  lastName: String!
 }
 
 type Query {
@@ -165,13 +165,13 @@ type RootCompetency implements Accountable & Competency & Node {
 }
 
 type Teacher implements Node & Person {
-  firstName: String
+  firstName: String!
 
   """
   A CUID for a resource
   """
   id: ID!
-  lastName: String
+  lastName: String!
 }
 
 type UserError {

@@ -184,9 +184,9 @@ export interface NexusGenFieldTypes {
   };
   Teacher: {
     // field return type
-    firstName: string | null; // String
+    firstName: string; // String!
     id: string; // ID!
-    lastName: string | null; // String
+    lastName: string; // String!
   };
   UserError: {
     // field return type
@@ -217,9 +217,9 @@ export interface NexusGenFieldTypes {
   };
   Person: {
     // field return type
-    firstName: string | null; // String
+    firstName: string; // String!
     id: string; // ID!
-    lastName: string | null; // String
+    lastName: string; // String!
   };
 }
 
