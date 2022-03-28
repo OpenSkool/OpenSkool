@@ -13,7 +13,6 @@ declare module 'vue' {
     RiCheckFill: typeof import('~icons/ri/check-fill')['default']
     RiEditBoxFill: typeof import('~icons/ri/edit-box-fill')['default']
     RiLoaderFill: typeof import('~icons/ri/loader-fill')['default']
-    SvgEdit: typeof import('./../components/svg/svg-edit.vue')['default']
     TransitionRoot: typeof import('@headlessui/vue')['TransitionRoot']
     UiBreadcrumb: typeof import('./../components/breadcrumb/ui-breadcrumb.vue')['default']
     UiDialog: typeof import('./../components/dialog/ui-dialog.vue')['default']

@@ -27,7 +27,6 @@ const { result } = useQuery<GetRootCompetencyQuery>(
   },
 );
 
-// watchEffect
 watch(result, () => {
   if (result.value?.rootCompetency != null) {
     values.value = { title: result.value.rootCompetency.title };
