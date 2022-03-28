@@ -131,6 +131,7 @@ export type Node = {
 };
 
 export type Person = {
+  displayName: Scalars['String'];
   firstName: Scalars['String'];
   /** A CUID for a resource */
   id: Scalars['ID'];
@@ -184,6 +185,7 @@ export type RootCompetency = Accountable & Competency & Node & {
 
 export type Teacher = Node & Person & {
   __typename?: 'Teacher';
+  displayName: Scalars['String'];
   firstName: Scalars['String'];
   /** A CUID for a resource */
   id: Scalars['ID'];
@@ -200,7 +202,7 @@ export type UserError = {
 export type GetPeopleQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetPeopleQuery = { __typename?: 'Query', allPeople: Array<{ __typename?: 'Teacher', id: string, firstName: string, lastName: string }> };
+export type GetPeopleQuery = { __typename?: 'Query', allPeople: Array<{ __typename?: 'Teacher', id: string, displayName: string }> };
 
 export type GetEducationsQueryVariables = Exact<{ [key: string]: never; }>;
 
