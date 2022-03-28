@@ -7,8 +7,7 @@ const { result } = useQuery<GetPeopleQuery>(gql`
   query getPeople {
     allPeople {
       id
-      firstName
-      lastName
+      displayName
     }
   }
 `);
@@ -34,9 +33,7 @@ const selectedPerson = computed(() =>
   <ui-listbox
     v-model="selectedPersonId"
     :selected-label="
-      selectedPerson == null
-        ? 'Kies een gebruiker'
-        : selectedPerson?.firstName + ' ' + selectedPerson?.lastName
+      selectedPerson == null ? 'Kies een gebruiker' : selectedPerson.displayName
     "
   >
     <ui-listbox-option
@@ -44,7 +41,7 @@ const selectedPerson = computed(() =>
       :key="person.id"
       :value="person.id"
     >
-      {{ person.firstName + ' ' + person.lastName }}
+      {{ person.displayName }}
     </ui-listbox-option>
   </ui-listbox>
 </template>

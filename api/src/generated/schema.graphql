@@ -112,6 +112,7 @@ interface Node {
 }
 
 interface Person implements Node {
+  displayName: String!
   firstName: String!
 
   """
@@ -165,6 +166,7 @@ type RootCompetency implements Accountable & Competency & Node {
 }
 
 type Teacher implements Node & Person {
+  displayName: String!
   firstName: String!
 
   """

@@ -6,6 +6,11 @@ export const Person = interfaceType({
   name: 'Person',
   definition(t) {
     t.implements('Node');
+    t.nonNull.string('displayName', {
+      resolve(parent, argumentz, ctx) {
+        return `${parent.firstName} ${parent.lastName}`;
+      },
+    });
     t.nonNull.string('firstName');
     t.nonNull.string('lastName');
   },

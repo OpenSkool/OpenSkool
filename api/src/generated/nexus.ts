@@ -184,6 +184,7 @@ export interface NexusGenFieldTypes {
   };
   Teacher: {
     // field return type
+    displayName: string; // String!
     firstName: string; // String!
     id: string; // ID!
     lastName: string; // String!
@@ -217,6 +218,7 @@ export interface NexusGenFieldTypes {
   };
   Person: {
     // field return type
+    displayName: string; // String!
     firstName: string; // String!
     id: string; // ID!
     lastName: string; // String!
@@ -291,6 +293,7 @@ export interface NexusGenFieldTypeNames {
   };
   Teacher: {
     // field return type name
+    displayName: 'String';
     firstName: 'String';
     id: 'ID';
     lastName: 'String';
@@ -324,6 +327,7 @@ export interface NexusGenFieldTypeNames {
   };
   Person: {
     // field return type name
+    displayName: 'String';
     firstName: 'String';
     id: 'ID';
     lastName: 'String';
