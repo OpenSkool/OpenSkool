@@ -10,8 +10,6 @@ const { result } = useQuery<GetAllRootCompetenciesQuery>(
       }
     }
   `,
-  null,
-  { fetchPolicy: 'cache-and-network' },
 );
 
 const competencies = useResult(result);
