@@ -11,7 +11,7 @@
     "clean": "rm -rf .eslintcache .turbo/ dist/",
     "dev": "FORCE_COLOR=1 NODE_ENV=development nodemon src/server.ts",
     "generate": "yarn run generate:nexus && yarn run generate:prisma",
-    "generate:nexus": "NODE_ENV=development node -r dotenv-flow/config -r esbuild-register src/schema/module.ts",
+    "generate:nexus": "NODE_ENV=development node -r dotenv-flow/config -r esbuild-register src/schema/index.ts",
     "generate:prisma": "prisma generate",
     "lint": "eslint --cache --ext .cjs,.ts .",
     "postinstall": "yarn run generate:prisma",
