@@ -6,7 +6,7 @@ import {
 } from '~/generated/graphql';
 
 const formErrors = ref<string[]>([]);
-const values = reactive<{ title: string }>({ title: '' });
+const values = ref<{ title: string }>({ title: '' });
 
 const { mutate: createCompetency } = useMutation<
   CreateCompetencyMutation,
@@ -41,7 +41,7 @@ async function handleFormSubmit(): Promise<void> {
   try {
     const response = await createCompetency({
       currentUserId: demoStore.activeUserId,
-      title: values.title,
+      title: values.value.title,
     });
     switch (response?.data?.createCompetency.__typename) {
       default:

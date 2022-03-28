@@ -10,7 +10,7 @@ const educations: Education[] = [
   { id: 3, name: 'Medicine' },
 ];
 
-const values = reactive<{
+const values = ref<{
   competencyTitle: string;
   education1: string | undefined;
   education2: number | undefined;
