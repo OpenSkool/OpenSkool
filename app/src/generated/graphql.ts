@@ -131,10 +131,10 @@ export type Node = {
 };
 
 export type Person = {
-  firstName?: Maybe<Scalars['String']>;
+  firstName: Scalars['String'];
   /** A CUID for a resource */
   id: Scalars['ID'];
-  lastName?: Maybe<Scalars['String']>;
+  lastName: Scalars['String'];
 };
 
 export type Query = {
@@ -184,10 +184,10 @@ export type RootCompetency = Accountable & Competency & Node & {
 
 export type Teacher = Node & Person & {
   __typename?: 'Teacher';
-  firstName?: Maybe<Scalars['String']>;
+  firstName: Scalars['String'];
   /** A CUID for a resource */
   id: Scalars['ID'];
-  lastName?: Maybe<Scalars['String']>;
+  lastName: Scalars['String'];
 };
 
 export type UserError = {
@@ -200,7 +200,7 @@ export type UserError = {
 export type GetPeopleQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetPeopleQuery = { __typename?: 'Query', allPeople: Array<{ __typename?: 'Teacher', id: string, firstName?: string | null, lastName?: string | null }> };
+export type GetPeopleQuery = { __typename?: 'Query', allPeople: Array<{ __typename?: 'Teacher', id: string, firstName: string, lastName: string }> };
 
 export type GetEducationsQueryVariables = Exact<{ [key: string]: never; }>;
 

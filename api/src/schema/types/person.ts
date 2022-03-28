@@ -6,8 +6,8 @@ export const Person = interfaceType({
   name: 'Person',
   definition(t) {
     t.implements('Node');
-    t.string('firstName');
-    t.string('lastName');
+    t.nonNull.string('firstName');
+    t.nonNull.string('lastName');
   },
   resolveType(person) {
     switch (person.role) {
