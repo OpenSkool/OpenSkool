@@ -1,23 +1,29 @@
 <script lang="ts" setup>
+import { FormKitNode } from '@formkit/core';
+
 import { useDemoStore } from '~/demo-store';
 import {
   CreateCompetencyMutation,
   CreateCompetencyMutationVariables,
 } from '~/generated/graphql';
 
-const formErrors = ref<string[]>([]);
-const values = ref<{ title: string }>({ title: '' });
+const demoStore = useDemoStore();
+const router = useRouter();
 
 const { mutate: createCompetency } = useMutation<
   CreateCompetencyMutation,
   CreateCompetencyMutationVariables
 >(gql`
-  mutation CreateCompetency($currentUserId: ID!, $title: String!) {
-    createCompetency(currentUserId: $currentUserId, data: { title: $title }) {
+  mutation CreateCompetency(
+    $currentUserId: ID!
+    $data: CreateCompetencyInput!
+  ) {
+    createCompetency(currentUserId: $currentUserId, data: $data) {
       ... on CreateCompetencyErrorPayload {
         error {
           code
           message
+          path
         }
       }
       ... on CreateCompetencySuccessPayload {
@@ -29,8 +35,10 @@ const { mutate: createCompetency } = useMutation<
   }
 `);
 
-const demoStore = useDemoStore();
-const router = useRouter();
+const formErrors = ref<string[]>([]);
+const formNode = ref<FormKitNode>();
+const formValues = ref<{ title: string }>({ title: '' });
+
 async function handleFormSubmit(): Promise<void> {
   formErrors.value = [];
   if (demoStore.activeUserId == null) {
@@ -41,14 +49,21 @@ async function handleFormSubmit(): Promise<void> {
   try {
     const response = await createCompetency({
       currentUserId: demoStore.activeUserId,
-      title: values.value.title,
+      data: formValues.value,
     });
     switch (response?.data?.createCompetency.__typename) {
       default:
         throw new Error('unknown api response');
-      case 'CreateCompetencyErrorPayload':
-        formErrors.value.push(response.data.createCompetency.error.message);
+      case 'CreateCompetencyErrorPayload': {
+        const { error } = response.data.createCompetency;
+        const fieldNode = formNode.value?.at(error.path);
+        if (fieldNode) {
+          fieldNode.setErrors([error.message]);
+        } else {
+          formErrors.value.push(error.message);
+        }
         break;
+      }
       case 'CreateCompetencySuccessPayload':
         router.push('/manage/competencies');
         break;
@@ -67,10 +82,11 @@ async function handleFormSubmit(): Promise<void> {
   </ui-breadcrumb>
   <h2 class="text-xl mb-3">Create competency</h2>
   <FormKit
-    v-model="values"
+    v-model="formValues"
     type="form"
     submit-label="Create competency"
     :errors="formErrors"
+    @node="formNode = $event"
     @submit="handleFormSubmit"
   >
     <FormKit name="title" label="Title" type="text" validation="required" />

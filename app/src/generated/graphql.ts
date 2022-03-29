@@ -219,19 +219,19 @@ export type GetRootCompetencyQuery = { __typename?: 'Query', rootCompetency?: { 
 export type RenameCompetencyMutationVariables = Exact<{
   currentUserId: Scalars['ID'];
   id: Scalars['ID'];
-  title: Scalars['String'];
+  data: RenameCompetencyInput;
 }>;
 
 
-export type RenameCompetencyMutation = { __typename?: 'Mutation', renameCompetency: { __typename?: 'RenameCompetencyErrorPayload', error: { __typename?: 'UserError', code: string, message: string } } | { __typename?: 'RenameCompetencySuccessPayload', competency: { __typename?: 'NestedCompetency', id: string } | { __typename?: 'RootCompetency', id: string } } };
+export type RenameCompetencyMutation = { __typename?: 'Mutation', renameCompetency: { __typename?: 'RenameCompetencyErrorPayload', error: { __typename?: 'UserError', code: string, message: string, path: Array<string> } } | { __typename?: 'RenameCompetencySuccessPayload', competency: { __typename?: 'NestedCompetency', id: string } | { __typename?: 'RootCompetency', id: string } } };
 
 export type CreateCompetencyMutationVariables = Exact<{
   currentUserId: Scalars['ID'];
-  title: Scalars['String'];
+  data: CreateCompetencyInput;
 }>;
 
 
-export type CreateCompetencyMutation = { __typename?: 'Mutation', createCompetency: { __typename?: 'CreateCompetencyErrorPayload', error: { __typename?: 'UserError', code: string, message: string } } | { __typename?: 'CreateCompetencySuccessPayload', competency: { __typename?: 'NestedCompetency', id: string } | { __typename?: 'RootCompetency', id: string } } };
+export type CreateCompetencyMutation = { __typename?: 'Mutation', createCompetency: { __typename?: 'CreateCompetencyErrorPayload', error: { __typename?: 'UserError', code: string, message: string, path: Array<string> } } | { __typename?: 'CreateCompetencySuccessPayload', competency: { __typename?: 'NestedCompetency', id: string } | { __typename?: 'RootCompetency', id: string } } };
 
 export type GetAllRootCompetenciesQueryVariables = Exact<{ [key: string]: never; }>;
 
