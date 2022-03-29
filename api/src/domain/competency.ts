@@ -134,7 +134,7 @@ export async function findRandomRootCompetency(): Promise<CompetencyModel | null
   return competencies.length === 0 ? null : competencies[0];
 }
 
-export async function findRootCompetencyById(
+export async function findCompetencyById(
   id: string,
 ): Promise<CompetencyModel | null> {
   try {
@@ -144,13 +144,6 @@ export async function findRootCompetencyById(
       },
       where: { id },
     });
-    if (
-      competency == null ||
-      competency.parentCompetencyId != null ||
-      competency.translations.length === 0
-    ) {
-      return null;
-    }
     return competency;
   } catch (error) {
     handleServiceError(error);
