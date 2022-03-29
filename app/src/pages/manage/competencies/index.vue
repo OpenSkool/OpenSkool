@@ -31,7 +31,7 @@ const { result } = useQuery<GetAllRootCompetenciesQuery>(
       {{ competency?.title }}
       <router-link
         class="inline-block"
-        :to="`/manage/competencies/${competency?.id}/edit`"
+        :to="`/manage/competencies/${competency.id}/edit`"
       >
         <span class="sr-only">Edit</span>
         <ri-edit-box-fill aria-hidden />
