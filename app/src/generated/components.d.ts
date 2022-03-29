@@ -21,6 +21,7 @@ declare module 'vue' {
     RiCheckFill: typeof import('~icons/ri/check-fill')['default']
     RiDeleteBinFill: typeof import('~icons/ri/delete-bin-fill')['default']
     RiEdit2Fill: typeof import('~icons/ri/edit2-fill')['default']
+    RiEditBoxFill: typeof import('~icons/ri/edit-box-fill')['default']
     RiLoaderFill: typeof import('~icons/ri/loader-fill')['default']
     RiPencilFill: typeof import('~icons/ri/pencil-fill')['default']
     Switch: typeof import('@headlessui/vue')['Switch']

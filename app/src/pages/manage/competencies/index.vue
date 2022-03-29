@@ -29,6 +29,13 @@ const { result } = useQuery<GetAllRootCompetenciesQuery>(
   <ol class="list-decimal">
     <li v-for="competency of result?.allRootCompetencies" :key="competency.id">
       {{ competency?.title }}
+      <router-link
+        class="inline-block"
+        :to="`/manage/competencies/${competency.id}/edit`"
+      >
+        <span class="sr-only">Edit</span>
+        <ri-edit-box-fill aria-hidden />
+      </router-link>
     </li>
   </ol>
 </template>
