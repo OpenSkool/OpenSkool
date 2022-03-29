@@ -11,8 +11,9 @@ import {
 const demoStore = useDemoStore();
 const router = useRouter();
 
-const route = useRoute();
-const { id } = route.params as { id: string };
+const props = defineProps<{
+  id: string; // route param
+}>();
 
 const { result } = useQuery<GetRootCompetencyQuery>(
   gql`
@@ -23,7 +24,7 @@ const { result } = useQuery<GetRootCompetencyQuery>(
       }
     }
   `,
-  { id },
+  { id: props.id },
   { fetchPolicy: 'network-only' },
 );
 
@@ -73,7 +74,7 @@ async function handleFormSubmit(): Promise<void> {
   try {
     const response = await renameCompetency({
       currentUserId: demoStore.activeUserId,
-      id,
+      id: props.id,
       data: formValues.value!,
     });
     switch (response?.data?.renameCompetency.__typename) {
