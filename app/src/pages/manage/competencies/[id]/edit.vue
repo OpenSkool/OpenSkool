@@ -7,6 +7,7 @@ import {
   RenameCompetencyMutationVariables,
   GetRootCompetencyQuery,
 } from '~/generated/graphql';
+import { assert } from '~/utils';
 
 const demoStore = useDemoStore();
 const router = useRouter();
@@ -66,6 +67,7 @@ watch(result, () => {
 });
 
 async function handleFormSubmit(): Promise<void> {
+  assert(formValues.value);
   formErrors.value = [];
   if (demoStore.activeUserId == null) {
     formErrors.value.push('No active user id selected.');
@@ -76,7 +78,7 @@ async function handleFormSubmit(): Promise<void> {
     const response = await renameCompetency({
       currentUserId: demoStore.activeUserId,
       id: props.id,
-      data: formValues.value!,
+      data: formValues.value,
     });
     switch (response?.data?.renameCompetency.__typename) {
       default:
