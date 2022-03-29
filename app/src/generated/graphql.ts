@@ -143,13 +143,13 @@ export type Query = {
   allEducations: Array<Education>;
   allPeople: Array<Person>;
   allRootCompetencies: Array<RootCompetency>;
+  competency?: Maybe<Competency>;
   randomCompetency?: Maybe<Competency>;
   randomRootCompetency?: Maybe<RootCompetency>;
-  rootCompetency?: Maybe<RootCompetency>;
 };
 
 
-export type QueryRootCompetencyArgs = {
+export type QueryCompetencyArgs = {
   id: Scalars['ID'];
 };
 
@@ -209,12 +209,12 @@ export type GetEducationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetEducationsQuery = { __typename?: 'Query', allEducations: Array<{ __typename?: 'Education', id: string, title: string }> };
 
-export type GetRootCompetencyQueryVariables = Exact<{
+export type GetCompetencyQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GetRootCompetencyQuery = { __typename?: 'Query', rootCompetency?: { __typename?: 'RootCompetency', id: string, title: string } | null };
+export type GetCompetencyQuery = { __typename?: 'Query', competency?: { __typename?: 'NestedCompetency', id: string, title: string } | { __typename?: 'RootCompetency', id: string, title: string } | null };
 
 export type RenameCompetencyMutationVariables = Exact<{
   currentUserId: Scalars['ID'];

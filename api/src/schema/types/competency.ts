@@ -6,6 +6,7 @@ import {
   list,
   mutationField,
   nonNull,
+  nullable,
   objectType,
   unionType,
 } from 'nexus';
@@ -103,12 +104,12 @@ export const CompetencyQueries = extendType({
       },
       type: 'RootCompetency',
     });
-    t.field('rootCompetency', {
+    t.field('competency', {
       args: { id: idArg() },
       async resolve(root, { id }, ctx: Context, info) {
-        return CompetencyService.findRootCompetencyById(id);
+        return CompetencyService.findCompetencyById(id);
       },
-      type: 'RootCompetency',
+      type: nullable('Competency'),
     });
   },
 });

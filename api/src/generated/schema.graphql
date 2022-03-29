@@ -126,9 +126,9 @@ type Query {
   allEducations: [Education!]!
   allPeople: [Person!]!
   allRootCompetencies: [RootCompetency!]!
+  competency(id: ID!): Competency
   randomCompetency: Competency
   randomRootCompetency: RootCompetency
-  rootCompetency(id: ID!): RootCompetency
 }
 
 type RenameCompetencyErrorPayload {

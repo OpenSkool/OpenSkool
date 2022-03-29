@@ -5,7 +5,7 @@ import { useDemoStore } from '~/demo-store';
 import {
   RenameCompetencyMutation,
   RenameCompetencyMutationVariables,
-  GetRootCompetencyQuery,
+  GetCompetencyQuery,
 } from '~/generated/graphql';
 import { assert } from '~/utils';
 
@@ -16,10 +16,10 @@ const props = defineProps<{
   id: string; // route param
 }>();
 
-const { error, loading, result } = useQuery<GetRootCompetencyQuery>(
+const { error, loading, result } = useQuery<GetCompetencyQuery>(
   gql`
-    query getRootCompetency($id: ID!) {
-      rootCompetency(id: $id) {
+    query getCompetency($id: ID!) {
+      competency(id: $id) {
         id
         title
       }
