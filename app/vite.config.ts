@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
+import VueI18n from '@intlify/vite-plugin-vue-i18n';
 import Vue from '@vitejs/plugin-vue';
 import visualizer from 'rollup-plugin-visualizer';
 import AutoImport from 'unplugin-auto-import/vite';
@@ -60,6 +61,7 @@ export default defineConfig({
       exclude: ['**/*.spec.ts'],
     }),
     Vue(),
+    VueI18n(),
     WindiCSS({
       config: windiConfigFilepath,
     }),
