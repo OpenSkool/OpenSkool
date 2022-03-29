@@ -26,7 +26,7 @@ const competencies = useResult(result);
   </router-link>
   <ol class="list-decimal">
     <li v-for="competency of competencies" :key="competency.id">
-      {{ competency?.title }}
+      {{ competency.title }}
       <router-link
         class="inline-block"
         :to="`/manage/competencies/${competency.id}/edit`"
