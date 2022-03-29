@@ -15,7 +15,7 @@ const props = defineProps<{
   id: string; // route param
 }>();
 
-const { result } = useQuery<GetRootCompetencyQuery>(
+const { error, loading, result } = useQuery<GetRootCompetencyQuery>(
   gql`
     query getRootCompetency($id: ID!) {
       rootCompetency(id: $id) {
@@ -27,6 +27,7 @@ const { result } = useQuery<GetRootCompetencyQuery>(
   { id: props.id },
   { fetchPolicy: 'network-only' },
 );
+const competency = useResult(result);
 
 const { mutate: renameCompetency } = useMutation<
   RenameCompetencyMutation,
@@ -59,8 +60,8 @@ const formErrors = ref<string[]>([]);
 const formValues = ref<{ title: string }>();
 
 watch(result, () => {
-  if (result.value?.rootCompetency != null) {
-    formValues.value = { title: result.value.rootCompetency.title };
+  if (competency.value != null) {
+    formValues.value = { title: competency.value.title };
   }
 });
 
@@ -81,12 +82,12 @@ async function handleFormSubmit(): Promise<void> {
       default:
         throw new Error('unknown api response');
       case 'RenameCompetencyErrorPayload': {
-        const { error } = response.data.renameCompetency;
-        const fieldNode = formNode.value?.at(error.path);
+        const mutationError = response.data.renameCompetency.error;
+        const fieldNode = formNode.value?.at(mutationError.path);
         if (fieldNode) {
-          fieldNode.setErrors([error.message]);
+          fieldNode.setErrors([mutationError.message]);
         } else {
-          formErrors.value.push(error.message);
+          formErrors.value.push(mutationError.message);
         }
         break;
       }
@@ -101,22 +102,35 @@ async function handleFormSubmit(): Promise<void> {
 </script>
 
 <template>
-  <ui-breadcrumb class="mb-5">
-    <li>Manage</li>
-    <li><router-link to="/manage/competencies">Competencies</router-link></li>
-    <li>{{ result?.rootCompetency?.title }}</li>
-    <li>Edit</li>
-  </ui-breadcrumb>
-  <h2 class="text-xl mb-3">Edit competency</h2>
-  <FormKit
-    v-if="formValues != null"
-    v-model="formValues"
-    type="form"
-    submit-label="Edit competency"
-    :errors="formErrors"
-    @submit="handleFormSubmit"
-    @node="formNode = $event"
-  >
-    <FormKit name="title" label="Title" type="text" validation="required" />
-  </FormKit>
+  <template v-if="error">
+    <p>Something went wrong</p>
+  </template>
+  <template v-else-if="loading">
+    <div>Loading</div>
+  </template>
+  <template v-else>
+    <ui-breadcrumb class="mb-5">
+      <li>Manage</li>
+      <li><router-link to="/manage/competencies">Competencies</router-link></li>
+      <li>{{ competency?.title }}</li>
+      <li>Edit</li>
+    </ui-breadcrumb>
+    <h2 class="text-xl mb-3">Edit competency</h2>
+    <template v-if="competency == null">
+      <div>Not Found</div>
+    </template>
+    <template v-else>
+      <FormKit
+        v-if="formValues != null"
+        v-model="formValues"
+        type="form"
+        submit-label="Edit competency"
+        :errors="formErrors"
+        @submit="handleFormSubmit"
+        @node="formNode = $event"
+      >
+        <FormKit name="title" label="Title" type="text" validation="required" />
+      </FormKit>
+    </template>
+  </template>
 </template>
