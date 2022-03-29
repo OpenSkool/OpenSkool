@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { FormKitNode } from '@formkit/core';
+
 import { useDemoStore } from '~/demo-store';
 import {
   RenameCompetencyMutation,
@@ -6,8 +8,8 @@ import {
   GetRootCompetencyQuery,
 } from '~/generated/graphql';
 
-const formErrors = ref<string[]>([]);
-const values = ref<{ title: string }>();
+const demoStore = useDemoStore();
+const router = useRouter();
 
 const route = useRoute();
 const { id } = route.params as { id: string };
@@ -22,31 +24,24 @@ const { result } = useQuery<GetRootCompetencyQuery>(
     }
   `,
   { id },
-  {
-    fetchPolicy: 'network-only',
-  },
+  { fetchPolicy: 'network-only' },
 );
-
-watch(result, () => {
-  if (result.value?.rootCompetency != null) {
-    values.value = { title: result.value.rootCompetency.title };
-  }
-});
 
 const { mutate: renameCompetency } = useMutation<
   RenameCompetencyMutation,
   RenameCompetencyMutationVariables
 >(gql`
-  mutation RenameCompetency($currentUserId: ID!, $id: ID!, $title: String!) {
-    renameCompetency(
-      currentUserId: $currentUserId
-      id: $id
-      data: { title: $title }
-    ) {
+  mutation RenameCompetency(
+    $currentUserId: ID!
+    $id: ID!
+    $data: RenameCompetencyInput!
+  ) {
+    renameCompetency(currentUserId: $currentUserId, id: $id, data: $data) {
       ... on RenameCompetencyErrorPayload {
         error {
           code
           message
+          path
         }
       }
       ... on RenameCompetencySuccessPayload {
@@ -58,8 +53,16 @@ const { mutate: renameCompetency } = useMutation<
   }
 `);
 
-const demoStore = useDemoStore();
-const router = useRouter();
+const formNode = ref<FormKitNode>();
+const formErrors = ref<string[]>([]);
+const formValues = ref<{ title: string }>();
+
+watch(result, () => {
+  if (result.value?.rootCompetency != null) {
+    formValues.value = { title: result.value.rootCompetency.title };
+  }
+});
+
 async function handleFormSubmit(): Promise<void> {
   formErrors.value = [];
   if (demoStore.activeUserId == null) {
@@ -71,14 +74,21 @@ async function handleFormSubmit(): Promise<void> {
     const response = await renameCompetency({
       currentUserId: demoStore.activeUserId,
       id,
-      title: values.value!.title,
+      data: formValues.value!,
     });
     switch (response?.data?.renameCompetency.__typename) {
       default:
         throw new Error('unknown api response');
-      case 'RenameCompetencyErrorPayload':
-        formErrors.value.push(response.data.renameCompetency.error.message);
+      case 'RenameCompetencyErrorPayload': {
+        const { error } = response.data.renameCompetency;
+        const fieldNode = formNode.value?.at(error.path);
+        if (fieldNode) {
+          fieldNode.setErrors([error.message]);
+        } else {
+          formErrors.value.push(error.message);
+        }
         break;
+      }
       case 'RenameCompetencySuccessPayload':
         router.push('/manage/competencies');
         break;
@@ -98,12 +108,13 @@ async function handleFormSubmit(): Promise<void> {
   </ui-breadcrumb>
   <h2 class="text-xl mb-3">Edit competency</h2>
   <FormKit
-    v-if="values != null"
-    v-model="values"
+    v-if="formValues != null"
+    v-model="formValues"
     type="form"
     submit-label="Edit competency"
     :errors="formErrors"
     @submit="handleFormSubmit"
+    @node="formNode = $event"
   >
     <FormKit name="title" label="Title" type="text" validation="required" />
   </FormKit>
