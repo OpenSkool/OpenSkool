@@ -11,6 +11,10 @@ const base: Config = {
       bg-primary1-100 hover:bg-primary1-200 text-primary1-900
       focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-primary1-500)
     `,
+    'btn-cancel': `
+      bg-gray-300 hover:bg-gray-400 text-primary1-900
+      focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-primary1-500)
+    `,
   },
 };
 

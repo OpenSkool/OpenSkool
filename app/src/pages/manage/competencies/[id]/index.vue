@@ -109,7 +109,7 @@ watch(competency, () => {
       <p class="text-gray-500">{{ competency.title }}</p>
       <div class="mt-4">
         <button
-          class="btn bg-gray-300 hover:bg-gray-400 mr-3"
+          class="btn btn-cancel mr-3"
           type="button"
           @click="isDeleteModalOpen = false"
         >
