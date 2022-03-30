@@ -46,7 +46,13 @@ const competency = useResult(result);
       <!-- TODO: replace "Back" with title of parent when available in API -->
     </ui-backbutton>
     <ui-backbutton v-else to="/manage/competencies">Competencies</ui-backbutton>
-    <h2 class="text-xl mb-3">{{ competency?.title }}</h2>
+    <h2 class="text-xl mb-3 flex items-center gap-1">
+      {{ competency.title }}
+      <router-link :to="`/manage/competencies/${competency.id}/edit`">
+        <span class="sr-only">Edit</span>
+        <ri-edit-box-fill aria-hidden />
+      </router-link>
+    </h2>
     <router-link
       class="btn btn-primary my-5"
       :to="`/manage/competencies/${competency.id}/create`"
@@ -55,18 +61,11 @@ const competency = useResult(result);
     </router-link>
     <ol class="list-decimal">
       <li
-        v-for="subcompetency of competency.subCompetencies"
-        :key="subcompetency.id"
+        v-for="subCompetency of competency.subCompetencies"
+        :key="subCompetency.id"
       >
-        <router-link :to="`/manage/competencies/${subcompetency.id}`">
-          {{ subcompetency.title }}
-        </router-link>
-        <router-link
-          class="inline-block"
-          :to="`/manage/competencies/${subcompetency.id}/edit`"
-        >
-          <span class="sr-only">Edit</span>
-          <ri-edit-box-fill aria-hidden />
+        <router-link :to="`/manage/competencies/${subCompetency.id}`">
+          {{ subCompetency.title }}
         </router-link>
       </li>
     </ol>
