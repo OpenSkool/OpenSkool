@@ -10,7 +10,7 @@
     "build": "vite build",
     "clean": "rm -rf .eslintcache .turbo/ dist/",
     "dev": "concurrently 'yarn:dev:*'",
-    "dev:generate": "FORCE_COLOR=1 yarn run generate --watch 'src/**/*.vue'",
+    "dev:generate": "FORCE_COLOR=1 yarn run generate --watch 'src/**/*.{ts,vue}'",
     "dev:vite": "FORCE_COLOR=1 vite",
     "generate": "graphql-codegen --config ../.graphqlrc.yaml",
     "lint": "eslint --cache --ext .cjs,.js,.ts,.vue .",
