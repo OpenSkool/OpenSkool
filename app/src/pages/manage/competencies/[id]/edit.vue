@@ -7,6 +7,7 @@ import {
   RenameCompetencyMutationVariables,
   GetCompetencyQuery,
 } from '~/generated/graphql';
+import { READ_COMPETENCY_QUERY } from '~/gql';
 import { assert } from '~/utils';
 
 const demoStore = useDemoStore();
@@ -17,17 +18,7 @@ const props = defineProps<{
 }>();
 
 const { error, loading, result } = useQuery<GetCompetencyQuery>(
-  gql`
-    query getCompetency($id: ID!) {
-      competency(id: $id) {
-        id
-        title
-        ... on NestedCompetency {
-          parentId
-        }
-      }
-    }
-  `,
+  READ_COMPETENCY_QUERY,
   { id: props.id },
   { fetchPolicy: 'network-only' },
 );

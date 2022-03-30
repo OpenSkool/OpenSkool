@@ -3,10 +3,11 @@ import { FormKitNode } from '@formkit/core';
 
 import { useDemoStore } from '~/demo-store';
 import {
+  GetCompetencyQuery,
   CreateCompetencyMutation,
   CreateCompetencyMutationVariables,
 } from '~/generated/graphql';
-import { CREATE_COMPETENCY_QUERY } from '~/gql';
+import { CREATE_COMPETENCY_QUERY, READ_COMPETENCY_QUERY } from '~/gql';
 
 const demoStore = useDemoStore();
 const router = useRouter();
@@ -14,6 +15,17 @@ const router = useRouter();
 const props = defineProps<{
   id: string; // route param
 }>();
+
+const {
+  error: readError,
+  loading,
+  result,
+} = useQuery<GetCompetencyQuery>(
+  READ_COMPETENCY_QUERY,
+  { id: props.id },
+  { fetchPolicy: 'network-only' },
+);
+const competency = useResult(result);
 
 const { mutate: createCompetency } = useMutation<
   CreateCompetencyMutation,
@@ -40,12 +52,12 @@ async function handleFormSubmit(): Promise<void> {
       default:
         throw new Error('unknown api response');
       case 'CreateCompetencyErrorPayload': {
-        const { error } = response.data.createCompetency;
-        const fieldNode = formNode.value?.at(error.path);
+        const { error: createError } = response.data.createCompetency;
+        const fieldNode = formNode.value?.at(createError.path);
         if (fieldNode) {
-          fieldNode.setErrors([error.message]);
+          fieldNode.setErrors([createError.message]);
         } else {
-          formErrors.value.push(error.message);
+          formErrors.value.push(createError.message);
         }
         break;
       }
@@ -58,18 +70,27 @@ async function handleFormSubmit(): Promise<void> {
   }
 }
 </script>
-
 <template>
-  <ui-backbutton to="/manage/competencies">Competencies</ui-backbutton>
-  <h2 class="text-xl mb-3">Create competency</h2>
-  <FormKit
-    v-model="formValues"
-    type="form"
-    submit-label="Create competency"
-    :errors="formErrors"
-    @node="formNode = $event"
-    @submit="handleFormSubmit"
-  >
-    <FormKit name="title" label="Title" type="text" validation="required" />
-  </FormKit>
+  <template v-if="readError">
+    <p>Something went wrong</p>
+  </template>
+  <template v-else-if="loading">
+    <div>Loading</div>
+  </template>
+  <template v-else>
+    <ui-backbutton :to="`/manage/competencies/${props.id}`">
+      {{ competency?.title }}
+    </ui-backbutton>
+    <h2 class="text-xl mb-3">Create competency</h2>
+    <FormKit
+      v-model="formValues"
+      type="form"
+      submit-label="Create competency"
+      :errors="formErrors"
+      @node="formNode = $event"
+      @submit="handleFormSubmit"
+    >
+      <FormKit name="title" label="Title" type="text" validation="required" />
+    </FormKit>
+  </template>
 </template>
