@@ -39,8 +39,8 @@ const competency = useResult(result);
   </template>
   <template v-else>
     <ui-backbutton
-      v-if="competency?.parentId"
-      :to="`/manage/competencies/${competency?.parentId}`"
+      v-if="competency.__typename === 'NestedCompetency'"
+      :to="`/manage/competencies/${competency.parentId}`"
     >
       Back
       <!-- TODO: replace "Back" with title of parent when available in API -->
