@@ -75,11 +75,7 @@ async function handleFormSubmit(): Promise<void> {
 </script>
 
 <template>
-  <ui-breadcrumb class="mb-5">
-    <li>Manage</li>
-    <li><router-link to="/manage/competencies">Competencies</router-link></li>
-    <li>Create</li>
-  </ui-breadcrumb>
+  <ui-backbutton to="/manage/competencies">Competencies</ui-backbutton>
   <h2 class="text-xl mb-3">Create competency</h2>
   <FormKit
     v-model="formValues"

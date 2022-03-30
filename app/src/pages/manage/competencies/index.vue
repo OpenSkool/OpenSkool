@@ -16,10 +16,6 @@ const competencies = useResult(result);
 </script>
 
 <template>
-  <ui-breadcrumb class="mb-5">
-    <li>Manage</li>
-    <li>Competencies</li>
-  </ui-breadcrumb>
   <h2 class="text-xl mb-3">Manage competencies</h2>
   <router-link class="btn btn-primary my-5" to="/manage/competencies/create">
     Create competency
