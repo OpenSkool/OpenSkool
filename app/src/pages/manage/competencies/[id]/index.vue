@@ -48,12 +48,15 @@ const { mutate: deleteCompetency } = useMutation<
 
 async function deleteCompetencyHandler(): Promise<void> {
   try {
-    // TO DO: error handling for deleteCompetency
-    await deleteCompetency({
+    const response = await deleteCompetency({
       id: props.id,
     });
-    isDeleteModalOpen.value = false;
-    router.replace(parentUrl.value);
+    if (response?.data) {
+      isDeleteModalOpen.value = false;
+      router.replace(parentUrl.value);
+    } else {
+      throw new Error('Delete unsuccessful');
+    }
   } catch {
     throw new Error('Something went wrong');
   }
