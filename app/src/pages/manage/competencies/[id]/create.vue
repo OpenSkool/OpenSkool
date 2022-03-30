@@ -11,6 +11,10 @@ import { CREATE_COMPETENCY_QUERY } from '~/gql';
 const demoStore = useDemoStore();
 const router = useRouter();
 
+const props = defineProps<{
+  id: string; // route param
+}>();
+
 const { mutate: createCompetency } = useMutation<
   CreateCompetencyMutation,
   CreateCompetencyMutationVariables
@@ -30,7 +34,7 @@ async function handleFormSubmit(): Promise<void> {
   try {
     const response = await createCompetency({
       currentUserId: demoStore.activeUserId,
-      data: formValues.value,
+      data: { parentId: props.id, title: formValues.value.title },
     });
     switch (response?.data?.createCompetency.__typename) {
       default:
@@ -46,7 +50,7 @@ async function handleFormSubmit(): Promise<void> {
         break;
       }
       case 'CreateCompetencySuccessPayload':
-        router.push('/manage/competencies');
+        router.push('/manage/competencies/' + props.id);
         break;
     }
   } catch {
