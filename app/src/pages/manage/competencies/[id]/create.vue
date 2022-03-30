@@ -50,7 +50,7 @@ async function handleFormSubmit(): Promise<void> {
         break;
       }
       case 'CreateCompetencySuccessPayload':
-        router.push('/manage/competencies/' + props.id);
+        router.push(`/manage/competencies/${props.id}`);
         break;
     }
   } catch {

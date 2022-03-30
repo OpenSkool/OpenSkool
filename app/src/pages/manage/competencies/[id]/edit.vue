@@ -7,7 +7,6 @@ import {
   RenameCompetencyMutationVariables,
   GetCompetencyQuery,
 } from '~/generated/graphql';
-import { READ_COMPETENCY_QUERY } from '~/gql';
 import { assert } from '~/utils';
 
 const demoStore = useDemoStore();
@@ -18,7 +17,17 @@ const props = defineProps<{
 }>();
 
 const { error, loading, result } = useQuery<GetCompetencyQuery>(
-  READ_COMPETENCY_QUERY,
+  gql`
+    query getCompetency($id: ID!) {
+      competency(id: $id) {
+        id
+        title
+        ... on NestedCompetency {
+          parentId
+        }
+      }
+    }
+  `,
   { id: props.id },
   { fetchPolicy: 'network-only' },
 );
@@ -62,6 +71,7 @@ watch(result, () => {
 
 async function handleFormSubmit(): Promise<void> {
   assert(formValues.value);
+  assert(competency.value);
   formErrors.value = [];
   if (demoStore.activeUserId == null) {
     formErrors.value.push('No active user id selected.');
@@ -88,8 +98,8 @@ async function handleFormSubmit(): Promise<void> {
         break;
       }
       case 'RenameCompetencySuccessPayload':
-        if (competency.value.parentId) {
-          router.push('/manage/competencies/' + competency.value.parentId);
+        if (competency.value.__typename === 'NestedCompetency') {
+          router.push(`/manage/competencies/${competency.value.parentId}`);
         } else {
           router.push('/manage/competencies');
         }
