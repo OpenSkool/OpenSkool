@@ -48,7 +48,7 @@ const { mutate: deleteCompetency } = useMutation<
 
 async function deleteCompetencyHandler(): Promise<void> {
   try {
-    // TODO: error handling for deleteCompetency
+    // TO DO: error handling for deleteCompetency
     await deleteCompetency({
       id: props.id,
     });
