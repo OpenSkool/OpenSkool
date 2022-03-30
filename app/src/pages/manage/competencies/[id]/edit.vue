@@ -98,10 +98,15 @@ async function handleFormSubmit(): Promise<void> {
         break;
       }
       case 'RenameCompetencySuccessPayload':
-        if (competency.value.__typename === 'NestedCompetency') {
-          router.push(`/manage/competencies/${competency.value.parentId}`);
-        } else {
-          router.push('/manage/competencies');
+        switch (competency.value.__typename) {
+          default:
+            throw new Error('unknown competency type');
+          case 'RootCompetency':
+            router.push('/manage/competencies');
+            break;
+          case 'NestedCompetency':
+            router.push(`/manage/competencies/${competency.value.parentId}`);
+            break;
         }
         break;
     }
