@@ -1,4 +1,4 @@
-documents: app/src/**/*.vue
+documents: app/src/**/*.{ts,vue}
 schema: api/src/generated/schema.graphql
 
 extensions:
