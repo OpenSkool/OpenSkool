@@ -114,8 +114,13 @@ async function handleFormSubmit(): Promise<void> {
   <template v-else-if="loading">
     <div>Loading</div>
   </template>
+  <template v-if="competency == null">
+    <div>Not Found</div>
+  </template>
   <template v-else>
-    <ui-backbutton to="/manage/competencies">Competencies</ui-backbutton>
+    <ui-backbutton :to="`/manage/competencies/${competency.id}`">
+      {{ competency.title }}
+    </ui-backbutton>
     <h2 class="text-xl mb-3">Edit competency</h2>
     <template v-if="competency == null">
       <div>Not Found</div>
