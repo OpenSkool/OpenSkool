@@ -241,6 +241,13 @@ export type GetSubCompetenciesQueryVariables = Exact<{
 
 export type GetSubCompetenciesQuery = { __typename?: 'Query', competency?: { __typename?: 'NestedCompetency', parentId: string, id: string, title: string, subCompetencies?: Array<{ __typename?: 'NestedCompetency', id: string, title: string }> | null } | { __typename?: 'RootCompetency', id: string, title: string, subCompetencies?: Array<{ __typename?: 'NestedCompetency', id: string, title: string }> | null } | null };
 
+export type DeleteCompetencyMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type DeleteCompetencyMutation = { __typename?: 'Mutation', deleteCompetency?: { __typename?: 'NestedCompetency', id: string } | { __typename?: 'RootCompetency', id: string } | null };
+
 export type GetAllRootCompetenciesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
