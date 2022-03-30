@@ -121,21 +121,16 @@ async function handleFormSubmit(): Promise<void> {
       {{ competency.title }}
     </ui-backbutton>
     <h2 class="text-xl mb-3">Edit competency</h2>
-    <template v-if="competency == null">
-      <div>Not Found</div>
-    </template>
-    <template v-else>
-      <FormKit
-        v-if="formValues != null"
-        v-model="formValues"
-        type="form"
-        submit-label="Edit competency"
-        :errors="formErrors"
-        @submit="handleFormSubmit"
-        @node="formNode = $event"
-      >
-        <FormKit name="title" label="Title" type="text" validation="required" />
-      </FormKit>
-    </template>
+    <FormKit
+      v-if="formValues != null"
+      v-model="formValues"
+      type="form"
+      submit-label="Edit competency"
+      :errors="formErrors"
+      @submit="handleFormSubmit"
+      @node="formNode = $event"
+    >
+      <FormKit name="title" label="Title" type="text" validation="required" />
+    </FormKit>
   </template>
 </template>

@@ -76,7 +76,7 @@ async function handleFormSubmit(): Promise<void> {
   <template v-else-if="loading">
     <div>Loading</div>
   </template>
-  <template v-if="competency == null">
+  <template v-else-if="competency == null">
     <div>Not Found</div>
   </template>
   <template v-else>
