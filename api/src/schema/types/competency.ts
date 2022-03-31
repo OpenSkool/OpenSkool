@@ -12,7 +12,7 @@ import {
 
 import { CompetencyService } from '../../domain';
 import type { CompetencyModel } from '../../domain/competency';
-import { AppValidationError } from '../../errors';
+import { AppUnauthorizedError, AppValidationError } from '../../errors';
 import { Context } from '../context';
 import { UserErrorModel } from './errors';
 
@@ -177,14 +177,16 @@ export const CreateCompetencySuccessPayload = objectType({
 export const CreateCompetency = mutationField('createCompetency', {
   type: nonNull('CreateCompetencyPayload'),
   args: {
-    currentUserId: idArg(),
     data: 'CreateCompetencyInput',
   },
-  async resolve(root, { currentUserId, data }, ctx) {
+  async resolve(root, { data }, ctx) {
+    if (ctx.userId == null) {
+      throw new AppUnauthorizedError();
+    }
     try {
       const competency = await CompetencyService.createCompetency(
         { title: data.title, parentId: data.parentId ?? undefined },
-        { currentUserId },
+        { userId: ctx.userId },
       );
       return { competency };
     } catch (error) {
@@ -256,16 +258,18 @@ export const RenameCompetencySuccessPayload = objectType({
 export const RenameCompetency = mutationField('renameCompetency', {
   type: nonNull('RenameCompetencyPayload'),
   args: {
-    currentUserId: idArg(),
     id: idArg(),
     data: 'RenameCompetencyInput',
   },
-  async resolve(root, { currentUserId, id, data }, ctx) {
+  async resolve(root, { id, data }, ctx) {
+    if (ctx.userId == null) {
+      throw new AppUnauthorizedError();
+    }
     try {
       const competency = await CompetencyService.updateCompetencyTranslations(
         id,
         data,
-        { currentUserId },
+        { userId: ctx.userId },
       );
       return { competency };
     } catch (error) {

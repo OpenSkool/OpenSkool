@@ -18,18 +18,16 @@ describe('createCompetency', () => {
       select: { id: true },
     });
     const client = createMercuriusTestClient(app);
+    client.setHeaders({ authorization: `demo-user-id: ${person.id}` });
     const {
       data: { createCompetency },
     } = await client.mutate<
       { createCompetency: { error?: UserErrorModel } },
-      { currentUserId: string; title: string }
+      { title: string }
     >(
       gql`
-        mutation ($currentUserId: ID!, $title: String!) {
-          createCompetency(
-            currentUserId: $currentUserId
-            data: { title: $title }
-          ) {
+        mutation ($title: String!) {
+          createCompetency(data: { title: $title }) {
             ... on CreateCompetencyErrorPayload {
               error {
                 code
@@ -39,7 +37,11 @@ describe('createCompetency', () => {
           }
         }
       `,
-      { variables: { currentUserId: person.id, title: '  ' } },
+      {
+        variables: {
+          title: '  ',
+        },
+      },
     );
     expect(createCompetency.error).toMatchObject({
       code: 'valueNotValid',
@@ -62,18 +64,16 @@ describe('createCompetency', () => {
       },
     });
     const client = createMercuriusTestClient(app);
+    client.setHeaders({ authorization: `demo-user-id: ${person.id}` });
     const {
       data: { createCompetency },
     } = await client.mutate<
       { createCompetency: { error?: UserErrorModel } },
-      { currentUserId: string; title: string }
+      { title: string }
     >(
       gql`
-        mutation ($currentUserId: ID!, $title: String!) {
-          createCompetency(
-            currentUserId: $currentUserId
-            data: { title: $title }
-          ) {
+        mutation ($title: String!) {
+          createCompetency(data: { title: $title }) {
             ... on CreateCompetencyErrorPayload {
               error {
                 code
@@ -85,7 +85,6 @@ describe('createCompetency', () => {
       `,
       {
         variables: {
-          currentUserId: person.id,
           title: 'Hello Root!',
         },
       },
@@ -121,18 +120,16 @@ describe('createCompetency', () => {
       },
     });
     const client = createMercuriusTestClient(app);
+    client.setHeaders({ authorization: `demo-user-id: ${person.id}` });
     const {
       data: { createCompetency },
     } = await client.mutate<
       { createCompetency: { error?: UserErrorModel } },
-      { currentUserId: string; parentId: string; title: string }
+      { parentId: string; title: string }
     >(
       gql`
-        mutation ($currentUserId: ID!, $parentId: ID!, $title: String!) {
-          createCompetency(
-            currentUserId: $currentUserId
-            data: { parentId: $parentId, title: $title }
-          ) {
+        mutation ($parentId: ID!, $title: String!) {
+          createCompetency(data: { parentId: $parentId, title: $title }) {
             ... on CreateCompetencyErrorPayload {
               error {
                 code
@@ -144,7 +141,6 @@ describe('createCompetency', () => {
       `,
       {
         variables: {
-          currentUserId: person.id,
           parentId: parent.id,
           title: 'Hello Child!',
         },
@@ -190,18 +186,16 @@ describe('createCompetency', () => {
       },
     });
     const client = createMercuriusTestClient(app);
+    client.setHeaders({ authorization: `demo-user-id: ${person.id}` });
     const {
       data: { createCompetency },
     } = await client.mutate<
       { createCompetency: { competency?: { id: string } } },
-      { currentUserId: string; parentId: string; title: string }
+      { parentId: string; title: string }
     >(
       gql`
-        mutation ($currentUserId: ID!, $parentId: ID!, $title: String!) {
-          createCompetency(
-            currentUserId: $currentUserId
-            data: { parentId: $parentId, title: $title }
-          ) {
+        mutation ($parentId: ID!, $title: String!) {
+          createCompetency(data: { parentId: $parentId, title: $title }) {
             ... on CreateCompetencySuccessPayload {
               competency {
                 id
@@ -212,7 +206,6 @@ describe('createCompetency', () => {
       `,
       {
         variables: {
-          currentUserId: person.id,
           parentId: parent2.id,
           title: 'Hello Child!',
         },
@@ -227,6 +220,7 @@ describe('createCompetency', () => {
       select: { id: true },
     });
     const client = createMercuriusTestClient(app);
+    client.setHeaders({ authorization: `demo-user-id: ${person.id}` });
     const {
       data: { createCompetency },
     } = await client.mutate<
@@ -235,14 +229,11 @@ describe('createCompetency', () => {
           competency?: { __typename: string };
         };
       },
-      { currentUserId: string; title: string }
+      { title: string }
     >(
       gql`
-        mutation ($currentUserId: ID!, $title: String!) {
-          createCompetency(
-            currentUserId: $currentUserId
-            data: { title: $title }
-          ) {
+        mutation ($title: String!) {
+          createCompetency(data: { title: $title }) {
             ... on CreateCompetencySuccessPayload {
               competency {
                 __typename
@@ -251,7 +242,7 @@ describe('createCompetency', () => {
           }
         }
       `,
-      { variables: { currentUserId: person.id, title: 'Hello World!' } },
+      { variables: { title: 'Hello World!' } },
     );
     expect(createCompetency.competency).toHaveProperty(
       '__typename',
@@ -266,9 +257,10 @@ describe('createCompetency', () => {
     });
     const parentCompetency = await CompetencyService.createCompetency(
       { title: 'Parent Title' },
-      { currentUserId: person.id },
+      { userId: person.id },
     );
     const client = createMercuriusTestClient(app);
+    client.setHeaders({ authorization: `demo-user-id: ${person.id}` });
     const {
       data: { createCompetency },
     } = await client.mutate<
@@ -277,14 +269,11 @@ describe('createCompetency', () => {
           competency?: { __typename: string };
         };
       },
-      { currentUserId: string; parentId: string; title: string }
+      { parentId: string; title: string }
     >(
       gql`
-        mutation ($currentUserId: ID!, $parentId: ID!, $title: String!) {
-          createCompetency(
-            currentUserId: $currentUserId
-            data: { parentId: $parentId, title: $title }
-          ) {
+        mutation ($parentId: ID!, $title: String!) {
+          createCompetency(data: { parentId: $parentId, title: $title }) {
             ... on CreateCompetencySuccessPayload {
               competency {
                 __typename
@@ -295,7 +284,6 @@ describe('createCompetency', () => {
       `,
       {
         variables: {
-          currentUserId: person.id,
           parentId: parentCompetency.id,
           title: 'Hello World!',
         },
@@ -316,7 +304,7 @@ describe('deleteCompetency', () => {
     });
     const competency = await CompetencyService.createCompetency(
       { title: 'Hello World!' },
-      { currentUserId: person.id },
+      { userId: person.id },
     );
     const client = createMercuriusTestClient(app);
     const deletedCompetency = await client.mutate<
@@ -348,15 +336,15 @@ describe('deleteCompetency', () => {
     });
     const competencyRoot = await CompetencyService.createCompetency(
       { title: 'Hello World!' },
-      { currentUserId: person.id },
+      { userId: person.id },
     );
     const competencyParent = await CompetencyService.createCompetency(
       { parentId: competencyRoot.id, title: 'Hello World!' },
-      { currentUserId: person.id },
+      { userId: person.id },
     );
     const competencyLeaf = await CompetencyService.createCompetency(
       { parentId: competencyParent.id, title: 'Hello World!' },
-      { currentUserId: person.id },
+      { userId: person.id },
     );
     const client = createMercuriusTestClient(app);
     await client.mutate<{ deleteCompetency: { id: string } }, { id: string }>(
@@ -383,22 +371,19 @@ describe('renameCompetency', () => {
     });
     const competency = await CompetencyService.createCompetency(
       { title: 'Hello World!' },
-      { currentUserId: person.id },
+      { userId: person.id },
     );
     const client = createMercuriusTestClient(app);
+    client.setHeaders({ authorization: `demo-user-id: ${person.id}` });
     const {
       data: { renameCompetency },
     } = await client.mutate<
       { renameCompetency: { error?: UserErrorModel } },
-      { currentUserId: string; id: string; title: string }
+      { id: string; title: string }
     >(
       gql`
-        mutation ($id: ID!, $currentUserId: ID!, $title: String!) {
-          renameCompetency(
-            id: $id
-            currentUserId: $currentUserId
-            data: { title: $title }
-          ) {
+        mutation ($id: ID!, $title: String!) {
+          renameCompetency(id: $id, data: { title: $title }) {
             ... on RenameCompetencyErrorPayload {
               error {
                 code
@@ -410,7 +395,6 @@ describe('renameCompetency', () => {
       `,
       {
         variables: {
-          currentUserId: person.id,
           id: competency.id,
           title: '  ',
         },
@@ -446,19 +430,16 @@ describe('renameCompetency', () => {
       },
     });
     const client = createMercuriusTestClient(app);
+    client.setHeaders({ authorization: `demo-user-id: ${person.id}` });
     const {
       data: { renameCompetency },
     } = await client.mutate<
       { renameCompetency: { error?: UserErrorModel } },
-      { currentUserId: string; id: string; title: string }
+      { id: string; title: string }
     >(
       gql`
-        mutation ($id: ID!, $currentUserId: ID!, $title: String!) {
-          renameCompetency(
-            currentUserId: $currentUserId
-            id: $id
-            data: { title: $title }
-          ) {
+        mutation ($id: ID!, $title: String!) {
+          renameCompetency(id: $id, data: { title: $title }) {
             ... on RenameCompetencyErrorPayload {
               error {
                 code
@@ -470,7 +451,6 @@ describe('renameCompetency', () => {
       `,
       {
         variables: {
-          currentUserId: person.id,
           id: root2.id,
           title: 'Hello Root 1!',
         },
@@ -517,19 +497,16 @@ describe('renameCompetency', () => {
       },
     });
     const client = createMercuriusTestClient(app);
+    client.setHeaders({ authorization: `demo-user-id: ${person.id}` });
     const {
       data: { renameCompetency },
     } = await client.mutate<
       { renameCompetency: { error?: UserErrorModel } },
-      { currentUserId: string; id: string; title: string }
+      { id: string; title: string }
     >(
       gql`
-        mutation ($id: ID!, $currentUserId: ID!, $title: String!) {
-          renameCompetency(
-            id: $id
-            currentUserId: $currentUserId
-            data: { title: $title }
-          ) {
+        mutation ($id: ID!, $title: String!) {
+          renameCompetency(id: $id, data: { title: $title }) {
             ... on RenameCompetencyErrorPayload {
               error {
                 code
@@ -541,7 +518,6 @@ describe('renameCompetency', () => {
       `,
       {
         variables: {
-          currentUserId: person.id,
           id: child2.id,
           title: 'Hello Child 1!',
         },
@@ -597,19 +573,16 @@ describe('renameCompetency', () => {
       },
     });
     const client = createMercuriusTestClient(app);
+    client.setHeaders({ authorization: `demo-user-id: ${person.id}` });
     const {
       data: { renameCompetency },
     } = await client.mutate<
       { renameCompetency: { error?: UserErrorModel } },
-      { currentUserId: string; id: string; title: string }
+      { id: string; title: string }
     >(
       gql`
-        mutation ($id: ID!, $currentUserId: ID!, $title: String!) {
-          renameCompetency(
-            id: $id
-            currentUserId: $currentUserId
-            data: { title: $title }
-          ) {
+        mutation ($id: ID!, $title: String!) {
+          renameCompetency(id: $id, data: { title: $title }) {
             ... on RenameCompetencySuccessPayload {
               competency {
                 id
@@ -620,7 +593,6 @@ describe('renameCompetency', () => {
       `,
       {
         variables: {
-          currentUserId: person.id,
           id: child2.id,
           title: 'Hello Child 1!',
         },
@@ -636,9 +608,10 @@ describe('renameCompetency', () => {
     });
     const competency = await CompetencyService.createCompetency(
       { title: 'Hello World!' },
-      { currentUserId: person.id },
+      { userId: person.id },
     );
     const client = createMercuriusTestClient(app);
+    client.setHeaders({ authorization: `demo-user-id: ${person.id}` });
     const {
       data: { renameCompetency },
     } = await client.mutate<
@@ -647,15 +620,11 @@ describe('renameCompetency', () => {
           competency?: { title: string };
         };
       },
-      { currentUserId: string; id: string; title: string }
+      { id: string; title: string }
     >(
       gql`
-        mutation ($id: ID!, $currentUserId: ID!, $title: String!) {
-          renameCompetency(
-            id: $id
-            currentUserId: $currentUserId
-            data: { title: $title }
-          ) {
+        mutation ($id: ID!, $title: String!) {
+          renameCompetency(id: $id, data: { title: $title }) {
             ... on RenameCompetencySuccessPayload {
               competency {
                 title
@@ -666,7 +635,6 @@ describe('renameCompetency', () => {
       `,
       {
         variables: {
-          currentUserId: person.id,
           id: competency.id,
           title: 'Hello Universe!',
         },

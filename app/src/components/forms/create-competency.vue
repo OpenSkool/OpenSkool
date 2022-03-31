@@ -1,26 +1,23 @@
 <script lang="ts" setup>
 import { FormKitNode } from '@formkit/core';
 
-import { useDemoStore } from '~/demo-store';
 import {
   CreateCompetencyMutation,
   CreateCompetencyMutationVariables,
 } from '~/generated/graphql';
 
-const demoStore = useDemoStore();
 const router = useRouter();
 
-const props = defineProps<{ id?: string }>();
+const props = defineProps<{
+  id?: string;
+}>();
 
 const { mutate: createCompetency } = useMutation<
   CreateCompetencyMutation,
   CreateCompetencyMutationVariables
 >(gql`
-  mutation CreateCompetency(
-    $currentUserId: ID!
-    $data: CreateCompetencyInput!
-  ) {
-    createCompetency(currentUserId: $currentUserId, data: $data) {
+  mutation CreateCompetency($data: CreateCompetencyInput!) {
+    createCompetency(data: $data) {
       ... on CreateCompetencyErrorPayload {
         error {
           code
@@ -43,13 +40,8 @@ const formValues = ref<{ title: string }>({ title: '' });
 
 async function handleFormSubmit(): Promise<void> {
   formErrors.value = [];
-  if (demoStore.activeUserId == null) {
-    formErrors.value.push('No active user id selected.');
-    return;
-  }
   try {
     const response = await createCompetency({
-      currentUserId: demoStore.activeUserId,
       data: { parentId: props.id, title: formValues.value.title },
     });
     switch (response?.data?.createCompetency.__typename) {

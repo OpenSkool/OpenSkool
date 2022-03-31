@@ -1,12 +1,12 @@
 import { acceptHMRUpdate, defineStore } from 'pinia';
 
 export const useDemoStore = defineStore('demo', () => {
-  const activeUserId = ref<string>();
+  const demoUserId = ref<string>();
 
   return {
-    activeUserId,
-    setActiveUserId(id: string | undefined): void {
-      activeUserId.value = id;
+    demoUserId,
+    setDemoUserId(id: string | undefined): void {
+      demoUserId.value = id;
     },
   };
 });
