@@ -6,21 +6,20 @@ import {
 import { setContext } from '@apollo/client/link/context';
 
 import { useDemoStore } from './demo-store';
+import { getLocaleString } from './i18n';
 import { pinia } from './pinia';
 
 const authLink = setContext(
   (operation, previousContext: { headers?: Record<string, string> }) => {
     const demoStore = useDemoStore(pinia);
-
-    return {
-      headers: {
-        ...previousContext.headers,
-        authorization:
-          demoStore.demoUserId == null
-            ? undefined
-            : `demo-user-id: ${demoStore.demoUserId}`,
-      },
+    const headers: Record<string, string> = {
+      ...previousContext.headers,
+      'accept-language': getLocaleString(),
     };
+    if (demoStore.demoUserId != null) {
+      headers.authorization = `demo-user-id: ${demoStore.demoUserId}`;
+    }
+    return { headers };
   },
 );
 

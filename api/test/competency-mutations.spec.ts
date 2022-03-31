@@ -6,6 +6,7 @@ import app from '../src/app';
 import { CompetencyService } from '../src/domain';
 import { prisma } from '../src/prisma';
 import { UserErrorModel } from '../src/schema/types/errors';
+import { createClientHeaders, createSpecContext } from './helpers';
 
 beforeEach(async () => {
   await prisma.competency.deleteMany();
@@ -13,12 +14,9 @@ beforeEach(async () => {
 
 describe('createCompetency', () => {
   test('error on invalid title', async () => {
-    const person = await prisma.person.create({
-      data: { firstName: 'Jos', lastName: 'Vermeulen', role: 'TEACHER' },
-      select: { id: true },
-    });
+    const { clientHeaders } = await createSpecContext();
     const client = createMercuriusTestClient(app);
-    client.setHeaders({ authorization: `demo-user-id: ${person.id}` });
+    client.setHeaders(clientHeaders);
     const {
       data: { createCompetency },
     } = await client.mutate<
@@ -50,21 +48,18 @@ describe('createCompetency', () => {
   });
 
   test('error on duplicate title at root', async () => {
-    const person = await prisma.person.create({
-      data: { firstName: 'Jos', lastName: 'Vermeulen', role: 'TEACHER' },
-      select: { id: true },
-    });
+    const { clientHeaders, languageCode, userId } = await createSpecContext();
     await prisma.competency.create({
       data: {
-        createdById: person.id,
-        updatedById: person.id,
+        createdById: userId,
+        updatedById: userId,
         translations: {
-          create: { languageCode: 'EN', title: 'Hello Root!' },
+          create: { languageCode, title: 'Hello Root!' },
         },
       },
     });
     const client = createMercuriusTestClient(app);
-    client.setHeaders({ authorization: `demo-user-id: ${person.id}` });
+    client.setHeaders(clientHeaders);
     const {
       data: { createCompetency },
     } = await client.mutate<
@@ -96,31 +91,29 @@ describe('createCompetency', () => {
   });
 
   test('error on duplicate title within same parent', async () => {
-    const person = await prisma.person.create({
-      data: { firstName: 'Jos', lastName: 'Vermeulen', role: 'TEACHER' },
-      select: { id: true },
-    });
+    const { clientHeaders, languageCode, userId } = await createSpecContext();
+
     const parent = await prisma.competency.create({
       data: {
-        createdById: person.id,
-        updatedById: person.id,
+        createdById: userId,
+        updatedById: userId,
         translations: {
-          create: { languageCode: 'EN', title: 'Hello Parent!' },
+          create: { languageCode, title: 'Hello Parent!' },
         },
       },
     });
     await prisma.competency.create({
       data: {
-        createdById: person.id,
-        updatedById: person.id,
+        createdById: userId,
+        updatedById: userId,
         parentCompetencyId: parent.id,
         translations: {
-          create: { languageCode: 'EN', title: 'Hello Child!' },
+          create: { languageCode, title: 'Hello Child!' },
         },
       },
     });
     const client = createMercuriusTestClient(app);
-    client.setHeaders({ authorization: `demo-user-id: ${person.id}` });
+    client.setHeaders(clientHeaders);
     const {
       data: { createCompetency },
     } = await client.mutate<
@@ -153,40 +146,38 @@ describe('createCompetency', () => {
   });
 
   test('no error on duplicate title not within same parent', async () => {
-    const person = await prisma.person.create({
-      data: { firstName: 'Jos', lastName: 'Vermeulen', role: 'TEACHER' },
-      select: { id: true },
-    });
+    const { clientHeaders, languageCode, userId } = await createSpecContext();
+
     const parent1 = await prisma.competency.create({
       data: {
-        createdById: person.id,
-        updatedById: person.id,
+        createdById: userId,
+        updatedById: userId,
         translations: {
-          create: { languageCode: 'EN', title: 'Hello Parent 1!' },
+          create: { languageCode, title: 'Hello Parent 1!' },
         },
       },
     });
     const parent2 = await prisma.competency.create({
       data: {
-        createdById: person.id,
-        updatedById: person.id,
+        createdById: userId,
+        updatedById: userId,
         translations: {
-          create: { languageCode: 'EN', title: 'Hello Parent 2!' },
+          create: { languageCode, title: 'Hello Parent 2!' },
         },
       },
     });
     await prisma.competency.create({
       data: {
-        createdById: person.id,
-        updatedById: person.id,
+        createdById: userId,
+        updatedById: userId,
         parentCompetencyId: parent1.id,
         translations: {
-          create: { languageCode: 'EN', title: 'Hello Child!' },
+          create: { languageCode, title: 'Hello Child!' },
         },
       },
     });
     const client = createMercuriusTestClient(app);
-    client.setHeaders({ authorization: `demo-user-id: ${person.id}` });
+    client.setHeaders(clientHeaders);
     const {
       data: { createCompetency },
     } = await client.mutate<
@@ -214,13 +205,51 @@ describe('createCompetency', () => {
     expect(createCompetency).not.toHaveProperty('error');
   });
 
-  test('should create root competency', async () => {
-    const person = await prisma.person.create({
-      data: { firstName: 'Jos', lastName: 'Vermeulen', role: 'TEACHER' },
-      select: { id: true },
+  test('no error on duplicate title with different locale', async () => {
+    const { languageCode, userId } = await createSpecContext({ locale: 'en' });
+    await prisma.competency.create({
+      data: {
+        createdById: userId,
+        updatedById: userId,
+        translations: {
+          create: { languageCode, title: 'Hello Root!' },
+        },
+      },
     });
     const client = createMercuriusTestClient(app);
-    client.setHeaders({ authorization: `demo-user-id: ${person.id}` });
+    client.setHeaders(createClientHeaders({ locale: 'nl', userId }));
+    const {
+      data: { createCompetency },
+    } = await client.mutate<
+      { createCompetency: { error?: UserErrorModel } },
+      { title: string }
+    >(
+      gql`
+        mutation ($title: String!) {
+          createCompetency(data: { title: $title }) {
+            ... on CreateCompetencySuccessPayload {
+              competency {
+                id
+              }
+            }
+          }
+        }
+      `,
+      {
+        variables: {
+          title: 'Hello Root!',
+        },
+      },
+    );
+    expect(createCompetency).not.toHaveProperty('error');
+    expect(createCompetency).toHaveProperty('competency.id');
+  });
+
+  test('should create root competency', async () => {
+    const { clientHeaders } = await createSpecContext();
+
+    const client = createMercuriusTestClient(app);
+    client.setHeaders(clientHeaders);
     const {
       data: { createCompetency },
     } = await client.mutate<
@@ -251,16 +280,14 @@ describe('createCompetency', () => {
   });
 
   test('should create nested competency', async () => {
-    const person = await prisma.person.create({
-      data: { firstName: 'Jos', lastName: 'Vermeulen', role: 'TEACHER' },
-      select: { id: true },
-    });
+    const { clientHeaders, userId } = await createSpecContext();
+
     const parentCompetency = await CompetencyService.createCompetency(
       { title: 'Parent Title' },
-      { userId: person.id },
+      { locale: 'en', userId },
     );
     const client = createMercuriusTestClient(app);
-    client.setHeaders({ authorization: `demo-user-id: ${person.id}` });
+    client.setHeaders(clientHeaders);
     const {
       data: { createCompetency },
     } = await client.mutate<
@@ -294,19 +321,63 @@ describe('createCompetency', () => {
       'NestedCompetency',
     );
   });
+
+  test('should create competency in user locale', async () => {
+    const { clientHeaders, languageCode } = await createSpecContext({
+      locale: 'nl',
+    });
+
+    const client = createMercuriusTestClient(app);
+    client.setHeaders(clientHeaders);
+    const {
+      data: { createCompetency },
+    } = await client.mutate<
+      {
+        createCompetency: {
+          competency: { id: string };
+        };
+      },
+      { title: string }
+    >(
+      gql`
+        mutation ($title: String!) {
+          createCompetency(data: { title: $title }) {
+            ... on CreateCompetencySuccessPayload {
+              competency {
+                id
+              }
+            }
+          }
+        }
+      `,
+      { variables: { title: 'Hello World!' } },
+    );
+    expect(createCompetency.competency).toHaveProperty('id');
+    expect(
+      await prisma.competency.findUnique({
+        include: { translations: true },
+        where: { id: createCompetency.competency.id },
+      }),
+    ).toMatchObject({
+      translations: [
+        {
+          languageCode,
+          title: 'Hello World!',
+        },
+      ],
+    });
+  });
 });
 
 describe('deleteCompetency', () => {
   test('should delete competency', async () => {
-    const person = await prisma.person.create({
-      data: { firstName: 'Jos', lastName: 'Vermeulen', role: 'TEACHER' },
-      select: { id: true },
-    });
+    const { clientHeaders, domainContext } = await createSpecContext();
     const competency = await CompetencyService.createCompetency(
       { title: 'Hello World!' },
-      { userId: person.id },
+      domainContext,
     );
     const client = createMercuriusTestClient(app);
+    client.setHeaders(clientHeaders);
     const deletedCompetency = await client.mutate<
       { deleteCompetency: { id: string } },
       { id: string }
@@ -330,21 +401,18 @@ describe('deleteCompetency', () => {
   });
 
   test('should delete competency and all its descendants', async () => {
-    const person = await prisma.person.create({
-      data: { firstName: 'Jos', lastName: 'Vermeulen', role: 'TEACHER' },
-      select: { id: true },
-    });
+    const { domainContext } = await createSpecContext();
     const competencyRoot = await CompetencyService.createCompetency(
       { title: 'Hello World!' },
-      { userId: person.id },
+      domainContext,
     );
     const competencyParent = await CompetencyService.createCompetency(
       { parentId: competencyRoot.id, title: 'Hello World!' },
-      { userId: person.id },
+      domainContext,
     );
     const competencyLeaf = await CompetencyService.createCompetency(
       { parentId: competencyParent.id, title: 'Hello World!' },
-      { userId: person.id },
+      domainContext,
     );
     const client = createMercuriusTestClient(app);
     await client.mutate<{ deleteCompetency: { id: string } }, { id: string }>(
@@ -365,16 +433,14 @@ describe('deleteCompetency', () => {
 
 describe('renameCompetency', () => {
   test('error on invalid title', async () => {
-    const person = await prisma.person.create({
-      data: { firstName: 'Jos', lastName: 'Vermeulen', role: 'TEACHER' },
-      select: { id: true },
-    });
+    const { clientHeaders, domainContext } = await createSpecContext();
+
     const competency = await CompetencyService.createCompetency(
       { title: 'Hello World!' },
-      { userId: person.id },
+      domainContext,
     );
     const client = createMercuriusTestClient(app);
-    client.setHeaders({ authorization: `demo-user-id: ${person.id}` });
+    client.setHeaders(clientHeaders);
     const {
       data: { renameCompetency },
     } = await client.mutate<
@@ -407,30 +473,28 @@ describe('renameCompetency', () => {
   });
 
   test('error on duplicate title at root', async () => {
-    const person = await prisma.person.create({
-      data: { firstName: 'Jos', lastName: 'Vermeulen', role: 'TEACHER' },
-      select: { id: true },
-    });
+    const { clientHeaders, languageCode, userId } = await createSpecContext();
+
     await prisma.competency.create({
       data: {
-        createdById: person.id,
-        updatedById: person.id,
+        createdById: userId,
+        updatedById: userId,
         translations: {
-          create: { languageCode: 'EN', title: 'Hello Root 1!' },
+          create: { languageCode, title: 'Hello Root 1!' },
         },
       },
     });
     const root2 = await prisma.competency.create({
       data: {
-        createdById: person.id,
-        updatedById: person.id,
+        createdById: userId,
+        updatedById: userId,
         translations: {
-          create: { languageCode: 'EN', title: 'Hello Root 2!' },
+          create: { languageCode, title: 'Hello Root 2!' },
         },
       },
     });
     const client = createMercuriusTestClient(app);
-    client.setHeaders({ authorization: `demo-user-id: ${person.id}` });
+    client.setHeaders(clientHeaders);
     const {
       data: { renameCompetency },
     } = await client.mutate<
@@ -463,41 +527,39 @@ describe('renameCompetency', () => {
   });
 
   test('error on duplicate title within same parent', async () => {
-    const person = await prisma.person.create({
-      data: { firstName: 'Jos', lastName: 'Vermeulen', role: 'TEACHER' },
-      select: { id: true },
-    });
+    const { clientHeaders, languageCode, userId } = await createSpecContext();
+
     const parent = await prisma.competency.create({
       data: {
-        createdById: person.id,
-        updatedById: person.id,
+        createdById: userId,
+        updatedById: userId,
         translations: {
-          create: { languageCode: 'EN', title: 'Hello Parent!' },
+          create: { languageCode, title: 'Hello Parent!' },
         },
       },
     });
     await prisma.competency.create({
       data: {
-        createdById: person.id,
-        updatedById: person.id,
+        createdById: userId,
+        updatedById: userId,
         parentCompetencyId: parent.id,
         translations: {
-          create: { languageCode: 'EN', title: 'Hello Child 1!' },
+          create: { languageCode, title: 'Hello Child 1!' },
         },
       },
     });
     const child2 = await prisma.competency.create({
       data: {
-        createdById: person.id,
-        updatedById: person.id,
+        createdById: userId,
+        updatedById: userId,
         parentCompetencyId: parent.id,
         translations: {
-          create: { languageCode: 'EN', title: 'Hello Child 2!' },
+          create: { languageCode, title: 'Hello Child 2!' },
         },
       },
     });
     const client = createMercuriusTestClient(app);
-    client.setHeaders({ authorization: `demo-user-id: ${person.id}` });
+    client.setHeaders(clientHeaders);
     const {
       data: { renameCompetency },
     } = await client.mutate<
@@ -530,50 +592,48 @@ describe('renameCompetency', () => {
   });
 
   test('no error on duplicate title not within same parent', async () => {
-    const person = await prisma.person.create({
-      data: { firstName: 'Jos', lastName: 'Vermeulen', role: 'TEACHER' },
-      select: { id: true },
-    });
+    const { clientHeaders, languageCode, userId } = await createSpecContext();
+
     const parent1 = await prisma.competency.create({
       data: {
-        createdById: person.id,
-        updatedById: person.id,
+        createdById: userId,
+        updatedById: userId,
         translations: {
-          create: { languageCode: 'EN', title: 'Hello Parent 1!' },
+          create: { languageCode, title: 'Hello Parent 1!' },
         },
       },
     });
     await prisma.competency.create({
       data: {
-        createdById: person.id,
-        updatedById: person.id,
+        createdById: userId,
+        updatedById: userId,
         parentCompetencyId: parent1.id,
         translations: {
-          create: { languageCode: 'EN', title: 'Hello Child 1!' },
+          create: { languageCode, title: 'Hello Child 1!' },
         },
       },
     });
     const parent2 = await prisma.competency.create({
       data: {
-        createdById: person.id,
-        updatedById: person.id,
+        createdById: userId,
+        updatedById: userId,
         translations: {
-          create: { languageCode: 'EN', title: 'Hello Parent 2!' },
+          create: { languageCode, title: 'Hello Parent 2!' },
         },
       },
     });
     const child2 = await prisma.competency.create({
       data: {
-        createdById: person.id,
-        updatedById: person.id,
+        createdById: userId,
+        updatedById: userId,
         parentCompetencyId: parent2.id,
         translations: {
-          create: { languageCode: 'EN', title: 'Hello Child 2!' },
+          create: { languageCode, title: 'Hello Child 2!' },
         },
       },
     });
     const client = createMercuriusTestClient(app);
-    client.setHeaders({ authorization: `demo-user-id: ${person.id}` });
+    client.setHeaders(clientHeaders);
     const {
       data: { renameCompetency },
     } = await client.mutate<
@@ -602,16 +662,13 @@ describe('renameCompetency', () => {
   });
 
   test('should rename competency', async () => {
-    const person = await prisma.person.create({
-      data: { firstName: 'Jos', lastName: 'Vermeulen', role: 'TEACHER' },
-      select: { id: true },
-    });
+    const { clientHeaders, domainContext } = await createSpecContext();
     const competency = await CompetencyService.createCompetency(
       { title: 'Hello World!' },
-      { userId: person.id },
+      domainContext,
     );
     const client = createMercuriusTestClient(app);
-    client.setHeaders({ authorization: `demo-user-id: ${person.id}` });
+    client.setHeaders(clientHeaders);
     const {
       data: { renameCompetency },
     } = await client.mutate<

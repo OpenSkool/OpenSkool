@@ -8,6 +8,7 @@ datasource db {
 }
 
 enum Language {
+  NL
   EN
 }
 

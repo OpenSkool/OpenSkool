@@ -10,6 +10,7 @@ import {
 
 import { EducationService } from '../../domain';
 import { Context } from '../context';
+import { getLocalizedData } from '../helpers';
 
 export const Education = objectType({
   name: 'Education',
@@ -18,7 +19,12 @@ export const Education = objectType({
     t.implements('Accountable');
     t.nonNull.string('title', {
       resolve: async (education, argumentz, ctx) => {
-        return education.translations[0].title;
+        return getLocalizedData(
+          'Education',
+          education.translations,
+          'title',
+          ctx,
+        );
       },
     });
   },
@@ -34,7 +40,7 @@ export const EducationQueries = extendType({
     t.nonNull.field('allEducations', {
       type: list(nonNull('Education')),
       async resolve(root, argumentz, ctx: Context, info) {
-        return EducationService.getAllEducations();
+        return EducationService.getAllEducations(ctx);
       },
     });
   },
@@ -53,7 +59,7 @@ export const CreateEducation = mutationField('createEducation', {
     data: 'EducationInput',
   },
   async resolve(root, { data }, ctx) {
-    return EducationService.createEducation(data);
+    return EducationService.createEducation(data, ctx);
   },
 });
 
@@ -64,7 +70,7 @@ export const UpdateEducation = mutationField('updateEducation', {
     data: 'EducationInput',
   },
   async resolve(root, { id, data }, ctx) {
-    return EducationService.updateEducation(id, data);
+    return EducationService.updateEducation(id, data, ctx);
   },
 });
 

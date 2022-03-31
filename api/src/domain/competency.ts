@@ -1,24 +1,24 @@
-import { Competency, CompetencyTranslation, Language } from '@prisma/client';
+import { Competency, CompetencyTranslation } from '@prisma/client';
 
 import { AppValidationError } from '../errors';
 import { prisma } from '../prisma';
 import { SchemaValidationErrorCode } from '../schema/constants';
+import { DomainContext } from './context';
 import { handleServiceError, validateSingleLineString } from './helpers';
+import { mapLocaleToLanguageCode } from './helpers/language';
 
 export interface CompetencyModel extends Competency {
   translations: CompetencyTranslation[];
 }
 
-interface Accountancy {
-  userId: string;
-}
-
 export async function createCompetency(
   data: { parentId?: string; title: string },
-  accountancy: Accountancy,
+  context: DomainContext,
 ): Promise<CompetencyModel> {
+  const languageCode = mapLocaleToLanguageCode(context.locale);
+
   const title = validateSingleLineString(data.title);
-  await assertUniqueTitle(title, { parentId: data.parentId });
+  await assertUniqueTitle(title, { parentId: data.parentId }, context);
   let rootId: string | undefined;
   if (data.parentId != null) {
     const parentCompetency = await prisma.competency.findUnique({
@@ -37,11 +37,11 @@ export async function createCompetency(
   try {
     return await prisma.competency.create({
       data: {
-        createdById: accountancy.userId,
-        updatedById: accountancy.userId,
+        createdById: context.userId,
+        updatedById: context.userId,
         parentCompetencyId: data.parentId,
         rootCompetencyId: rootId,
-        translations: { create: { languageCode: 'EN', title } },
+        translations: { create: { languageCode, title } },
       },
       include: {
         translations: true,
@@ -63,16 +63,13 @@ export async function deleteCompetency(id: string): Promise<CompetencyModel> {
   }
 }
 
-export async function getAllRootCompetencies(): Promise<CompetencyModel[]> {
+export async function getAllRootCompetencies(
+  context: DomainContext,
+): Promise<CompetencyModel[]> {
   try {
     return await prisma.competency.findMany({
-      include: {
-        translations: { where: { languageCode: Language.EN } },
-      },
-      where: {
-        parentCompetencyId: null,
-        translations: { some: { languageCode: Language.EN } },
-      },
+      include: { translations: true },
+      where: { parentCompetencyId: null },
     });
   } catch (error) {
     handleServiceError(error);
@@ -81,41 +78,37 @@ export async function getAllRootCompetencies(): Promise<CompetencyModel[]> {
 
 export async function getNestedCompetenciesByRootId(
   id: string,
+  context: DomainContext,
 ): Promise<CompetencyModel[]> {
   try {
     const nestedCompetencies = await prisma.competency
       .findUnique({ where: { id } })
       .nestedCompetencies({
-        include: {
-          translations: { where: { languageCode: Language.EN } },
-        },
+        include: { translations: true },
       });
-    return nestedCompetencies.filter(
-      (competency) => competency.translations.length > 0,
-    );
+    return nestedCompetencies;
   } catch (error) {
     handleServiceError(error);
   }
 }
 
-export async function findRandomCompetency(): Promise<CompetencyModel | null> {
+export async function findRandomCompetency(
+  context: DomainContext,
+): Promise<CompetencyModel | null> {
   const competencyCount = await prisma.competency.count();
   const skip = Math.floor(Math.random() * competencyCount);
   const competencies = await prisma.competency.findMany({
     skip,
     take: 1,
 
-    include: {
-      translations: { where: { languageCode: Language.EN } },
-    },
-    where: {
-      translations: { some: { languageCode: Language.EN } },
-    },
+    include: { translations: true },
   });
   return competencies.length === 0 ? null : competencies[0];
 }
 
-export async function findRandomRootCompetency(): Promise<CompetencyModel | null> {
+export async function findRandomRootCompetency(
+  context: DomainContext,
+): Promise<CompetencyModel | null> {
   const rootCompetencyCount = await prisma.competency.count({
     where: { parentCompetencyId: null },
   });
@@ -124,24 +117,20 @@ export async function findRandomRootCompetency(): Promise<CompetencyModel | null
     skip,
     take: 1,
 
-    include: {
-      translations: { where: { languageCode: Language.EN } },
-    },
-    where: {
-      translations: { some: { languageCode: Language.EN } },
-    },
+    include: { translations: true },
   });
   return competencies.length === 0 ? null : competencies[0];
 }
 
 export async function findCompetencyById(
   id: string,
+  context: DomainContext,
 ): Promise<CompetencyModel | null> {
+  // const languageCode = mapLocaleToLanguageCode(context.locale);
+
   try {
     const competency = await prisma.competency.findUnique({
-      include: {
-        translations: { where: { languageCode: Language.EN } },
-      },
+      include: { translations: true },
       where: { id },
     });
     return competency;
@@ -152,14 +141,13 @@ export async function findCompetencyById(
 
 export async function findSubCompetenciesByParentId(
   id: string,
+  context: DomainContext,
 ): Promise<CompetencyModel[] | null> {
   try {
     const subCompetencies = await prisma.competency
       .findUnique({ where: { id } })
       .subCompetencies({
-        include: {
-          translations: { where: { languageCode: Language.EN } },
-        },
+        include: { translations: true },
       });
     if (subCompetencies.length === 0) {
       return null;
@@ -175,28 +163,30 @@ export async function findSubCompetenciesByParentId(
 export async function updateCompetencyTranslations(
   id: string,
   data: Pick<CompetencyTranslation, 'title'>,
-  accountancy: Accountancy,
+  context: DomainContext,
 ): Promise<CompetencyModel> {
+  const languageCode = mapLocaleToLanguageCode(context.locale);
+
   const title = validateSingleLineString(data.title);
 
   try {
     const parent = await prisma.competency
       .findUnique({ where: { id } })
       .parentCompetency({ select: { id: true } });
-    await assertUniqueTitle(title, { id, parentId: parent?.id });
+    await assertUniqueTitle(title, { id, parentId: parent?.id }, context);
     return prisma.competency.update({
       data: {
-        updatedById: accountancy.userId,
+        updatedById: context.userId,
         translations: {
           updateMany: {
             data: { title },
-            where: { languageCode: Language.EN },
+            where: { languageCode },
           },
         },
       },
       include: {
         translations: {
-          where: { languageCode: Language.EN },
+          where: { languageCode },
         },
       },
       where: { id },
@@ -209,20 +199,23 @@ export async function updateCompetencyTranslations(
 async function assertUniqueTitle(
   title: string,
   { id, parentId }: { id?: string; parentId?: string },
+  context: DomainContext,
 ): Promise<void> | never {
+  const languageCode = mapLocaleToLanguageCode(context.locale);
+
   let siblingTitles: string[];
   if (parentId == null) {
     const siblings = await prisma.competency.findMany({
       select: {
         translations: {
           select: { title: true },
-          where: { languageCode: Language.EN },
+          where: { languageCode },
         },
       },
       where: {
         id: { not: id },
         parentCompetencyId: null,
-        translations: { some: { languageCode: Language.EN } },
+        translations: { some: { languageCode } },
       },
     });
     siblingTitles = siblings.map(
@@ -235,12 +228,12 @@ async function assertUniqueTitle(
         select: {
           translations: {
             select: { title: true },
-            where: { languageCode: Language.EN },
+            where: { languageCode },
           },
         },
         where: {
           id: { not: id },
-          translations: { some: { languageCode: Language.EN } },
+          translations: { some: { languageCode } },
         },
       });
     siblingTitles = siblings.map(
