@@ -1,0 +1,10 @@
+forms:
+  submitButton: Creëer competentie
+  subTitle: Creëer competentie
+  title: Formulieren
+  field:
+    education1:
+      help: Wat is je opleiding?
+      label: Opleiding (radio)
+    education2: Opleiding (Listbox)
+    title: Titel

@@ -1,9 +1,34 @@
-import { ApolloLink } from '@apollo/client/core';
+import {
+  ApolloClient,
+  createHttpLink,
+  InMemoryCache,
+  ApolloLink,
+} from '@apollo/client/core';
 import { Observable } from '@apollo/client/utilities';
+import { DefaultApolloClient } from '@vue/apollo-composable';
 
 export interface ApolloNetworkStatus {
   pendingRequestCount: number;
   isPending: boolean;
+}
+
+export function useApolloClient(): { status: ApolloNetworkStatus } {
+  const { status, statusLink } = useApolloNetworkStatus();
+  const httpLink = createHttpLink({
+    uri: `${import.meta.env.VITE_API_BASE_URL}/graphql`,
+  });
+  const cache = new InMemoryCache();
+  const apolloClient = new ApolloClient({
+    cache,
+    defaultOptions: {
+      watchQuery: {
+        fetchPolicy: 'cache-and-network',
+      },
+    },
+    link: statusLink.concat(httpLink),
+  });
+  provide(DefaultApolloClient, apolloClient);
+  return { status };
 }
 
 export function useApolloNetworkStatus(): {

@@ -30,18 +30,23 @@ const selectedPerson = computed(() =>
 );
 </script>
 <template>
-  <ui-listbox
-    v-model="selectedPersonId"
-    :selected-label="
-      selectedPerson == null ? 'Kies een gebruiker' : selectedPerson.displayName
-    "
-  >
-    <ui-listbox-option
-      v-for="person in people"
-      :key="person.id"
-      :value="person.id"
+  <div class="flex gap-3 items-center">
+    <ri-shield-user-fill />
+    <ui-listbox
+      v-model="selectedPersonId"
+      :selected-label="
+        selectedPerson == null
+          ? 'Kies een gebruiker'
+          : selectedPerson.displayName
+      "
     >
-      {{ person.displayName }}
-    </ui-listbox-option>
-  </ui-listbox>
+      <ui-listbox-option
+        v-for="person in people"
+        :key="person.id"
+        :value="person.id"
+      >
+        {{ person.displayName }}
+      </ui-listbox-option>
+    </ui-listbox>
+  </div>
 </template>

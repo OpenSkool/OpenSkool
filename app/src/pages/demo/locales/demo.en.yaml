@@ -1,0 +1,10 @@
+forms:
+  submitButton: Create competency
+  subTitle: Create competency
+  title: Forms
+  field:
+    education1:
+      help: Which is your education?
+      label: Education Radio
+    education2: Education Listbox
+    title: Title

@@ -1,15 +1,9 @@
-<i18n lang="yaml">
-en:
-  message: Move along. Nothing to see here.
-</i18n>
-
-<script setup lang="ts">
+<script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
 
-useI18n();
+const { t } = useI18n();
 </script>
 
 <template>
-  <p v-t="'message'" />
-  <p v-t="'globalMessage'" />
+  <p>{{ t('global.message') }}</p>
 </template>

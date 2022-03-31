@@ -1,1 +1,1 @@
-export * from './use-apollo-network-status';
+export * from './use-apollo';

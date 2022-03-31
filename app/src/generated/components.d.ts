@@ -9,6 +9,7 @@ declare module 'vue' {
     DialogOverlay: typeof import('@headlessui/vue')['DialogOverlay']
     DialogTitle: typeof import('@headlessui/vue')['DialogTitle']
     FkListbox: typeof import('./../components/listbox/fk-listbox.vue')['default']
+    LanguageSelect: typeof import('./../components/demo/language-select.vue')['default']
     Listbox: typeof import('@headlessui/vue')['Listbox']
     ListboxButton: typeof import('@headlessui/vue')['ListboxButton']
     ListboxOption: typeof import('@headlessui/vue')['ListboxOption']
@@ -23,8 +24,10 @@ declare module 'vue' {
     RiDeleteBinFill: typeof import('~icons/ri/delete-bin-fill')['default']
     RiEdit2Fill: typeof import('~icons/ri/edit2-fill')['default']
     RiEditBoxFill: typeof import('~icons/ri/edit-box-fill')['default']
+    RiGlobalFill: typeof import('~icons/ri/global-fill')['default']
     RiLoaderFill: typeof import('~icons/ri/loader-fill')['default']
     RiPencilFill: typeof import('~icons/ri/pencil-fill')['default']
+    RiShieldUserFill: typeof import('~icons/ri/shield-user-fill')['default']
     Switch: typeof import('@headlessui/vue')['Switch']
     TransitionChild: typeof import('@headlessui/vue')['TransitionChild']
     TransitionRoot: typeof import('@headlessui/vue')['TransitionRoot']
@@ -38,7 +41,7 @@ declare module 'vue' {
     UiMenuItem: typeof import('./../components/menu/ui-menu-item.vue')['default']
     UiMenuItemButton: typeof import('./../components/menu/ui-menu-item-button.vue')['default']
     UiSwitch: typeof import('./../components/switch/ui-switch.vue')['default']
-    UserSelect: typeof import('./../components/user-select.vue')['default']
+    UserSelect: typeof import('./../components/demo/user-select.vue')['default']
   }
 }
 

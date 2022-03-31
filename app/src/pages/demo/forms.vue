@@ -1,4 +1,13 @@
 <script lang="ts" setup>
+import { useI18n } from 'vue-i18n';
+
+import { useI18nStore } from '~/i18n';
+
+const i18nStore = useI18nStore();
+await i18nStore.loadGlob(import.meta.glob('./locales/demo.*.yaml'));
+
+const { t } = useI18n();
+
 interface Education {
   id: number;
   name: string;
@@ -22,30 +31,34 @@ const values = ref<{
 </script>
 
 <template>
-  <h2 class="text-xl mb-3">Forms</h2>
-  <h3 class="text-lg mb-3">Create competency</h3>
-  <FormKit v-model="values" type="form" submit-label="Create competency">
+  <h2 v-t="'demo.forms.title'" class="text-xl mb-3"></h2>
+  <h3 v-t="'demo.forms.subTitle'" class="text-lg mb-3"></h3>
+  <FormKit
+    v-model="values"
+    type="form"
+    :submit-label="t('demo.forms.submitButton')"
+  >
     <FormKit
       name="competencyTitle"
-      label="Title"
+      :label="t('demo.forms.field.title')"
       type="text"
       validation="required"
     />
     <FormKit
       name="education1"
       type="radio"
-      label="Education Radio"
+      :label="t('demo.forms.field.education1.label')"
       :options="
         educations.map((education) => ({
           label: education.name,
           value: education.id,
         }))
       "
-      help="Which is your education?"
+      :help="t('demo.forms.field.education1.help')"
     />
     <FormKit
       name="education2"
-      label="Education Listbox"
+      :label="t('demo.forms.field.education2')"
       type="listbox"
       :options="
         educations.map((education) => ({

@@ -1,0 +1,78 @@
+<script lang="ts" setup>
+import { useApolloClient } from './hooks';
+
+const { status } = useApolloClient();
+</script>
+
+<template>
+  <div class="container mx-auto px-5">
+    <div class="relative">
+      <div class="flex items-center justify-between">
+        <div class="absolute -ml-10 mt-1">
+          <TransitionRoot
+            :show="status.isPending"
+            enter="duration-100 ease-out"
+            enter-from="opacity-0"
+            enter-to="opacity-100"
+            leave="delay-300 duration-100 ease-in"
+            leave-from="opacity-100"
+            leave-to="opacity-0"
+          >
+            <ri-loader-fill class="text-2xl text-secondary-500 spin" />
+          </TransitionRoot>
+        </div>
+        <h1 v-t="'global.title'" class="text-4xl my-5 text-primary1-700"></h1>
+        <div class="flex gap-6">
+          <language-select />
+          <user-select />
+        </div>
+      </div>
+    </div>
+    <nav class="my-5">
+      <ol class="flex gap-5">
+        <li>
+          <router-link to="/">Home</router-link>
+        </li>
+        <li>
+          <router-link to="/demo/data-fetching">Data-fetching</router-link>
+        </li>
+        <li>
+          <router-link to="/demo/forms">Forms</router-link>
+        </li>
+        <li>
+          <router-link to="/demo/ui">UI</router-link>
+        </li>
+        <li>
+          <router-link to="/manage/competencies">
+            Manage competencies
+          </router-link>
+        </li>
+      </ol>
+    </nav>
+    <suspense>
+      <router-view />
+    </suspense>
+  </div>
+</template>
+
+<style scoped>
+:global(html, body) {
+  @apply antialiased font-sans bg-blue-gray-100;
+}
+
+:global(a) {
+  @apply text-primary2-900;
+}
+
+.spin {
+  animation: spin 1.25s linear infinite;
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+</style>
