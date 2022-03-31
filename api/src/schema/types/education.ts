@@ -31,11 +31,11 @@ export const Education = objectType({
 export const EducationQueries = extendType({
   type: 'Query',
   definition: (t) => {
-    t.field('allEducations', {
+    t.nonNull.field('allEducations', {
+      type: list(nonNull('Education')),
       async resolve(root, argumentz, ctx: Context, info) {
         return EducationService.getAllEducations();
       },
-      type: nonNull(list(nonNull('Education'))),
     });
   },
 });

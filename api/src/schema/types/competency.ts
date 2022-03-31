@@ -6,7 +6,6 @@ import {
   list,
   mutationField,
   nonNull,
-  nullable,
   objectType,
   unionType,
 } from 'nexus';
@@ -90,7 +89,7 @@ export const RootCompetency = objectType({
   definition(t) {
     t.implements('Competency');
     t.nonNull.field('nestedCompetencies', {
-      type: nonNull(list(nonNull('NestedCompetency'))),
+      type: list(nonNull('NestedCompetency')),
       async resolve(parent, argumentz, ctx) {
         return CompetencyService.getNestedCompetenciesByRootId(parent.id);
       },
@@ -105,11 +104,11 @@ export const RootCompetency = objectType({
 export const CompetencyQueries = extendType({
   type: 'Query',
   definition: (t) => {
-    t.field('allRootCompetencies', {
+    t.nonNull.field('allRootCompetencies', {
       async resolve(root, argumentz, ctx) {
         return CompetencyService.getAllRootCompetencies();
       },
-      type: nonNull(list(nonNull('RootCompetency'))),
+      type: list(nonNull('RootCompetency')),
     });
     t.field('randomCompetency', {
       async resolve(root, argumentz, ctx) {
@@ -128,7 +127,7 @@ export const CompetencyQueries = extendType({
       async resolve(root, { id }, ctx: Context, info) {
         return CompetencyService.findCompetencyById(id);
       },
-      type: nullable('Competency'),
+      type: 'Competency',
     });
   },
 });

@@ -37,8 +37,8 @@ export const Teacher = objectType({
 export const PeopleQueries = extendType({
   type: 'Query',
   definition(t) {
-    t.field('allPeople', {
-      type: nonNull(list(nonNull(Person))),
+    t.nonNull.field('allPeople', {
+      type: list(nonNull(Person)),
       async resolve(root, argumentz, ctx) {
         return PersonService.getAllPeople();
       },
