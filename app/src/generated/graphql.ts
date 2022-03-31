@@ -117,6 +117,7 @@ export type NestedCompetency = Accountable & Competency & Node & {
   createdBy: Person;
   /** A CUID for a resource */
   id: Scalars['ID'];
+  parent: Competency;
   parentId: Scalars['ID'];
   subCompetencies?: Maybe<Array<NestedCompetency>>;
   title: Scalars['String'];
