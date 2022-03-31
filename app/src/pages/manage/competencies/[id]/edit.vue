@@ -61,8 +61,8 @@ watch(result, () => {
 });
 
 async function handleFormSubmit(): Promise<void> {
-  assert(formValues.value);
-  assert(competency.value);
+  assert(formValues.value, 'formValues');
+  assert(competency.value, 'competency');
   formErrors.value = [];
   if (demoStore.activeUserId == null) {
     formErrors.value.push('No active user id selected.');
