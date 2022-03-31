@@ -1,13 +1,29 @@
 import { isRef, Ref } from 'vue';
 
-import { DEFAULT_LOCALE, GLOBAL_LOCALES_GLOB } from './constants';
+import {
+  AVAILABLE_LOCALES,
+  DEFAULT_LOCALE,
+  GLOBAL_LOCALES_GLOB,
+  LOCALE_STORAGE_LOCALE_KEY,
+} from './constants';
 import { parseLocalesGlob } from './helpers';
 import { i18n } from './plugin';
 
+export function getLocaleString(): string {
+  return isRef(i18n.global.locale)
+    ? (i18n.global.locale as Ref<string>).value
+    : i18n.global.locale;
+}
+
 export async function initI18n(): Promise<void> {
-  setLocale(DEFAULT_LOCALE);
+  const localeStorage = window.localStorage.getItem(LOCALE_STORAGE_LOCALE_KEY);
+  const initialLocale =
+    localeStorage == null || !AVAILABLE_LOCALES.includes(localeStorage)
+      ? DEFAULT_LOCALE
+      : localeStorage;
+  setLocale(initialLocale);
   for (const { locale, loader } of parseLocalesGlob(GLOBAL_LOCALES_GLOB)) {
-    if (locale === DEFAULT_LOCALE) {
+    if (locale === initialLocale) {
       const { default: messages } = await loader();
       mergeLocaleMessage(locale, 'global', messages);
     }
@@ -31,4 +47,5 @@ export function setLocale(locale: string): void {
   } else {
     i18n.global.locale = locale;
   }
+  window.localStorage.setItem(LOCALE_STORAGE_LOCALE_KEY, locale);
 }
