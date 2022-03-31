@@ -29,6 +29,12 @@ export default defineConfig({
       ],
     },
   },
+  define: {
+    // https://vue-i18n.intlify.dev/guide/advanced/optimization.html#reduce-bundle-size-with-feature-build-flags
+    __INTLIFY_PROD_DEVTOOLS__: false,
+    __VUE_I18N_FULL_INSTALL__: false,
+    __VUE_I18N_LEGACY_API__: false,
+  },
   plugins: [
     AutoImport({
       imports: [

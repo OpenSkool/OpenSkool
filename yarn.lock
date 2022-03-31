@@ -797,7 +797,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formkit/i18n@npm:1.0.0-beta.7-f27a0f7":
+"@formkit/i18n@npm:1.0.0-beta.7-f27a0f7, @formkit/i18n@npm:^1.0.0-beta.6":
   version: 1.0.0-beta.7-f27a0f7
   resolution: "@formkit/i18n@npm:1.0.0-beta.7-f27a0f7"
   dependencies:
@@ -1658,6 +1658,7 @@ __metadata:
   dependencies:
     "@apollo/client": ^3.5.10
     "@formkit/core": ^1.0.0-beta.6
+    "@formkit/i18n": ^1.0.0-beta.6
     "@formkit/vue": ^1.0.0-beta.6
     "@graphql-codegen/cli": 2.6.2
     "@graphql-codegen/typescript": 2.4.8
