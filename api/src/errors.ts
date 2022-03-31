@@ -2,6 +2,8 @@ import mercurius from 'mercurius';
 
 export const HTTP_STATUS_BAD_REQUEST = 400;
 
+export const HTTP_STATUS_UNAUTHORIZED = 401;
+
 export const HTTP_STATUS_NOT_FOUND = 404;
 
 export const HTTP_STATUS_INTERNAL_SERVER_ERROR = 500;
@@ -19,6 +21,17 @@ export class AppError extends mercurius.ErrorWithProps {
     super(message, options?.extensions, options?.statusCode);
     this.cause = options?.cause;
     this.name = 'AppError';
+  }
+}
+
+export class AppUnauthorizedError extends AppError {
+  constructor(
+    message = 'Unauthorized',
+    options: Omit<AppErrorOptions, 'statusCode'> = {},
+  ) {
+    super(message, options);
+    this.name = 'AppUnauthorizedError';
+    this.statusCode = HTTP_STATUS_UNAUTHORIZED;
   }
 }
 

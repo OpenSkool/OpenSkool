@@ -17,6 +17,7 @@ const {
 );
 const competency = useResult(result);
 </script>
+
 <template>
   <template v-if="readError">
     <p>Something went wrong</p>

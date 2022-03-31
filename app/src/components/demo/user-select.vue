@@ -17,7 +17,7 @@ const people = useResult(result, []);
 const demoStore = useDemoStore();
 const selectedPersonId = ref<string>();
 watchEffect(() => {
-  demoStore.setActiveUserId(selectedPersonId.value);
+  demoStore.setDemoUserId(selectedPersonId.value);
 });
 watchEffect(() => {
   if (people.value.length > 0 && selectedPersonId.value == null) {

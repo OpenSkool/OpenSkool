@@ -340,7 +340,6 @@ export interface NexusGenArgTypes {
   Mutation: {
     createCompetency: {
       // args
-      currentUserId: string; // ID!
       data: NexusGenInputs['CreateCompetencyInput']; // CreateCompetencyInput!
     };
     createEducation: {
@@ -357,7 +356,6 @@ export interface NexusGenArgTypes {
     };
     renameCompetency: {
       // args
-      currentUserId: string; // ID!
       data: NexusGenInputs['RenameCompetencyInput']; // RenameCompetencyInput!
       id: string; // ID!
     };

@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { FormKitNode } from '@formkit/core';
 
-import { useDemoStore } from '~/demo-store';
 import {
   RenameCompetencyMutation,
   RenameCompetencyMutationVariables,
@@ -10,7 +9,6 @@ import {
 import { READ_COMPETENCY_QUERY } from '~/gql';
 import { assert } from '~/utils';
 
-const demoStore = useDemoStore();
 const router = useRouter();
 
 const props = defineProps<{
@@ -28,12 +26,8 @@ const { mutate: renameCompetency } = useMutation<
   RenameCompetencyMutation,
   RenameCompetencyMutationVariables
 >(gql`
-  mutation RenameCompetency(
-    $currentUserId: ID!
-    $id: ID!
-    $data: RenameCompetencyInput!
-  ) {
-    renameCompetency(currentUserId: $currentUserId, id: $id, data: $data) {
+  mutation RenameCompetency($id: ID!, $data: RenameCompetencyInput!) {
+    renameCompetency(id: $id, data: $data) {
       ... on RenameCompetencyErrorPayload {
         error {
           code
@@ -64,13 +58,8 @@ async function handleFormSubmit(): Promise<void> {
   assert(formValues.value, 'formValues');
   assert(competency.value, 'competency');
   formErrors.value = [];
-  if (demoStore.activeUserId == null) {
-    formErrors.value.push('No active user id selected.');
-    return;
-  }
   try {
     const response = await renameCompetency({
-      currentUserId: demoStore.activeUserId,
       id: props.id,
       data: formValues.value,
     });

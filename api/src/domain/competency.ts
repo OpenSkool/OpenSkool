@@ -10,7 +10,7 @@ export interface CompetencyModel extends Competency {
 }
 
 interface Accountancy {
-  currentUserId: string;
+  userId: string;
 }
 
 export async function createCompetency(
@@ -37,8 +37,8 @@ export async function createCompetency(
   try {
     return await prisma.competency.create({
       data: {
-        createdById: accountancy.currentUserId,
-        updatedById: accountancy.currentUserId,
+        createdById: accountancy.userId,
+        updatedById: accountancy.userId,
         parentCompetencyId: data.parentId,
         rootCompetencyId: rootId,
         translations: { create: { languageCode: 'EN', title } },
@@ -186,7 +186,7 @@ export async function updateCompetencyTranslations(
     await assertUniqueTitle(title, { id, parentId: parent?.id });
     return prisma.competency.update({
       data: {
-        updatedById: accountancy.currentUserId,
+        updatedById: accountancy.userId,
         translations: {
           updateMany: {
             data: { title },

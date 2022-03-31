@@ -23,7 +23,15 @@ export default plugin(async (app) => {
     })
     .register(mercurius, {
       context: (request, reply): Context => {
-        return { request, reply };
+        const { authorization } = request.headers;
+        let userId: string | null = null;
+        if (authorization != null) {
+          const prefix = 'demo-user-id: ';
+          if (authorization.toLocaleLowerCase().startsWith(prefix)) {
+            userId = authorization.slice(prefix.length);
+          }
+        }
+        return { request, reply, userId };
       },
       errorFormatter(executionResult, ctx) {
         let statusCode: number | undefined;

@@ -78,7 +78,6 @@ export type Mutation = {
 
 
 export type MutationCreateCompetencyArgs = {
-  currentUserId: Scalars['ID'];
   data: CreateCompetencyInput;
 };
 
@@ -99,7 +98,6 @@ export type MutationDeleteEducationArgs = {
 
 
 export type MutationRenameCompetencyArgs = {
-  currentUserId: Scalars['ID'];
   data: RenameCompetencyInput;
   id: Scalars['ID'];
 };
@@ -206,7 +204,6 @@ export type GetPeopleQueryVariables = Exact<{ [key: string]: never; }>;
 export type GetPeopleQuery = { __typename?: 'Query', allPeople: Array<{ __typename?: 'Teacher', id: string, displayName: string }> };
 
 export type CreateCompetencyMutationVariables = Exact<{
-  currentUserId: Scalars['ID'];
   data: CreateCompetencyInput;
 }>;
 
@@ -226,7 +223,6 @@ export type GetEducationsQueryVariables = Exact<{ [key: string]: never; }>;
 export type GetEducationsQuery = { __typename?: 'Query', allEducations: Array<{ __typename?: 'Education', id: string, title: string }> };
 
 export type RenameCompetencyMutationVariables = Exact<{
-  currentUserId: Scalars['ID'];
   id: Scalars['ID'];
   data: RenameCompetencyInput;
 }>;
