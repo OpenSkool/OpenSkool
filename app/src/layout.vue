@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { useApolloClient } from './hooks';
+import { useGlobalQueryLoading } from '@vue/apollo-composable';
 
-const { status } = useApolloClient();
+const loading = useGlobalQueryLoading();
 </script>
 
 <template>
@@ -10,7 +10,7 @@ const { status } = useApolloClient();
       <div class="flex items-center justify-between">
         <div class="absolute -ml-10 mt-1">
           <TransitionRoot
-            :show="status.isPending"
+            :show="loading"
             enter="duration-100 ease-out"
             enter-from="opacity-0"
             enter-to="opacity-100"
