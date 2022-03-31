@@ -94,6 +94,7 @@ type NestedCompetency implements Accountable & Competency & Node {
   A CUID for a resource
   """
   id: ID!
+  parent: Competency!
   parentId: ID!
   subCompetencies: [NestedCompetency!]
   title: String!

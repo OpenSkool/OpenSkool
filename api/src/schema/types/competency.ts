@@ -48,6 +48,25 @@ export const NestedCompetency = objectType({
   description: 'A competency with a parent.',
   definition(t) {
     t.implements('Competency');
+    t.nonNull.field('parent', {
+      type: 'Competency',
+      async resolve(parent, argumentz, ctx) {
+        if (parent.parentCompetencyId == null) {
+          throw new Error(
+            'expected NestedCompetency type to have a parent competency id',
+          );
+        }
+        const parentCompetency = await CompetencyService.findCompetencyById(
+          parent.parentCompetencyId,
+        );
+        if (parentCompetency == null) {
+          throw new Error(
+            'expected NestedCompetency type to have a parent competency',
+          );
+        }
+        return parentCompetency;
+      },
+    });
     t.nonNull.id('parentId', {
       resolve(competency, argumentz, ctx): string {
         if (competency.parentCompetencyId == null) {

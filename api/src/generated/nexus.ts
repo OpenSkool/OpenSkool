@@ -148,6 +148,7 @@ export interface NexusGenFieldTypes {
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     createdBy: NexusGenRootTypes['Person']; // Person!
     id: string; // ID!
+    parent: NexusGenRootTypes['Competency']; // Competency!
     parentId: string; // ID!
     subCompetencies: NexusGenRootTypes['NestedCompetency'][] | null; // [NestedCompetency!]
     title: string; // String!
@@ -257,6 +258,7 @@ export interface NexusGenFieldTypeNames {
     createdAt: 'DateTime';
     createdBy: 'Person';
     id: 'ID';
+    parent: 'Competency';
     parentId: 'ID';
     subCompetencies: 'NestedCompetency';
     title: 'String';
