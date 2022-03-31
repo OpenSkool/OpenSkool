@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { useDemoStore } from '~/demo-store';
 import { GetPeopleQuery } from '~/generated/graphql';
-import { sample } from '~/utils';
 
 const { result } = useQuery<GetPeopleQuery>(gql`
   query getPeople {
@@ -11,34 +10,22 @@ const { result } = useQuery<GetPeopleQuery>(gql`
     }
   }
 `);
-
 const people = useResult(result, []);
 
 const demoStore = useDemoStore();
-const selectedPersonId = ref<string>();
-watchEffect(() => {
-  demoStore.setDemoUserId(selectedPersonId.value);
-});
-watchEffect(() => {
-  if (people.value.length > 0 && selectedPersonId.value == null) {
-    selectedPersonId.value = sample(people.value).id;
-  }
-});
-
 const selectedPerson = computed(() =>
-  people.value.find((item) => item.id === selectedPersonId.value),
+  demoStore.demoUserId == null
+    ? undefined
+    : people.value.find((person) => person.id === demoStore.demoUserId),
 );
 </script>
 <template>
   <div class="flex gap-3 items-center">
     <ri-shield-user-fill />
     <ui-listbox
-      v-model="selectedPersonId"
-      :selected-label="
-        selectedPerson == null
-          ? 'Kies een gebruiker'
-          : selectedPerson.displayName
-      "
+      :model-value="demoStore.demoUserId"
+      :selected-label="selectedPerson?.displayName"
+      @update:model-value="demoStore.setDemoUserId($event as string)"
     >
       <ui-listbox-option
         v-for="person in people"

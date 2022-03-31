@@ -1,7 +1,11 @@
+import { useLocalStorage } from '@vueuse/core';
 import { acceptHMRUpdate, defineStore } from 'pinia';
 
 export const useDemoStore = defineStore('demo', () => {
-  const demoUserId = ref<string>();
+  const demoUserId = useLocalStorage<string | undefined>(
+    'os-demo-user-id',
+    null,
+  );
 
   return {
     demoUserId,
