@@ -42,7 +42,6 @@ async function handleFormSubmit(): Promise<void> {
     formErrors.value.push('No active user id selected.');
     return;
   }
-  /* eslint-disable no-underscore-dangle */
   try {
     const response = await createCompetency({
       currentUserId: demoStore.activeUserId,
