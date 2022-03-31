@@ -14,6 +14,7 @@ import { CompetencyService } from '../../domain';
 import type { CompetencyModel } from '../../domain/competency';
 import { AppUnauthorizedError, AppValidationError } from '../../errors';
 import { Context } from '../context';
+import { getLocalizedData } from '../helpers';
 import { UserErrorModel } from './errors';
 
 export const Competency = interfaceType({
@@ -26,12 +27,17 @@ export const Competency = interfaceType({
     t.field('subCompetencies', {
       type: list(nonNull('NestedCompetency')),
       async resolve(parent, argumentz, ctx) {
-        return CompetencyService.findSubCompetenciesByParentId(parent.id);
+        return CompetencyService.findSubCompetenciesByParentId(parent.id, ctx);
       },
     });
     t.nonNull.string('title', {
       resolve(competency, argumentz, ctx) {
-        return competency.translations[0].title;
+        return getLocalizedData(
+          'Competency',
+          competency.translations,
+          'title',
+          ctx,
+        );
       },
     });
   },
@@ -57,6 +63,7 @@ export const NestedCompetency = objectType({
         }
         const parentCompetency = await CompetencyService.findCompetencyById(
           parent.parentCompetencyId,
+          ctx,
         );
         if (parentCompetency == null) {
           throw new Error(
@@ -91,7 +98,7 @@ export const RootCompetency = objectType({
     t.nonNull.field('nestedCompetencies', {
       type: list(nonNull('NestedCompetency')),
       async resolve(parent, argumentz, ctx) {
-        return CompetencyService.getNestedCompetenciesByRootId(parent.id);
+        return CompetencyService.getNestedCompetenciesByRootId(parent.id, ctx);
       },
     });
   },
@@ -106,26 +113,26 @@ export const CompetencyQueries = extendType({
   definition: (t) => {
     t.nonNull.field('allRootCompetencies', {
       async resolve(root, argumentz, ctx) {
-        return CompetencyService.getAllRootCompetencies();
+        return CompetencyService.getAllRootCompetencies(ctx);
       },
       type: list(nonNull('RootCompetency')),
     });
     t.field('randomCompetency', {
       async resolve(root, argumentz, ctx) {
-        return CompetencyService.findRandomCompetency();
+        return CompetencyService.findRandomCompetency(ctx);
       },
       type: 'Competency',
     });
     t.field('randomRootCompetency', {
       async resolve(root, argumentz, ctx) {
-        return CompetencyService.findRandomRootCompetency();
+        return CompetencyService.findRandomRootCompetency(ctx);
       },
       type: 'RootCompetency',
     });
     t.field('competency', {
       args: { id: idArg() },
       async resolve(root, { id }, ctx: Context, info) {
-        return CompetencyService.findCompetencyById(id);
+        return CompetencyService.findCompetencyById(id, ctx);
       },
       type: 'Competency',
     });
@@ -186,7 +193,7 @@ export const CreateCompetency = mutationField('createCompetency', {
     try {
       const competency = await CompetencyService.createCompetency(
         { title: data.title, parentId: data.parentId ?? undefined },
-        { userId: ctx.userId },
+        ctx,
       );
       return { competency };
     } catch (error) {
@@ -269,7 +276,7 @@ export const RenameCompetency = mutationField('renameCompetency', {
       const competency = await CompetencyService.updateCompetencyTranslations(
         id,
         data,
-        { userId: ctx.userId },
+        ctx,
       );
       return { competency };
     } catch (error) {

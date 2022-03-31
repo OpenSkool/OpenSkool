@@ -1,3 +1,4 @@
+import acceptLanguageParser from 'accept-language-parser';
 import altairPlugin from 'altair-fastify-plugin';
 import plugin from 'fastify-plugin';
 import { GraphQLSchema } from 'graphql';
@@ -23,7 +24,12 @@ export default plugin(async (app) => {
     })
     .register(mercurius, {
       context: (request, reply): Context => {
-        const { authorization } = request.headers;
+        const { authorization, 'accept-language': acceptLanguage = '' } =
+          request.headers;
+
+        const locale =
+          acceptLanguageParser.pick(['en', 'nl'], acceptLanguage) ?? 'en';
+
         let userId: string | null = null;
         if (authorization != null) {
           const prefix = 'demo-user-id: ';
@@ -31,7 +37,7 @@ export default plugin(async (app) => {
             userId = authorization.slice(prefix.length);
           }
         }
-        return { request, reply, userId };
+        return { locale, request, reply, userId };
       },
       errorFormatter(executionResult, ctx) {
         let statusCode: number | undefined;
