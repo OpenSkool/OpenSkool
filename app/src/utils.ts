@@ -1,6 +1,6 @@
-export function assert(value: unknown): asserts value {
+export function assert(value: unknown, label = 'value'): asserts value {
   if (value == null) {
-    throw new TypeError('expected value not to be nullish');
+    throw new TypeError(`expected ${label} not to be nullish`);
   }
 }
 
