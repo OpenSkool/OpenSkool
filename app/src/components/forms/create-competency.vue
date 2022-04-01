@@ -79,7 +79,6 @@ async function handleFormSubmit(): Promise<void> {
 }
 </script>
 <template>
-  <h2 class="text-xl mb-3">Create competency</h2>
   <FormKit
     v-model="formValues"
     type="form"

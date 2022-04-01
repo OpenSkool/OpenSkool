@@ -31,6 +31,7 @@ const competency = useResult(result);
     <ui-backbutton :to="`/manage/competencies/${props.id}`">
       {{ competency.title }}
     </ui-backbutton>
+    <h2 class="text-xl mb-3">Create competency</h2>
     <create-competency :id="`${props.id}`"></create-competency>
   </template>
 </template>
