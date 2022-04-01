@@ -11,9 +11,7 @@ import { prisma } from '../src/prisma';
 test('create educations', async () => {
   const title = faker.commerce.productName();
   const client = createMercuriusTestClient(app);
-  const {
-    data: { createEducation },
-  } = await client.mutate<
+  const repsonse = await client.mutate<
     { createEducation: Pick<NexusGenFieldTypes['Education'], 'id' | 'title'> },
     { title: string }
   >(
@@ -27,6 +25,9 @@ test('create educations', async () => {
     `,
     { variables: { title } },
   );
+  expect(repsonse).not.toHaveProperty('error');
+  expect(repsonse).toHaveProperty('data.createEducation');
+  const { createEducation } = repsonse.data;
   expect(createEducation).toMatchObject({ title });
   expect(
     await prisma.education.findUnique({
@@ -51,9 +52,7 @@ test('update education', async () => {
   });
   const title = faker.commerce.productName();
   const client = createMercuriusTestClient(app);
-  const {
-    data: { updateEducation },
-  } = await client.mutate<
+  const response = await client.mutate<
     { updateEducation: Pick<NexusGenFieldTypes['Education'], 'id' | 'title'> },
     { id: string; title: string }
   >(
@@ -67,6 +66,9 @@ test('update education', async () => {
     `,
     { variables: { id: education.id, title } },
   );
+  expect(response).not.toHaveProperty('errors');
+  expect(response).toHaveProperty('data.updateEducation');
+  const { updateEducation } = response.data;
   expect(updateEducation).toMatchObject({ title });
   expect(
     await prisma.education.findUnique({
@@ -90,7 +92,7 @@ test('delete education', async () => {
     },
   });
   const client = createMercuriusTestClient(app);
-  await client.mutate<
+  const response = await client.mutate<
     { deleteEducation: Pick<NexusGenFieldTypes['Education'], 'id'> },
     { id: string }
   >(
@@ -103,7 +105,10 @@ test('delete education', async () => {
     `,
     { variables: { id: education.id } },
   );
+  expect(response).not.toHaveProperty('errors');
+  expect(response).toHaveProperty('data.deleteEducation');
+  const { deleteEducation } = response.data;
   expect(
-    await prisma.education.findUnique({ where: { id: education.id } }),
+    await prisma.education.findUnique({ where: { id: deleteEducation.id } }),
   ).toBe(null);
 });
