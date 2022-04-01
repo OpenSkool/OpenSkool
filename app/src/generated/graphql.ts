@@ -143,8 +143,6 @@ export type Query = {
   allPeople: Array<Person>;
   allRootCompetencies: Array<RootCompetency>;
   competency?: Maybe<Competency>;
-  randomCompetency?: Maybe<Competency>;
-  randomRootCompetency?: Maybe<RootCompetency>;
 };
 
 

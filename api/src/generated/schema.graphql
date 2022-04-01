@@ -124,8 +124,6 @@ type Query {
   allPeople: [Person!]!
   allRootCompetencies: [RootCompetency!]!
   competency(id: ID!): Competency
-  randomCompetency: Competency
-  randomRootCompetency: RootCompetency
 }
 
 type RenameCompetencyErrorPayload {

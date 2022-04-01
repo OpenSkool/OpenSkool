@@ -107,18 +107,6 @@ export const CompetencyQueries = extendType({
       },
       type: list(nonNull('RootCompetency')),
     });
-    t.field('randomCompetency', {
-      async resolve(root, argumentz, ctx) {
-        return CompetencyService.findRandomCompetency(ctx);
-      },
-      type: 'Competency',
-    });
-    t.field('randomRootCompetency', {
-      async resolve(root, argumentz, ctx) {
-        return CompetencyService.findRandomRootCompetency(ctx);
-      },
-      type: 'RootCompetency',
-    });
     t.field('competency', {
       args: { id: idArg() },
       async resolve(root, { id }, ctx: Context) {
