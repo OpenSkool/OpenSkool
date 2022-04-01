@@ -4,7 +4,9 @@ export const READ_COMPETENCY_QUERY = gql`
       id
       title
       ... on NestedCompetency {
-        parentId
+        parent {
+          id
+        }
       }
     }
   }

@@ -95,7 +95,7 @@ async function handleFormSubmit(): Promise<void> {
             router.push('/manage/competencies');
             break;
           case 'NestedCompetency':
-            router.push(`/manage/competencies/${competency.value.parentId}`);
+            router.push(`/manage/competencies/${competency.value.parent.id}`);
             break;
         }
         break;

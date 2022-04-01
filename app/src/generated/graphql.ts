@@ -218,7 +218,7 @@ export type GetCompetencyQueryVariables = Exact<{
 }>;
 
 
-export type GetCompetencyQuery = { __typename?: 'Query', competency?: { __typename?: 'NestedCompetency', parentId: string, id: string, title: string } | { __typename?: 'RootCompetency', id: string, title: string } | null };
+export type GetCompetencyQuery = { __typename?: 'Query', competency?: { __typename?: 'NestedCompetency', id: string, title: string, parent: { __typename?: 'NestedCompetency', id: string } | { __typename?: 'RootCompetency', id: string } } | { __typename?: 'RootCompetency', id: string, title: string } | null };
 
 export type GetEducationsQueryVariables = Exact<{ [key: string]: never; }>;
 
