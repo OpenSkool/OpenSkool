@@ -14,7 +14,6 @@ import { CompetencyService } from '../../domain';
 import type { CompetencyModel } from '../../domain/competency';
 import { AppUnauthorizedError, AppValidationError } from '../../errors';
 import { Context } from '../context';
-import { getLocalizedData } from '../helpers';
 import { UserErrorModel } from './errors';
 
 export const Competency = interfaceType({
@@ -30,16 +29,7 @@ export const Competency = interfaceType({
         return CompetencyService.findSubCompetenciesByParentId(parent.id, ctx);
       },
     });
-    t.nonNull.string('title', {
-      resolve(competency, argumentz, ctx) {
-        return getLocalizedData(
-          'Competency',
-          competency.translations,
-          'title',
-          ctx,
-        );
-      },
-    });
+    t.nonNull.string('title');
   },
   resolveType(competency) {
     return competency.rootCompetencyId == null
@@ -131,7 +121,7 @@ export const CompetencyQueries = extendType({
     });
     t.field('competency', {
       args: { id: idArg() },
-      async resolve(root, { id }, ctx: Context, info) {
+      async resolve(root, { id }, ctx: Context) {
         return CompetencyService.findCompetencyById(id, ctx);
       },
       type: 'Competency',
@@ -217,7 +207,7 @@ export const DeleteCompetency = mutationField('deleteCompetency', {
     id: idArg(),
   },
   async resolve(root, { id }, ctx) {
-    return CompetencyService.deleteCompetency(id);
+    return CompetencyService.deleteCompetency(id, ctx);
   },
 });
 

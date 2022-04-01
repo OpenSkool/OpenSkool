@@ -15,7 +15,7 @@ beforeEach(async () => {
 describe('competency', () => {
   test('error on competency not found', async () => {
     const client = createMercuriusTestClient(app);
-    const result = await client.query<
+    const response = await client.query<
       { competency: { title: string } },
       { id: string }
     >(
@@ -28,8 +28,8 @@ describe('competency', () => {
       `,
       { variables: { id: 'id-does-not-exist' } },
     );
-    expect(result).not.toHaveProperty('error');
-    expect(result).toHaveProperty('data.competency', null);
+    expect(response).not.toHaveProperty('errors');
+    expect(response).toHaveProperty('data.competency', null);
   });
 
   test('get title in default locale with user prefered locale', async () => {
@@ -47,7 +47,7 @@ describe('competency', () => {
     });
     const client = createMercuriusTestClient(app);
     client.setHeaders(clientHeaders);
-    const result = await client.query<
+    const response = await client.query<
       { competency: { title: string } },
       { id: string }
     >(
@@ -60,7 +60,8 @@ describe('competency', () => {
       `,
       { variables: { id: competency.id } },
     );
-    expect(result).toHaveProperty('data.competency.title', 'Hello World!');
+    expect(response).not.toHaveProperty('errors');
+    expect(response).toHaveProperty('data.competency.title', 'Hello World!');
   });
 
   test('get title in default locale with user fallback locale', async () => {
@@ -76,7 +77,7 @@ describe('competency', () => {
     });
     const client = createMercuriusTestClient(app);
     client.setHeaders(createClientHeaders({ locale: 'nl', userId }));
-    const result = await client.query<
+    const response = await client.query<
       { competency: { title: string } },
       { id: string }
     >(
@@ -89,7 +90,8 @@ describe('competency', () => {
       `,
       { variables: { id: competency.id } },
     );
-    expect(result).toHaveProperty('data.competency.title', 'Hello World!');
+    expect(response).not.toHaveProperty('errors');
+    expect(response).toHaveProperty('data.competency.title', 'Hello World!');
   });
 
   test('get title in other locale with user prefered locale', async () => {
@@ -107,7 +109,7 @@ describe('competency', () => {
     });
     const client = createMercuriusTestClient(app);
     client.setHeaders(clientHeaders);
-    const result = await client.query<
+    const response = await client.query<
       { competency: { title: string } },
       { id: string }
     >(
@@ -120,7 +122,8 @@ describe('competency', () => {
       `,
       { variables: { id: competency.id } },
     );
-    expect(result).toHaveProperty('data.competency.title', 'Hallo Wereld!');
+    expect(response).not.toHaveProperty('errors');
+    expect(response).toHaveProperty('data.competency.title', 'Hallo Wereld!');
   });
 
   test('get title in other locale with user fallback locale', async () => {
@@ -136,7 +139,7 @@ describe('competency', () => {
     });
     const client = createMercuriusTestClient(app);
     client.setHeaders(createClientHeaders({ locale: 'en', userId }));
-    const result = await client.query<
+    const response = await client.query<
       { competency: { title: string } },
       { id: string }
     >(
@@ -149,6 +152,6 @@ describe('competency', () => {
       `,
       { variables: { id: competency.id } },
     );
-    expect(result).toHaveProperty('data.competency.title', 'Hallo Wereld!');
+    expect(response).toHaveProperty('data.competency.title', 'Hallo Wereld!');
   });
 });

@@ -1,4 +1,6 @@
-import { Competency, CompetencyTranslation } from '@prisma/client';
+import assert from 'assert';
+
+import { Competency, CompetencyTranslation, Language } from '@prisma/client';
 
 import { AppValidationError } from '../errors';
 import { prisma } from '../prisma';
@@ -7,8 +9,31 @@ import { DomainContext } from './context';
 import { handleServiceError, validateSingleLineString } from './helpers';
 import { mapLocaleToLanguageCode } from './helpers/language';
 
-export interface CompetencyModel extends Competency {
+export interface CompetencyModel
+  extends Competency,
+    Pick<CompetencyTranslation, 'title'> {}
+
+type InternalCompetency = Competency & {
   translations: CompetencyTranslation[];
+};
+
+function mapToModel(
+  competency: InternalCompetency,
+  languageCode: Language,
+): CompetencyModel {
+  const { translations, ...baseData } = competency;
+  const preferedTranslation = translations.find(
+    (translation) => translation.languageCode === languageCode,
+  );
+  const translation = preferedTranslation ?? translations[0];
+  assert(
+    translation,
+    `no translation found for competency id ${competency.id}`,
+  );
+  return {
+    ...baseData,
+    title: translation.title,
+  };
 }
 
 export async function createCompetency(
@@ -35,7 +60,7 @@ export async function createCompetency(
     rootId = parentCompetency.rootCompetencyId ?? parentCompetency.id;
   }
   try {
-    return await prisma.competency.create({
+    const competency = await prisma.competency.create({
       data: {
         createdById: context.userId,
         updatedById: context.userId,
@@ -47,17 +72,24 @@ export async function createCompetency(
         translations: true,
       },
     });
+    return mapToModel(competency, languageCode);
   } catch (error) {
     handleServiceError(error);
   }
 }
 
-export async function deleteCompetency(id: string): Promise<CompetencyModel> {
+export async function deleteCompetency(
+  id: string,
+  context: DomainContext,
+): Promise<CompetencyModel> {
+  const languageCode = mapLocaleToLanguageCode(context.locale);
+
   try {
-    return await prisma.competency.delete({
+    const competency = await prisma.competency.delete({
       include: { translations: true },
       where: { id },
     });
+    return mapToModel(competency, languageCode);
   } catch (error) {
     handleServiceError(error);
   }
@@ -66,11 +98,16 @@ export async function deleteCompetency(id: string): Promise<CompetencyModel> {
 export async function getAllRootCompetencies(
   context: DomainContext,
 ): Promise<CompetencyModel[]> {
+  const languageCode = mapLocaleToLanguageCode(context.locale);
+
   try {
-    return await prisma.competency.findMany({
+    const competencies = await prisma.competency.findMany({
       include: { translations: true },
       where: { parentCompetencyId: null },
     });
+    return competencies.map((competency) =>
+      mapToModel(competency, languageCode),
+    );
   } catch (error) {
     handleServiceError(error);
   }
@@ -80,13 +117,17 @@ export async function getNestedCompetenciesByRootId(
   id: string,
   context: DomainContext,
 ): Promise<CompetencyModel[]> {
+  const languageCode = mapLocaleToLanguageCode(context.locale);
+
   try {
     const nestedCompetencies = await prisma.competency
       .findUnique({ where: { id } })
       .nestedCompetencies({
         include: { translations: true },
       });
-    return nestedCompetencies;
+    return nestedCompetencies.map((competency) =>
+      mapToModel(competency, languageCode),
+    );
   } catch (error) {
     handleServiceError(error);
   }
@@ -95,6 +136,8 @@ export async function getNestedCompetenciesByRootId(
 export async function findRandomCompetency(
   context: DomainContext,
 ): Promise<CompetencyModel | null> {
+  const languageCode = mapLocaleToLanguageCode(context.locale);
+
   const competencyCount = await prisma.competency.count();
   const skip = Math.floor(Math.random() * competencyCount);
   const competencies = await prisma.competency.findMany({
@@ -103,12 +146,16 @@ export async function findRandomCompetency(
 
     include: { translations: true },
   });
-  return competencies.length === 0 ? null : competencies[0];
+  return competencies.length === 0
+    ? null
+    : mapToModel(competencies[0], languageCode);
 }
 
 export async function findRandomRootCompetency(
   context: DomainContext,
 ): Promise<CompetencyModel | null> {
+  const languageCode = mapLocaleToLanguageCode(context.locale);
+
   const rootCompetencyCount = await prisma.competency.count({
     where: { parentCompetencyId: null },
   });
@@ -119,21 +166,23 @@ export async function findRandomRootCompetency(
 
     include: { translations: true },
   });
-  return competencies.length === 0 ? null : competencies[0];
+  return competencies.length === 0
+    ? null
+    : mapToModel(competencies[0], languageCode);
 }
 
 export async function findCompetencyById(
   id: string,
   context: DomainContext,
 ): Promise<CompetencyModel | null> {
-  // const languageCode = mapLocaleToLanguageCode(context.locale);
+  const languageCode = mapLocaleToLanguageCode(context.locale);
 
   try {
     const competency = await prisma.competency.findUnique({
       include: { translations: true },
       where: { id },
     });
-    return competency;
+    return competency == null ? null : mapToModel(competency, languageCode);
   } catch (error) {
     handleServiceError(error);
   }
@@ -143,6 +192,8 @@ export async function findSubCompetenciesByParentId(
   id: string,
   context: DomainContext,
 ): Promise<CompetencyModel[] | null> {
+  const languageCode = mapLocaleToLanguageCode(context.locale);
+
   try {
     const subCompetencies = await prisma.competency
       .findUnique({ where: { id } })
@@ -152,8 +203,8 @@ export async function findSubCompetenciesByParentId(
     if (subCompetencies.length === 0) {
       return null;
     }
-    return subCompetencies.filter(
-      (competency) => competency.translations.length > 0,
+    return subCompetencies.map((competency) =>
+      mapToModel(competency, languageCode),
     );
   } catch (error) {
     handleServiceError(error);
@@ -165,16 +216,16 @@ export async function updateCompetencyTranslations(
   data: Pick<CompetencyTranslation, 'title'>,
   context: DomainContext,
 ): Promise<CompetencyModel> {
-  const languageCode = mapLocaleToLanguageCode(context.locale);
-
   const title = validateSingleLineString(data.title);
+
+  const languageCode = mapLocaleToLanguageCode(context.locale);
 
   try {
     const parent = await prisma.competency
       .findUnique({ where: { id } })
       .parentCompetency({ select: { id: true } });
     await assertUniqueTitle(title, { id, parentId: parent?.id }, context);
-    return prisma.competency.update({
+    const competency = await prisma.competency.update({
       data: {
         updatedById: context.userId,
         translations: {
@@ -184,13 +235,10 @@ export async function updateCompetencyTranslations(
           },
         },
       },
-      include: {
-        translations: {
-          where: { languageCode },
-        },
-      },
+      include: { translations: true },
       where: { id },
     });
+    return mapToModel(competency, languageCode);
   } catch (error) {
     handleServiceError(error);
   }
