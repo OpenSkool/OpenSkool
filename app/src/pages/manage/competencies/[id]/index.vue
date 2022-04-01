@@ -47,7 +47,6 @@ const { mutate: deleteCompetency } = useMutation<
 `);
 
 const parentUrl = computed(() => {
-  /* eslint-disable no-underscore-dangle */
   if (
     competency.value != null &&
     competency.value.__typename === 'NestedCompetency'
