@@ -12,7 +12,7 @@ const props = defineProps<{
 }>();
 
 const isDeleteModalOpen = ref(false);
-const errorMessage = ref();
+const deleteErrorMessage = ref();
 
 const { error, loading, result } = useQuery<GetSubCompetenciesQuery>(
   gql`
@@ -46,7 +46,7 @@ const { mutate: deleteCompetency } = useMutation<
   }
 `);
 
-const getParentUrl = computed(() => {
+const parentUrl = computed(() => {
   /* eslint-disable no-underscore-dangle */
   if (
     competency.value != null &&
@@ -59,19 +59,19 @@ const getParentUrl = computed(() => {
 
 async function deleteCompetencyHandler(): Promise<void> {
   try {
-    errorMessage.value = null;
+    deleteErrorMessage.value = null;
     const response = await deleteCompetency({
       id: props.id,
     });
     if (response?.data) {
       isDeleteModalOpen.value = false;
-      router.replace(getParentUrl.value);
+      router.replace(parentUrl.value);
     } else {
-      errorMessage.value =
+      deleteErrorMessage.value =
         'Something went wrong: competency could not be deleted.';
     }
   } catch {
-    errorMessage.value =
+    deleteErrorMessage.value =
       'Something went wrong: competency could not be deleted.';
   }
 }
@@ -88,7 +88,7 @@ async function deleteCompetencyHandler(): Promise<void> {
     <div>Not Found</div>
   </template>
   <template v-else>
-    <ui-backbutton :to="`${getParentUrl}`">
+    <ui-backbutton :to="`${parentUrl}`">
       Back
       <!-- TODO: replace "Back" with title of parent when available in API -->
     </ui-backbutton>
@@ -112,7 +112,9 @@ async function deleteCompetencyHandler(): Promise<void> {
         Are you sure you want to delete this competency and all its children?
       </p>
       <p class="text-gray-500">{{ competency.title }}</p>
-      <p v-if="errorMessage" class="text-red-600">{{ errorMessage }}</p>
+      <p v-if="deleteErrorMessage" class="text-red-600">
+        {{ deleteErrorMessage }}
+      </p>
       <div class="mt-4">
         <button
           class="btn btn-cancel mr-3"
