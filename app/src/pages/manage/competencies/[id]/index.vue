@@ -21,7 +21,10 @@ const { error, loading, result } = useQuery<GetSubCompetenciesQuery>(
         id
         title
         ... on NestedCompetency {
-          parentId
+          parent {
+            id
+            title
+          }
         }
         subCompetencies {
           id
@@ -46,15 +49,17 @@ const { mutate: deleteCompetency } = useMutation<
   }
 `);
 
-const parentUrl = computed(() => {
-  /* eslint-disable no-underscore-dangle */
+const parent = computed(() => {
   if (
     competency.value != null &&
     competency.value.__typename === 'NestedCompetency'
   ) {
-    return `/manage/competencies/${competency.value.parentId}`;
+    return {
+      title: competency.value.parent.title,
+      url: `/manage/competencies/${competency.value.parent.id}`,
+    };
   }
-  return '/manage/competencies';
+  return { title: 'Manage competencies', url: '/manage/competencies' };
 });
 
 async function deleteCompetencyHandler(): Promise<void> {
@@ -65,7 +70,7 @@ async function deleteCompetencyHandler(): Promise<void> {
     });
     if (response?.data) {
       isDeleteModalOpen.value = false;
-      router.replace(parentUrl.value);
+      router.replace(parent.value.url);
     } else {
       deleteErrorMessage.value =
         'Something went wrong: competency could not be deleted.';
@@ -88,9 +93,8 @@ async function deleteCompetencyHandler(): Promise<void> {
     <div>Not Found</div>
   </template>
   <template v-else>
-    <ui-backbutton :to="`${parentUrl}`">
-      Back
-      <!-- TODO: replace "Back" with title of parent when available in API -->
+    <ui-backbutton :to="`${parent.url}`">
+      {{ parent.title }}
     </ui-backbutton>
     <h2 class="text-xl mb-3 flex items-center gap-1">
       {{ competency.title }}
