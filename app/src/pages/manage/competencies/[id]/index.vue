@@ -12,7 +12,7 @@ const props = defineProps<{
 }>();
 
 const isDeleteModalOpen = ref(false);
-const parentUrl = ref('/manage/competencies');
+const errorMessage = ref();
 
 const { error, loading, result } = useQuery<GetSubCompetenciesQuery>(
   gql`
@@ -46,33 +46,35 @@ const { mutate: deleteCompetency } = useMutation<
   }
 `);
 
-async function deleteCompetencyHandler(): Promise<void> {
-  try {
-    const response = await deleteCompetency({
-      id: props.id,
-    });
-    if (response?.data) {
-      isDeleteModalOpen.value = false;
-      router.replace(parentUrl.value);
-    } else {
-      throw new Error('Delete unsuccessful');
-    }
-  } catch {
-    throw new Error('Something went wrong');
-  }
-}
-
-watch(competency, () => {
+const getParentUrl = computed(() => {
   /* eslint-disable no-underscore-dangle */
   if (
     competency.value != null &&
     competency.value.__typename === 'NestedCompetency'
   ) {
-    parentUrl.value = `/manage/competencies/${competency.value.parentId}`;
-  } else {
-    parentUrl.value = '/manage/competencies';
+    return `/manage/competencies/${competency.value.parentId}`;
   }
+  return '/manage/competencies';
 });
+
+async function deleteCompetencyHandler(): Promise<void> {
+  try {
+    errorMessage.value = null;
+    const response = await deleteCompetency({
+      id: props.id,
+    });
+    if (response?.data) {
+      isDeleteModalOpen.value = false;
+      router.replace(getParentUrl.value);
+    } else {
+      errorMessage.value =
+        'Something went wrong: competency could not be deleted.';
+    }
+  } catch {
+    errorMessage.value =
+      'Something went wrong: competency could not be deleted.';
+  }
+}
 </script>
 
 <template>
@@ -86,7 +88,7 @@ watch(competency, () => {
     <div>Not Found</div>
   </template>
   <template v-else>
-    <ui-backbutton :to="`${parentUrl}`">
+    <ui-backbutton :to="`${getParentUrl}`">
       Back
       <!-- TODO: replace "Back" with title of parent when available in API -->
     </ui-backbutton>
@@ -110,6 +112,7 @@ watch(competency, () => {
         Are you sure you want to delete this competency and all its children?
       </p>
       <p class="text-gray-500">{{ competency.title }}</p>
+      <p v-if="errorMessage" class="text-red-600">{{ errorMessage }}</p>
       <div class="mt-4">
         <button
           class="btn btn-cancel mr-3"
