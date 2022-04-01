@@ -161,8 +161,6 @@ export interface NexusGenFieldTypes {
     allPeople: NexusGenRootTypes['Person'][]; // [Person!]!
     allRootCompetencies: NexusGenRootTypes['RootCompetency'][]; // [RootCompetency!]!
     competency: NexusGenRootTypes['Competency'] | null; // Competency
-    randomCompetency: NexusGenRootTypes['Competency'] | null; // Competency
-    randomRootCompetency: NexusGenRootTypes['RootCompetency'] | null; // RootCompetency
   };
   RenameCompetencyErrorPayload: {
     // field return type
@@ -271,8 +269,6 @@ export interface NexusGenFieldTypeNames {
     allPeople: 'Person';
     allRootCompetencies: 'RootCompetency';
     competency: 'Competency';
-    randomCompetency: 'Competency';
-    randomRootCompetency: 'RootCompetency';
   };
   RenameCompetencyErrorPayload: {
     // field return type name
