@@ -205,13 +205,6 @@ export type GetPeopleQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetPeopleQuery = { __typename?: 'Query', allPeople: Array<{ __typename?: 'Teacher', id: string, displayName: string }> };
 
-export type GetCompetencyQueryVariables = Exact<{
-  id: Scalars['ID'];
-}>;
-
-
-export type GetCompetencyQuery = { __typename?: 'Query', competency?: { __typename?: 'NestedCompetency', parentId: string, id: string, title: string } | { __typename?: 'RootCompetency', id: string, title: string } | null };
-
 export type CreateCompetencyMutationVariables = Exact<{
   currentUserId: Scalars['ID'];
   data: CreateCompetencyInput;
@@ -219,6 +212,13 @@ export type CreateCompetencyMutationVariables = Exact<{
 
 
 export type CreateCompetencyMutation = { __typename?: 'Mutation', createCompetency: { __typename?: 'CreateCompetencyErrorPayload', error: { __typename?: 'UserError', code: string, message: string, path: Array<string> } } | { __typename?: 'CreateCompetencySuccessPayload', competency: { __typename?: 'NestedCompetency', id: string } | { __typename?: 'RootCompetency', id: string } } };
+
+export type GetCompetencyQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetCompetencyQuery = { __typename?: 'Query', competency?: { __typename?: 'NestedCompetency', parentId: string, id: string, title: string } | { __typename?: 'RootCompetency', id: string, title: string } | null };
 
 export type GetEducationsQueryVariables = Exact<{ [key: string]: never; }>;
 

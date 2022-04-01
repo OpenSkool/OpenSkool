@@ -6,7 +6,6 @@ import {
   CreateCompetencyMutation,
   CreateCompetencyMutationVariables,
 } from '~/generated/graphql';
-import { CREATE_COMPETENCY_QUERY } from '~/gql';
 
 const demoStore = useDemoStore();
 const router = useRouter();
@@ -22,7 +21,27 @@ const props = defineProps({
 const { mutate: createCompetency } = useMutation<
   CreateCompetencyMutation,
   CreateCompetencyMutationVariables
->(CREATE_COMPETENCY_QUERY);
+>(gql`
+  mutation CreateCompetency(
+    $currentUserId: ID!
+    $data: CreateCompetencyInput!
+  ) {
+    createCompetency(currentUserId: $currentUserId, data: $data) {
+      ... on CreateCompetencyErrorPayload {
+        error {
+          code
+          message
+          path
+        }
+      }
+      ... on CreateCompetencySuccessPayload {
+        competency {
+          id
+        }
+      }
+    }
+  }
+`);
 
 const formErrors = ref<string[]>([]);
 const formNode = ref<FormKitNode>();
