@@ -29,10 +29,10 @@ const competency = useResult(result);
     <div>Not Found</div>
   </template>
   <template v-else>
-    <ui-backbutton :to="`/manage/competencies/${props.id}`">
+    <ui-backbutton :to="`/manage/competencies/${id}`">
       {{ competency.title }}
     </ui-backbutton>
     <h2 class="text-xl mb-3">Create competency</h2>
-    <create-competency :id="`${props.id}`"></create-competency>
+    <create-competency :id="id"></create-competency>
   </template>
 </template>
