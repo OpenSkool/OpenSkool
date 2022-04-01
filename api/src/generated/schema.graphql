@@ -91,7 +91,6 @@ type NestedCompetency implements Accountable & Competency & Node {
   """
   id: ID!
   parent: Competency!
-  parentId: ID!
   subCompetencies: [NestedCompetency!]
   title: String!
   updatedAt: DateTime!

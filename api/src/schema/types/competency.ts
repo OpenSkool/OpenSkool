@@ -12,7 +12,11 @@ import {
 
 import { CompetencyService } from '../../domain';
 import type { CompetencyModel } from '../../domain/competency';
-import { AppUnauthorizedError, AppValidationError } from '../../errors';
+import {
+  AppError,
+  AppUnauthorizedError,
+  AppValidationError,
+} from '../../errors';
 import { Context } from '../context';
 import { UserErrorModel } from './errors';
 
@@ -47,7 +51,7 @@ export const NestedCompetency = objectType({
       type: 'Competency',
       async resolve(parent, argumentz, ctx) {
         if (parent.parentCompetencyId == null) {
-          throw new Error(
+          throw new AppError(
             'expected NestedCompetency type to have a parent competency id',
           );
         }
@@ -56,21 +60,11 @@ export const NestedCompetency = objectType({
           ctx,
         );
         if (parentCompetency == null) {
-          throw new Error(
+          throw new AppError(
             'expected NestedCompetency type to have a parent competency',
           );
         }
         return parentCompetency;
-      },
-    });
-    t.nonNull.id('parentId', {
-      resolve(competency, argumentz, ctx): string {
-        if (competency.parentCompetencyId == null) {
-          throw new Error(
-            'A resolver tried to create a NestedCompetency of a Db.Competency without it having a parentCompetencyId',
-          );
-        }
-        return competency.parentCompetencyId;
       },
     });
   },
