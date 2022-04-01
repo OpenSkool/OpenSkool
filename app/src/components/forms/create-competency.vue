@@ -10,13 +10,7 @@ import {
 const demoStore = useDemoStore();
 const router = useRouter();
 
-const props = defineProps({
-  id: {
-    type: String,
-    required: false,
-    default: undefined,
-  },
-});
+const props = defineProps<{ id?: string }>();
 
 const { mutate: createCompetency } = useMutation<
   CreateCompetencyMutation,
