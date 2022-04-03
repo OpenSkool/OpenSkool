@@ -10,7 +10,7 @@
     "build": "vite build",
     "clean": "rm -rf .eslintcache .turbo/ dist/",
     "dev": "FORCE_COLOR=1 vite",
-    "generate": "graphql-codegen --config ../.graphqlrc.yaml",
+    "generate": "graphql-codegen",
     "lint": "eslint --cache --ext .cjs,.js,.ts,.vue .",
     "preview": "vite preview",
     "test": "vue-tsc --noEmit && vitest run"
