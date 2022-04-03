@@ -53,9 +53,7 @@ export default defineConfig({
       ],
       dts: 'src/generated/auto-imports.d.ts',
     }),
-    Codegen({
-      configFilePathOverride: path.join(__dirname, `../.graphqlrc.yaml`),
-    }),
+    Codegen(),
     Components({
       dts: 'src/generated/components.d.ts',
       resolvers: [
