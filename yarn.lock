@@ -977,6 +977,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@graphql-codegen/typed-document-node@npm:^2.2.8":
+  version: 2.2.8
+  resolution: "@graphql-codegen/typed-document-node@npm:2.2.8"
+  dependencies:
+    "@graphql-codegen/plugin-helpers": ^2.4.0
+    "@graphql-codegen/visitor-plugin-common": 2.7.4
+    auto-bind: ~4.0.0
+    change-case-all: 1.0.14
+    tslib: ~2.3.0
+  peerDependencies:
+    graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
+  checksum: a4dea41ccd3e911dd35adde863f538bdd691de12f52021e10b113a80c026431044cae994cd3c4960b4db88269e305ccd673a265b33801eba116c920a036463a6
+  languageName: node
+  linkType: hard
+
 "@graphql-codegen/typescript-operations@npm:2.3.5":
   version: 2.3.5
   resolution: "@graphql-codegen/typescript-operations@npm:2.3.5"
@@ -1663,6 +1678,7 @@ __metadata:
     "@formkit/i18n": ^1.0.0-beta.6
     "@formkit/vue": ^1.0.0-beta.6
     "@graphql-codegen/cli": 2.6.2
+    "@graphql-codegen/typed-document-node": ^2.2.8
     "@graphql-codegen/typescript": 2.4.8
     "@graphql-codegen/typescript-operations": 2.3.5
     "@headlessui/vue": ^1.5.0

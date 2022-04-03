@@ -1,4 +1,4 @@
-documents: app/src/**/*.{ts,vue}
+documents: app/src/**/*.{gql,ts,vue}
 schema: api/src/generated/schema.graphql
 
 extensions:
@@ -8,6 +8,7 @@ extensions:
         plugins:
           - typescript
           - typescript-operations
+          - typed-document-node
   endpoints:
     default:
       url: http://localhost:3030/graphql

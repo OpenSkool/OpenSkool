@@ -10,6 +10,12 @@ module.exports = {
     {
       files: ['src/**/*'],
       extends: 'noise/web-app',
+      rules: {
+        '@typescript-eslint/no-unused-expressions': [
+          'error',
+          { allowTaggedTemplates: true },
+        ],
+      },
     },
     {
       files: ['src/pages/**/*.vue', '!src/pages/**/components/**/*.vue'],

@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-import { GetCompetencyQuery } from '~/generated/graphql';
-import { READ_COMPETENCY_QUERY } from '~/gql';
+import { GetCompetencyDocument } from '~/generated/graphql';
 
 const props = defineProps<{
   id: string; // route param
@@ -10,8 +9,8 @@ const {
   error: readError,
   loading,
   result,
-} = useQuery<GetCompetencyQuery>(
-  READ_COMPETENCY_QUERY,
+} = useQuery(
+  GetCompetencyDocument,
   { id: props.id },
   { fetchPolicy: 'network-only' },
 );

@@ -1,10 +1,7 @@
 <script lang="ts" setup>
 import { FormKitNode } from '@formkit/core';
 
-import {
-  CreateCompetencyMutation,
-  CreateCompetencyMutationVariables,
-} from '~/generated/graphql';
+import { CreateCompetencyDocument } from '~/generated/graphql';
 
 const router = useRouter();
 
@@ -12,10 +9,7 @@ const props = defineProps<{
   id?: string;
 }>();
 
-const { mutate: createCompetency } = useMutation<
-  CreateCompetencyMutation,
-  CreateCompetencyMutationVariables
->(gql`
+gql`
   mutation CreateCompetency($data: CreateCompetencyInput!) {
     createCompetency(data: $data) {
       ... on CreateCompetencySuccessPayload {
@@ -30,7 +24,9 @@ const { mutate: createCompetency } = useMutation<
       }
     }
   }
-`);
+`;
+
+const { mutate: createCompetency } = useMutation(CreateCompetencyDocument);
 
 const formErrors = ref<string[]>([]);
 const formNode = ref<FormKitNode>();
@@ -71,6 +67,7 @@ async function handleFormSubmit(): Promise<void> {
   }
 }
 </script>
+
 <template>
   <FormKit
     v-model="formValues"
