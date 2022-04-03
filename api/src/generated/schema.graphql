@@ -11,6 +11,12 @@ interface Accountable {
   updatedBy: Person!
 }
 
+interface BaseError {
+  code: String!
+  message: String!
+  path: [String!]
+}
+
 """
 A competency can be an individual competence or a grouping of competences.
 """
@@ -33,7 +39,7 @@ input CreateCompetencyInput {
   title: String!
 }
 
-union CreateCompetencyPayload = CreateCompetencySuccessPayload | UserError
+union CreateCompetencyPayload = CreateCompetencySuccessPayload | InputError
 
 type CreateCompetencySuccessPayload {
   competency: Competency!
@@ -59,6 +65,12 @@ type Education implements Accountable & Node {
 
 input EducationInput {
   title: String!
+}
+
+type InputError implements BaseError {
+  code: String!
+  message: String!
+  path: [String!]
 }
 
 type Mutation {
@@ -123,7 +135,7 @@ input RenameCompetencyInput {
   title: String!
 }
 
-union RenameCompetencyPayload = RenameCompetencySuccessPayload | UserError
+union RenameCompetencyPayload = InputError | RenameCompetencySuccessPayload
 
 type RenameCompetencySuccessPayload {
   competency: Competency!
@@ -156,10 +168,4 @@ type Teacher implements Node & Person {
   """
   id: ID!
   lastName: String!
-}
-
-type UserError {
-  code: String!
-  message: String!
-  path: [String!]!
 }

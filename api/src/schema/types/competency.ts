@@ -18,7 +18,7 @@ import {
   AppValidationError,
 } from '../../errors';
 import { Context } from '../context';
-import { UserErrorModel } from './errors';
+import { BaseErrorModel } from './errors';
 
 export const Competency = interfaceType({
   name: 'Competency',
@@ -120,18 +120,18 @@ export const CreateCompetencyInput = inputObjectType({
 });
 
 export type CreateCompetencyPayloadModel =
-  | UserErrorModel
+  | BaseErrorModel
   | { competency: CompetencyModel };
 
 export const CreateCompetencyPayload = unionType({
   name: 'CreateCompetencyPayload',
   definition(t) {
-    t.members('UserError', 'CreateCompetencySuccessPayload');
+    t.members('InputError', 'CreateCompetencySuccessPayload');
   },
   resolveType: (item) => {
     return 'competency' in item
       ? 'CreateCompetencySuccessPayload'
-      : 'UserError';
+      : 'InputError';
   },
   sourceType: {
     export: 'CreateCompetencyPayloadModel',
@@ -164,6 +164,7 @@ export const CreateCompetency = mutationField('createCompetency', {
     } catch (error) {
       if (error instanceof AppValidationError) {
         return {
+          __typename: 'InputError',
           code: error.extensions.code,
           message: error.message,
           path: error.extensions.path,
@@ -192,18 +193,18 @@ export const RenameCompetencyInput = inputObjectType({
 });
 
 export type RenameCompetencyPayloadModel =
-  | UserErrorModel
+  | BaseErrorModel
   | { competency: CompetencyModel };
 
 export const RenameCompetencyPayload = unionType({
   name: 'RenameCompetencyPayload',
   definition(t) {
-    t.members('UserError', 'RenameCompetencySuccessPayload');
+    t.members('InputError', 'RenameCompetencySuccessPayload');
   },
   resolveType: (item) => {
     return 'competency' in item
       ? 'RenameCompetencySuccessPayload'
-      : 'UserError';
+      : 'InputError';
   },
   sourceType: {
     export: 'RenameCompetencyPayloadModel',
@@ -238,6 +239,7 @@ export const RenameCompetency = mutationField('renameCompetency', {
     } catch (error) {
       if (error instanceof AppValidationError) {
         return {
+          __typename: 'InputError',
           code: error.extensions.code,
           message: error.message,
           path: error.extensions.path,

@@ -4,7 +4,7 @@
  */
 
 import type { Context } from './../schema/context';
-import type { UserErrorModel } from './../schema/types/errors';
+import type { BaseErrorModel } from './../schema/types/errors';
 import type { NodeModel } from './../schema/types/interfaces';
 import type {
   CreateCompetencyPayloadModel,
@@ -73,6 +73,7 @@ export interface NexusGenObjects {
     competency: NexusGenRootTypes['Competency']; // Competency!
   };
   Education: EducationModel;
+  InputError: BaseErrorModel;
   Mutation: {};
   NestedCompetency: CompetencyModel;
   Query: {};
@@ -82,7 +83,6 @@ export interface NexusGenObjects {
   };
   RootCompetency: CompetencyModel;
   Teacher: Person;
-  UserError: UserErrorModel;
 }
 
 export interface NexusGenInterfaces {
@@ -90,6 +90,7 @@ export interface NexusGenInterfaces {
     | NexusGenRootTypes['Education']
     | NexusGenRootTypes['NestedCompetency']
     | NexusGenRootTypes['RootCompetency'];
+  BaseError: NexusGenRootTypes['InputError'];
   Competency:
     | NexusGenRootTypes['NestedCompetency']
     | NexusGenRootTypes['RootCompetency'];
@@ -121,6 +122,12 @@ export interface NexusGenFieldTypes {
     title: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
     updatedBy: NexusGenRootTypes['Person']; // Person!
+  };
+  InputError: {
+    // field return type
+    code: string; // String!
+    message: string; // String!
+    path: string[] | null; // [String!]
   };
   Mutation: {
     // field return type
@@ -171,18 +178,18 @@ export interface NexusGenFieldTypes {
     id: string; // ID!
     lastName: string; // String!
   };
-  UserError: {
-    // field return type
-    code: string; // String!
-    message: string; // String!
-    path: string[]; // [String!]!
-  };
   Accountable: {
     // field return type
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     createdBy: NexusGenRootTypes['Person']; // Person!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
     updatedBy: NexusGenRootTypes['Person']; // Person!
+  };
+  BaseError: {
+    // field return type
+    code: string; // String!
+    message: string; // String!
+    path: string[] | null; // [String!]
   };
   Competency: {
     // field return type
@@ -220,6 +227,12 @@ export interface NexusGenFieldTypeNames {
     title: 'String';
     updatedAt: 'DateTime';
     updatedBy: 'Person';
+  };
+  InputError: {
+    // field return type name
+    code: 'String';
+    message: 'String';
+    path: 'String';
   };
   Mutation: {
     // field return type name
@@ -270,18 +283,18 @@ export interface NexusGenFieldTypeNames {
     id: 'ID';
     lastName: 'String';
   };
-  UserError: {
-    // field return type name
-    code: 'String';
-    message: 'String';
-    path: 'String';
-  };
   Accountable: {
     // field return type name
     createdAt: 'DateTime';
     createdBy: 'Person';
     updatedAt: 'DateTime';
     updatedBy: 'Person';
+  };
+  BaseError: {
+    // field return type name
+    code: 'String';
+    message: 'String';
+    path: 'String';
   };
   Competency: {
     // field return type name
@@ -344,9 +357,10 @@ export interface NexusGenArgTypes {
 }
 
 export interface NexusGenAbstractTypeMembers {
-  CreateCompetencyPayload: 'CreateCompetencySuccessPayload' | 'UserError';
-  RenameCompetencyPayload: 'RenameCompetencySuccessPayload' | 'UserError';
+  CreateCompetencyPayload: 'CreateCompetencySuccessPayload' | 'InputError';
+  RenameCompetencyPayload: 'InputError' | 'RenameCompetencySuccessPayload';
   Accountable: 'Education' | 'NestedCompetency' | 'RootCompetency';
+  BaseError: 'InputError';
   Competency: 'NestedCompetency' | 'RootCompetency';
   Node: 'Education' | 'NestedCompetency' | 'RootCompetency' | 'Teacher';
   Person: 'Teacher';
@@ -354,6 +368,7 @@ export interface NexusGenAbstractTypeMembers {
 
 export interface NexusGenTypeInterfaces {
   Education: 'Accountable' | 'Node';
+  InputError: 'BaseError';
   NestedCompetency: 'Accountable' | 'Competency' | 'Node';
   RootCompetency: 'Accountable' | 'Competency' | 'Node';
   Teacher: 'Node' | 'Person';
@@ -377,6 +392,7 @@ export type NexusGenObjectsUsingAbstractStrategyIsTypeOf = never;
 
 export type NexusGenAbstractsUsingStrategyResolveType =
   | 'Accountable'
+  | 'BaseError'
   | 'Competency'
   | 'CreateCompetencyPayload'
   | 'Node'
