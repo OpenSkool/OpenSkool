@@ -5,7 +5,6 @@ import { beforeEach, describe, expect, test } from 'vitest';
 import app from '../src/app';
 import { CompetencyService } from '../src/domain';
 import { prisma } from '../src/prisma';
-import { UserErrorModel } from '../src/schema/types/errors';
 import { createClientHeaders, createSpecContext } from './helpers';
 
 beforeEach(async () => {
@@ -19,18 +18,13 @@ describe('createCompetency', () => {
     client.setHeaders(clientHeaders);
     const {
       data: { createCompetency },
-    } = await client.mutate<
-      { createCompetency: { error?: UserErrorModel } },
-      { title: string }
-    >(
+    } = await client.mutate<{ createCompetency: unknown }, { title: string }>(
       gql`
         mutation ($title: String!) {
           createCompetency(data: { title: $title }) {
-            ... on CreateCompetencyErrorPayload {
-              error {
-                code
-                path
-              }
+            ... on UserError {
+              code
+              path
             }
           }
         }
@@ -41,7 +35,7 @@ describe('createCompetency', () => {
         },
       },
     );
-    expect(createCompetency.error).toMatchObject({
+    expect(createCompetency).toMatchObject({
       code: 'valueNotValid',
       path: ['title'],
     });
@@ -62,29 +56,20 @@ describe('createCompetency', () => {
     client.setHeaders(clientHeaders);
     const {
       data: { createCompetency },
-    } = await client.mutate<
-      { createCompetency: { error?: UserErrorModel } },
-      { title: string }
-    >(
+    } = await client.mutate<{ createCompetency: unknown }, { title: string }>(
       gql`
         mutation ($title: String!) {
           createCompetency(data: { title: $title }) {
-            ... on CreateCompetencyErrorPayload {
-              error {
-                code
-                path
-              }
+            ... on UserError {
+              code
+              path
             }
           }
         }
       `,
-      {
-        variables: {
-          title: 'Hello Root!',
-        },
-      },
+      { variables: { title: 'Hello Root!' } },
     );
-    expect(createCompetency.error).toMatchObject({
+    expect(createCompetency).toMatchObject({
       code: 'valueNotUnique',
       path: ['title'],
     });
@@ -117,17 +102,15 @@ describe('createCompetency', () => {
     const {
       data: { createCompetency },
     } = await client.mutate<
-      { createCompetency: { error?: UserErrorModel } },
+      { createCompetency: unknown },
       { parentId: string; title: string }
     >(
       gql`
         mutation ($parentId: ID!, $title: String!) {
           createCompetency(data: { parentId: $parentId, title: $title }) {
-            ... on CreateCompetencyErrorPayload {
-              error {
-                code
-                path
-              }
+            ... on UserError {
+              code
+              path
             }
           }
         }
@@ -139,7 +122,7 @@ describe('createCompetency', () => {
         },
       },
     );
-    expect(createCompetency.error).toMatchObject({
+    expect(createCompetency).toMatchObject({
       code: 'valueNotUnique',
       path: ['title'],
     });
@@ -181,7 +164,7 @@ describe('createCompetency', () => {
     const {
       data: { createCompetency },
     } = await client.mutate<
-      { createCompetency: { competency?: { id: string } } },
+      { createCompetency: unknown },
       { parentId: string; title: string }
     >(
       gql`
@@ -202,7 +185,7 @@ describe('createCompetency', () => {
         },
       },
     );
-    expect(createCompetency).not.toHaveProperty('error');
+    expect(createCompetency).toHaveProperty('competency.id');
   });
 
   test('no error on duplicate title with different locale', async () => {
@@ -220,10 +203,7 @@ describe('createCompetency', () => {
     client.setHeaders(createClientHeaders({ locale: 'nl', userId }));
     const {
       data: { createCompetency },
-    } = await client.mutate<
-      { createCompetency: { error?: UserErrorModel } },
-      { title: string }
-    >(
+    } = await client.mutate<{ createCompetency: unknown }, { title: string }>(
       gql`
         mutation ($title: String!) {
           createCompetency(data: { title: $title }) {
@@ -241,7 +221,6 @@ describe('createCompetency', () => {
         },
       },
     );
-    expect(createCompetency).not.toHaveProperty('error');
     expect(createCompetency).toHaveProperty('competency.id');
   });
 
@@ -252,14 +231,7 @@ describe('createCompetency', () => {
     client.setHeaders(clientHeaders);
     const {
       data: { createCompetency },
-    } = await client.mutate<
-      {
-        createCompetency: {
-          competency?: { __typename: string };
-        };
-      },
-      { title: string }
-    >(
+    } = await client.mutate<{ createCompetency: unknown }, { title: string }>(
       gql`
         mutation ($title: String!) {
           createCompetency(data: { title: $title }) {
@@ -273,8 +245,8 @@ describe('createCompetency', () => {
       `,
       { variables: { title: 'Hello World!' } },
     );
-    expect(createCompetency.competency).toHaveProperty(
-      '__typename',
+    expect(createCompetency).toHaveProperty(
+      'competency.__typename',
       'RootCompetency',
     );
   });
@@ -291,11 +263,7 @@ describe('createCompetency', () => {
     const {
       data: { createCompetency },
     } = await client.mutate<
-      {
-        createCompetency: {
-          competency?: { __typename: string };
-        };
-      },
+      { createCompetency: unknown },
       { parentId: string; title: string }
     >(
       gql`
@@ -316,8 +284,8 @@ describe('createCompetency', () => {
         },
       },
     );
-    expect(createCompetency.competency).toHaveProperty(
-      '__typename',
+    expect(createCompetency).toHaveProperty(
+      'competency.__typename',
       'NestedCompetency',
     );
   });
@@ -332,11 +300,7 @@ describe('createCompetency', () => {
     const {
       data: { createCompetency },
     } = await client.mutate<
-      {
-        createCompetency: {
-          competency: { id: string };
-        };
-      },
+      { createCompetency: { competency: { id: string } } },
       { title: string }
     >(
       gql`
@@ -352,7 +316,7 @@ describe('createCompetency', () => {
       `,
       { variables: { title: 'Hello World!' } },
     );
-    expect(createCompetency.competency).toHaveProperty('id');
+    expect(createCompetency).toHaveProperty('competency.id');
     expect(
       await prisma.competency.findUnique({
         include: { translations: true },
@@ -444,17 +408,15 @@ describe('renameCompetency', () => {
     const {
       data: { renameCompetency },
     } = await client.mutate<
-      { renameCompetency: { error?: UserErrorModel } },
+      { renameCompetency: unknown },
       { id: string; title: string }
     >(
       gql`
         mutation ($id: ID!, $title: String!) {
           renameCompetency(id: $id, data: { title: $title }) {
-            ... on RenameCompetencyErrorPayload {
-              error {
-                code
-                path
-              }
+            ... on UserError {
+              code
+              path
             }
           }
         }
@@ -466,7 +428,7 @@ describe('renameCompetency', () => {
         },
       },
     );
-    expect(renameCompetency.error).toMatchObject({
+    expect(renameCompetency).toMatchObject({
       code: 'valueNotValid',
       path: ['title'],
     });
@@ -498,17 +460,15 @@ describe('renameCompetency', () => {
     const {
       data: { renameCompetency },
     } = await client.mutate<
-      { renameCompetency: { error?: UserErrorModel } },
+      { renameCompetency: unknown },
       { id: string; title: string }
     >(
       gql`
         mutation ($id: ID!, $title: String!) {
           renameCompetency(id: $id, data: { title: $title }) {
-            ... on RenameCompetencyErrorPayload {
-              error {
-                code
-                path
-              }
+            ... on UserError {
+              code
+              path
             }
           }
         }
@@ -520,7 +480,7 @@ describe('renameCompetency', () => {
         },
       },
     );
-    expect(renameCompetency.error).toMatchObject({
+    expect(renameCompetency).toMatchObject({
       code: 'valueNotUnique',
       path: ['title'],
     });
@@ -563,17 +523,15 @@ describe('renameCompetency', () => {
     const {
       data: { renameCompetency },
     } = await client.mutate<
-      { renameCompetency: { error?: UserErrorModel } },
+      { renameCompetency: unknown },
       { id: string; title: string }
     >(
       gql`
         mutation ($id: ID!, $title: String!) {
           renameCompetency(id: $id, data: { title: $title }) {
-            ... on RenameCompetencyErrorPayload {
-              error {
-                code
-                path
-              }
+            ... on UserError {
+              code
+              path
             }
           }
         }
@@ -585,7 +543,7 @@ describe('renameCompetency', () => {
         },
       },
     );
-    expect(renameCompetency.error).toMatchObject({
+    expect(renameCompetency).toMatchObject({
       code: 'valueNotUnique',
       path: ['title'],
     });
@@ -637,7 +595,7 @@ describe('renameCompetency', () => {
     const {
       data: { renameCompetency },
     } = await client.mutate<
-      { renameCompetency: { error?: UserErrorModel } },
+      { renameCompetency: unknown },
       { id: string; title: string }
     >(
       gql`
@@ -658,7 +616,7 @@ describe('renameCompetency', () => {
         },
       },
     );
-    expect(renameCompetency).not.toHaveProperty('error');
+    expect(renameCompetency).toHaveProperty('competency.id');
   });
 
   test('should rename competency', async () => {
@@ -672,11 +630,7 @@ describe('renameCompetency', () => {
     const {
       data: { renameCompetency },
     } = await client.mutate<
-      {
-        renameCompetency: {
-          competency?: { title: string };
-        };
-      },
+      { renameCompetency: unknown },
       { id: string; title: string }
     >(
       gql`

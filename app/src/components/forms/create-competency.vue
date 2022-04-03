@@ -18,17 +18,15 @@ const { mutate: createCompetency } = useMutation<
 >(gql`
   mutation CreateCompetency($data: CreateCompetencyInput!) {
     createCompetency(data: $data) {
-      ... on CreateCompetencyErrorPayload {
-        error {
-          code
-          message
-          path
-        }
-      }
       ... on CreateCompetencySuccessPayload {
         competency {
           id
         }
+      }
+      ... on UserError {
+        code
+        message
+        path
       }
     }
   }
@@ -47,13 +45,13 @@ async function handleFormSubmit(): Promise<void> {
     switch (response?.data?.createCompetency.__typename) {
       default:
         throw new Error('unknown api response');
-      case 'CreateCompetencyErrorPayload': {
-        const { error: createError } = response.data.createCompetency;
-        const fieldNode = formNode.value?.at(createError.path);
+      case 'UserError': {
+        const mutationError = response.data.createCompetency;
+        const fieldNode = formNode.value?.at(mutationError.path);
         if (fieldNode) {
-          fieldNode.setErrors([createError.message]);
+          fieldNode.setErrors([mutationError.message]);
         } else {
-          formErrors.value.push(createError.message);
+          formErrors.value.push(mutationError.message);
         }
         break;
       }

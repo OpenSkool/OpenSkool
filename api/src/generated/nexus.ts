@@ -68,10 +68,6 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
-  CreateCompetencyErrorPayload: {
-    // root type
-    error: NexusGenRootTypes['UserError']; // UserError!
-  };
   CreateCompetencySuccessPayload: {
     // root type
     competency: NexusGenRootTypes['Competency']; // Competency!
@@ -80,10 +76,6 @@ export interface NexusGenObjects {
   Mutation: {};
   NestedCompetency: CompetencyModel;
   Query: {};
-  RenameCompetencyErrorPayload: {
-    // root type
-    error: NexusGenRootTypes['UserError']; // UserError!
-  };
   RenameCompetencySuccessPayload: {
     // root type
     competency: NexusGenRootTypes['Competency']; // Competency!
@@ -117,10 +109,6 @@ export type NexusGenRootTypes = NexusGenInterfaces &
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars;
 
 export interface NexusGenFieldTypes {
-  CreateCompetencyErrorPayload: {
-    // field return type
-    error: NexusGenRootTypes['UserError']; // UserError!
-  };
   CreateCompetencySuccessPayload: {
     // field return type
     competency: NexusGenRootTypes['Competency']; // Competency!
@@ -160,10 +148,6 @@ export interface NexusGenFieldTypes {
     allPeople: NexusGenRootTypes['Person'][]; // [Person!]!
     allRootCompetencies: NexusGenRootTypes['RootCompetency'][]; // [RootCompetency!]!
     competency: NexusGenRootTypes['Competency'] | null; // Competency
-  };
-  RenameCompetencyErrorPayload: {
-    // field return type
-    error: NexusGenRootTypes['UserError']; // UserError!
   };
   RenameCompetencySuccessPayload: {
     // field return type
@@ -224,10 +208,6 @@ export interface NexusGenFieldTypes {
 }
 
 export interface NexusGenFieldTypeNames {
-  CreateCompetencyErrorPayload: {
-    // field return type name
-    error: 'UserError';
-  };
   CreateCompetencySuccessPayload: {
     // field return type name
     competency: 'Competency';
@@ -267,10 +247,6 @@ export interface NexusGenFieldTypeNames {
     allPeople: 'Person';
     allRootCompetencies: 'RootCompetency';
     competency: 'Competency';
-  };
-  RenameCompetencyErrorPayload: {
-    // field return type name
-    error: 'UserError';
   };
   RenameCompetencySuccessPayload: {
     // field return type name
@@ -368,12 +344,8 @@ export interface NexusGenArgTypes {
 }
 
 export interface NexusGenAbstractTypeMembers {
-  CreateCompetencyPayload:
-    | 'CreateCompetencyErrorPayload'
-    | 'CreateCompetencySuccessPayload';
-  RenameCompetencyPayload:
-    | 'RenameCompetencyErrorPayload'
-    | 'RenameCompetencySuccessPayload';
+  CreateCompetencyPayload: 'CreateCompetencySuccessPayload' | 'UserError';
+  RenameCompetencyPayload: 'RenameCompetencySuccessPayload' | 'UserError';
   Accountable: 'Education' | 'NestedCompetency' | 'RootCompetency';
   Competency: 'NestedCompetency' | 'RootCompetency';
   Node: 'Education' | 'NestedCompetency' | 'RootCompetency' | 'Teacher';

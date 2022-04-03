@@ -28,18 +28,12 @@ interface Competency implements Accountable & Node {
   updatedBy: Person!
 }
 
-type CreateCompetencyErrorPayload {
-  error: UserError!
-}
-
 input CreateCompetencyInput {
   parentId: ID
   title: String!
 }
 
-union CreateCompetencyPayload =
-    CreateCompetencyErrorPayload
-  | CreateCompetencySuccessPayload
+union CreateCompetencyPayload = CreateCompetencySuccessPayload | UserError
 
 type CreateCompetencySuccessPayload {
   competency: Competency!
@@ -125,17 +119,11 @@ type Query {
   competency(id: ID!): Competency
 }
 
-type RenameCompetencyErrorPayload {
-  error: UserError!
-}
-
 input RenameCompetencyInput {
   title: String!
 }
 
-union RenameCompetencyPayload =
-    RenameCompetencyErrorPayload
-  | RenameCompetencySuccessPayload
+union RenameCompetencyPayload = RenameCompetencySuccessPayload | UserError
 
 type RenameCompetencySuccessPayload {
   competency: Competency!

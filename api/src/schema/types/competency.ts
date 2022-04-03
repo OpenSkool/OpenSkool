@@ -120,29 +120,22 @@ export const CreateCompetencyInput = inputObjectType({
 });
 
 export type CreateCompetencyPayloadModel =
-  | { error: UserErrorModel }
+  | UserErrorModel
   | { competency: CompetencyModel };
 
 export const CreateCompetencyPayload = unionType({
   name: 'CreateCompetencyPayload',
   definition(t) {
-    t.members('CreateCompetencyErrorPayload', 'CreateCompetencySuccessPayload');
+    t.members('UserError', 'CreateCompetencySuccessPayload');
   },
   resolveType: (item) => {
-    return 'error' in item
-      ? 'CreateCompetencyErrorPayload'
-      : 'CreateCompetencySuccessPayload';
+    return 'competency' in item
+      ? 'CreateCompetencySuccessPayload'
+      : 'UserError';
   },
   sourceType: {
     export: 'CreateCompetencyPayloadModel',
     module: __filename,
-  },
-});
-
-export const CreateCompetencyErrorPayload = objectType({
-  name: 'CreateCompetencyErrorPayload',
-  definition(t) {
-    t.nonNull.field('error', { type: 'UserError' });
   },
 });
 
@@ -171,11 +164,9 @@ export const CreateCompetency = mutationField('createCompetency', {
     } catch (error) {
       if (error instanceof AppValidationError) {
         return {
-          error: {
-            code: error.extensions.code,
-            message: error.message,
-            path: error.extensions.path,
-          },
+          code: error.extensions.code,
+          message: error.message,
+          path: error.extensions.path,
         };
       }
       throw error as Error;
@@ -201,29 +192,22 @@ export const RenameCompetencyInput = inputObjectType({
 });
 
 export type RenameCompetencyPayloadModel =
-  | { error: UserErrorModel }
+  | UserErrorModel
   | { competency: CompetencyModel };
 
 export const RenameCompetencyPayload = unionType({
   name: 'RenameCompetencyPayload',
   definition(t) {
-    t.members('RenameCompetencyErrorPayload', 'RenameCompetencySuccessPayload');
+    t.members('UserError', 'RenameCompetencySuccessPayload');
   },
   resolveType: (item) => {
-    return 'error' in item
-      ? 'RenameCompetencyErrorPayload'
-      : 'RenameCompetencySuccessPayload';
+    return 'competency' in item
+      ? 'RenameCompetencySuccessPayload'
+      : 'UserError';
   },
   sourceType: {
     export: 'RenameCompetencyPayloadModel',
     module: __filename,
-  },
-});
-
-export const RenameCompetencyErrorPayload = objectType({
-  name: 'RenameCompetencyErrorPayload',
-  definition(t) {
-    t.nonNull.field('error', { type: 'UserError' });
   },
 });
 
@@ -254,11 +238,9 @@ export const RenameCompetency = mutationField('renameCompetency', {
     } catch (error) {
       if (error instanceof AppValidationError) {
         return {
-          error: {
-            code: error.extensions.code,
-            message: error.message,
-            path: error.extensions.path,
-          },
+          code: error.extensions.code,
+          message: error.message,
+          path: error.extensions.path,
         };
       }
       throw error as Error;
