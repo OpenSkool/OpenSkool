@@ -33,7 +33,7 @@ const { mutate: renameCompetency } = useMutation<
           id
         }
       }
-      ... on UserError {
+      ... on InputError {
         code
         message
         path
@@ -64,9 +64,12 @@ async function handleFormSubmit(): Promise<void> {
     switch (response?.data?.renameCompetency.__typename) {
       default:
         throw new Error('unknown api response');
-      case 'UserError': {
+      case 'InputError': {
         const mutationError = response.data.renameCompetency;
-        const fieldNode = formNode.value?.at(mutationError.path);
+        const fieldNode =
+          mutationError.path == null
+            ? undefined
+            : formNode.value?.at(mutationError.path);
         if (fieldNode) {
           fieldNode.setErrors([mutationError.message]);
         } else {

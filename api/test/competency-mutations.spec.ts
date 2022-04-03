@@ -22,7 +22,7 @@ describe('createCompetency', () => {
       gql`
         mutation ($title: String!) {
           createCompetency(data: { title: $title }) {
-            ... on UserError {
+            ... on BaseError {
               code
               path
             }
@@ -60,7 +60,7 @@ describe('createCompetency', () => {
       gql`
         mutation ($title: String!) {
           createCompetency(data: { title: $title }) {
-            ... on UserError {
+            ... on BaseError {
               code
               path
             }
@@ -108,7 +108,7 @@ describe('createCompetency', () => {
       gql`
         mutation ($parentId: ID!, $title: String!) {
           createCompetency(data: { parentId: $parentId, title: $title }) {
-            ... on UserError {
+            ... on BaseError {
               code
               path
             }
@@ -414,7 +414,7 @@ describe('renameCompetency', () => {
       gql`
         mutation ($id: ID!, $title: String!) {
           renameCompetency(id: $id, data: { title: $title }) {
-            ... on UserError {
+            ... on BaseError {
               code
               path
             }
@@ -466,7 +466,7 @@ describe('renameCompetency', () => {
       gql`
         mutation ($id: ID!, $title: String!) {
           renameCompetency(id: $id, data: { title: $title }) {
-            ... on UserError {
+            ... on BaseError {
               code
               path
             }
@@ -529,7 +529,7 @@ describe('renameCompetency', () => {
       gql`
         mutation ($id: ID!, $title: String!) {
           renameCompetency(id: $id, data: { title: $title }) {
-            ... on UserError {
+            ... on BaseError {
               code
               path
             }
