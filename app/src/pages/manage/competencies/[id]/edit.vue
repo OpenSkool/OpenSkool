@@ -2,11 +2,9 @@
 import { FormKitNode } from '@formkit/core';
 
 import {
-  RenameCompetencyMutation,
-  RenameCompetencyMutationVariables,
-  GetCompetencyQuery,
+  GetCompetencyDocument,
+  RenameCompetencyDocument,
 } from '~/generated/graphql';
-import { READ_COMPETENCY_QUERY } from '~/gql';
 import { assert } from '~/utils';
 
 const router = useRouter();
@@ -15,17 +13,14 @@ const props = defineProps<{
   id: string; // route param
 }>();
 
-const { error, loading, result } = useQuery<GetCompetencyQuery>(
-  READ_COMPETENCY_QUERY,
+const { error, loading, result } = useQuery(
+  GetCompetencyDocument,
   { id: props.id },
   { fetchPolicy: 'network-only' },
 );
 const competency = useResult(result);
 
-const { mutate: renameCompetency } = useMutation<
-  RenameCompetencyMutation,
-  RenameCompetencyMutationVariables
->(gql`
+gql`
   mutation RenameCompetency($id: ID!, $data: RenameCompetencyInput!) {
     renameCompetency(id: $id, data: $data) {
       ... on RenameCompetencySuccessPayload {
@@ -40,7 +35,9 @@ const { mutate: renameCompetency } = useMutation<
       }
     }
   }
-`);
+`;
+
+const { mutate: renameCompetency } = useMutation(RenameCompetencyDocument);
 
 const formNode = ref<FormKitNode>();
 const formErrors = ref<string[]>([]);

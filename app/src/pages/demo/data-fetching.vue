@@ -1,14 +1,16 @@
 <script lang="ts" setup>
-import { GetEducationsQuery } from '~/generated/graphql';
+import { GetEducationsDocument } from '~/generated/graphql';
 
-const { result } = useQuery<GetEducationsQuery>(gql`
+gql`
   query getEducations {
     allEducations {
       id
       title
     }
   }
-`);
+`;
+
+const { result } = useQuery(GetEducationsDocument);
 
 const educations = useResult(result, null, (data) => data.allEducations);
 </script>

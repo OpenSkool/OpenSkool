@@ -1,16 +1,16 @@
 <script lang="ts" setup>
-import { GetAllRootCompetenciesQuery } from '~/generated/graphql';
+import { GetAllRootCompetenciesDocument } from '~/generated/graphql';
 
-const { result } = useQuery<GetAllRootCompetenciesQuery>(
-  gql`
-    query GetAllRootCompetencies {
-      allRootCompetencies {
-        id
-        title
-      }
+gql`
+  query GetAllRootCompetencies {
+    allRootCompetencies {
+      id
+      title
     }
-  `,
-);
+  }
+`;
+
+const { result } = useQuery(GetAllRootCompetenciesDocument);
 
 const competencies = useResult(result);
 </script>
