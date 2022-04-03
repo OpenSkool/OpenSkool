@@ -11,7 +11,7 @@ import { prisma } from '../src/prisma';
 test('create educations', async () => {
   const title = faker.commerce.productName();
   const client = createMercuriusTestClient(app);
-  const repsonse = await client.mutate<
+  const response = await client.mutate<
     { createEducation: Pick<NexusGenFieldTypes['Education'], 'id' | 'title'> },
     { title: string }
   >(
@@ -25,9 +25,9 @@ test('create educations', async () => {
     `,
     { variables: { title } },
   );
-  expect(repsonse).not.toHaveProperty('error');
-  expect(repsonse).toHaveProperty('data.createEducation');
-  const { createEducation } = repsonse.data;
+  expect(response).not.toHaveProperty('errors');
+  expect(response).toHaveProperty('data.createEducation');
+  const { createEducation } = response.data;
   expect(createEducation).toMatchObject({ title });
   expect(
     await prisma.education.findUnique({

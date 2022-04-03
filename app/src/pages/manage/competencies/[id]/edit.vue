@@ -28,17 +28,15 @@ const { mutate: renameCompetency } = useMutation<
 >(gql`
   mutation RenameCompetency($id: ID!, $data: RenameCompetencyInput!) {
     renameCompetency(id: $id, data: $data) {
-      ... on RenameCompetencyErrorPayload {
-        error {
-          code
-          message
-          path
-        }
-      }
       ... on RenameCompetencySuccessPayload {
         competency {
           id
         }
+      }
+      ... on UserError {
+        code
+        message
+        path
       }
     }
   }
@@ -66,8 +64,8 @@ async function handleFormSubmit(): Promise<void> {
     switch (response?.data?.renameCompetency.__typename) {
       default:
         throw new Error('unknown api response');
-      case 'RenameCompetencyErrorPayload': {
-        const mutationError = response.data.renameCompetency.error;
+      case 'UserError': {
+        const mutationError = response.data.renameCompetency;
         const fieldNode = formNode.value?.at(mutationError.path);
         if (fieldNode) {
           fieldNode.setErrors([mutationError.message]);
