@@ -9,6 +9,9 @@
     "generate": {
       "cache": false
     },
+    "@os/app#generate": {
+      "dependsOn": ["@os/api#generate"]
+    },
     "clean": {
       "cache": false
     },
