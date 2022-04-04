@@ -1,7 +1,10 @@
 import userEvent from '@testing-library/user-event';
-import { render } from '@testing-library/vue';
+import { render, waitFor } from '@testing-library/vue';
+import { DefaultApolloClient } from '@vue/apollo-composable';
 import { expect, MockedFunction, test, vi } from 'vitest';
 import { useRouter } from 'vue-router';
+
+import { apolloClient } from '~/api';
 
 import { formkit } from '../../formkit';
 import CreateCompetency from './create-competency.vue';
@@ -29,4 +32,28 @@ test('title is required', async () => {
   user.click(submitButton);
   await findByText('Title is required.');
   expect(push).not.toHaveBeenCalled();
+});
+
+test('create competency', async () => {
+  const push = vi.fn();
+  mockUseRouter.mockImplementationOnce((): any => ({
+    push,
+  }));
+  const user = userEvent.setup();
+  const { getByText, getByLabelText } = render(CreateCompetency, {
+    global: {
+      plugins: [formkit],
+      provide: { [DefaultApolloClient]: apolloClient },
+    },
+  });
+
+  const titleInput = getByLabelText('Title');
+  await user.type(titleInput, 'Hello World!');
+
+  const submitButton = getByText(/create/i);
+  await user.click(submitButton);
+
+  await waitFor(() => {
+    expect(push).toHaveBeenCalled();
+  });
 });
