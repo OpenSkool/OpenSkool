@@ -42,6 +42,7 @@ module.exports = {
       files: ['src/spec/**/*', 'src/**/*.spec.ts'],
       rules: {
         '@typescript-eslint/no-explicit-any': 'off',
+        '@typescript-eslint/no-unsafe-assignment': 'off',
         'import/no-unassigned-import': 'off',
       },
     },
