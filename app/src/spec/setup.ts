@@ -1,11 +1,14 @@
+import * as matchers from '@testing-library/jest-dom/matchers';
 import { cleanup } from '@testing-library/vue';
-import { afterAll, afterEach, beforeAll } from 'vitest';
+import { afterAll, afterEach, beforeAll, expect } from 'vitest';
 
 import 'whatwg-fetch';
 
 import { apolloClient } from '~/api';
 
 import server from './mocks/server';
+
+expect.extend(matchers as any);
 
 beforeAll(() => {
   server.listen({ onUnhandledRequest: 'error' });
