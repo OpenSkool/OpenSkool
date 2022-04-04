@@ -1,6 +1,8 @@
 import { cleanup } from '@testing-library/vue';
 import { afterAll, afterEach, beforeAll } from 'vitest';
 
+import 'whatwg-fetch';
+
 import { apolloClient } from '~/api';
 
 import server from './mocks/server';
