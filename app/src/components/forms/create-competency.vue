@@ -40,7 +40,8 @@ async function handleFormSubmit(): Promise<void> {
     });
     switch (response?.data?.createCompetency.__typename) {
       default:
-        throw new Error('unknown api response');
+        formErrors.value.push('TEST ERROR');
+        return;
       case 'InputError': {
         const mutationError = response.data.createCompetency;
         const fieldNode =
