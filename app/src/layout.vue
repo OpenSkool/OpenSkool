@@ -34,9 +34,6 @@ const loading = useGlobalQueryLoading();
           <router-link to="/">Home</router-link>
         </li>
         <li>
-          <router-link to="/demo/data-fetching">Data-fetching</router-link>
-        </li>
-        <li>
           <router-link to="/demo/forms">Forms</router-link>
         </li>
         <li>
