@@ -1,12 +1,13 @@
 <script lang="ts" setup>
+import { useI18n } from 'vue-i18n';
+
 import {
   GetSubCompetenciesQuery,
   DeleteCompetencyMutation,
   DeleteCompetencyMutationVariables,
 } from '~/generated/graphql';
-
-import { useI18n } from 'vue-i18n';
 import { useI18nStore } from '~/i18n';
+
 const i18nStore = useI18nStore();
 i18nStore.loadGlob(import.meta.glob('~/locales/competencies.*.yaml'));
 
@@ -66,7 +67,10 @@ const parent = computed(() => {
       url: `/manage/competencies/${competency.value.parent.id}`,
     };
   }
-  return { title: 'Manage competencies', url: '/manage/competencies' };
+  return {
+    title: t('competencies.route.id.index.action.backButton'),
+    url: '/manage/competencies',
+  };
 });
 
 async function deleteCompetencyHandler(): Promise<void> {

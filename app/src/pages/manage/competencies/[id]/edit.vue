@@ -1,14 +1,14 @@
 <script lang="ts" setup>
 import { FormKitNode } from '@formkit/core';
+import { useI18n } from 'vue-i18n';
 
 import {
   GetCompetencyDocument,
   RenameCompetencyDocument,
 } from '~/generated/graphql';
+import { useI18nStore } from '~/i18n';
 import { assert } from '~/utils';
 
-import { useI18n } from 'vue-i18n';
-import { useI18nStore } from '~/i18n';
 const i18nStore = useI18nStore();
 i18nStore.loadGlob(import.meta.glob('~/locales/competencies.*.yaml'));
 
