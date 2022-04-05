@@ -46,7 +46,6 @@ export default plugin(async (app) => {
             error.originalError instanceof mercurius.ErrorWithProps
               ? (error.originalError.statusCode as number)
               : HTTP_STATUS_INTERNAL_SERVER_ERROR;
-          ctx.app.log.error({ errorStatusCode });
           const isServerError =
             errorStatusCode >= HTTP_STATUS_INTERNAL_SERVER_ERROR;
           statusCode ??= errorStatusCode;
