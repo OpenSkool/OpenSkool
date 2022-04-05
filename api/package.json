@@ -15,7 +15,7 @@
     "generate:prisma": "prisma generate",
     "lint": "eslint --cache --ext .cjs,.ts .",
     "postinstall": "yarn run generate:prisma",
-    "preview": "NODE_ENV=production node -r dotenv-flow/config dist/server.js",
+    "preview": "FORCE_COLOR=1 NODE_ENV=production node -r dotenv-flow/config dist/server.js",
     "start": "node dist/server.js",
     "test": "tsc --noEmit",
     "test:integration": "vitest run"
