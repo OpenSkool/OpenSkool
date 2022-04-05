@@ -5,6 +5,13 @@ import {
   DeleteCompetencyMutationVariables,
 } from '~/generated/graphql';
 
+import { useI18n } from 'vue-i18n';
+import { useI18nStore } from '~/i18n';
+const i18nStore = useI18nStore();
+i18nStore.loadGlob(import.meta.glob('~/locales/competencies.*.yaml'));
+
+const { t } = useI18n();
+
 const router = useRouter();
 
 const props = defineProps<{
@@ -72,12 +79,14 @@ async function deleteCompetencyHandler(): Promise<void> {
       isDeleteModalOpen.value = false;
       router.replace(parent.value.url);
     } else {
-      deleteErrorMessage.value =
-        'Something went wrong: competency could not be deleted.';
+      deleteErrorMessage.value = t(
+        'competencies.route.id.index.confirmDeleteModal.error',
+      );
     }
   } catch {
-    deleteErrorMessage.value =
-      'Something went wrong: competency could not be deleted.';
+    deleteErrorMessage.value = t(
+      'competencies.route.id.index.confirmDeleteModal.error',
+    );
   }
 }
 </script>
@@ -99,7 +108,9 @@ async function deleteCompetencyHandler(): Promise<void> {
     <h2 class="text-xl mb-3 flex items-center gap-1">
       {{ competency.title }}
       <router-link :to="`/manage/competencies/${competency.id}/edit`">
-        <span class="sr-only">Edit</span>
+        <span class="sr-only">{{
+          t('competencies.route.id.index.action.edit')
+        }}</span>
         <ri-edit-box-fill aria-hidden />
       </router-link>
     </h2>
@@ -108,12 +119,14 @@ async function deleteCompetencyHandler(): Promise<void> {
       type="button"
       @click="isDeleteModalOpen = true"
     >
-      Delete competency
+      {{ t('competencies.route.id.index.action.openDeleteModal') }}
     </button>
     <ui-dialog :open="isDeleteModalOpen" @close="isDeleteModalOpen = false">
-      <template #title>Delete competency?</template>
+      <template #title>{{
+        t('competencies.route.id.index.confirmDeleteModal.heading')
+      }}</template>
       <p>
-        Are you sure you want to delete this competency and all its children?
+        {{ t('competencies.route.id.index.confirmDeleteModal.message') }}
       </p>
       <p class="text-gray-500">{{ competency.title }}</p>
       <p v-if="deleteErrorMessage" class="text-red-600">
@@ -125,23 +138,25 @@ async function deleteCompetencyHandler(): Promise<void> {
           type="button"
           @click="isDeleteModalOpen = false"
         >
-          keep
+          {{ t('competencies.route.id.index.confirmDeleteModal.action.abort') }}
         </button>
         <button
           class="btn btn-primary"
           type="button"
           @click="deleteCompetencyHandler"
         >
-          Delete
+          {{
+            t('competencies.route.id.index.confirmDeleteModal.action.confirm')
+          }}
         </button>
       </div>
     </ui-dialog>
-    <h3 class="text-xl">Sub-competencies</h3>
+    <h3 class="text-xl">{{ t('competencies.route.id.index.heading') }}</h3>
     <router-link
       class="btn btn-primary my-5"
       :to="`/manage/competencies/${competency.id}/create`"
     >
-      New
+      {{ t('competencies.route.id.index.action.new') }}
     </router-link>
     <ol class="list-decimal">
       <li

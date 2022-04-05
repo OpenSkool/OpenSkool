@@ -7,6 +7,13 @@ import {
 } from '~/generated/graphql';
 import { assert } from '~/utils';
 
+import { useI18n } from 'vue-i18n';
+import { useI18nStore } from '~/i18n';
+const i18nStore = useI18nStore();
+i18nStore.loadGlob(import.meta.glob('~/locales/competencies.*.yaml'));
+
+const { t } = useI18n();
+
 const router = useRouter();
 
 const props = defineProps<{
@@ -88,7 +95,7 @@ async function handleFormSubmit(): Promise<void> {
         break;
     }
   } catch {
-    formErrors.value.push('Something went wrong');
+    formErrors.value.push(t('competencies.form.action.edit.error'));
   }
 }
 </script>
@@ -107,17 +114,22 @@ async function handleFormSubmit(): Promise<void> {
     <ui-backbutton :to="`/manage/competencies/${competency.id}`">
       {{ competency.title }}
     </ui-backbutton>
-    <h2 class="text-xl mb-3">Edit competency</h2>
+    <h2 class="text-xl mb-3">{{ t('competencies.route.id.edit.heading') }}</h2>
     <FormKit
       v-if="formValues != null"
       v-model="formValues"
       type="form"
-      submit-label="Edit competency"
+      :submit-label="t('competencies.form.action.edit.label')"
       :errors="formErrors"
       @submit="handleFormSubmit"
       @node="formNode = $event"
     >
-      <FormKit name="title" label="Title" type="text" validation="required" />
+      <FormKit
+        name="title"
+        :label="t('competencies.form.nameLabel')"
+        type="text"
+        validation="required"
+      />
     </FormKit>
   </template>
 </template>

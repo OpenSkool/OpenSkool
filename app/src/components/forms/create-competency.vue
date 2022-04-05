@@ -1,7 +1,10 @@
 <script lang="ts" setup>
 import { FormKitNode } from '@formkit/core';
+import { useI18n } from 'vue-i18n';
 
 import { CreateCompetencyDocument } from '~/generated/graphql';
+
+const { t } = useI18n();
 
 const router = useRouter();
 
@@ -73,11 +76,16 @@ async function handleFormSubmit(): Promise<void> {
   <FormKit
     v-model="formValues"
     type="form"
-    submit-label="Create competency"
+    :submit-label="t('competencies.form.action.create')"
     :errors="formErrors"
     @node="formNode = $event"
     @submit="handleFormSubmit"
   >
-    <FormKit name="title" label="Title" type="text" validation="required" />
+    <FormKit
+      name="title"
+      :label="t('competencies.form.nameLabel')"
+      type="text"
+      validation="required"
+    />
   </FormKit>
 </template>
