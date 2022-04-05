@@ -42,10 +42,6 @@ export function mergeLocaleMessage(
 export function setLocale(locale: string): void {
   const html = document.querySelector('html') as HTMLHtmlElement;
   html.setAttribute('lang', locale);
-  if (isRef(i18n.global.locale)) {
-    (i18n.global.locale as Ref<string>).value = locale;
-  } else {
-    i18n.global.locale = locale;
-  }
+  i18n.global.locale.value = locale;
   window.localStorage.setItem(LOCALE_STORAGE_LOCALE_KEY, locale);
 }
