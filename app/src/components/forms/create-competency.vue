@@ -43,7 +43,7 @@ async function handleFormSubmit(): Promise<void> {
     });
     switch (response?.data?.createCompetency.__typename) {
       default:
-        formErrors.value.push('TEST ERROR');
+        formErrors.value.push(t('competencies.form.action.create.error'));
         return;
       case 'InputError': {
         const mutationError = response.data.createCompetency;
@@ -67,7 +67,7 @@ async function handleFormSubmit(): Promise<void> {
         break;
     }
   } catch {
-    formErrors.value.push('Something went wrong');
+    formErrors.value.push(t('competencies.form.action.create.error'));
   }
 }
 </script>
@@ -76,7 +76,7 @@ async function handleFormSubmit(): Promise<void> {
   <FormKit
     v-model="formValues"
     type="form"
-    :submit-label="t('competencies.form.action.create')"
+    :submit-label="t('competencies.form.action.create.label')"
     :errors="formErrors"
     @node="formNode = $event"
     @submit="handleFormSubmit"
