@@ -1,0 +1,31 @@
+route:
+  index:
+    heading: Manage competencies
+    action:
+      createCompetency: Create competency
+  create:
+    heading: Create competency
+    action:
+      backButton: Competencies
+      createCompetency: Create competency
+  id:
+    edit:
+      heading: Edit competency
+      action:
+        edit: Edit competency
+    index:
+      actions:
+        backButton: Manage competencies
+        openDeleteModal: Delete competency
+        edit: Edit competency
+        new: New competency
+      confirmDeleteModal:
+        action:
+          abort: keep
+          confirm: delete
+        error: Something went wrong, competency could not be deleted.
+        heading: Delete competency?
+        messsage: Are you sure you want to delete this competency and all its children?
+      heading: Sub-comptencies
+form:
+  nameLabel: Competency name
