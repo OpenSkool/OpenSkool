@@ -40,7 +40,6 @@ export default plugin(async (app) => {
         return { locale, request, reply, userId };
       },
       errorFormatter(executionResult, ctx) {
-        let statusCode: number | undefined;
         for (const error of executionResult.errors ?? []) {
           const errorStatusCode =
             error.originalError instanceof mercurius.ErrorWithProps
@@ -48,7 +47,6 @@ export default plugin(async (app) => {
               : HTTP_STATUS_INTERNAL_SERVER_ERROR;
           const isServerError =
             errorStatusCode >= HTTP_STATUS_INTERNAL_SERVER_ERROR;
-          statusCode ??= errorStatusCode;
           if (isServerError) {
             ctx.reply.log.error(error);
           }
@@ -62,7 +60,7 @@ export default plugin(async (app) => {
           }
         }
         return {
-          statusCode: statusCode ?? HTTP_STATUS_OK,
+          statusCode: HTTP_STATUS_OK,
           response: executionResult,
         };
       },
