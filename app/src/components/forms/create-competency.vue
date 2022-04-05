@@ -43,6 +43,10 @@ async function handleFormSubmit(): Promise<void> {
     });
     switch (response?.data?.createCompetency.__typename) {
       default:
+        console.error(
+          'unexpected mutation response',
+          response?.data?.createCompetency,
+        );
         formErrors.value.push(t('competencies.form.action.create.error'));
         return;
       case 'InputError': {
@@ -66,7 +70,8 @@ async function handleFormSubmit(): Promise<void> {
         }
         break;
     }
-  } catch {
+  } catch (error) {
+    console.error('crash during execution', error);
     formErrors.value.push(t('competencies.form.action.create.error'));
   }
 }

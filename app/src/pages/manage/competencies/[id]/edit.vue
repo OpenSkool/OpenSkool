@@ -25,7 +25,11 @@ const props = defineProps<{
   id: string; // route param
 }>();
 
-const { error, loading, result } = useQuery(
+const {
+  error: getCompetencyError,
+  loading,
+  result,
+} = useQuery(
   GetCompetencyDocument,
   { id: props.id },
   { fetchPolicy: 'network-only' },
@@ -72,7 +76,12 @@ async function handleFormSubmit(): Promise<void> {
     });
     switch (response?.data?.renameCompetency.__typename) {
       default:
-        throw new Error('unknown api response');
+        console.error(
+          'unexpected mutation response',
+          response?.data?.renameCompetency,
+        );
+        formErrors.value.push('Something went wrong');
+        return;
       case 'InputError': {
         const mutationError = response.data.renameCompetency;
         const fieldNode =
@@ -99,14 +108,15 @@ async function handleFormSubmit(): Promise<void> {
         }
         break;
     }
-  } catch {
+  } catch (error) {
+    console.error('crash during execution', error);
     formErrors.value.push(t('competencies.form.action.edit.error'));
   }
 }
 </script>
 
 <template>
-  <template v-if="error">
+  <template v-if="getCompetencyError">
     <p>Something went wrong</p>
   </template>
   <template v-else-if="loading">
