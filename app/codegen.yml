@@ -1,6 +1,10 @@
 documents: ./src/**/*.{gql,ts,vue}
 schema: ../api/src/generated/schema.graphql
 
+hooks:
+  afterAllFileWrite:
+    - prettier --write
+
 generates:
   src/generated/graphql.ts:
     plugins:
