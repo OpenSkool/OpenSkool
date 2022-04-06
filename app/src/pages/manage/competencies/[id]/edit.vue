@@ -8,7 +8,7 @@ import { FormKitNode } from '@formkit/core';
 import { useI18n } from 'vue-i18n';
 
 import {
-  GetCompetencyDocument,
+  GetEditCompetencyDocument,
   RenameCompetencyDocument,
 } from '~/generated/graphql';
 import { useI18nStore } from '~/i18n';
@@ -25,12 +25,20 @@ const props = defineProps<{
   id: string; // route param
 }>();
 
+gql`
+  query getEditCompetency($id: ID!) {
+    competency(id: $id) {
+      title
+    }
+  }
+`;
+
 const {
-  error: getCompetencyError,
+  error: getEditCompetencyError,
   loading,
   result,
 } = useQuery(
-  GetCompetencyDocument,
+  GetEditCompetencyDocument,
   { id: props.id },
   { fetchPolicy: 'network-only' },
 );
@@ -112,7 +120,7 @@ async function handleFormSubmit(): Promise<void> {
 </script>
 
 <template>
-  <template v-if="getCompetencyError">
+  <template v-if="getEditCompetencyError">
     <p>Something went wrong</p>
   </template>
   <template v-else-if="loading">
@@ -122,7 +130,7 @@ async function handleFormSubmit(): Promise<void> {
     <div>Not Found</div>
   </template>
   <template v-else>
-    <ui-backbutton :to="`/manage/competencies/${competency.id}`">
+    <ui-backbutton :to="`/manage/competencies/${id}`">
       {{ competency.title }}
     </ui-backbutton>
     <h2 class="text-xl mb-3">{{ t('competencies.route.id.edit.heading') }}</h2>

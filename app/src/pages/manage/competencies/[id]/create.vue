@@ -6,7 +6,7 @@ meta:
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
 
-import { GetCompetencyDocument } from '~/generated/graphql';
+import { GetCreateCompetencyParentDocument } from '~/generated/graphql';
 import { useI18nStore } from '~/i18n';
 
 const i18nStore = useI18nStore();
@@ -18,12 +18,20 @@ const props = defineProps<{
   id: string; // route param
 }>();
 
+gql`
+  query getCreateCompetencyParent($id: ID!) {
+    competency(id: $id) {
+      title
+    }
+  }
+`;
+
 const {
-  error: readError,
+  error: getCreateCompetencyParentError,
   loading,
   result,
 } = useQuery(
-  GetCompetencyDocument,
+  GetCreateCompetencyParentDocument,
   { id: props.id },
   { fetchPolicy: 'network-only' },
 );
@@ -31,7 +39,7 @@ const competency = useResult(result);
 </script>
 
 <template>
-  <template v-if="readError">
+  <template v-if="getCreateCompetencyParentError">
     <p>Something went wrong</p>
   </template>
   <template v-else-if="loading">
