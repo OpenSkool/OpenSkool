@@ -229,6 +229,13 @@ export type CreateCompetencyMutation = {
       };
 };
 
+export type BaseErrorFieldsFragment = {
+  __typename?: 'InputError';
+  code: string;
+  message: string;
+  path?: Array<string> | null;
+};
+
 export type RenameCompetencyMutationVariables = Exact<{
   id: Scalars['ID'];
   data: RenameCompetencyInput;
@@ -328,6 +335,27 @@ export type GetCompetencyQuery = {
     | null;
 };
 
+export const BaseErrorFieldsFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'BaseErrorFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'BaseError' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'code' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'message' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'path' } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<BaseErrorFieldsFragment, unknown>;
 export const GetPeopleDocument = {
   kind: 'Document',
   definitions: [
@@ -422,22 +450,8 @@ export const CreateCompetencyDocument = {
                   },
                 },
                 {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'InputError' },
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'code' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'message' },
-                      },
-                      { kind: 'Field', name: { kind: 'Name', value: 'path' } },
-                    ],
-                  },
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'BaseErrorFields' },
                 },
               ],
             },
@@ -445,6 +459,7 @@ export const CreateCompetencyDocument = {
         ],
       },
     },
+    ...BaseErrorFieldsFragmentDoc.definitions,
   ],
 } as unknown as DocumentNode<
   CreateCompetencyMutation,
@@ -534,22 +549,8 @@ export const RenameCompetencyDocument = {
                   },
                 },
                 {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'InputError' },
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'code' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'message' },
-                      },
-                      { kind: 'Field', name: { kind: 'Name', value: 'path' } },
-                    ],
-                  },
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'BaseErrorFields' },
                 },
               ],
             },
@@ -557,6 +558,7 @@ export const RenameCompetencyDocument = {
         ],
       },
     },
+    ...BaseErrorFieldsFragmentDoc.definitions,
   ],
 } as unknown as DocumentNode<
   RenameCompetencyMutation,

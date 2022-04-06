@@ -1,0 +1,5 @@
+fragment BaseErrorFields on BaseError {
+  code
+  message
+  path
+}

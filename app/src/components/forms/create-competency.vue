@@ -20,11 +20,7 @@ gql`
           id
         }
       }
-      ... on InputError {
-        code
-        message
-        path
-      }
+      ...BaseErrorFields
     }
   }
 `;
