@@ -4,6 +4,6 @@ module.exports = {
       name: 'default',
       localSchemaFile: 'api/src/generated/schema.graphql',
     },
-    includes: ['app/src/**/*.vue'],
+    includes: ['app/src/**/*.{gql,vue}'],
   },
 };
