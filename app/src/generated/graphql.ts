@@ -236,6 +236,30 @@ export type BaseErrorFieldsFragment = {
   path?: Array<string> | null;
 };
 
+export type GetCreateCompetencyParentQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetCreateCompetencyParentQuery = {
+  __typename?: 'Query';
+  competency?:
+    | { __typename?: 'NestedCompetency'; title: string }
+    | { __typename?: 'RootCompetency'; title: string }
+    | null;
+};
+
+export type GetEditCompetencyQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetEditCompetencyQuery = {
+  __typename?: 'Query';
+  competency?:
+    | { __typename?: 'NestedCompetency'; title: string }
+    | { __typename?: 'RootCompetency'; title: string }
+    | null;
+};
+
 export type RenameCompetencyMutationVariables = Exact<{
   id: Scalars['ID'];
   data: RenameCompetencyInput;
@@ -314,25 +338,6 @@ export type GetAllRootCompetenciesQuery = {
     id: string;
     title: string;
   }>;
-};
-
-export type GetCompetencyQueryVariables = Exact<{
-  id: Scalars['ID'];
-}>;
-
-export type GetCompetencyQuery = {
-  __typename?: 'Query';
-  competency?:
-    | {
-        __typename?: 'NestedCompetency';
-        id: string;
-        title: string;
-        parent:
-          | { __typename?: 'NestedCompetency'; id: string }
-          | { __typename?: 'RootCompetency'; id: string };
-      }
-    | { __typename?: 'RootCompetency'; id: string; title: string }
-    | null;
 };
 
 export const BaseErrorFieldsFragmentDoc = {
@@ -464,6 +469,102 @@ export const CreateCompetencyDocument = {
 } as unknown as DocumentNode<
   CreateCompetencyMutation,
   CreateCompetencyMutationVariables
+>;
+export const GetCreateCompetencyParentDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'getCreateCompetencyParent' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'competency' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'id' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  GetCreateCompetencyParentQuery,
+  GetCreateCompetencyParentQueryVariables
+>;
+export const GetEditCompetencyDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'getEditCompetency' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'competency' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'id' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  GetEditCompetencyQuery,
+  GetEditCompetencyQueryVariables
 >;
 export const RenameCompetencyDocument = {
   kind: 'Document',
@@ -730,74 +831,3 @@ export const GetAllRootCompetenciesDocument = {
   GetAllRootCompetenciesQuery,
   GetAllRootCompetenciesQueryVariables
 >;
-export const GetCompetencyDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'getCompetency' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'competency' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'id' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'id' },
-                },
-              },
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'NestedCompetency' },
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'parent' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<GetCompetencyQuery, GetCompetencyQueryVariables>;
