@@ -778,6 +778,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@envelop/response-cache@npm:^2.3.0":
+  version: 2.3.0
+  resolution: "@envelop/response-cache@npm:2.3.0"
+  dependencies:
+    "@graphql-tools/utils": ^8.6.1
+    fast-json-stable-stringify: ^2.1.0
+    lru-cache: ^6.0.0
+  peerDependencies:
+    "@envelop/core": ^2.3.0
+    graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
+  checksum: 0633fcf6f0a494a1ef523288c23ccdc56f7ae29873a9978ca22409ac6bf4393943c9b48d4deec3366e1a0ba0e85cf24ff4794e7675de805197c8dcebc0073db4
+  languageName: node
+  linkType: hard
+
 "@envelop/types@npm:2.2.0":
   version: 2.2.0
   resolution: "@envelop/types@npm:2.2.0"
@@ -1404,7 +1418,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graphql-tools/utils@npm:8.6.5, @graphql-tools/utils@npm:^8.6.0":
+"@graphql-tools/utils@npm:8.6.5, @graphql-tools/utils@npm:^8.6.0, @graphql-tools/utils@npm:^8.6.1":
   version: 8.6.5
   resolution: "@graphql-tools/utils@npm:8.6.5"
   dependencies:
@@ -1804,6 +1818,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@os/api@workspace:api"
   dependencies:
+    "@envelop/response-cache": ^2.3.0
     "@faker-js/faker": ^6.1.2
     "@graphql-yoga/common": ^2.0.0
     "@graphql-yoga/node": ^2.0.0
@@ -1831,6 +1846,7 @@ __metadata:
     graphql-scalars: ^1.17.0
     graphql-tag: ^2.12.6
     mercurius-integration-testing: ^4.0.0
+    ms: 3.0.0-canary.1
     nexus: ^1.3.0
     nodemon: ^2.0.15
     pino: ^6.14.0
@@ -5573,7 +5589,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-json-stable-stringify@npm:^2.0.0":
+"fast-json-stable-stringify@npm:^2.0.0, fast-json-stable-stringify@npm:^2.1.0":
   version: 2.1.0
   resolution: "fast-json-stable-stringify@npm:2.1.0"
   checksum: b191531e36c607977e5b1c47811158733c34ccb3bfde92c44798929e9b4154884378536d26ad90dfecd32e1ffc09c545d23535ad91b3161a27ddbb8ebe0cbecb
@@ -8030,6 +8046,13 @@ __metadata:
   version: 2.1.3
   resolution: "ms@npm:2.1.3"
   checksum: aa92de608021b242401676e35cfa5aa42dd70cbdc082b916da7fb925c542173e36bce97ea3e804923fe92c0ad991434e4a38327e15a1b5b5f945d66df615ae6d
+  languageName: node
+  linkType: hard
+
+"ms@npm:3.0.0-canary.1":
+  version: 3.0.0-canary.1
+  resolution: "ms@npm:3.0.0-canary.1"
+  checksum: 5ec76c0932cf83ac3e7f70f1a4c0d4db4dbc91de6ea5f7d336c67b48f513c8cb4c0fce3a07e3d84ee931dbdc9a48f33ed1c485e834279fff8906d385e86684ae
   languageName: node
   linkType: hard
 
