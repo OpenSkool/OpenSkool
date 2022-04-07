@@ -1,10 +1,10 @@
+import { Language } from '@prisma/client';
 import gql from 'graphql-tag';
-import { createMercuriusTestClient } from 'mercurius-integration-testing';
 import { beforeEach, describe, expect, test } from 'vitest';
 
-import app from '../src/app';
 import { prisma } from '../src/prisma';
-import { createClientHeaders, createSpecContext } from './helpers';
+import { execute } from './client';
+import { createCompetencyFixture } from './fixtures';
 
 beforeEach(async () => {
   await prisma.competency.deleteMany();
@@ -12,8 +12,7 @@ beforeEach(async () => {
 
 describe('competency', () => {
   test('error on competency not found', async () => {
-    const client = createMercuriusTestClient(app);
-    const response = await client.query<
+    const response = await execute<
       { competency: { title: string } },
       { id: string }
     >(
@@ -31,24 +30,11 @@ describe('competency', () => {
   });
 
   test('get title in default locale with user prefered locale', async () => {
-    const { clientHeaders, languageCode, userId } = await createSpecContext({
-      locale: 'en',
+    const competency = await createCompetencyFixture({
+      language: Language.EN,
+      title: 'Hello World!',
     });
-    const competency = await prisma.competency.create({
-      data: {
-        createdById: userId,
-        updatedById: userId,
-        translations: {
-          create: { languageCode, title: 'Hello World!' },
-        },
-      },
-    });
-    const client = createMercuriusTestClient(app);
-    client.setHeaders(clientHeaders);
-    const response = await client.query<
-      { competency: { title: string } },
-      { id: string }
-    >(
+    const response = await execute<{ competency: { title: string } }>(
       gql`
         query ($id: ID!) {
           competency(id: $id) {
@@ -56,29 +42,21 @@ describe('competency', () => {
           }
         }
       `,
-      { variables: { id: competency.id } },
+      {
+        spec: { locale: 'en' },
+        variables: { id: competency.id },
+      },
     );
     expect(response).not.toHaveProperty('errors');
     expect(response).toHaveProperty('data.competency.title', 'Hello World!');
   });
 
   test('get title in default locale with user fallback locale', async () => {
-    const { languageCode, userId } = await createSpecContext({ locale: 'en' });
-    const competency = await prisma.competency.create({
-      data: {
-        createdById: userId,
-        updatedById: userId,
-        translations: {
-          create: { languageCode, title: 'Hello World!' },
-        },
-      },
+    const competency = await createCompetencyFixture({
+      language: Language.EN,
+      title: 'Hello World!',
     });
-    const client = createMercuriusTestClient(app);
-    client.setHeaders(createClientHeaders({ locale: 'nl', userId }));
-    const response = await client.query<
-      { competency: { title: string } },
-      { id: string }
-    >(
+    const response = await execute<{ competency: { title: string } }>(
       gql`
         query ($id: ID!) {
           competency(id: $id) {
@@ -86,31 +64,21 @@ describe('competency', () => {
           }
         }
       `,
-      { variables: { id: competency.id } },
+      {
+        spec: { locale: 'nl' },
+        variables: { id: competency.id },
+      },
     );
     expect(response).not.toHaveProperty('errors');
     expect(response).toHaveProperty('data.competency.title', 'Hello World!');
   });
 
   test('get title in other locale with user prefered locale', async () => {
-    const { clientHeaders, languageCode, userId } = await createSpecContext({
-      locale: 'nl',
+    const competency = await createCompetencyFixture({
+      language: Language.NL,
+      title: 'Hallo Wereld!',
     });
-    const competency = await prisma.competency.create({
-      data: {
-        createdById: userId,
-        updatedById: userId,
-        translations: {
-          create: { languageCode, title: 'Hallo Wereld!' },
-        },
-      },
-    });
-    const client = createMercuriusTestClient(app);
-    client.setHeaders(clientHeaders);
-    const response = await client.query<
-      { competency: { title: string } },
-      { id: string }
-    >(
+    const response = await execute<{ competency: { title: string } }>(
       gql`
         query ($id: ID!) {
           competency(id: $id) {
@@ -118,26 +86,21 @@ describe('competency', () => {
           }
         }
       `,
-      { variables: { id: competency.id } },
+      {
+        spec: { locale: 'nl' },
+        variables: { id: competency.id },
+      },
     );
     expect(response).not.toHaveProperty('errors');
     expect(response).toHaveProperty('data.competency.title', 'Hallo Wereld!');
   });
 
   test('get title in other locale with user fallback locale', async () => {
-    const { languageCode, userId } = await createSpecContext({ locale: 'nl' });
-    const competency = await prisma.competency.create({
-      data: {
-        createdById: userId,
-        updatedById: userId,
-        translations: {
-          create: { languageCode, title: 'Hallo Wereld!' },
-        },
-      },
+    const competency = await createCompetencyFixture({
+      language: Language.NL,
+      title: 'Hallo Wereld!',
     });
-    const client = createMercuriusTestClient(app);
-    client.setHeaders(createClientHeaders({ locale: 'en', userId }));
-    const response = await client.query<
+    const response = await execute<
       { competency: { title: string } },
       { id: string }
     >(
@@ -148,7 +111,10 @@ describe('competency', () => {
           }
         }
       `,
-      { variables: { id: competency.id } },
+      {
+        spec: { locale: 'en' },
+        variables: { id: competency.id },
+      },
     );
     expect(response).toHaveProperty('data.competency.title', 'Hallo Wereld!');
   });
