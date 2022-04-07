@@ -1,9 +1,11 @@
 import { Readable } from 'stream';
 
+import { useResponseCache } from '@envelop/response-cache';
 import { createServer } from '@graphql-yoga/node';
 import acceptLanguageParser from 'accept-language-parser';
 import altairPlugin from 'altair-fastify-plugin';
 import plugin from 'fastify-plugin';
+import ms from 'ms';
 
 import schema from '../schema';
 import type { Context } from '../schema/context';
@@ -30,6 +32,14 @@ export default plugin(async (app) => {
   const yogaServer = createServer<Context>({
     logging: app.log,
     schema,
+    plugins: [
+      useResponseCache({
+        includeExtensionMetadata: true,
+        session: (context: Context) =>
+          `${context.userId ?? 'anonymous'}-${context.locale}`,
+        ttl: ms('2s'),
+      }),
+    ],
   });
 
   app.route({
