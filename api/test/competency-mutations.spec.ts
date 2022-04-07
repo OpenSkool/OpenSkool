@@ -1,11 +1,10 @@
+import { Language } from '@prisma/client';
 import gql from 'graphql-tag';
-import { createMercuriusTestClient } from 'mercurius-integration-testing';
 import { beforeEach, describe, expect, test } from 'vitest';
 
-import app from '../src/app';
-import { CompetencyService } from '../src/domain';
 import { prisma } from '../src/prisma';
-import { createClientHeaders, createSpecContext } from './helpers';
+import { execute } from './client';
+import { createCompetencyFixture, createPersonFixture } from './fixtures';
 
 beforeEach(async () => {
   await prisma.competency.deleteMany();
@@ -13,15 +12,11 @@ beforeEach(async () => {
 
 describe('createCompetency', () => {
   test('error on invalid title', async () => {
-    const { clientHeaders } = await createSpecContext();
-    const client = createMercuriusTestClient(app);
-    client.setHeaders(clientHeaders);
-    const {
-      data: { createCompetency },
-    } = await client.mutate<{ createCompetency: unknown }, { title: string }>(
+    const response = await execute<{ createCompetency: unknown }>(
       gql`
         mutation ($title: String!) {
           createCompetency(data: { title: $title }) {
+            __typename
             ... on BaseError {
               code
               path
@@ -29,37 +24,25 @@ describe('createCompetency', () => {
           }
         }
       `,
-      {
-        variables: {
-          title: '  ',
-        },
-      },
+      { variables: { title: '  ' } },
     );
-    expect(createCompetency).toMatchObject({
+    expect(response).toHaveProperty(
+      'data.createCompetency.__typename',
+      'InputError',
+    );
+    expect(response.data.createCompetency).toMatchObject({
       code: 'valueNotValid',
       path: ['title'],
     });
   });
 
   test('error on duplicate title at root', async () => {
-    const { clientHeaders, languageCode, userId } = await createSpecContext();
-    await prisma.competency.create({
-      data: {
-        createdById: userId,
-        updatedById: userId,
-        translations: {
-          create: { languageCode, title: 'Hello Root!' },
-        },
-      },
-    });
-    const client = createMercuriusTestClient(app);
-    client.setHeaders(clientHeaders);
-    const {
-      data: { createCompetency },
-    } = await client.mutate<{ createCompetency: unknown }, { title: string }>(
+    await createCompetencyFixture({ title: 'Hello Root!' });
+    const response = await execute<{ createCompetency: unknown }>(
       gql`
         mutation ($title: String!) {
           createCompetency(data: { title: $title }) {
+            __typename
             ... on BaseError {
               code
               path
@@ -69,45 +52,32 @@ describe('createCompetency', () => {
       `,
       { variables: { title: 'Hello Root!' } },
     );
-    expect(createCompetency).toMatchObject({
+    expect(response).toHaveProperty(
+      'data.createCompetency.__typename',
+      'InputError',
+    );
+    expect(response.data.createCompetency).toMatchObject({
       code: 'valueNotUnique',
       path: ['title'],
     });
   });
 
   test('error on duplicate title within same parent', async () => {
-    const { clientHeaders, languageCode, userId } = await createSpecContext();
-
-    const parent = await prisma.competency.create({
-      data: {
-        createdById: userId,
-        updatedById: userId,
-        translations: {
-          create: { languageCode, title: 'Hello Parent!' },
-        },
-      },
+    const parent = await createCompetencyFixture({
+      title: 'Hello Parent!',
     });
-    await prisma.competency.create({
-      data: {
-        createdById: userId,
-        updatedById: userId,
-        parentCompetencyId: parent.id,
-        translations: {
-          create: { languageCode, title: 'Hello Child!' },
-        },
-      },
+    await createCompetencyFixture({
+      title: 'Hello Child!',
+      parentId: parent.id,
     });
-    const client = createMercuriusTestClient(app);
-    client.setHeaders(clientHeaders);
-    const {
-      data: { createCompetency },
-    } = await client.mutate<
+    const response = await execute<
       { createCompetency: unknown },
       { parentId: string; title: string }
     >(
       gql`
         mutation ($parentId: ID!, $title: String!) {
           createCompetency(data: { parentId: $parentId, title: $title }) {
+            __typename
             ... on BaseError {
               code
               path
@@ -122,51 +92,25 @@ describe('createCompetency', () => {
         },
       },
     );
-    expect(createCompetency).toMatchObject({
+    expect(response).toHaveProperty(
+      'data.createCompetency.__typename',
+      'InputError',
+    );
+    expect(response.data.createCompetency).toMatchObject({
       code: 'valueNotUnique',
       path: ['title'],
     });
   });
 
   test('no error on duplicate title not within same parent', async () => {
-    const { clientHeaders, languageCode, userId } = await createSpecContext();
-
-    const parent1 = await prisma.competency.create({
-      data: {
-        createdById: userId,
-        updatedById: userId,
-        translations: {
-          create: { languageCode, title: 'Hello Parent 1!' },
-        },
-      },
+    const person = await createPersonFixture();
+    const parent1 = await createCompetencyFixture({ title: 'Hello Parent 1!' });
+    const parent2 = await createCompetencyFixture({ title: 'Hello Parent 2!' });
+    await createCompetencyFixture({
+      title: 'Hello Child!',
+      parentId: parent1.id,
     });
-    const parent2 = await prisma.competency.create({
-      data: {
-        createdById: userId,
-        updatedById: userId,
-        translations: {
-          create: { languageCode, title: 'Hello Parent 2!' },
-        },
-      },
-    });
-    await prisma.competency.create({
-      data: {
-        createdById: userId,
-        updatedById: userId,
-        parentCompetencyId: parent1.id,
-        translations: {
-          create: { languageCode, title: 'Hello Child!' },
-        },
-      },
-    });
-    const client = createMercuriusTestClient(app);
-    client.setHeaders(clientHeaders);
-    const {
-      data: { createCompetency },
-    } = await client.mutate<
-      { createCompetency: unknown },
-      { parentId: string; title: string }
-    >(
+    const response = await execute<{ createCompetency: unknown }>(
       gql`
         mutation ($parentId: ID!, $title: String!) {
           createCompetency(data: { parentId: $parentId, title: $title }) {
@@ -179,31 +123,23 @@ describe('createCompetency', () => {
         }
       `,
       {
+        spec: { userId: person.id },
         variables: {
           parentId: parent2.id,
           title: 'Hello Child!',
         },
       },
     );
-    expect(createCompetency).toHaveProperty('competency.id');
+    expect(response).toHaveProperty('data.createCompetency.competency');
   });
 
   test('no error on duplicate title with different locale', async () => {
-    const { languageCode, userId } = await createSpecContext({ locale: 'en' });
-    await prisma.competency.create({
-      data: {
-        createdById: userId,
-        updatedById: userId,
-        translations: {
-          create: { languageCode, title: 'Hello Root!' },
-        },
-      },
+    const person = await createPersonFixture();
+    await createCompetencyFixture({
+      title: 'Hello Root!',
+      language: Language.EN,
     });
-    const client = createMercuriusTestClient(app);
-    client.setHeaders(createClientHeaders({ locale: 'nl', userId }));
-    const {
-      data: { createCompetency },
-    } = await client.mutate<{ createCompetency: unknown }, { title: string }>(
+    const response = await execute<{ createCompetency: unknown }>(
       gql`
         mutation ($title: String!) {
           createCompetency(data: { title: $title }) {
@@ -216,22 +152,16 @@ describe('createCompetency', () => {
         }
       `,
       {
-        variables: {
-          title: 'Hello Root!',
-        },
+        spec: { locale: 'nl', userId: person.id },
+        variables: { title: 'Hello Root!' },
       },
     );
-    expect(createCompetency).toHaveProperty('competency.id');
+    expect(response).toHaveProperty('data.createCompetency.competency');
   });
 
   test('should create root competency', async () => {
-    const { clientHeaders } = await createSpecContext();
-
-    const client = createMercuriusTestClient(app);
-    client.setHeaders(clientHeaders);
-    const {
-      data: { createCompetency },
-    } = await client.mutate<{ createCompetency: unknown }, { title: string }>(
+    const person = await createPersonFixture();
+    const response = await execute<{ createCompetency: unknown }>(
       gql`
         mutation ($title: String!) {
           createCompetency(data: { title: $title }) {
@@ -243,29 +173,21 @@ describe('createCompetency', () => {
           }
         }
       `,
-      { variables: { title: 'Hello World!' } },
+      {
+        spec: { userId: person.id },
+        variables: { title: 'Hello World!' },
+      },
     );
-    expect(createCompetency).toHaveProperty(
-      'competency.__typename',
+    expect(response.data).toHaveProperty(
+      'createCompetency.competency.__typename',
       'RootCompetency',
     );
   });
 
   test('should create nested competency', async () => {
-    const { clientHeaders, userId } = await createSpecContext();
-
-    const parentCompetency = await CompetencyService.createCompetency(
-      { title: 'Parent Title' },
-      { locale: 'en', userId },
-    );
-    const client = createMercuriusTestClient(app);
-    client.setHeaders(clientHeaders);
-    const {
-      data: { createCompetency },
-    } = await client.mutate<
-      { createCompetency: unknown },
-      { parentId: string; title: string }
-    >(
+    const person = await createPersonFixture();
+    const parent = await createCompetencyFixture({ title: 'Parent Title' });
+    const response = await execute<{ createCompetency: unknown }>(
       gql`
         mutation ($parentId: ID!, $title: String!) {
           createCompetency(data: { parentId: $parentId, title: $title }) {
@@ -278,28 +200,23 @@ describe('createCompetency', () => {
         }
       `,
       {
+        spec: { userId: person.id },
         variables: {
-          parentId: parentCompetency.id,
+          parentId: parent.id,
           title: 'Hello World!',
         },
       },
     );
-    expect(createCompetency).toHaveProperty(
+    expect(response.data).toHaveProperty('createCompetency.competency');
+    expect(response.data.createCompetency).toHaveProperty(
       'competency.__typename',
       'NestedCompetency',
     );
   });
 
   test('should create competency in user locale', async () => {
-    const { clientHeaders, languageCode } = await createSpecContext({
-      locale: 'nl',
-    });
-
-    const client = createMercuriusTestClient(app);
-    client.setHeaders(clientHeaders);
-    const {
-      data: { createCompetency },
-    } = await client.mutate<
+    const person = await createPersonFixture();
+    const response = await execute<
       { createCompetency: { competency: { id: string } } },
       { title: string }
     >(
@@ -314,35 +231,28 @@ describe('createCompetency', () => {
           }
         }
       `,
-      { variables: { title: 'Hello World!' } },
+      {
+        spec: { locale: 'nl', userId: person.id },
+        variables: { title: 'Hello World!' },
+      },
     );
-    expect(createCompetency).toHaveProperty('competency.id');
+    expect(response).toHaveProperty('data.createCompetency.competency.id');
     expect(
       await prisma.competency.findUnique({
         include: { translations: true },
-        where: { id: createCompetency.competency.id },
+        where: { id: response.data.createCompetency.competency.id },
       }),
     ).toMatchObject({
-      translations: [
-        {
-          languageCode,
-          title: 'Hello World!',
-        },
-      ],
+      translations: [{ languageCode: Language.NL, title: 'Hello World!' }],
     });
   });
 });
 
 describe('deleteCompetency', () => {
   test('should delete competency', async () => {
-    const { clientHeaders, domainContext } = await createSpecContext();
-    const competency = await CompetencyService.createCompetency(
-      { title: 'Hello World!' },
-      domainContext,
-    );
-    const client = createMercuriusTestClient(app);
-    client.setHeaders(clientHeaders);
-    const deletedCompetency = await client.mutate<
+    const person = await createPersonFixture();
+    const competency = await createCompetencyFixture();
+    const response = await execute<
       { deleteCompetency: { id: string } },
       { id: string }
     >(
@@ -353,33 +263,23 @@ describe('deleteCompetency', () => {
           }
         }
       `,
-      { variables: { id: competency.id } },
+      {
+        spec: { userId: person.id },
+        variables: { id: competency.id },
+      },
     );
-    expect(deletedCompetency.data).toHaveProperty(
-      'deleteCompetency.id',
-      competency.id,
-    );
+    expect(response).toHaveProperty('data.deleteCompetency.id', competency.id);
     expect(
       await prisma.competency.findUnique({ where: { id: competency.id } }),
     ).toBe(null);
   });
 
   test('should delete competency and all its descendants', async () => {
-    const { domainContext } = await createSpecContext();
-    const competencyRoot = await CompetencyService.createCompetency(
-      { title: 'Hello World!' },
-      domainContext,
-    );
-    const competencyParent = await CompetencyService.createCompetency(
-      { parentId: competencyRoot.id, title: 'Hello World!' },
-      domainContext,
-    );
-    const competencyLeaf = await CompetencyService.createCompetency(
-      { parentId: competencyParent.id, title: 'Hello World!' },
-      domainContext,
-    );
-    const client = createMercuriusTestClient(app);
-    await client.mutate<{ deleteCompetency: { id: string } }, { id: string }>(
+    const person = await createPersonFixture();
+    const root = await createCompetencyFixture();
+    const parent = await createCompetencyFixture({ parentId: root.id });
+    const child = await createCompetencyFixture({ parentId: parent.id });
+    await execute<{ deleteCompetency: unknown }>(
       gql`
         mutation ($id: ID!) {
           deleteCompetency(id: $id) {
@@ -387,33 +287,24 @@ describe('deleteCompetency', () => {
           }
         }
       `,
-      { variables: { id: competencyRoot.id } },
+      { spec: { userId: person.id }, variables: { id: root.id } },
     );
     expect(
-      await prisma.competency.findUnique({ where: { id: competencyLeaf.id } }),
+      await prisma.competency.findUnique({ where: { id: child.id } }),
     ).toBe(null);
   });
 });
 
 describe('renameCompetency', () => {
   test('error on invalid title', async () => {
-    const { clientHeaders, domainContext } = await createSpecContext();
+    const person = await createPersonFixture();
 
-    const competency = await CompetencyService.createCompetency(
-      { title: 'Hello World!' },
-      domainContext,
-    );
-    const client = createMercuriusTestClient(app);
-    client.setHeaders(clientHeaders);
-    const {
-      data: { renameCompetency },
-    } = await client.mutate<
-      { renameCompetency: unknown },
-      { id: string; title: string }
-    >(
+    const competency = await createCompetencyFixture();
+    const response = await execute<{ renameCompetency: unknown }>(
       gql`
         mutation ($id: ID!, $title: String!) {
           renameCompetency(id: $id, data: { title: $title }) {
+            __typename
             ... on BaseError {
               code
               path
@@ -422,50 +313,31 @@ describe('renameCompetency', () => {
         }
       `,
       {
+        spec: { userId: person.id },
         variables: {
           id: competency.id,
           title: '  ',
         },
       },
     );
-    expect(renameCompetency).toMatchObject({
+    expect(response).toHaveProperty(
+      'data.renameCompetency.__typename',
+      'InputError',
+    );
+    expect(response.data.renameCompetency).toMatchObject({
       code: 'valueNotValid',
       path: ['title'],
     });
   });
 
   test('error on duplicate title at root', async () => {
-    const { clientHeaders, languageCode, userId } = await createSpecContext();
-
-    await prisma.competency.create({
-      data: {
-        createdById: userId,
-        updatedById: userId,
-        translations: {
-          create: { languageCode, title: 'Hello Root 1!' },
-        },
-      },
-    });
-    const root2 = await prisma.competency.create({
-      data: {
-        createdById: userId,
-        updatedById: userId,
-        translations: {
-          create: { languageCode, title: 'Hello Root 2!' },
-        },
-      },
-    });
-    const client = createMercuriusTestClient(app);
-    client.setHeaders(clientHeaders);
-    const {
-      data: { renameCompetency },
-    } = await client.mutate<
-      { renameCompetency: unknown },
-      { id: string; title: string }
-    >(
+    await createCompetencyFixture({ title: 'Hello Root 1!' });
+    const root2 = await createCompetencyFixture({ title: 'Hello Root 2!' });
+    const response = await execute<{ renameCompetency: unknown }>(
       gql`
         mutation ($id: ID!, $title: String!) {
           renameCompetency(id: $id, data: { title: $title }) {
+            __typename
             ... on BaseError {
               code
               path
@@ -480,55 +352,31 @@ describe('renameCompetency', () => {
         },
       },
     );
-    expect(renameCompetency).toMatchObject({
+    expect(response).toHaveProperty(
+      'data.renameCompetency.__typename',
+      'InputError',
+    );
+    expect(response.data.renameCompetency).toMatchObject({
       code: 'valueNotUnique',
       path: ['title'],
     });
   });
 
   test('error on duplicate title within same parent', async () => {
-    const { clientHeaders, languageCode, userId } = await createSpecContext();
-
-    const parent = await prisma.competency.create({
-      data: {
-        createdById: userId,
-        updatedById: userId,
-        translations: {
-          create: { languageCode, title: 'Hello Parent!' },
-        },
-      },
+    const parent = await createCompetencyFixture({ title: 'Hello Parent!' });
+    await createCompetencyFixture({
+      title: 'Hello Child 1!',
+      parentId: parent.id,
     });
-    await prisma.competency.create({
-      data: {
-        createdById: userId,
-        updatedById: userId,
-        parentCompetencyId: parent.id,
-        translations: {
-          create: { languageCode, title: 'Hello Child 1!' },
-        },
-      },
+    const child2 = await createCompetencyFixture({
+      title: 'Hello Child 2!',
+      parentId: parent.id,
     });
-    const child2 = await prisma.competency.create({
-      data: {
-        createdById: userId,
-        updatedById: userId,
-        parentCompetencyId: parent.id,
-        translations: {
-          create: { languageCode, title: 'Hello Child 2!' },
-        },
-      },
-    });
-    const client = createMercuriusTestClient(app);
-    client.setHeaders(clientHeaders);
-    const {
-      data: { renameCompetency },
-    } = await client.mutate<
-      { renameCompetency: unknown },
-      { id: string; title: string }
-    >(
+    const response = await execute<{ renameCompetency: unknown }>(
       gql`
         mutation ($id: ID!, $title: String!) {
           renameCompetency(id: $id, data: { title: $title }) {
+            __typename
             ... on BaseError {
               code
               path
@@ -543,61 +391,32 @@ describe('renameCompetency', () => {
         },
       },
     );
-    expect(renameCompetency).toMatchObject({
+    expect(response).toHaveProperty(
+      'data.renameCompetency.__typename',
+      'InputError',
+    );
+    expect(response.data.renameCompetency).toMatchObject({
       code: 'valueNotUnique',
       path: ['title'],
     });
   });
 
   test('no error on duplicate title not within same parent', async () => {
-    const { clientHeaders, languageCode, userId } = await createSpecContext();
+    const person = await createPersonFixture();
 
-    const parent1 = await prisma.competency.create({
-      data: {
-        createdById: userId,
-        updatedById: userId,
-        translations: {
-          create: { languageCode, title: 'Hello Parent 1!' },
-        },
-      },
+    const parent1 = await createCompetencyFixture({ title: 'Hello Parent 1!' });
+    await createCompetencyFixture({
+      title: 'Hello Child 1!',
+      parentId: parent1.id,
     });
-    await prisma.competency.create({
-      data: {
-        createdById: userId,
-        updatedById: userId,
-        parentCompetencyId: parent1.id,
-        translations: {
-          create: { languageCode, title: 'Hello Child 1!' },
-        },
-      },
+
+    const parent2 = await createCompetencyFixture({ title: 'Hello Parent 2!' });
+    const child2 = await createCompetencyFixture({
+      title: 'Hello Child 2!',
+      parentId: parent2.id,
     });
-    const parent2 = await prisma.competency.create({
-      data: {
-        createdById: userId,
-        updatedById: userId,
-        translations: {
-          create: { languageCode, title: 'Hello Parent 2!' },
-        },
-      },
-    });
-    const child2 = await prisma.competency.create({
-      data: {
-        createdById: userId,
-        updatedById: userId,
-        parentCompetencyId: parent2.id,
-        translations: {
-          create: { languageCode, title: 'Hello Child 2!' },
-        },
-      },
-    });
-    const client = createMercuriusTestClient(app);
-    client.setHeaders(clientHeaders);
-    const {
-      data: { renameCompetency },
-    } = await client.mutate<
-      { renameCompetency: unknown },
-      { id: string; title: string }
-    >(
+
+    const response = await execute<{ renameCompetency: unknown }>(
       gql`
         mutation ($id: ID!, $title: String!) {
           renameCompetency(id: $id, data: { title: $title }) {
@@ -610,29 +429,20 @@ describe('renameCompetency', () => {
         }
       `,
       {
+        spec: { userId: person.id },
         variables: {
           id: child2.id,
           title: 'Hello Child 1!',
         },
       },
     );
-    expect(renameCompetency).toHaveProperty('competency.id');
+    expect(response).toHaveProperty('data.renameCompetency.competency');
   });
 
   test('should rename competency', async () => {
-    const { clientHeaders, domainContext } = await createSpecContext();
-    const competency = await CompetencyService.createCompetency(
-      { title: 'Hello World!' },
-      domainContext,
-    );
-    const client = createMercuriusTestClient(app);
-    client.setHeaders(clientHeaders);
-    const {
-      data: { renameCompetency },
-    } = await client.mutate<
-      { renameCompetency: unknown },
-      { id: string; title: string }
-    >(
+    const person = await createPersonFixture();
+    const competency = await createCompetencyFixture();
+    const response = await execute<{ renameCompetency: unknown }>(
       gql`
         mutation ($id: ID!, $title: String!) {
           renameCompetency(id: $id, data: { title: $title }) {
@@ -645,14 +455,15 @@ describe('renameCompetency', () => {
         }
       `,
       {
+        spec: { userId: person.id },
         variables: {
           id: competency.id,
           title: 'Hello Universe!',
         },
       },
     );
-    expect(renameCompetency).toHaveProperty(
-      'competency.title',
+    expect(response).toHaveProperty(
+      'data.renameCompetency.competency.title',
       'Hello Universe!',
     );
   });

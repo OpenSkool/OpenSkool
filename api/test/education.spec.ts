@@ -1,17 +1,15 @@
 import { faker } from '@faker-js/faker';
 import { Language } from '@prisma/client';
 import gql from 'graphql-tag';
-import { createMercuriusTestClient } from 'mercurius-integration-testing';
 import { expect, test } from 'vitest';
 
-import app from '../src/app';
 import { NexusGenFieldTypes } from '../src/generated/nexus';
 import { prisma } from '../src/prisma';
+import { execute } from './client';
 
 test('create educations', async () => {
   const title = faker.commerce.productName();
-  const client = createMercuriusTestClient(app);
-  const response = await client.mutate<
+  const response = await execute<
     { createEducation: Pick<NexusGenFieldTypes['Education'], 'id' | 'title'> },
     { title: string }
   >(
@@ -51,8 +49,7 @@ test('update education', async () => {
     },
   });
   const title = faker.commerce.productName();
-  const client = createMercuriusTestClient(app);
-  const response = await client.mutate<
+  const response = await execute<
     { updateEducation: Pick<NexusGenFieldTypes['Education'], 'id' | 'title'> },
     { id: string; title: string }
   >(
@@ -91,8 +88,7 @@ test('delete education', async () => {
       },
     },
   });
-  const client = createMercuriusTestClient(app);
-  const response = await client.mutate<
+  const response = await execute<
     { deleteEducation: Pick<NexusGenFieldTypes['Education'], 'id'> },
     { id: string }
   >(
