@@ -1,9 +1,8 @@
-import type { IncomingHttpHeaders } from 'http';
-
+import { createServer } from '@graphql-yoga/common';
 import { DocumentNode, GraphQLError } from 'graphql';
-import { createMercuriusTestClient } from 'mercurius-integration-testing';
 
-import app from '../src/app';
+import schema from '../src/schema';
+import type { Context } from '../src/schema/context';
 import { createPersonFixture } from './fixtures';
 
 export interface GraphQlResponse<TData> {
@@ -24,16 +23,34 @@ export async function execute<
   document: DocumentNode,
   { spec, variables }: { spec?: SpecContext; variables?: TVariables },
 ): Promise<GraphQlResponse<TData>> {
-  const client = createMercuriusTestClient(app);
-  const headers: IncomingHttpHeaders = {};
-  if (spec == null || spec.userId !== false) {
-    const { id: userId } =
-      spec?.userId == null ? await createPersonFixture() : { id: spec.userId };
+  const yoga = createServer<Context>({
+    maskedErrors: false,
+    schema,
+  });
+  const headers: HeadersInit = {};
+  let userId: string | null = null;
+  if (spec?.userId == null) {
+    const person = await createPersonFixture();
+    userId = person.id;
+  } else if (spec.userId !== false) {
+    userId = spec.userId;
+  }
+  if (userId != null) {
     headers.authorization = `demo-user-id: ${userId}`;
   }
   if (spec?.locale != null) {
     headers['accept-language'] = spec.locale;
   }
-  client.setHeaders(headers);
-  return client.query<TData, TVariables>(document, { variables });
+  const { executionResult } = await yoga.inject<TData, TVariables>({
+    document,
+    headers,
+    serverContext: {
+      locale: spec?.locale ?? 'en',
+      reply: {} as any,
+      request: {} as any,
+      userId,
+    },
+    variables,
+  });
+  return executionResult as unknown as GraphQlResponse<TData>;
 }
