@@ -1,5 +1,3 @@
-import mercurius from 'mercurius';
-
 export const HTTP_STATUS_BAD_REQUEST = 400;
 
 export const HTTP_STATUS_UNAUTHORIZED = 401;
@@ -16,9 +14,15 @@ interface AppErrorOptions {
   statusCode?: number;
 }
 
-export class AppError extends mercurius.ErrorWithProps {
+export class AppError extends Error {
+  public extensions?: AppErrorExtensions;
+
+  public statusCode?: number;
+
   constructor(message: string, options?: AppErrorOptions) {
-    super(message, options?.extensions, options?.statusCode);
+    super(message);
+    this.extensions = options?.extensions;
+    this.statusCode = options?.statusCode;
     this.cause = options?.cause;
     this.name = 'AppError';
   }
