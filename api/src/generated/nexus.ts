@@ -6,7 +6,11 @@
 import type { Context } from './../schema/context';
 import type { BaseErrorModel } from './../schema/types/errors';
 import type { NodeModel } from './../schema/types/interfaces';
-import type { CompetencyModel, EducationModel } from './../domain/source-types';
+import type {
+  CompetencyModel,
+  CompetencyFrameworkModel,
+  EducationModel,
+} from './../domain/source-types';
 import type {
   CreateCompetencyPayloadModel,
   RenameCompetencyPayloadModel,
@@ -69,6 +73,7 @@ export interface NexusGenScalars {
 
 export interface NexusGenObjects {
   Competency: CompetencyModel;
+  CompetencyFramework: CompetencyFrameworkModel;
   CreateCompetencySuccessPayload: {
     // root type
     competency: NexusGenRootTypes['Competency']; // Competency!
@@ -107,12 +112,18 @@ export interface NexusGenFieldTypes {
     // field return type
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     createdBy: NexusGenRootTypes['Person']; // Person!
+    framework: NexusGenRootTypes['CompetencyFramework']; // CompetencyFramework!
     id: string; // ID!
     parent: NexusGenRootTypes['Competency'] | null; // Competency
     subCompetencies: NexusGenRootTypes['Competency'][] | null; // [Competency!]
     title: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
     updatedBy: NexusGenRootTypes['Person']; // Person!
+  };
+  CompetencyFramework: {
+    // field return type
+    competencies: NexusGenRootTypes['Competency'][]; // [Competency!]!
+    title: string; // String!
   };
   CreateCompetencySuccessPayload: {
     // field return type
@@ -144,6 +155,7 @@ export interface NexusGenFieldTypes {
   };
   Query: {
     // field return type
+    allCompetencyFrameworks: NexusGenRootTypes['CompetencyFramework'][]; // [CompetencyFramework!]!
     allEducations: NexusGenRootTypes['Education'][]; // [Education!]!
     allPeople: NexusGenRootTypes['Person'][]; // [Person!]!
     allRootCompetencies: NexusGenRootTypes['Competency'][]; // [Competency!]!
@@ -191,12 +203,18 @@ export interface NexusGenFieldTypeNames {
     // field return type name
     createdAt: 'DateTime';
     createdBy: 'Person';
+    framework: 'CompetencyFramework';
     id: 'ID';
     parent: 'Competency';
     subCompetencies: 'Competency';
     title: 'String';
     updatedAt: 'DateTime';
     updatedBy: 'Person';
+  };
+  CompetencyFramework: {
+    // field return type name
+    competencies: 'Competency';
+    title: 'String';
   };
   CreateCompetencySuccessPayload: {
     // field return type name
@@ -228,6 +246,7 @@ export interface NexusGenFieldTypeNames {
   };
   Query: {
     // field return type name
+    allCompetencyFrameworks: 'CompetencyFramework';
     allEducations: 'Education';
     allPeople: 'Person';
     allRootCompetencies: 'Competency';

@@ -19,6 +19,23 @@ import {
 import { Context } from '../context';
 import { BaseErrorModel } from './errors';
 
+export const CompetencyFramework = objectType({
+  name: 'CompetencyFramework',
+  definition(t) {
+    t.nonNull.string('title');
+    t.nonNull.field('competencies', {
+      type: list(nonNull('Competency')),
+      async resolve(parent, argumentz, ctx) {
+        return CompetencyService.getFrameworkCompetencies(parent.id, ctx);
+      },
+    });
+  },
+  sourceType: {
+    export: 'CompetencyFrameworkModel',
+    module: require.resolve('../../domain/source-types'),
+  },
+});
+
 export const Competency = objectType({
   name: 'Competency',
   description:
@@ -26,6 +43,19 @@ export const Competency = objectType({
   definition(t) {
     t.implements('Node');
     t.implements('Accountable');
+    t.nonNull.field('framework', {
+      type: 'CompetencyFramework',
+      async resolve(parent, argumentz, ctx) {
+        const framework = await CompetencyService.findFrameworkById(
+          parent.id,
+          ctx,
+        );
+        if (framework == null) {
+          throw new Error('expected framework to be found');
+        }
+        return framework;
+      },
+    });
     t.field('parent', {
       type: 'Competency',
       async resolve(parent, argumentz, ctx) {
@@ -61,6 +91,12 @@ export const Competency = objectType({
 export const CompetencyQueries = extendType({
   type: 'Query',
   definition: (t) => {
+    t.nonNull.field('allCompetencyFrameworks', {
+      async resolve(root, argumentz, ctx) {
+        return CompetencyService.getAllFrameworks(ctx);
+      },
+      type: list(nonNull('CompetencyFramework')),
+    });
     t.nonNull.field('allRootCompetencies', {
       async resolve(root, argumentz, ctx) {
         return CompetencyService.getAllRootCompetencies(ctx);

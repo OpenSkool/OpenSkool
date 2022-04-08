@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { CompetencyFramework, PrismaClient } from '@prisma/client';
 
 import { CompetencyFixture, competencyFixtures } from './fixtures/competencies';
 
@@ -8,12 +8,14 @@ const sample = <T>(array: T[]): T =>
   array[Math.floor(Math.random() * array.length)] as T;
 
 async function createCompetency(
+  framework: CompetencyFramework,
   fixture: CompetencyFixture,
   peopleIds: string[],
   nesting?: { root: string; parent: string },
 ): Promise<void> {
   const competency = await prisma.competency.create({
     data: {
+      competencyFrameworkId: framework.id,
       createdById: sample(peopleIds),
       updatedById: sample(peopleIds),
       parentCompetencyId: nesting?.parent,
@@ -21,7 +23,7 @@ async function createCompetency(
     },
   });
   if (Array.isArray(fixture.children)) {
-    await createCompetencies(fixture.children, peopleIds, {
+    await createCompetencies(framework, fixture.children, peopleIds, {
       parent: competency.id,
       root: nesting?.root ?? competency.id,
     });
@@ -29,12 +31,13 @@ async function createCompetency(
 }
 
 async function createCompetencies(
+  framework: CompetencyFramework,
   fixtures: CompetencyFixture[],
   peopleIds: string[],
   nesting?: { root: string; parent: string },
 ): Promise<void> {
   for (const fixture of fixtures) {
-    await createCompetency(fixture, peopleIds, nesting);
+    await createCompetency(framework, fixture, peopleIds, nesting);
   }
 }
 
@@ -53,8 +56,17 @@ async function main(): Promise<void> {
   const peopleWithIds = await prisma.person.findMany({ select: { id: true } });
   const peopleIds = peopleWithIds.map(({ id }) => id);
 
+  await prisma.competencyFramework.deleteMany({ where: {} });
+  const competencyFramework = await prisma.competencyFramework.create({
+    data: {
+      createdById: sample(peopleIds),
+      updatedById: sample(peopleIds),
+      translations: { create: { languageCode: 'EN', title: 'CanMEDS 2015' } },
+    },
+  });
+
   await prisma.competency.deleteMany({ where: {} });
-  await createCompetencies(competencyFixtures, peopleIds);
+  await createCompetencies(competencyFramework, competencyFixtures, peopleIds);
 
   await prisma.education.deleteMany({ where: {} });
   for (const educationTitle of ['Informatics', 'Chemistry', 'Medicine']) {
