@@ -100,16 +100,7 @@ async function handleFormSubmit(): Promise<void> {
         break;
       }
       case 'RenameCompetencySuccessPayload':
-        switch (competency.value.__typename) {
-          default:
-            throw new Error('unknown competency type');
-          case 'RootCompetency':
-            router.push('/manage/competencies');
-            break;
-          case 'NestedCompetency':
-            router.push(`/manage/competencies/${props.id}`);
-            break;
-        }
+        router.push(`/manage/competencies/${props.id}`);
         break;
     }
   } catch (error) {
