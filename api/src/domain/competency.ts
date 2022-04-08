@@ -134,42 +134,6 @@ export async function getNestedCompetenciesByRootId(
   }
 }
 
-export async function findRandomCompetency(
-  context: DomainContext,
-): Promise<CompetencyModel | null> {
-  const languageCode = mapLocaleToLanguageCode(context.locale);
-
-  const competencyCount = await prisma.competency.count();
-  const skip = Math.floor(Math.random() * competencyCount);
-  const competencies = await prisma.competency.findMany({
-    skip,
-    take: 1,
-
-    include: { translations: true },
-  });
-  const competency = first(competencies);
-  return competency == null ? null : mapToModel(competency, languageCode);
-}
-
-export async function findRandomRootCompetency(
-  context: DomainContext,
-): Promise<CompetencyModel | null> {
-  const languageCode = mapLocaleToLanguageCode(context.locale);
-
-  const rootCompetencyCount = await prisma.competency.count({
-    where: { parentCompetencyId: null },
-  });
-  const skip = Math.floor(Math.random() * rootCompetencyCount);
-  const competencies = await prisma.competency.findMany({
-    skip,
-    take: 1,
-
-    include: { translations: true },
-  });
-  const competency = first(competencies);
-  return competency == null ? null : mapToModel(competency, languageCode);
-}
-
 export async function findCompetencyById(
   id: string,
   context: DomainContext,
