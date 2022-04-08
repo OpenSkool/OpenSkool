@@ -29,6 +29,39 @@ services:
     volumes:
       - os-api-db-test:/var/lib/postgresql/data
 
+  auth:
+    command: start-dev
+    container_name: os-auth
+    environment:
+      KC_DB: postgres
+      KC_DB_PASSWORD: keycloak
+      KC_DB_SCHEMA: public
+      KC_DB_URL: jdbc:postgresql://auth-db/keycloak
+      KC_DB_USERNAME: keycloak
+      KEYCLOAK_ADMIN: keycloak
+      KEYCLOAK_ADMIN_PASSWORD: keycloak
+    image: quay.io/keycloak/keycloak:17.0.1
+    networks:
+      - openskool
+    ports:
+      - 8080:8080
+    restart: unless-stopped
+
+  auth-db:
+    container_name: os-auth-db
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: keycloak
+    image: postgres:12
+    networks:
+      - openskool
+    ports:
+      - 5434:5432
+    restart: unless-stopped
+    volumes:
+      - os-auth-db:/var/lib/postgresql/data
+
 networks:
   openskool:
     name: openskool
@@ -36,3 +69,4 @@ networks:
 volumes:
   os-api-db:
   os-api-db-test:
+  os-auth-db:
