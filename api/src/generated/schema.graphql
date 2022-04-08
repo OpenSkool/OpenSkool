@@ -20,7 +20,7 @@ interface BaseError {
 """
 A competency can be an individual competence or a grouping of competences.
 """
-interface Competency implements Accountable & Node {
+type Competency implements Accountable & Node {
   createdAt: DateTime!
   createdBy: Person!
 
@@ -28,7 +28,8 @@ interface Competency implements Accountable & Node {
   A CUID for a resource
   """
   id: ID!
-  subCompetencies: [NestedCompetency!]
+  parent: Competency
+  subCompetencies: [Competency!]
   title: String!
   updatedAt: DateTime!
   updatedBy: Person!
@@ -86,24 +87,6 @@ type Mutation {
 }
 
 """
-A competency with a parent.
-"""
-type NestedCompetency implements Accountable & Competency & Node {
-  createdAt: DateTime!
-  createdBy: Person!
-
-  """
-  A CUID for a resource
-  """
-  id: ID!
-  parent: Competency!
-  subCompetencies: [NestedCompetency!]
-  title: String!
-  updatedAt: DateTime!
-  updatedBy: Person!
-}
-
-"""
 A node is any resource that can be identified via an ID.
 """
 interface Node {
@@ -127,7 +110,7 @@ interface Person implements Node {
 type Query {
   allEducations: [Education!]!
   allPeople: [Person!]!
-  allRootCompetencies: [RootCompetency!]!
+  allRootCompetencies: [Competency!]!
   competency(id: ID!): Competency
 }
 
@@ -139,24 +122,6 @@ union RenameCompetencyPayload = InputError | RenameCompetencySuccessPayload
 
 type RenameCompetencySuccessPayload {
   competency: Competency!
-}
-
-"""
-A competency without a parent.
-"""
-type RootCompetency implements Accountable & Competency & Node {
-  createdAt: DateTime!
-  createdBy: Person!
-
-  """
-  A CUID for a resource
-  """
-  id: ID!
-  nestedCompetencies: [NestedCompetency!]!
-  subCompetencies: [NestedCompetency!]
-  title: String!
-  updatedAt: DateTime!
-  updatedBy: Person!
 }
 
 type Teacher implements Node & Person {

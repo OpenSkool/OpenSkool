@@ -36,16 +36,19 @@ export type BaseError = {
 };
 
 /** A competency can be an individual competence or a grouping of competences. */
-export type Competency = {
-  createdAt: Scalars['DateTime'];
-  createdBy: Person;
-  /** A CUID for a resource */
-  id: Scalars['ID'];
-  subCompetencies?: Maybe<Array<NestedCompetency>>;
-  title: Scalars['String'];
-  updatedAt: Scalars['DateTime'];
-  updatedBy: Person;
-};
+export type Competency = Accountable &
+  Node & {
+    __typename?: 'Competency';
+    createdAt: Scalars['DateTime'];
+    createdBy: Person;
+    /** A CUID for a resource */
+    id: Scalars['ID'];
+    parent?: Maybe<Competency>;
+    subCompetencies?: Maybe<Array<Competency>>;
+    title: Scalars['String'];
+    updatedAt: Scalars['DateTime'];
+    updatedBy: Person;
+  };
 
 export type CreateCompetencyInput = {
   parentId?: InputMaybe<Scalars['ID']>;
@@ -120,22 +123,6 @@ export type MutationUpdateEducationArgs = {
   id: Scalars['ID'];
 };
 
-/** A competency with a parent. */
-export type NestedCompetency = Accountable &
-  Competency &
-  Node & {
-    __typename?: 'NestedCompetency';
-    createdAt: Scalars['DateTime'];
-    createdBy: Person;
-    /** A CUID for a resource */
-    id: Scalars['ID'];
-    parent: Competency;
-    subCompetencies?: Maybe<Array<NestedCompetency>>;
-    title: Scalars['String'];
-    updatedAt: Scalars['DateTime'];
-    updatedBy: Person;
-  };
-
 /** A node is any resource that can be identified via an ID. */
 export type Node = {
   /** A CUID for a resource */
@@ -154,7 +141,7 @@ export type Query = {
   __typename?: 'Query';
   allEducations: Array<Education>;
   allPeople: Array<Person>;
-  allRootCompetencies: Array<RootCompetency>;
+  allRootCompetencies: Array<Competency>;
   competency?: Maybe<Competency>;
 };
 
@@ -174,22 +161,6 @@ export type RenameCompetencySuccessPayload = {
   __typename?: 'RenameCompetencySuccessPayload';
   competency: Competency;
 };
-
-/** A competency without a parent. */
-export type RootCompetency = Accountable &
-  Competency &
-  Node & {
-    __typename?: 'RootCompetency';
-    createdAt: Scalars['DateTime'];
-    createdBy: Person;
-    /** A CUID for a resource */
-    id: Scalars['ID'];
-    nestedCompetencies: Array<NestedCompetency>;
-    subCompetencies?: Maybe<Array<NestedCompetency>>;
-    title: Scalars['String'];
-    updatedAt: Scalars['DateTime'];
-    updatedBy: Person;
-  };
 
 export type Teacher = Node &
   Person & {
@@ -217,9 +188,7 @@ export type CreateCompetencyMutation = {
   createCompetency:
     | {
         __typename?: 'CreateCompetencySuccessPayload';
-        competency:
-          | { __typename?: 'NestedCompetency'; id: string }
-          | { __typename?: 'RootCompetency'; id: string };
+        competency: { __typename?: 'Competency'; id: string };
       }
     | {
         __typename?: 'InputError';
@@ -242,10 +211,7 @@ export type GetCreateCompetencyParentQueryVariables = Exact<{
 
 export type GetCreateCompetencyParentQuery = {
   __typename?: 'Query';
-  competency?:
-    | { __typename?: 'NestedCompetency'; title: string }
-    | { __typename?: 'RootCompetency'; title: string }
-    | null;
+  competency?: { __typename?: 'Competency'; title: string } | null;
 };
 
 export type GetEditCompetencyQueryVariables = Exact<{
@@ -254,10 +220,7 @@ export type GetEditCompetencyQueryVariables = Exact<{
 
 export type GetEditCompetencyQuery = {
   __typename?: 'Query';
-  competency?:
-    | { __typename?: 'NestedCompetency'; title: string }
-    | { __typename?: 'RootCompetency'; title: string }
-    | null;
+  competency?: { __typename?: 'Competency'; title: string } | null;
 };
 
 export type RenameCompetencyMutationVariables = Exact<{
@@ -276,9 +239,7 @@ export type RenameCompetencyMutation = {
       }
     | {
         __typename?: 'RenameCompetencySuccessPayload';
-        competency:
-          | { __typename?: 'NestedCompetency'; id: string }
-          | { __typename?: 'RootCompetency'; id: string };
+        competency: { __typename?: 'Competency'; id: string };
       };
 };
 
@@ -288,31 +249,17 @@ export type GetSubCompetenciesQueryVariables = Exact<{
 
 export type GetSubCompetenciesQuery = {
   __typename?: 'Query';
-  competency?:
-    | {
-        __typename?: 'NestedCompetency';
-        id: string;
-        title: string;
-        parent:
-          | { __typename?: 'NestedCompetency'; id: string; title: string }
-          | { __typename?: 'RootCompetency'; id: string; title: string };
-        subCompetencies?: Array<{
-          __typename?: 'NestedCompetency';
-          id: string;
-          title: string;
-        }> | null;
-      }
-    | {
-        __typename?: 'RootCompetency';
-        id: string;
-        title: string;
-        subCompetencies?: Array<{
-          __typename?: 'NestedCompetency';
-          id: string;
-          title: string;
-        }> | null;
-      }
-    | null;
+  competency?: {
+    __typename?: 'Competency';
+    id: string;
+    title: string;
+    parent?: { __typename?: 'Competency'; id: string; title: string } | null;
+    subCompetencies?: Array<{
+      __typename?: 'Competency';
+      id: string;
+      title: string;
+    }> | null;
+  } | null;
 };
 
 export type DeleteCompetencyMutationVariables = Exact<{
@@ -321,10 +268,7 @@ export type DeleteCompetencyMutationVariables = Exact<{
 
 export type DeleteCompetencyMutation = {
   __typename?: 'Mutation';
-  deleteCompetency?:
-    | { __typename?: 'NestedCompetency'; id: string }
-    | { __typename?: 'RootCompetency'; id: string }
-    | null;
+  deleteCompetency?: { __typename?: 'Competency'; id: string } | null;
 };
 
 export type GetAllRootCompetenciesQueryVariables = Exact<{
@@ -334,7 +278,7 @@ export type GetAllRootCompetenciesQueryVariables = Exact<{
 export type GetAllRootCompetenciesQuery = {
   __typename?: 'Query';
   allRootCompetencies: Array<{
-    __typename?: 'RootCompetency';
+    __typename?: 'Competency';
     id: string;
     title: string;
   }>;
@@ -707,7 +651,7 @@ export const GetSubCompetenciesDocument = {
                   kind: 'InlineFragment',
                   typeCondition: {
                     kind: 'NamedType',
-                    name: { kind: 'Name', value: 'NestedCompetency' },
+                    name: { kind: 'Name', value: 'Competency' },
                   },
                   selectionSet: {
                     kind: 'SelectionSet',

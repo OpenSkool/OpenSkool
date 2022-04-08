@@ -30,10 +30,6 @@ model Competency {
   updatedBy   Person?  @relation("CompetencyToPersonUpdated", fields: [updatedById], references: [id])
   updatedById String?
 
-  nestedCompetencies Competency[] @relation("RootCompetencyToCompetency")
-  rootCompetency     Competency?  @relation("RootCompetencyToCompetency", fields: [rootCompetencyId], references: [id])
-  rootCompetencyId   String?
-
   subCompetencies    Competency[] @relation("CompetencyToCompetency")
   parentCompetency   Competency?  @relation("CompetencyToCompetency", fields: [parentCompetencyId], onDelete: Cascade, references: [id])
   parentCompetencyId String?

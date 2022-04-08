@@ -28,7 +28,7 @@ const { error, loading, result } = useQuery<GetSubCompetenciesQuery>(
       competency(id: $id) {
         id
         title
-        ... on NestedCompetency {
+        ... on Competency {
           parent {
             id
             title
@@ -58,10 +58,7 @@ const { mutate: deleteCompetency } = useMutation<
 `);
 
 const parent = computed(() => {
-  if (
-    competency.value != null &&
-    competency.value.__typename === 'NestedCompetency'
-  ) {
+  if (competency.value?.parent != null) {
     return {
       title: competency.value.parent.title,
       url: `/manage/competencies/${competency.value.parent.id}`,

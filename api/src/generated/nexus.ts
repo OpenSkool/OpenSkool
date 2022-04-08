@@ -6,11 +6,11 @@
 import type { Context } from './../schema/context';
 import type { BaseErrorModel } from './../schema/types/errors';
 import type { NodeModel } from './../schema/types/interfaces';
+import type { CompetencyModel, EducationModel } from './../domain/source-types';
 import type {
   CreateCompetencyPayloadModel,
   RenameCompetencyPayloadModel,
 } from './../schema/types/competency';
-import type { CompetencyModel, EducationModel } from './../domain/source-types';
 import type { Person } from '@prisma/client';
 import type { core } from 'nexus';
 declare global {
@@ -68,6 +68,7 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
+  Competency: CompetencyModel;
   CreateCompetencySuccessPayload: {
     // root type
     competency: NexusGenRootTypes['Competency']; // Competency!
@@ -75,25 +76,17 @@ export interface NexusGenObjects {
   Education: EducationModel;
   InputError: BaseErrorModel;
   Mutation: {};
-  NestedCompetency: CompetencyModel;
   Query: {};
   RenameCompetencySuccessPayload: {
     // root type
     competency: NexusGenRootTypes['Competency']; // Competency!
   };
-  RootCompetency: CompetencyModel;
   Teacher: Person;
 }
 
 export interface NexusGenInterfaces {
-  Accountable:
-    | NexusGenRootTypes['Education']
-    | NexusGenRootTypes['NestedCompetency']
-    | NexusGenRootTypes['RootCompetency'];
+  Accountable: NexusGenRootTypes['Competency'] | NexusGenRootTypes['Education'];
   BaseError: NexusGenRootTypes['InputError'];
-  Competency:
-    | NexusGenRootTypes['NestedCompetency']
-    | NexusGenRootTypes['RootCompetency'];
   Node: NodeModel;
   Person: NexusGenRootTypes['Teacher'];
 }
@@ -110,6 +103,17 @@ export type NexusGenRootTypes = NexusGenInterfaces &
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars;
 
 export interface NexusGenFieldTypes {
+  Competency: {
+    // field return type
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    createdBy: NexusGenRootTypes['Person']; // Person!
+    id: string; // ID!
+    parent: NexusGenRootTypes['Competency'] | null; // Competency
+    subCompetencies: NexusGenRootTypes['Competency'][] | null; // [Competency!]
+    title: string; // String!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
+    updatedBy: NexusGenRootTypes['Person']; // Person!
+  };
   CreateCompetencySuccessPayload: {
     // field return type
     competency: NexusGenRootTypes['Competency']; // Competency!
@@ -138,38 +142,16 @@ export interface NexusGenFieldTypes {
     renameCompetency: NexusGenRootTypes['RenameCompetencyPayload']; // RenameCompetencyPayload!
     updateEducation: NexusGenRootTypes['Education'] | null; // Education
   };
-  NestedCompetency: {
-    // field return type
-    createdAt: NexusGenScalars['DateTime']; // DateTime!
-    createdBy: NexusGenRootTypes['Person']; // Person!
-    id: string; // ID!
-    parent: NexusGenRootTypes['Competency']; // Competency!
-    subCompetencies: NexusGenRootTypes['NestedCompetency'][] | null; // [NestedCompetency!]
-    title: string; // String!
-    updatedAt: NexusGenScalars['DateTime']; // DateTime!
-    updatedBy: NexusGenRootTypes['Person']; // Person!
-  };
   Query: {
     // field return type
     allEducations: NexusGenRootTypes['Education'][]; // [Education!]!
     allPeople: NexusGenRootTypes['Person'][]; // [Person!]!
-    allRootCompetencies: NexusGenRootTypes['RootCompetency'][]; // [RootCompetency!]!
+    allRootCompetencies: NexusGenRootTypes['Competency'][]; // [Competency!]!
     competency: NexusGenRootTypes['Competency'] | null; // Competency
   };
   RenameCompetencySuccessPayload: {
     // field return type
     competency: NexusGenRootTypes['Competency']; // Competency!
-  };
-  RootCompetency: {
-    // field return type
-    createdAt: NexusGenScalars['DateTime']; // DateTime!
-    createdBy: NexusGenRootTypes['Person']; // Person!
-    id: string; // ID!
-    nestedCompetencies: NexusGenRootTypes['NestedCompetency'][]; // [NestedCompetency!]!
-    subCompetencies: NexusGenRootTypes['NestedCompetency'][] | null; // [NestedCompetency!]
-    title: string; // String!
-    updatedAt: NexusGenScalars['DateTime']; // DateTime!
-    updatedBy: NexusGenRootTypes['Person']; // Person!
   };
   Teacher: {
     // field return type
@@ -191,16 +173,6 @@ export interface NexusGenFieldTypes {
     message: string; // String!
     path: string[] | null; // [String!]
   };
-  Competency: {
-    // field return type
-    createdAt: NexusGenScalars['DateTime']; // DateTime!
-    createdBy: NexusGenRootTypes['Person']; // Person!
-    id: string; // ID!
-    subCompetencies: NexusGenRootTypes['NestedCompetency'][] | null; // [NestedCompetency!]
-    title: string; // String!
-    updatedAt: NexusGenScalars['DateTime']; // DateTime!
-    updatedBy: NexusGenRootTypes['Person']; // Person!
-  };
   Node: {
     // field return type
     id: string; // ID!
@@ -215,6 +187,17 @@ export interface NexusGenFieldTypes {
 }
 
 export interface NexusGenFieldTypeNames {
+  Competency: {
+    // field return type name
+    createdAt: 'DateTime';
+    createdBy: 'Person';
+    id: 'ID';
+    parent: 'Competency';
+    subCompetencies: 'Competency';
+    title: 'String';
+    updatedAt: 'DateTime';
+    updatedBy: 'Person';
+  };
   CreateCompetencySuccessPayload: {
     // field return type name
     competency: 'Competency';
@@ -243,38 +226,16 @@ export interface NexusGenFieldTypeNames {
     renameCompetency: 'RenameCompetencyPayload';
     updateEducation: 'Education';
   };
-  NestedCompetency: {
-    // field return type name
-    createdAt: 'DateTime';
-    createdBy: 'Person';
-    id: 'ID';
-    parent: 'Competency';
-    subCompetencies: 'NestedCompetency';
-    title: 'String';
-    updatedAt: 'DateTime';
-    updatedBy: 'Person';
-  };
   Query: {
     // field return type name
     allEducations: 'Education';
     allPeople: 'Person';
-    allRootCompetencies: 'RootCompetency';
+    allRootCompetencies: 'Competency';
     competency: 'Competency';
   };
   RenameCompetencySuccessPayload: {
     // field return type name
     competency: 'Competency';
-  };
-  RootCompetency: {
-    // field return type name
-    createdAt: 'DateTime';
-    createdBy: 'Person';
-    id: 'ID';
-    nestedCompetencies: 'NestedCompetency';
-    subCompetencies: 'NestedCompetency';
-    title: 'String';
-    updatedAt: 'DateTime';
-    updatedBy: 'Person';
   };
   Teacher: {
     // field return type name
@@ -295,16 +256,6 @@ export interface NexusGenFieldTypeNames {
     code: 'String';
     message: 'String';
     path: 'String';
-  };
-  Competency: {
-    // field return type name
-    createdAt: 'DateTime';
-    createdBy: 'Person';
-    id: 'ID';
-    subCompetencies: 'NestedCompetency';
-    title: 'String';
-    updatedAt: 'DateTime';
-    updatedBy: 'Person';
   };
   Node: {
     // field return type name
@@ -359,20 +310,17 @@ export interface NexusGenArgTypes {
 export interface NexusGenAbstractTypeMembers {
   CreateCompetencyPayload: 'CreateCompetencySuccessPayload' | 'InputError';
   RenameCompetencyPayload: 'InputError' | 'RenameCompetencySuccessPayload';
-  Accountable: 'Education' | 'NestedCompetency' | 'RootCompetency';
+  Accountable: 'Competency' | 'Education';
   BaseError: 'InputError';
-  Competency: 'NestedCompetency' | 'RootCompetency';
-  Node: 'Education' | 'NestedCompetency' | 'RootCompetency' | 'Teacher';
+  Node: 'Competency' | 'Education' | 'Teacher';
   Person: 'Teacher';
 }
 
 export interface NexusGenTypeInterfaces {
+  Competency: 'Accountable' | 'Node';
   Education: 'Accountable' | 'Node';
   InputError: 'BaseError';
-  NestedCompetency: 'Accountable' | 'Competency' | 'Node';
-  RootCompetency: 'Accountable' | 'Competency' | 'Node';
   Teacher: 'Node' | 'Person';
-  Competency: 'Accountable' | 'Node';
   Person: 'Node';
 }
 
@@ -393,7 +341,6 @@ export type NexusGenObjectsUsingAbstractStrategyIsTypeOf = never;
 export type NexusGenAbstractsUsingStrategyResolveType =
   | 'Accountable'
   | 'BaseError'
-  | 'Competency'
   | 'CreateCompetencyPayload'
   | 'Node'
   | 'Person'

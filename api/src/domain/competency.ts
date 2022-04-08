@@ -45,7 +45,6 @@ export async function createCompetency(
 
   const title = validateSingleLineString(data.title);
   await assertUniqueTitle(title, { parentId: data.parentId }, context);
-  let rootId: string | undefined;
   if (data.parentId != null) {
     const parentCompetency = await prisma.competency.findUnique({
       where: { id: data.parentId },
@@ -58,7 +57,6 @@ export async function createCompetency(
         },
       });
     }
-    rootId = parentCompetency.rootCompetencyId ?? parentCompetency.id;
   }
   try {
     const competency = await prisma.competency.create({
@@ -66,7 +64,6 @@ export async function createCompetency(
         createdById: context.userId,
         updatedById: context.userId,
         parentCompetencyId: data.parentId,
-        rootCompetencyId: rootId,
         translations: { create: { languageCode, title } },
       },
       include: {
@@ -107,26 +104,6 @@ export async function getAllRootCompetencies(
       where: { parentCompetencyId: null },
     });
     return competencies.map((competency) =>
-      mapToModel(competency, languageCode),
-    );
-  } catch (error) {
-    handleServiceError(error);
-  }
-}
-
-export async function getNestedCompetenciesByRootId(
-  id: string,
-  context: DomainContext,
-): Promise<CompetencyModel[]> {
-  const languageCode = mapLocaleToLanguageCode(context.locale);
-
-  try {
-    const nestedCompetencies = await prisma.competency
-      .findUnique({ where: { id } })
-      .nestedCompetencies({
-        include: { translations: true },
-      });
-    return nestedCompetencies.map((competency) =>
       mapToModel(competency, languageCode),
     );
   } catch (error) {

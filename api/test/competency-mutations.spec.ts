@@ -180,7 +180,7 @@ describe('createCompetency', () => {
     );
     expect(response.data).toHaveProperty(
       'createCompetency.competency.__typename',
-      'RootCompetency',
+      'Competency',
     );
   });
 
@@ -210,7 +210,7 @@ describe('createCompetency', () => {
     expect(response.data).toHaveProperty('createCompetency.competency');
     expect(response.data.createCompetency).toHaveProperty(
       'competency.__typename',
-      'NestedCompetency',
+      'Competency',
     );
   });
 
