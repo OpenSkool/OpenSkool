@@ -12,7 +12,7 @@ const educations: Education[] = [
   { id: 3, name: 'Medicine' },
 ];
 
-const selectedEducation = ref<Education>(educations[0]);
+const selectedEducation = ref<Education>(educations[0] as Education);
 
 const isProjectAwesome = ref<boolean>(true);
 </script>

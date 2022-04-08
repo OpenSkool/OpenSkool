@@ -30,15 +30,16 @@ export function generateClasses(
   classes: Record<string, Record<string, string>>,
 ): FormKitClassFunctions {
   /* eslint-disable @typescript-eslint/no-explicit-any */
+  /* eslint-disable @typescript-eslint/no-non-null-assertion */
   const classesBySectionKey: Record<string, Record<string, any>> = {};
   for (const type of Object.keys(classes)) {
-    for (const sectionKey of Object.keys(classes[type])) {
+    for (const sectionKey of Object.keys(classes[type]!)) {
       classesBySectionKey[sectionKey] ??= {};
-      classesBySectionKey[sectionKey][type] = classes[type][sectionKey];
+      classesBySectionKey[sectionKey]![type] = classes[type]![sectionKey];
     }
   }
   for (const sectionKey of Object.keys(classesBySectionKey)) {
-    const classesObject = classesBySectionKey[sectionKey];
+    const classesObject = classesBySectionKey[sectionKey]!;
     classesBySectionKey[sectionKey] = (node: FormKitNode): string =>
       formKitStates(node, classesObject);
   }
@@ -49,11 +50,10 @@ function formKitStates(
   node: FormKitNode,
   classesByType: Record<string, () => string>,
 ): string {
-  /* eslint-disable @typescript-eslint/no-unnecessary-condition */
   /* eslint-disable @typescript-eslint/restrict-plus-operands */
   /* eslint-disable @typescript-eslint/restrict-template-expressions */
   /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-  /* eslint-disable @typescript-eslint/strict-boolean-expressions */
+
   const { type } = node.props;
   let classList = '';
   if (classesByType.global) {

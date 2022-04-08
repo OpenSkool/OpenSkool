@@ -5,7 +5,7 @@ import { CompetencyFixture, competencyFixtures } from './fixtures/competencies';
 const prisma = new PrismaClient();
 
 const sample = <T>(array: T[]): T =>
-  array[Math.floor(Math.random() * array.length)];
+  array[Math.floor(Math.random() * array.length)] as T;
 
 async function createCompetency(
   fixture: CompetencyFixture,

@@ -15,6 +15,11 @@ export const useI18nStore = defineStore('i18n', () => {
       const parsedGlobEntries = parseLocalesGlob(globLoaderMap);
       for (const { loader, locale, namespace } of parsedGlobEntries) {
         const { default: messages } = await loader();
+        if (messages == null) {
+          throw new TypeError(
+            `locale (${namespace}) should return a default export`,
+          );
+        }
         mergeLocaleMessage(locale, namespace, messages);
       }
     },

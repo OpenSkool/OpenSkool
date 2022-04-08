@@ -25,6 +25,9 @@ export async function initI18n(): Promise<void> {
   for (const { locale, loader } of parseLocalesGlob(GLOBAL_LOCALES_GLOB)) {
     if (locale === initialLocale) {
       const { default: messages } = await loader();
+      if (messages == null) {
+        throw new TypeError('locale (global) should return a default export');
+      }
       mergeLocaleMessage(locale, 'global', messages);
     }
   }
