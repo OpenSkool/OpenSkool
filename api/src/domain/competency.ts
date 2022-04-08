@@ -5,6 +5,7 @@ import { Competency, CompetencyTranslation, Language } from '@prisma/client';
 import { AppValidationError } from '../errors';
 import { prisma } from '../prisma';
 import { SchemaValidationErrorCode } from '../schema/constants';
+import { first } from '../utils';
 import { DomainContext } from './context';
 import { handleServiceError, validateSingleLineString } from './helpers';
 import { mapLocaleToLanguageCode } from './helpers/language';
@@ -146,9 +147,8 @@ export async function findRandomCompetency(
 
     include: { translations: true },
   });
-  return competencies.length === 0
-    ? null
-    : mapToModel(competencies[0], languageCode);
+  const competency = first(competencies);
+  return competency == null ? null : mapToModel(competency, languageCode);
 }
 
 export async function findRandomRootCompetency(
@@ -166,9 +166,8 @@ export async function findRandomRootCompetency(
 
     include: { translations: true },
   });
-  return competencies.length === 0
-    ? null
-    : mapToModel(competencies[0], languageCode);
+  const competency = first(competencies);
+  return competency == null ? null : mapToModel(competency, languageCode);
 }
 
 export async function findCompetencyById(
@@ -251,7 +250,8 @@ async function assertUniqueTitle(
 ): Promise<void> | never {
   const languageCode = mapLocaleToLanguageCode(context.locale);
 
-  let siblingTitles: string[];
+  let siblingTitles: string[] = [];
+
   if (parentId == null) {
     const siblings = await prisma.competency.findMany({
       select: {
@@ -266,9 +266,13 @@ async function assertUniqueTitle(
         translations: { some: { languageCode } },
       },
     });
-    siblingTitles = siblings.map(
-      (competency) => competency.translations[0].title,
-    );
+    siblingTitles = siblings.reduce<string[]>((titles, competency) => {
+      const translation = first(competency.translations);
+      if (translation != null) {
+        titles.push(translation.title);
+      }
+      return titles;
+    }, []);
   } else {
     const siblings = await prisma.competency
       .findUnique({ where: { id: parentId } })
@@ -284,9 +288,13 @@ async function assertUniqueTitle(
           translations: { some: { languageCode } },
         },
       });
-    siblingTitles = siblings.map(
-      (competency) => competency.translations[0].title,
-    );
+    siblingTitles = siblings.reduce<string[]>((titles, competency) => {
+      const translation = first(competency.translations);
+      if (translation != null) {
+        titles.push(translation.title);
+      }
+      return titles;
+    }, []);
   }
   if (siblingTitles.includes(title)) {
     throw new AppValidationError('Title is not unique', {
