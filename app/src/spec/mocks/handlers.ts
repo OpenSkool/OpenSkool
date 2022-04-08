@@ -25,9 +25,14 @@ export default [
         createCompetency: {
           __typename: 'CreateCompetencySuccessPayload',
           competency: {
+            id: 'cuid',
+            competencyFramework: {
+              id: '1',
+              competencies: [],
+              title: 'CanMEDS 2015',
+            },
             createdAt: '2022-04-01T00:00:00.000Z',
             createdBy: {} as any,
-            id: 'cuid',
             title: variables.data.title,
             updatedAt: '2022-04-01T00:00:00.000Z',
             updatedBy: {} as any,
@@ -60,9 +65,14 @@ export default [
         renameCompetency: {
           __typename: 'RenameCompetencySuccessPayload',
           competency: {
+            id: 'cuid',
+            competencyFramework: {
+              id: '1',
+              competencies: [],
+              title: 'CanMEDS 2015',
+            },
             createdAt: '2022-04-01T00:00:00.000Z',
             createdBy: {} as any,
-            id: 'cuid',
             title: variables.data.title,
             updatedAt: '2022-04-01T00:00:00.000Z',
             updatedBy: {} as any,
@@ -93,7 +103,7 @@ export default [
         ctx.data({
           __typename: 'Query',
           competency: {
-            __typename: 'RootCompetency',
+            __typename: 'Competency',
             title: 'Informatics',
           },
         }),

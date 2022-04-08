@@ -12,6 +12,7 @@ import type {
   EducationModel,
 } from './../domain/source-types';
 import type {
+  CreateCompetencyFrameworkPayloadModel,
   CreateCompetencyPayloadModel,
   RenameCompetencyPayloadModel,
 } from './../schema/types/competency';
@@ -45,9 +46,23 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  CreateCompetencyFrameworkInput: {
+    // input type
+    title: string; // String!
+  };
   CreateCompetencyInput: {
     // input type
     parentId?: string | null; // ID
+    title: string; // String!
+  };
+  CreateNestedCompetencyInput: {
+    // input type
+    parentId: string; // ID!
+    title: string; // String!
+  };
+  CreateRootCompetencyInput: {
+    // input type
+    frameworkId: string; // ID!
     title: string; // String!
   };
   EducationInput: {
@@ -74,6 +89,10 @@ export interface NexusGenScalars {
 export interface NexusGenObjects {
   Competency: CompetencyModel;
   CompetencyFramework: CompetencyFrameworkModel;
+  CreateCompetencyFrameworkSuccessPayload: {
+    // root type
+    competencyFramework: NexusGenRootTypes['CompetencyFramework']; // CompetencyFramework!
+  };
   CreateCompetencySuccessPayload: {
     // root type
     competency: NexusGenRootTypes['Competency']; // Competency!
@@ -97,6 +116,7 @@ export interface NexusGenInterfaces {
 }
 
 export interface NexusGenUnions {
+  CreateCompetencyFrameworkPayload: CreateCompetencyFrameworkPayloadModel;
   CreateCompetencyPayload: CreateCompetencyPayloadModel;
   RenameCompetencyPayload: RenameCompetencyPayloadModel;
 }
@@ -110,9 +130,9 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars;
 export interface NexusGenFieldTypes {
   Competency: {
     // field return type
+    competencyFramework: NexusGenRootTypes['CompetencyFramework']; // CompetencyFramework!
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     createdBy: NexusGenRootTypes['Person']; // Person!
-    framework: NexusGenRootTypes['CompetencyFramework']; // CompetencyFramework!
     id: string; // ID!
     parent: NexusGenRootTypes['Competency'] | null; // Competency
     subCompetencies: NexusGenRootTypes['Competency'][] | null; // [Competency!]
@@ -123,7 +143,12 @@ export interface NexusGenFieldTypes {
   CompetencyFramework: {
     // field return type
     competencies: NexusGenRootTypes['Competency'][]; // [Competency!]!
+    id: string; // ID!
     title: string; // String!
+  };
+  CreateCompetencyFrameworkSuccessPayload: {
+    // field return type
+    competencyFramework: NexusGenRootTypes['CompetencyFramework']; // CompetencyFramework!
   };
   CreateCompetencySuccessPayload: {
     // field return type
@@ -147,7 +172,10 @@ export interface NexusGenFieldTypes {
   Mutation: {
     // field return type
     createCompetency: NexusGenRootTypes['CreateCompetencyPayload']; // CreateCompetencyPayload!
+    createCompetencyFramework: NexusGenRootTypes['CreateCompetencyFrameworkPayload']; // CreateCompetencyFrameworkPayload!
     createEducation: NexusGenRootTypes['Education'] | null; // Education
+    createNestedCompetency: NexusGenRootTypes['CreateCompetencyPayload']; // CreateCompetencyPayload!
+    createRootCompetency: NexusGenRootTypes['CreateCompetencyPayload']; // CreateCompetencyPayload!
     deleteCompetency: NexusGenRootTypes['Competency'] | null; // Competency
     deleteEducation: NexusGenRootTypes['Education'] | null; // Education
     renameCompetency: NexusGenRootTypes['RenameCompetencyPayload']; // RenameCompetencyPayload!
@@ -201,9 +229,9 @@ export interface NexusGenFieldTypes {
 export interface NexusGenFieldTypeNames {
   Competency: {
     // field return type name
+    competencyFramework: 'CompetencyFramework';
     createdAt: 'DateTime';
     createdBy: 'Person';
-    framework: 'CompetencyFramework';
     id: 'ID';
     parent: 'Competency';
     subCompetencies: 'Competency';
@@ -214,7 +242,12 @@ export interface NexusGenFieldTypeNames {
   CompetencyFramework: {
     // field return type name
     competencies: 'Competency';
+    id: 'ID';
     title: 'String';
+  };
+  CreateCompetencyFrameworkSuccessPayload: {
+    // field return type name
+    competencyFramework: 'CompetencyFramework';
   };
   CreateCompetencySuccessPayload: {
     // field return type name
@@ -238,7 +271,10 @@ export interface NexusGenFieldTypeNames {
   Mutation: {
     // field return type name
     createCompetency: 'CreateCompetencyPayload';
+    createCompetencyFramework: 'CreateCompetencyFrameworkPayload';
     createEducation: 'Education';
+    createNestedCompetency: 'CreateCompetencyPayload';
+    createRootCompetency: 'CreateCompetencyPayload';
     deleteCompetency: 'Competency';
     deleteEducation: 'Education';
     renameCompetency: 'RenameCompetencyPayload';
@@ -295,9 +331,21 @@ export interface NexusGenArgTypes {
       // args
       data: NexusGenInputs['CreateCompetencyInput']; // CreateCompetencyInput!
     };
+    createCompetencyFramework: {
+      // args
+      data: NexusGenInputs['CreateCompetencyFrameworkInput']; // CreateCompetencyFrameworkInput!
+    };
     createEducation: {
       // args
       data: NexusGenInputs['EducationInput']; // EducationInput!
+    };
+    createNestedCompetency: {
+      // args
+      data: NexusGenInputs['CreateNestedCompetencyInput']; // CreateNestedCompetencyInput!
+    };
+    createRootCompetency: {
+      // args
+      data: NexusGenInputs['CreateRootCompetencyInput']; // CreateRootCompetencyInput!
     };
     deleteCompetency: {
       // args
@@ -327,16 +375,20 @@ export interface NexusGenArgTypes {
 }
 
 export interface NexusGenAbstractTypeMembers {
+  CreateCompetencyFrameworkPayload:
+    | 'CreateCompetencyFrameworkSuccessPayload'
+    | 'InputError';
   CreateCompetencyPayload: 'CreateCompetencySuccessPayload' | 'InputError';
   RenameCompetencyPayload: 'InputError' | 'RenameCompetencySuccessPayload';
   Accountable: 'Competency' | 'Education';
   BaseError: 'InputError';
-  Node: 'Competency' | 'Education' | 'Teacher';
+  Node: 'Competency' | 'CompetencyFramework' | 'Education' | 'Teacher';
   Person: 'Teacher';
 }
 
 export interface NexusGenTypeInterfaces {
   Competency: 'Accountable' | 'Node';
+  CompetencyFramework: 'Node';
   Education: 'Accountable' | 'Node';
   InputError: 'BaseError';
   Teacher: 'Node' | 'Person';
@@ -360,6 +412,7 @@ export type NexusGenObjectsUsingAbstractStrategyIsTypeOf = never;
 export type NexusGenAbstractsUsingStrategyResolveType =
   | 'Accountable'
   | 'BaseError'
+  | 'CreateCompetencyFrameworkPayload'
   | 'CreateCompetencyPayload'
   | 'Node'
   | 'Person'

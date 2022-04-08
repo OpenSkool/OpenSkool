@@ -21,9 +21,9 @@ interface BaseError {
 A competency can be an individual competence or a grouping of competences.
 """
 type Competency implements Accountable & Node {
+  competencyFramework: CompetencyFramework!
   createdAt: DateTime!
   createdBy: Person!
-  framework: CompetencyFramework!
 
   """
   A CUID for a resource
@@ -36,9 +36,26 @@ type Competency implements Accountable & Node {
   updatedBy: Person!
 }
 
-type CompetencyFramework {
+type CompetencyFramework implements Node {
   competencies: [Competency!]!
+
+  """
+  A CUID for a resource
+  """
+  id: ID!
   title: String!
+}
+
+input CreateCompetencyFrameworkInput {
+  title: String!
+}
+
+union CreateCompetencyFrameworkPayload =
+    CreateCompetencyFrameworkSuccessPayload
+  | InputError
+
+type CreateCompetencyFrameworkSuccessPayload {
+  competencyFramework: CompetencyFramework!
 }
 
 input CreateCompetencyInput {
@@ -50,6 +67,16 @@ union CreateCompetencyPayload = CreateCompetencySuccessPayload | InputError
 
 type CreateCompetencySuccessPayload {
   competency: Competency!
+}
+
+input CreateNestedCompetencyInput {
+  parentId: ID!
+  title: String!
+}
+
+input CreateRootCompetencyInput {
+  frameworkId: ID!
+  title: String!
 }
 
 """
@@ -82,7 +109,16 @@ type InputError implements BaseError {
 
 type Mutation {
   createCompetency(data: CreateCompetencyInput!): CreateCompetencyPayload!
+  createCompetencyFramework(
+    data: CreateCompetencyFrameworkInput!
+  ): CreateCompetencyFrameworkPayload!
   createEducation(data: EducationInput!): Education
+  createNestedCompetency(
+    data: CreateNestedCompetencyInput!
+  ): CreateCompetencyPayload!
+  createRootCompetency(
+    data: CreateRootCompetencyInput!
+  ): CreateCompetencyPayload!
   deleteCompetency(id: ID!): Competency
   deleteEducation(id: ID!): Education
   renameCompetency(
