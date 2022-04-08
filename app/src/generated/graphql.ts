@@ -39,9 +39,9 @@ export type BaseError = {
 export type Competency = Accountable &
   Node & {
     __typename?: 'Competency';
+    competencyFramework: CompetencyFramework;
     createdAt: Scalars['DateTime'];
     createdBy: Person;
-    framework: CompetencyFramework;
     /** A CUID for a resource */
     id: Scalars['ID'];
     parent?: Maybe<Competency>;
@@ -51,10 +51,25 @@ export type Competency = Accountable &
     updatedBy: Person;
   };
 
-export type CompetencyFramework = {
+export type CompetencyFramework = Node & {
   __typename?: 'CompetencyFramework';
   competencies: Array<Competency>;
+  /** A CUID for a resource */
+  id: Scalars['ID'];
   title: Scalars['String'];
+};
+
+export type CreateCompetencyFrameworkInput = {
+  title: Scalars['String'];
+};
+
+export type CreateCompetencyFrameworkPayload =
+  | CreateCompetencyFrameworkSuccessPayload
+  | InputError;
+
+export type CreateCompetencyFrameworkSuccessPayload = {
+  __typename?: 'CreateCompetencyFrameworkSuccessPayload';
+  competencyFramework: CompetencyFramework;
 };
 
 export type CreateCompetencyInput = {
@@ -69,6 +84,16 @@ export type CreateCompetencyPayload =
 export type CreateCompetencySuccessPayload = {
   __typename?: 'CreateCompetencySuccessPayload';
   competency: Competency;
+};
+
+export type CreateNestedCompetencyInput = {
+  parentId: Scalars['ID'];
+  title: Scalars['String'];
+};
+
+export type CreateRootCompetencyInput = {
+  frameworkId: Scalars['ID'];
+  title: Scalars['String'];
 };
 
 export type Education = Accountable &
@@ -97,7 +122,10 @@ export type InputError = BaseError & {
 export type Mutation = {
   __typename?: 'Mutation';
   createCompetency: CreateCompetencyPayload;
+  createCompetencyFramework: CreateCompetencyFrameworkPayload;
   createEducation?: Maybe<Education>;
+  createNestedCompetency: CreateCompetencyPayload;
+  createRootCompetency: CreateCompetencyPayload;
   deleteCompetency?: Maybe<Competency>;
   deleteEducation?: Maybe<Education>;
   renameCompetency: RenameCompetencyPayload;
@@ -108,8 +136,20 @@ export type MutationCreateCompetencyArgs = {
   data: CreateCompetencyInput;
 };
 
+export type MutationCreateCompetencyFrameworkArgs = {
+  data: CreateCompetencyFrameworkInput;
+};
+
 export type MutationCreateEducationArgs = {
   data: EducationInput;
+};
+
+export type MutationCreateNestedCompetencyArgs = {
+  data: CreateNestedCompetencyInput;
+};
+
+export type MutationCreateRootCompetencyArgs = {
+  data: CreateRootCompetencyInput;
 };
 
 export type MutationDeleteCompetencyArgs = {

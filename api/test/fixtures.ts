@@ -1,6 +1,28 @@
-import { Competency, Language, Person } from '@prisma/client';
+import {
+  Competency,
+  CompetencyFramework,
+  Language,
+  Person,
+} from '@prisma/client';
 
 import { prisma } from '../src/prisma';
+
+export async function createCompetencyFrameworkFixture({
+  language = Language.EN,
+  title = 'Hello World!',
+}: {
+  language?: Language;
+  title?: string;
+} = {}): Promise<CompetencyFramework> {
+  const person = await createPersonFixture();
+  return prisma.competencyFramework.create({
+    data: {
+      createdById: person.id,
+      translations: { create: { languageCode: language, title } },
+      updatedById: person.id,
+    },
+  });
+}
 
 export async function createCompetencyFixture({
   language = Language.EN,

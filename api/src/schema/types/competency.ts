@@ -10,7 +10,10 @@ import {
 } from 'nexus';
 
 import { CompetencyService } from '../../domain';
-import type { CompetencyModel } from '../../domain/competency';
+import type {
+  CompetencyFrameworkModel,
+  CompetencyModel,
+} from '../../domain/competency';
 import {
   AppError,
   AppUnauthorizedError,
@@ -22,6 +25,7 @@ import { BaseErrorModel } from './errors';
 export const CompetencyFramework = objectType({
   name: 'CompetencyFramework',
   definition(t) {
+    t.implements('Node');
     t.nonNull.string('title');
     t.nonNull.field('competencies', {
       type: list(nonNull('Competency')),
@@ -43,7 +47,7 @@ export const Competency = objectType({
   definition(t) {
     t.implements('Node');
     t.implements('Accountable');
-    t.nonNull.field('framework', {
+    t.nonNull.field('competencyFramework', {
       type: 'CompetencyFramework',
       async resolve(parent, argumentz, ctx) {
         const framework = await CompetencyService.findFrameworkById(
@@ -113,6 +117,89 @@ export const CompetencyQueries = extendType({
   },
 });
 
+export const CreateCompetencyFrameworkInput = inputObjectType({
+  name: 'CreateCompetencyFrameworkInput',
+  definition(t) {
+    t.string('title');
+  },
+});
+
+export type CreateCompetencyFrameworkPayloadModel =
+  | BaseErrorModel
+  | { competencyFramework: CompetencyFrameworkModel };
+
+export const CreateCompetencyFrameworkPayload = unionType({
+  name: 'CreateCompetencyFrameworkPayload',
+  definition(t) {
+    t.members('InputError', 'CreateCompetencyFrameworkSuccessPayload');
+  },
+  resolveType: (item) => {
+    return 'competencyFramework' in item
+      ? 'CreateCompetencyFrameworkSuccessPayload'
+      : 'InputError';
+  },
+  sourceType: {
+    export: 'CreateCompetencyFrameworkPayloadModel',
+    module: __filename,
+  },
+});
+
+export const CreateCompetencyFrameworkSuccessPayload = objectType({
+  name: 'CreateCompetencyFrameworkSuccessPayload',
+  definition(t) {
+    t.nonNull.field('competencyFramework', { type: 'CompetencyFramework' });
+  },
+});
+
+export const CreateCompetencyFramework = mutationField(
+  'createCompetencyFramework',
+  {
+    type: nonNull('CreateCompetencyFrameworkPayload'),
+    args: {
+      data: 'CreateCompetencyFrameworkInput',
+    },
+    async resolve(root, { data }, ctx) {
+      if (ctx.userId == null) {
+        throw new AppUnauthorizedError();
+      }
+      try {
+        const competencyFramework =
+          await CompetencyService.createCompetencyFramework(
+            { title: data.title },
+            ctx,
+          );
+        return { competencyFramework };
+      } catch (error) {
+        if (error instanceof AppValidationError) {
+          return {
+            __typename: 'InputError',
+            code: error.extensions.code,
+            message: error.message,
+            path: error.extensions.path,
+          };
+        }
+        throw error as Error;
+      }
+    },
+  },
+);
+
+export const CreateNestedCompetencyInput = inputObjectType({
+  name: 'CreateNestedCompetencyInput',
+  definition(t) {
+    t.string('title');
+    t.id('parentId');
+  },
+});
+
+export const CreateRootCompetencyInput = inputObjectType({
+  name: 'CreateRootCompetencyInput',
+  definition(t) {
+    t.string('title');
+    t.id('frameworkId');
+  },
+});
+
 export const CreateCompetencyInput = inputObjectType({
   name: 'CreateCompetencyInput',
   definition(t) {
@@ -159,7 +246,70 @@ export const CreateCompetency = mutationField('createCompetency', {
     }
     try {
       const competency = await CompetencyService.createCompetency(
-        { title: data.title, parentId: data.parentId ?? undefined },
+        {
+          parentId: data.parentId ?? undefined,
+          title: data.title,
+        },
+        ctx,
+      );
+
+      return { competency };
+    } catch (error) {
+      if (error instanceof AppValidationError) {
+        return {
+          __typename: 'InputError',
+          code: error.extensions.code,
+          message: error.message,
+          path: error.extensions.path,
+        };
+      }
+      throw error as Error;
+    }
+  },
+});
+
+export const CreateNestedCompetency = mutationField('createNestedCompetency', {
+  type: nonNull('CreateCompetencyPayload'),
+  args: {
+    data: 'CreateNestedCompetencyInput',
+  },
+  async resolve(root, { data }, ctx) {
+    if (ctx.userId == null) {
+      throw new AppUnauthorizedError();
+    }
+    try {
+      const competency = await CompetencyService.createNestedCompetency(
+        data,
+        ctx,
+      );
+
+      return { competency };
+    } catch (error) {
+      if (error instanceof AppValidationError) {
+        return {
+          __typename: 'InputError',
+          code: error.extensions.code,
+          message: error.message,
+          path: error.extensions.path,
+        };
+      }
+      throw error as Error;
+    }
+  },
+});
+
+export const CreateRootCompetency = mutationField('createRootCompetency', {
+  type: nonNull('CreateCompetencyPayload'),
+  args: {
+    data: 'CreateRootCompetencyInput',
+  },
+  async resolve(root, { data }, ctx) {
+    if (ctx.userId == null) {
+      throw new AppUnauthorizedError();
+    }
+    try {
+      const competency = await CompetencyService.createRootCompetency(
+        data,
         ctx,
       );
       return { competency };

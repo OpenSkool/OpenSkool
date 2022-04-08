@@ -91,12 +91,14 @@ export async function createCompetency(
       });
     }
   }
+
   try {
     const competency = await prisma.competency.create({
       data: {
         createdById: context.userId,
         updatedById: context.userId,
         parentCompetencyId: data.parentId,
+
         translations: { create: { languageCode, title } },
       },
       include: {
@@ -104,6 +106,112 @@ export async function createCompetency(
       },
     });
     return mapCompetencyToModel(competency, languageCode);
+  } catch (error) {
+    handleServiceError(error);
+  }
+}
+
+export async function createNestedCompetency(
+  data: { parentId: string; title: string },
+  context: DomainContext,
+): Promise<CompetencyModel> {
+  const languageCode = mapLocaleToLanguageCode(context.locale);
+
+  const title = validateSingleLineString(data.title);
+  await assertUniqueTitle(title, { parentId: data.parentId }, context);
+
+  const parentCompetency = await prisma.competency.findUnique({
+    where: { id: data.parentId },
+    select: { id: true, competencyFrameworkId: true },
+  });
+  if (parentCompetency == null) {
+    throw new AppValidationError('Foreign key constraint failed', {
+      extensions: {
+        code: SchemaValidationErrorCode.VALUE_NOT_VALID,
+        path: ['parentId'],
+      },
+    });
+  }
+
+  try {
+    const competency = await prisma.competency.create({
+      data: {
+        createdById: context.userId,
+        updatedById: context.userId,
+        competencyFrameworkId: parentCompetency.competencyFrameworkId,
+        parentCompetencyId: parentCompetency.id,
+        translations: { create: { languageCode, title } },
+      },
+      include: {
+        translations: true,
+      },
+    });
+    return mapCompetencyToModel(competency, languageCode);
+  } catch (error) {
+    handleServiceError(error);
+  }
+}
+
+export async function createRootCompetency(
+  data: { frameworkId: string; title: string },
+  context: DomainContext,
+): Promise<CompetencyModel> {
+  const languageCode = mapLocaleToLanguageCode(context.locale);
+
+  const title = validateSingleLineString(data.title);
+  await assertUniqueTitle(title, { parentId: undefined }, context);
+
+  const framework = await prisma.competencyFramework.findUnique({
+    where: { id: data.frameworkId },
+    select: { id: true },
+  });
+  if (framework == null) {
+    throw new AppValidationError('Foreign key constraint failed', {
+      extensions: {
+        code: SchemaValidationErrorCode.VALUE_NOT_VALID,
+        path: ['frameworkId'],
+      },
+    });
+  }
+
+  try {
+    const competency = await prisma.competency.create({
+      data: {
+        createdById: context.userId,
+        updatedById: context.userId,
+        competencyFrameworkId: framework.id,
+        translations: { create: { languageCode, title } },
+      },
+      include: {
+        translations: true,
+      },
+    });
+    return mapCompetencyToModel(competency, languageCode);
+  } catch (error) {
+    handleServiceError(error);
+  }
+}
+
+export async function createCompetencyFramework(
+  data: { title: string },
+  context: DomainContext,
+): Promise<CompetencyFrameworkModel> {
+  const languageCode = mapLocaleToLanguageCode(context.locale);
+
+  const title = validateSingleLineString(data.title);
+
+  try {
+    const competencyFramework = await prisma.competencyFramework.create({
+      data: {
+        createdById: context.userId,
+        updatedById: context.userId,
+        translations: { create: { languageCode, title } },
+      },
+      include: {
+        translations: true,
+      },
+    });
+    return mapCompetencyFrameworkToModel(competencyFramework, languageCode);
   } catch (error) {
     handleServiceError(error);
   }
@@ -278,7 +386,7 @@ export async function updateCompetencyTranslations(
 
 async function assertUniqueTitle(
   title: string,
-  { id, parentId }: { id?: string; parentId?: string },
+  { id, parentId }: { id?: string; parentId: string | undefined },
   context: DomainContext,
 ): Promise<void> | never {
   const languageCode = mapLocaleToLanguageCode(context.locale);
