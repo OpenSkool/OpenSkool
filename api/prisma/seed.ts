@@ -17,7 +17,6 @@ async function createCompetency(
       createdById: sample(peopleIds),
       updatedById: sample(peopleIds),
       parentCompetencyId: nesting?.parent,
-      rootCompetencyId: nesting?.root,
       translations: { create: { languageCode: 'EN', title: fixture.title } },
     },
   });

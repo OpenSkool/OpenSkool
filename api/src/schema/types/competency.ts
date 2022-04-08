@@ -2,7 +2,6 @@ import {
   extendType,
   idArg,
   inputObjectType,
-  interfaceType,
   list,
   mutationField,
   nonNull,
@@ -20,40 +19,18 @@ import {
 import { Context } from '../context';
 import { BaseErrorModel } from './errors';
 
-export const Competency = interfaceType({
+export const Competency = objectType({
   name: 'Competency',
   description:
     'A competency can be an individual competence or a grouping of competences.',
   definition(t) {
     t.implements('Node');
     t.implements('Accountable');
-    t.field('subCompetencies', {
-      type: list(nonNull('NestedCompetency')),
-      async resolve(parent, argumentz, ctx) {
-        return CompetencyService.findSubCompetenciesByParentId(parent.id, ctx);
-      },
-    });
-    t.nonNull.string('title');
-  },
-  resolveType(competency) {
-    return competency.rootCompetencyId == null
-      ? 'RootCompetency'
-      : 'NestedCompetency';
-  },
-});
-
-export const NestedCompetency = objectType({
-  name: 'NestedCompetency',
-  description: 'A competency with a parent.',
-  definition(t) {
-    t.implements('Competency');
-    t.nonNull.field('parent', {
+    t.field('parent', {
       type: 'Competency',
       async resolve(parent, argumentz, ctx) {
         if (parent.parentCompetencyId == null) {
-          throw new AppError(
-            'expected NestedCompetency type to have a parent competency id',
-          );
+          return null;
         }
         const parentCompetency = await CompetencyService.findCompetencyById(
           parent.parentCompetencyId,
@@ -61,30 +38,19 @@ export const NestedCompetency = objectType({
         );
         if (parentCompetency == null) {
           throw new AppError(
-            'expected NestedCompetency type to have a parent competency',
+            'expected Competency type to have a parent competency',
           );
         }
         return parentCompetency;
       },
     });
-  },
-  sourceType: {
-    export: 'CompetencyModel',
-    module: require.resolve('../../domain/source-types'),
-  },
-});
-
-export const RootCompetency = objectType({
-  name: 'RootCompetency',
-  description: 'A competency without a parent.',
-  definition(t) {
-    t.implements('Competency');
-    t.nonNull.field('nestedCompetencies', {
-      type: list(nonNull('NestedCompetency')),
+    t.field('subCompetencies', {
+      type: list(nonNull('Competency')),
       async resolve(parent, argumentz, ctx) {
-        return CompetencyService.getNestedCompetenciesByRootId(parent.id, ctx);
+        return CompetencyService.findSubCompetenciesByParentId(parent.id, ctx);
       },
     });
+    t.nonNull.string('title');
   },
   sourceType: {
     export: 'CompetencyModel',
@@ -99,7 +65,7 @@ export const CompetencyQueries = extendType({
       async resolve(root, argumentz, ctx) {
         return CompetencyService.getAllRootCompetencies(ctx);
       },
-      type: list(nonNull('RootCompetency')),
+      type: list(nonNull('Competency')),
     });
     t.field('competency', {
       args: { id: idArg() },
