@@ -23,6 +23,7 @@ A competency can be an individual competence or a grouping of competences.
 type Competency implements Accountable & Node {
   createdAt: DateTime!
   createdBy: Person!
+  framework: CompetencyFramework!
 
   """
   A CUID for a resource
@@ -33,6 +34,11 @@ type Competency implements Accountable & Node {
   title: String!
   updatedAt: DateTime!
   updatedBy: Person!
+}
+
+type CompetencyFramework {
+  competencies: [Competency!]!
+  title: String!
 }
 
 input CreateCompetencyInput {
@@ -108,6 +114,7 @@ interface Person implements Node {
 }
 
 type Query {
+  allCompetencyFrameworks: [CompetencyFramework!]!
   allEducations: [Education!]!
   allPeople: [Person!]!
   allRootCompetencies: [Competency!]!

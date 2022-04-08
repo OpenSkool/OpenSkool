@@ -1,6 +1,12 @@
 import assert from 'assert';
 
-import { Competency, CompetencyTranslation, Language } from '@prisma/client';
+import {
+  Competency,
+  CompetencyFramework,
+  CompetencyFrameworkTranslation,
+  CompetencyTranslation,
+  Language,
+} from '@prisma/client';
 
 import { AppValidationError } from '../errors';
 import { prisma } from '../prisma';
@@ -14,14 +20,41 @@ export interface CompetencyModel
   extends Competency,
     Pick<CompetencyTranslation, 'title'> {}
 
+export interface CompetencyFrameworkModel
+  extends CompetencyFramework,
+    Pick<CompetencyTranslation, 'title'> {}
+
 type InternalCompetency = Competency & {
   translations: CompetencyTranslation[];
 };
 
-function mapToModel(
+type InternalCompetencyFramework = CompetencyFramework & {
+  translations: CompetencyFrameworkTranslation[];
+};
+
+function mapCompetencyToModel(
   competency: InternalCompetency,
   languageCode: Language,
 ): CompetencyModel {
+  const { translations, ...baseData } = competency;
+  const preferedTranslation = translations.find(
+    (translation) => translation.languageCode === languageCode,
+  );
+  const translation = preferedTranslation ?? translations[0];
+  assert(
+    translation,
+    `no translation found for competency id ${competency.id}`,
+  );
+  return {
+    ...baseData,
+    title: translation.title,
+  };
+}
+
+function mapCompetencyFrameworkToModel(
+  competency: InternalCompetencyFramework,
+  languageCode: Language,
+): CompetencyFrameworkModel {
   const { translations, ...baseData } = competency;
   const preferedTranslation = translations.find(
     (translation) => translation.languageCode === languageCode,
@@ -70,7 +103,7 @@ export async function createCompetency(
         translations: true,
       },
     });
-    return mapToModel(competency, languageCode);
+    return mapCompetencyToModel(competency, languageCode);
   } catch (error) {
     handleServiceError(error);
   }
@@ -87,7 +120,7 @@ export async function deleteCompetency(
       include: { translations: true },
       where: { id },
     });
-    return mapToModel(competency, languageCode);
+    return mapCompetencyToModel(competency, languageCode);
   } catch (error) {
     handleServiceError(error);
   }
@@ -104,7 +137,64 @@ export async function getAllRootCompetencies(
       where: { parentCompetencyId: null },
     });
     return competencies.map((competency) =>
-      mapToModel(competency, languageCode),
+      mapCompetencyToModel(competency, languageCode),
+    );
+  } catch (error) {
+    handleServiceError(error);
+  }
+}
+
+export async function getAllFrameworks(
+  context: DomainContext,
+): Promise<CompetencyFrameworkModel[]> {
+  const languageCode = mapLocaleToLanguageCode(context.locale);
+
+  try {
+    const competencyFrameworks = await prisma.competencyFramework.findMany({
+      include: { translations: true },
+    });
+    return competencyFrameworks.map((competencyFramework) =>
+      mapCompetencyFrameworkToModel(competencyFramework, languageCode),
+    );
+  } catch (error) {
+    handleServiceError(error);
+  }
+}
+
+export async function findFrameworkById(
+  id: string,
+  context: DomainContext,
+): Promise<CompetencyFrameworkModel | null> {
+  const languageCode = mapLocaleToLanguageCode(context.locale);
+
+  try {
+    const competency = await prisma.competency.findUnique({
+      include: { translations: true },
+      where: { id },
+    });
+    return competency == null
+      ? null
+      : mapCompetencyToModel(competency, languageCode);
+  } catch (error) {
+    handleServiceError(error);
+  }
+}
+
+export async function getFrameworkCompetencies(
+  id: string,
+  context: DomainContext,
+): Promise<CompetencyModel[]> {
+  const languageCode = mapLocaleToLanguageCode(context.locale);
+
+  try {
+    const competencies = await prisma.competencyFramework
+      .findUnique({ where: { id } })
+      .competencies({
+        where: { parentCompetencyId: null },
+        include: { translations: true },
+      });
+    return competencies.map((competency) =>
+      mapCompetencyToModel(competency, languageCode),
     );
   } catch (error) {
     handleServiceError(error);
@@ -122,7 +212,9 @@ export async function findCompetencyById(
       include: { translations: true },
       where: { id },
     });
-    return competency == null ? null : mapToModel(competency, languageCode);
+    return competency == null
+      ? null
+      : mapCompetencyToModel(competency, languageCode);
   } catch (error) {
     handleServiceError(error);
   }
@@ -144,7 +236,7 @@ export async function findSubCompetenciesByParentId(
       return null;
     }
     return subCompetencies.map((competency) =>
-      mapToModel(competency, languageCode),
+      mapCompetencyToModel(competency, languageCode),
     );
   } catch (error) {
     handleServiceError(error);
@@ -178,7 +270,7 @@ export async function updateCompetencyTranslations(
       include: { translations: true },
       where: { id },
     });
-    return mapToModel(competency, languageCode);
+    return mapCompetencyToModel(competency, languageCode);
   } catch (error) {
     handleServiceError(error);
   }

@@ -41,6 +41,7 @@ export type Competency = Accountable &
     __typename?: 'Competency';
     createdAt: Scalars['DateTime'];
     createdBy: Person;
+    framework: CompetencyFramework;
     /** A CUID for a resource */
     id: Scalars['ID'];
     parent?: Maybe<Competency>;
@@ -49,6 +50,12 @@ export type Competency = Accountable &
     updatedAt: Scalars['DateTime'];
     updatedBy: Person;
   };
+
+export type CompetencyFramework = {
+  __typename?: 'CompetencyFramework';
+  competencies: Array<Competency>;
+  title: Scalars['String'];
+};
 
 export type CreateCompetencyInput = {
   parentId?: InputMaybe<Scalars['ID']>;
@@ -139,6 +146,7 @@ export type Person = {
 
 export type Query = {
   __typename?: 'Query';
+  allCompetencyFrameworks: Array<CompetencyFramework>;
   allEducations: Array<Education>;
   allPeople: Array<Person>;
   allRootCompetencies: Array<Competency>;

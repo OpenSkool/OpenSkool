@@ -30,6 +30,9 @@ model Competency {
   updatedBy   Person?  @relation("CompetencyToPersonUpdated", fields: [updatedById], references: [id])
   updatedById String?
 
+  competencyFramework   CompetencyFramework? @relation(fields: [competencyFrameworkId], references: [id])
+  competencyFrameworkId String?
+
   subCompetencies    Competency[] @relation("CompetencyToCompetency")
   parentCompetency   Competency?  @relation("CompetencyToCompetency", fields: [parentCompetencyId], onDelete: Cascade, references: [id])
   parentCompetencyId String?
@@ -45,6 +48,32 @@ model CompetencyTranslation {
   title        String
 
   @@unique([competencyId, languageCode])
+}
+
+model CompetencyFramework {
+  id String @id @default(cuid())
+
+  createdAt   DateTime @default(now())
+  createdBy   Person?  @relation("CompetencyFrameworkToPersonCreated", fields: [createdById], references: [id])
+  createdById String?
+
+  updatedAt   DateTime @updatedAt
+  updatedBy   Person?  @relation("CompetencyFrameworkToPersonUpdated", fields: [updatedById], references: [id])
+  updatedById String?
+
+  competencies Competency[]
+
+  translations CompetencyFrameworkTranslation[]
+}
+
+model CompetencyFrameworkTranslation {
+  id                    String              @id @default(cuid())
+  competencyFramework   CompetencyFramework @relation(fields: [competencyFrameworkId], onDelete: Cascade, references: [id])
+  competencyFrameworkId String
+  languageCode          Language
+  title                 String
+
+  @@unique([competencyFrameworkId, languageCode])
 }
 
 model Education {
@@ -74,8 +103,10 @@ model EducationTranslation {
 model Person {
   id String @id @default(cuid())
 
-  competenciesCreated Competency[] @relation("CompetencyToPersonCreated")
-  competenciesUpdated Competency[] @relation("CompetencyToPersonUpdated")
+  competenciesCreated         Competency[]          @relation("CompetencyToPersonCreated")
+  competenciesUpdated         Competency[]          @relation("CompetencyToPersonUpdated")
+  competencyFrameworksCreated CompetencyFramework[] @relation("CompetencyFrameworkToPersonCreated")
+  competencyFrameworksUpdated CompetencyFramework[] @relation("CompetencyFrameworkToPersonUpdated")
 
   educationsCreated Education[] @relation("EducationToPersonCreated")
   educationsUpdated Education[] @relation("EducationToPersonUpdated")
