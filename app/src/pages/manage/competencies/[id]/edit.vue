@@ -45,7 +45,7 @@ const {
 const competency = useResult(result);
 
 gql`
-  mutation RenameCompetency($id: ID!, $data: RenameCompetencyInput!) {
+  mutation renameCompetency($id: ID!, $data: RenameCompetencyInput!) {
     renameCompetency(id: $id, data: $data) {
       ... on RenameCompetencySuccessPayload {
         competency {

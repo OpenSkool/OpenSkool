@@ -1,5 +1,5 @@
 import userEvent from '@testing-library/user-event';
-import { render, waitFor } from '@testing-library/vue';
+import { render, waitFor, screen } from '@testing-library/vue';
 import { DefaultApolloClient } from '@vue/apollo-composable';
 import { expect, MockedFunction, test, vi } from 'vitest';
 import { createI18n } from 'vue-i18n';
@@ -26,7 +26,7 @@ test('title is required', async () => {
     push,
   }));
   const user = userEvent.setup();
-  const { findByText, getByRole } = render(CreateCompetency, {
+  render(CreateCompetency, {
     global: {
       plugins: [
         createI18n({ legacy: false, fallbackWarn: false, missingWarn: false }),
@@ -34,11 +34,11 @@ test('title is required', async () => {
       ],
     },
   });
-  const submitButton = getByRole('button', {
+  const submitButton = screen.getByRole('button', {
     name: /form.action.create.label/i,
   });
   user.click(submitButton);
-  await findByText('Competencies.form.nameLabel is required.');
+  await screen.findByText('Competencies.form.nameLabel is required.');
   expect(push).not.toHaveBeenCalled();
 });
 
@@ -48,7 +48,7 @@ test('create competency', async () => {
     push,
   }));
   const user = userEvent.setup();
-  const { getByRole } = render(CreateCompetency, {
+  render(CreateCompetency, {
     global: {
       plugins: [
         createI18n({ legacy: false, fallbackWarn: false, missingWarn: false }),
@@ -58,10 +58,12 @@ test('create competency', async () => {
     },
   });
 
-  const titleInput = getByRole('textbox', { name: /form.namelabel/i });
+  const titleInput: HTMLInputElement = screen.getByRole('textbox', {
+    name: /form.namelabel/i,
+  });
   await user.type(titleInput, 'Hello World!');
 
-  const submitButton = getByRole('button', {
+  const submitButton = screen.getByRole('button', {
     name: /form.action.create.label/i,
   });
   await user.click(submitButton);

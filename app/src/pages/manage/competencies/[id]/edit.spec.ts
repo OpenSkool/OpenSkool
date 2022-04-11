@@ -1,0 +1,48 @@
+import userEvent from '@testing-library/user-event';
+import { screen } from '@testing-library/vue';
+import { expect, spyOn, test } from 'vitest';
+
+import { render } from '~/spec/render';
+
+import edit from './edit.vue';
+
+import 'the-new-css-reset/css/reset.css';
+import 'virtual:windi.css';
+import { router } from '~/router';
+
+test('input field has prefilled value', async () => {
+  render(edit);
+  const titleInput: HTMLInputElement = await screen.findByRole('textbox', {
+    name: /form.namelabel/i,
+  });
+  expect(titleInput.value).toBe('Informatics');
+});
+
+test('alert shows when empty field is submitted', async () => {
+  render(edit);
+  await router.isReady();
+  const push = spyOn(router, 'push');
+  const user = userEvent.setup();
+  const titleInput: HTMLInputElement = await screen.findByRole('textbox', {
+    name: /form.namelabel/i,
+  });
+  await user.clear(titleInput);
+  const submitButton = screen.getByRole('button', {
+    name: 'competencies.form.action.edit.label',
+  });
+  await user.click(submitButton);
+  await screen.findByText('Competencies.form.nameLabel is required.');
+  expect(push).not.toBeCalled();
+});
+
+test('form submission works', async () => {
+  render(edit);
+  await router.isReady();
+  const push = spyOn(router, 'push');
+  const user = userEvent.setup();
+  const submitButton = await screen.findByRole('button', {
+    name: 'competencies.form.action.edit.label',
+  });
+  await user.click(submitButton);
+  expect(push).toBeCalled();
+});
