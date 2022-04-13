@@ -2,15 +2,12 @@ import userEvent from '@testing-library/user-event';
 import { screen, waitFor } from '@testing-library/vue';
 import { expect, spyOn, test } from 'vitest';
 
+import { router } from '~/router';
 import { render } from '~/spec/render';
 
 import index from './index.vue';
 
-import 'the-new-css-reset/css/reset.css';
-import 'virtual:windi.css';
-import { router } from '~/router';
-
-test.only('delete competency works', async () => {
+test('delete competency works', async () => {
   render(index);
   await router.isReady();
   const replace = spyOn(router, 'replace');

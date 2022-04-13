@@ -2,13 +2,10 @@ import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/vue';
 import { expect, spyOn, test } from 'vitest';
 
+import { router } from '~/router';
 import { render } from '~/spec/render';
 
 import edit from './edit.vue';
-
-import 'the-new-css-reset/css/reset.css';
-import 'virtual:windi.css';
-import { router } from '~/router';
 
 test('input field has prefilled value', async () => {
   render(edit);

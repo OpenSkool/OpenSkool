@@ -7,7 +7,7 @@ import { formkit } from '~/formkit';
 import { pinia } from '~/pinia';
 import { router } from '~/router';
 
-function render(component: any): RenderResult {
+export function render(component: any): RenderResult {
   const utils = originalRender(component, {
     global: {
       plugins: [
@@ -20,7 +20,5 @@ function render(component: any): RenderResult {
     },
     props: { id: 'ciud' },
   });
-  return { ...utils };
+  return utils;
 }
-
-export { render };
