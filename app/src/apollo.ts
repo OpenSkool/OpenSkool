@@ -24,6 +24,7 @@ const authLink = setContext(
 );
 
 const httpLink = createHttpLink({
+  credentials: 'include',
   uri: `${import.meta.env.VITE_API_BASE_URL}/graphql`,
 });
 
