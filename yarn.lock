@@ -799,6 +799,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fastify/session@npm:^8.1.0":
+  version: 8.1.0
+  resolution: "@fastify/session@npm:8.1.0"
+  dependencies:
+    cookie-signature: ^1.1.0
+    fastify-plugin: ^3.0.0
+    safe-stable-stringify: ^2.3.1
+    uid-safe: ^2.1.5
+  checksum: 345dd4e3694dac48b03aba5ff493865c5d5e1b390494b21936ff77a8066398860bf24329585f93f23dd7bbec95c2707337e85cba5594dd1c38e4090b057a30aa
+  languageName: node
+  linkType: hard
+
 "@formkit/core@npm:1.0.0-beta.7-f27a0f7, @formkit/core@npm:^1.0.0-beta.6":
   version: 1.0.0-beta.7-f27a0f7
   resolution: "@formkit/core@npm:1.0.0-beta.7-f27a0f7"
@@ -1773,6 +1785,7 @@ __metadata:
   dependencies:
     "@envelop/response-cache": ^2.3.0
     "@faker-js/faker": ^6.1.2
+    "@fastify/session": ^8.1.0
     "@graphql-codegen/cli": ^2.6.2
     "@graphql-codegen/schema-ast": ^2.4.1
     "@graphql-yoga/common": ^2.0.0
@@ -1796,6 +1809,7 @@ __metadata:
     eslint: ^8.12.0
     fast-glob: ^3.2.11
     fastify: ^3.27.4
+    fastify-cookie: ^5.6.0
     fastify-cors: ^6.0.3
     fastify-env: ^2.1.1
     fastify-plugin: ^3.0.1
@@ -1805,6 +1819,7 @@ __metadata:
     mercurius-integration-testing: ^4.0.0
     ms: 3.0.0-canary.1
     nodemon: ^2.0.15
+    openid-client: ^5.1.4
     pino: ^6.14.0
     pino-pretty: ^7.6.0
     prettier: ^2.6.2
@@ -3779,6 +3794,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cookie-signature@npm:^1.1.0":
+  version: 1.2.0
+  resolution: "cookie-signature@npm:1.2.0"
+  checksum: d11f56f909733695d989511bf0e1dd874220d818b9d118945dce3c275fa50adfb3f6984354de0f5eefdc9347951a22ba3545230a762576019d23c16055b12d4c
+  languageName: node
+  linkType: hard
+
 "cookie@npm:^0.4.0, cookie@npm:^0.4.2":
   version: 0.4.2
   resolution: "cookie@npm:0.4.2"
@@ -5351,6 +5373,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fastify-cookie@npm:^5.6.0":
+  version: 5.6.0
+  resolution: "fastify-cookie@npm:5.6.0"
+  dependencies:
+    cookie-signature: ^1.1.0
+    fastify-plugin: ^3.0.1
+  checksum: a4dc359a8434217ccc2fb28b82a1c25b2a06383d7e01a5967e457298c7a231bd4273a0295a17c8564753a5ab9dc1865d2bc0296db7ec8012a064f9b5c2e455b5
+  languageName: node
+  linkType: hard
+
 "fastify-cors@npm:^6.0.3":
   version: 6.0.3
   resolution: "fastify-cors@npm:6.0.3"
@@ -6805,6 +6837,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jose@npm:^4.1.4":
+  version: 4.6.1
+  resolution: "jose@npm:4.6.1"
+  checksum: f701b41ef385e819a2a6369f2c63277ed51694bac4c0dac211e58f71a7b902b5c42cb0fbaf922e5a14d6f02219f0cb4e1128147f6cbd003f9f6abb7b8f7b91e5
+  languageName: node
+  linkType: hard
+
 "joycon@npm:^3.1.1":
   version: 3.1.1
   resolution: "joycon@npm:3.1.1"
@@ -7946,6 +7985,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"object-hash@npm:^2.0.1":
+  version: 2.2.0
+  resolution: "object-hash@npm:2.2.0"
+  checksum: 55ba841e3adce9c4f1b9b46b41983eda40f854e0d01af2802d3ae18a7085a17168d6b81731d43fdf1d6bcbb3c9f9c56d22c8fea992203ad90a38d7d919bc28f1
+  languageName: node
+  linkType: hard
+
 "object-inspect@npm:^1.11.0, object-inspect@npm:^1.9.0":
   version: 1.12.0
   resolution: "object-inspect@npm:1.12.0"
@@ -7993,6 +8039,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"oidc-token-hash@npm:^5.0.1":
+  version: 5.0.1
+  resolution: "oidc-token-hash@npm:5.0.1"
+  checksum: d62aa8c665f1a0133a3694785e4cd75f471364e6a2f4fbf7997e193a49ccf8f8de15596f475c7fdf8510d021c3b72f7ff6ab8bc5b07bff4cf21d490177f164a5
+  languageName: node
+  linkType: hard
+
 "on-exit-leak-free@npm:^0.2.0":
   version: 0.2.0
   resolution: "on-exit-leak-free@npm:0.2.0"
@@ -8035,6 +8088,18 @@ __metadata:
     is-docker: ^2.1.1
     is-wsl: ^2.2.0
   checksum: e9545bec64cdbf30a0c35c1bdc310344adf8428a117f7d8df3c0af0a0a24c513b304916a6d9b11db0190ff7225c2d578885080b761ed46a3d5f6f1eebb98b63c
+  languageName: node
+  linkType: hard
+
+"openid-client@npm:^5.1.4":
+  version: 5.1.4
+  resolution: "openid-client@npm:5.1.4"
+  dependencies:
+    jose: ^4.1.4
+    lru-cache: ^6.0.0
+    object-hash: ^2.0.1
+    oidc-token-hash: ^5.0.1
+  checksum: 7e2d73c6416a92a57df9c78fa8c99afb4f772ca5b0eb6f53e0b93dd427d9e1989f00a90478200da2a4105cce7c88576f2ad761803ad78d06e147cbc379fd0921
   languageName: node
   linkType: hard
 
@@ -8720,6 +8785,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"random-bytes@npm:~1.0.0":
+  version: 1.0.0
+  resolution: "random-bytes@npm:1.0.0"
+  checksum: 09faa256394aa2ca9754aa57e92a27c452c3e97ffb266e98bebb517332e9df7168fea393159f88d884febce949ba8bec8ddb02f03342da6c6023ecc7b155e0ae
+  languageName: node
+  linkType: hard
+
 "rc@npm:^1.2.8":
   version: 1.2.8
   resolution: "rc@npm:1.2.8"
@@ -9155,6 +9227,13 @@ __metadata:
   dependencies:
     regexp-tree: ~0.1.1
   checksum: 5d734e2193c63ef0cb00f60c0244e0f8a30ecb31923633cd34636808d6a7c4c206d650017953ae1db8bc33967c2f06af33488dea6f038f4e38212beb7bed77b4
+  languageName: node
+  linkType: hard
+
+"safe-stable-stringify@npm:^2.3.1":
+  version: 2.3.1
+  resolution: "safe-stable-stringify@npm:2.3.1"
+  checksum: a0a0bad0294c3e2a9d1bf3cf2b1096dfb83c162d09a5e4891e488cce082120bd69161d2a92aae7fc48255290f17700decae9c89a07fe139794e61b5c8b411377
   languageName: node
   linkType: hard
 
@@ -10214,6 +10293,15 @@ __metadata:
   version: 0.7.31
   resolution: "ua-parser-js@npm:0.7.31"
   checksum: e2f8324a83d1715601576af85b2b6c03890699aaa7272950fc77ea925c70c5e4f75060ae147dc92124e49f7f0e3d6dd2b0a91e7f40d267e92df8894be967ba8b
+  languageName: node
+  linkType: hard
+
+"uid-safe@npm:^2.1.5":
+  version: 2.1.5
+  resolution: "uid-safe@npm:2.1.5"
+  dependencies:
+    random-bytes: ~1.0.0
+  checksum: 07536043da9a026f4a2bc397543d0ace7587449afa1d9d2c4fd3ce76af8a5263a678788bcc429dff499ef29d45843cd5ee9d05434450fcfc19cc661229f703d1
   languageName: node
   linkType: hard
 

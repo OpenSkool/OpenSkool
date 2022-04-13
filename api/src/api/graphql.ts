@@ -3,7 +3,7 @@ import { Readable } from 'stream';
 import { useResponseCache } from '@envelop/response-cache';
 import { createServer } from '@graphql-yoga/node';
 import acceptLanguageParser from 'accept-language-parser';
-import plugin from 'fastify-plugin';
+import { FastifyPluginAsync } from 'fastify';
 import ms from 'ms';
 
 import schema from '../schema';
@@ -18,7 +18,7 @@ interface IterableHeaders extends Headers {
   // values: () => IterableIterator<string>;
 }
 
-export default plugin(async (app) => {
+const graphqlPlugin: FastifyPluginAsync = async (app) => {
   const yogaServer = createServer<Context>({
     logging: app.log,
     schema,
@@ -33,7 +33,7 @@ export default plugin(async (app) => {
   });
 
   app.route({
-    url: '/graphql',
+    url: '/',
     method: ['GET', 'POST', 'OPTIONS'],
     handler: async (request, reply) => {
       const { authorization, 'accept-language': acceptLanguage = '' } =
@@ -72,4 +72,6 @@ export default plugin(async (app) => {
       }
     },
   });
-});
+};
+
+export default graphqlPlugin;
