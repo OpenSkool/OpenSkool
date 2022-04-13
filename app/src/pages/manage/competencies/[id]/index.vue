@@ -50,7 +50,7 @@ const { mutate: deleteCompetency } = useMutation<
   DeleteCompetencyMutation,
   DeleteCompetencyMutationVariables
 >(gql`
-  mutation DeleteCompetency($id: ID!) {
+  mutation deleteCompetency($id: ID!) {
     deleteCompetency(id: $id) {
       id
     }
