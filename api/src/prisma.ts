@@ -27,7 +27,7 @@ prisma.$on('warn', (event) => {
   logger.warn(event);
 });
 prisma.$on('query', (event) => {
-  logger.info(event);
+  logger.debug(event);
 });
 
 export function handlePrismaError(error: unknown): never | void {

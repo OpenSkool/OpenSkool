@@ -6,7 +6,7 @@ import boomPlugin from './plugins/boom';
 import configPlugin from './plugins/config';
 
 const app = createApp({
-  disableRequestLogging: process.env.DISABLE_REQUEST_LOGGING !== 'true',
+  disableRequestLogging: process.env.DISABLE_REQUEST_LOGGING === 'true',
   logger,
 });
 
