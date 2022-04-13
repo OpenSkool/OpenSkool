@@ -63,7 +63,7 @@
   },
   "nodemonConfig": {
     "execMap": {
-      "ts": "node -r dotenv-flow/config -r esbuild-register"
+      "ts": "node --inspect -r dotenv-flow/config -r esbuild-register"
     },
     "ext": "lock,ts",
     "watch": [
