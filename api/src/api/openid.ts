@@ -13,15 +13,15 @@ const HTTP_BAD_REQUEST = 400;
 const openIdPlugin: FastifyPluginAsync = async (app) => {
   const authIssuer = await Issuer.discover(app.config.AUTH_ISSUER);
 
-  const redirectUrl = new URL(
-    `${app.prefix}/callback`,
+  const connectCallbackUrl = new URL(
+    `${app.prefix}/connect/callback`,
     app.config.API_BASE_URL,
   ).toString();
 
   const client = new authIssuer.Client({
     client_id: app.config.AUTH_CLIENT_ID,
     client_secret: app.config.AUTH_CLIENT_SECRET,
-    redirect_uris: [redirectUrl],
+    redirect_uris: [connectCallbackUrl],
     response_types: ['code'],
   });
 
@@ -43,7 +43,7 @@ const openIdPlugin: FastifyPluginAsync = async (app) => {
     reply.redirect(authUrl);
   });
 
-  app.get('/callback', async (request, reply) => {
+  app.get('/connect/callback', async (request, reply) => {
     const parameters = client.callbackParams(request.raw);
     if (parameters.error != null) {
       throw new Error(
@@ -53,7 +53,7 @@ const openIdPlugin: FastifyPluginAsync = async (app) => {
     const { codeVerifier } = request.session;
     request.session.codeVerifier = undefined;
     try {
-      const tokenSet = await client.callback(redirectUrl, parameters, {
+      const tokenSet = await client.callback(connectCallbackUrl, parameters, {
         code_verifier: codeVerifier,
       });
       request.session.tokenSet = tokenSet;
@@ -63,6 +63,15 @@ const openIdPlugin: FastifyPluginAsync = async (app) => {
       reply.status(HTTP_BAD_REQUEST);
       reply.send({ error: 'invalid callback' });
     }
+  });
+
+  app.get('/logout', async (request, reply) => {
+    request.session.tokenSet = undefined;
+    reply.redirect(
+      client.endSessionUrl({
+        post_logout_redirect_uri: app.config.APP_BASE_URL,
+      }),
+    );
   });
 
   app.get('/status', async (request, reply) => {

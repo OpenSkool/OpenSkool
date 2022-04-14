@@ -13,11 +13,13 @@ const authStore = useAuthStore();
 <template>
   <p>{{ t('global.message') }}</p>
   <a
-    v-if="!authStore.isLoggedIn"
+    v-if="authStore.isLoggedIn"
     class="btn btn-primary mt-5"
-    :href="`${apiBaseUrl}/openid/connect`"
+    :href="`${apiBaseUrl}/openid/logout`"
   >
+    Logout
+  </a>
+  <a v-else class="btn btn-primary mt-5" :href="`${apiBaseUrl}/openid/connect`">
     Connect
   </a>
-  <p v-else>You are logged in.</p>
 </template>
