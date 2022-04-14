@@ -5,7 +5,7 @@ import { expect, MockedFunction, test, vi } from 'vitest';
 import { createI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
-import { apolloClient } from '~/api';
+import { apolloClient } from '~/apollo';
 
 import { formkit } from '../../formkit';
 import CreateCompetency from './create-competency.vue';

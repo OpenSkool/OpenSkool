@@ -3,7 +3,7 @@ import { afterAll, afterEach, beforeAll, vi } from 'vitest';
 
 import 'whatwg-fetch';
 
-import { apolloClient } from '~/api';
+import { apolloClient } from '~/apollo';
 
 import server from './mocks/server';
 
