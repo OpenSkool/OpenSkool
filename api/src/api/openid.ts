@@ -64,6 +64,11 @@ const openIdPlugin: FastifyPluginAsync = async (app) => {
       reply.send({ error: 'invalid callback' });
     }
   });
+
+  app.get('/status', async (request, reply) => {
+    const idToken = request.session.tokenSet?.id_token;
+    reply.send({ isLoggedIn: idToken != null });
+  });
 };
 
 export default openIdPlugin;
