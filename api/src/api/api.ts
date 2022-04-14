@@ -1,19 +1,18 @@
 import sessionPlugin from '@fastify/session';
 import * as Boom from '@hapi/boom';
 import { Static, Type } from '@sinclair/typebox';
-import type { FastifyInstance, FastifyPluginAsync } from 'fastify';
+import type { FastifyPluginAsync } from 'fastify';
 import cookiePlugin from 'fastify-cookie';
 import corsPlugin from 'fastify-cors';
 import ms from 'ms';
 
 import prismaPlugin from '../plugins/prisma';
-import { authHook } from './auth-hook';
 import graphqlPlugin from './graphql';
 import openIdPlugin from './openid';
 
 const HTTP_NO_CONTENT = 204;
 
-const apiPlugin: FastifyPluginAsync = async (app: FastifyInstance) => {
+const apiPlugin: FastifyPluginAsync = async (app) => {
   app
     .register(corsPlugin, { credentials: true, origin: true })
     .register(prismaPlugin)
@@ -31,8 +30,6 @@ const apiPlugin: FastifyPluginAsync = async (app: FastifyInstance) => {
     })
     .register(graphqlPlugin, { prefix: '/graphql' })
     .register(openIdPlugin, { prefix: '/openid' });
-
-  app.addHook('preHandler', authHook);
 
   app.get('/', async (request, reply) => {
     reply.status(HTTP_NO_CONTENT);
