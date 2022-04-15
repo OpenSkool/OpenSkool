@@ -3,7 +3,6 @@ import { Readable } from 'stream';
 import { useResponseCache } from '@envelop/response-cache';
 import { createServer } from '@graphql-yoga/node';
 import acceptLanguageParser from 'accept-language-parser';
-import altairPlugin from 'altair-fastify-plugin';
 import plugin from 'fastify-plugin';
 import ms from 'ms';
 
@@ -20,15 +19,6 @@ interface IterableHeaders extends Headers {
 }
 
 export default plugin(async (app) => {
-  app.register(altairPlugin, {
-    initialEnvironments: {
-      base: { title: 'Local' },
-    },
-    initialSettings: {
-      theme: 'dracula',
-    },
-  });
-
   const yogaServer = createServer<Context>({
     logging: app.log,
     schema,
