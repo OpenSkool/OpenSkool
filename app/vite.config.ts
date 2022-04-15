@@ -53,7 +53,7 @@ export default defineConfig({
       ],
       dts: 'src/generated/auto-imports.d.ts',
     }),
-    Codegen(),
+    Codegen({ runOnBuild: false }),
     Components({
       dts: 'src/generated/components.d.ts',
       resolvers: [

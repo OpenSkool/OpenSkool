@@ -1,75 +1,70 @@
-import {
-  extendType,
-  idArg,
-  inputObjectType,
-  list,
-  mutationField,
-  nonNull,
-  objectType,
-} from 'nexus';
-
 import { EducationService } from '../../domain';
-import { Context } from '../context';
+import type { EducationModel } from '../../domain/education';
+import builder from '../builder';
+import { Accountable } from './accountable';
+import { Node } from './node';
 
-export const Education = objectType({
+export const Education = builder.objectRef<EducationModel>('Education');
+
+builder.objectType(Education, {
   name: 'Education',
-  definition(t) {
-    t.implements('Node');
-    t.implements('Accountable');
-    t.nonNull.string('title');
-  },
-  sourceType: {
-    export: 'EducationModel',
-    module: require.resolve('../../domain/source-types'),
-  },
+  interfaces: [Accountable, Node],
+  fields: (t) => ({
+    title: t.exposeString('title'),
+  }),
 });
 
-export const EducationQueries = extendType({
-  type: 'Query',
-  definition: (t) => {
-    t.nonNull.field('allEducations', {
-      type: list(nonNull('Education')),
-      async resolve(root, argumentz, ctx: Context) {
-        return EducationService.getAllEducations(ctx);
-      },
-    });
-  },
+builder.queryField('allEducations', (t) =>
+  t.field({
+    type: [Education],
+    async resolve(root, argumentz, ctx) {
+      return EducationService.getAllEducations(ctx);
+    },
+  }),
+);
+
+const EducationInput = builder.inputType('EducationInput', {
+  fields: (t) => ({
+    title: t.string(),
+  }),
 });
 
-export const EducationInput = inputObjectType({
-  name: 'EducationInput',
-  definition(t) {
-    t.string('title');
-  },
-});
+builder.mutationField('createEducation', (t) =>
+  t.field({
+    type: Education,
+    nullable: true,
+    args: {
+      data: t.arg({ type: EducationInput }),
+    },
+    async resolve(root, { data }, ctx) {
+      return EducationService.createEducation(data, ctx);
+    },
+  }),
+);
 
-export const CreateEducation = mutationField('createEducation', {
-  type: Education,
-  args: {
-    data: 'EducationInput',
-  },
-  async resolve(root, { data }, ctx) {
-    return EducationService.createEducation(data, ctx);
-  },
-});
+builder.mutationField('updateEducation', (t) =>
+  t.field({
+    type: Education,
+    nullable: true,
+    args: {
+      id: t.arg.id(),
+      data: t.arg({ type: EducationInput }),
+    },
+    async resolve(root, { id, data }, ctx) {
+      return EducationService.updateEducation(id, data, ctx);
+    },
+  }),
+);
 
-export const UpdateEducation = mutationField('updateEducation', {
-  type: Education,
-  args: {
-    id: idArg(),
-    data: 'EducationInput',
-  },
-  async resolve(root, { id, data }, ctx) {
-    return EducationService.updateEducation(id, data, ctx);
-  },
-});
-
-export const DeleteEducation = mutationField('deleteEducation', {
-  type: 'Education',
-  args: {
-    id: idArg(),
-  },
-  async resolve(root, { id }, ctx) {
-    return EducationService.deleteEducation(id, ctx);
-  },
-});
+builder.mutationField('deleteEducation', (t) =>
+  t.field({
+    type: Education,
+    nullable: true,
+    args: {
+      id: t.arg.id(),
+    },
+    async resolve(root, { id }, ctx) {
+      return EducationService.deleteEducation(id, ctx);
+    },
+  }),
+);

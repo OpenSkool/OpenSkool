@@ -1,11 +1,10 @@
-import { GraphQLDateTime } from 'graphql-scalars';
-import { asNexusMethod } from 'nexus';
+/* eslint-disable import/no-unassigned-import */
 
-export const DateTime = asNexusMethod(GraphQLDateTime, 'dateTime');
+import './errors';
 
-export * from './errors';
-export * from './interfaces';
+import './accountable';
+import './node';
 
-export * from './competency';
-export * from './education';
-export * from './person';
+import './competency';
+import './education';
+import './person';
