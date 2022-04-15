@@ -9,26 +9,29 @@ import { execute } from './client';
 test('create educations', async () => {
   const title = faker.commerce.productName();
   const response = await execute<
-    { createEducation: { id: string } },
+    { createEducation: { data: { id: string } } },
     { title: string }
   >(
     gql`
       mutation ($title: String!) {
         createEducation(data: { title: $title }) {
-          id
-          title
+          ... on MutationCreateEducationSuccess {
+            data {
+              id
+            }
+          }
         }
       }
     `,
     { variables: { title } },
   );
+  console.dir(response.errors);
   expect(response).not.toHaveProperty('errors');
-  expect(response).toHaveProperty('data.createEducation');
+  expect(response).toHaveProperty('data.createEducation.data.id');
   const { createEducation } = response.data;
-  expect(createEducation).toMatchObject({ title });
   expect(
     await prisma.education.findUnique({
-      where: { id: createEducation.id },
+      where: { id: createEducation.data.id },
       include: { translations: true },
     }),
   ).toMatchObject({
@@ -49,26 +52,28 @@ test('update education', async () => {
   });
   const title = faker.commerce.productName();
   const response = await execute<
-    { updateEducation: { id: string } },
+    { updateEducation: { data: { id: string } } },
     { id: string; title: string }
   >(
     gql`
       mutation ($id: ID!, $title: String!) {
         updateEducation(id: $id, data: { title: $title }) {
-          id
-          title
+          ... on MutationUpdateEducationSuccess {
+            data {
+              id
+            }
+          }
         }
       }
     `,
     { variables: { id: education.id, title } },
   );
   expect(response).not.toHaveProperty('errors');
-  expect(response).toHaveProperty('data.updateEducation');
+  expect(response).toHaveProperty('data.updateEducation.data.id');
   const { updateEducation } = response.data;
-  expect(updateEducation).toMatchObject({ title });
   expect(
     await prisma.education.findUnique({
-      where: { id: updateEducation.id },
+      where: { id: updateEducation.data.id },
       include: { translations: true },
     }),
   ).toMatchObject({
@@ -88,22 +93,28 @@ test('delete education', async () => {
     },
   });
   const response = await execute<
-    { deleteEducation: { id: string } },
+    { deleteEducation: { data: { id: string } } },
     { id: string }
   >(
     gql`
       mutation ($id: ID!) {
         deleteEducation(id: $id) {
-          id
+          ... on MutationDeleteEducationSuccess {
+            data {
+              id
+            }
+          }
         }
       }
     `,
     { variables: { id: education.id } },
   );
   expect(response).not.toHaveProperty('errors');
-  expect(response).toHaveProperty('data.deleteEducation');
+  expect(response).toHaveProperty('data.deleteEducation.data.id');
   const { deleteEducation } = response.data;
   expect(
-    await prisma.education.findUnique({ where: { id: deleteEducation.id } }),
+    await prisma.education.findUnique({
+      where: { id: deleteEducation.data.id },
+    }),
   ).toBe(null);
 });

@@ -1828,6 +1828,7 @@ __metadata:
     "@os/eslint-config": "workspace:*"
     "@os/tsconfig": "workspace:*"
     "@pothos/core": ^3.6.0
+    "@pothos/plugin-errors": ^3.3.0
     "@prisma/client": ^3.10.0
     "@sinclair/typebox": ^0.23.4
     "@types/accept-language-parser": ^1.5.3
@@ -1945,6 +1946,16 @@ __metadata:
   peerDependencies:
     graphql: ">=15.1.0"
   checksum: 6fe82a711438ea0d83fd0bde9512b2b9d36c0628698e0f51e84532c6e046d4aefa33f35a6d48a8dd402a19e61a29ba97eedda828db4bac20c879024ebf114698
+  languageName: node
+  linkType: hard
+
+"@pothos/plugin-errors@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "@pothos/plugin-errors@npm:3.3.0"
+  peerDependencies:
+    "@pothos/core": "*"
+    graphql: ">=15.1.0"
+  checksum: 2482b2426e2fb3d152ff431de52f972e9d55f2d49fe74e7ca500fbab68d6d299b76d61379a71cf99679b6629da5e3d3257463a9ad9af8c1b48c6b1dc1a0c84a7
   languageName: node
   linkType: hard
 

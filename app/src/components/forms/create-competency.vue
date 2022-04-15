@@ -15,8 +15,8 @@ const props = defineProps<{
 gql`
   mutation CreateCompetency($data: CreateCompetencyInput!) {
     createCompetency(data: $data) {
-      ... on CreateCompetencySuccessPayload {
-        competency {
+      ... on MutationCreateCompetencySuccess {
+        data {
           id
         }
       }
@@ -58,7 +58,7 @@ async function handleFormSubmit(): Promise<void> {
         }
         break;
       }
-      case 'CreateCompetencySuccessPayload':
+      case 'MutationCreateCompetencySuccess':
         if (props.id == null) {
           router.push('/manage/competencies');
         } else {

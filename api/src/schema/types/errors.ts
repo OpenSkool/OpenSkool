@@ -1,25 +1,34 @@
+import {
+  AppInputError,
+  AppNotFoundError,
+  AppUnauthorizedError,
+  AppUserError,
+} from '../../errors';
 import builder from '../builder';
 
-interface BaseErrorModel {
-  code: string;
-  message: string;
-  path?: string[];
-}
-
-export const BaseError = builder.interfaceRef<BaseErrorModel>('BaseError');
-
-builder.interfaceType(BaseError, {
-  name: 'BaseError',
+const UserError = builder.interfaceType(AppUserError, {
+  name: 'UserError',
   fields: (t) => ({
     code: t.exposeString('code'),
     message: t.exposeString('message'),
-    path: t.exposeStringList('path', { nullable: true }),
+    path: t.stringList({
+      nullable: true,
+      resolve: (error) => error.metadata?.path,
+    }),
   }),
 });
 
-export const InputError = builder.objectRef<BaseErrorModel>('InputError');
-
-builder.objectType(InputError, {
+builder.objectType(AppInputError, {
   name: 'InputError',
-  interfaces: [BaseError],
+  interfaces: [UserError],
+});
+
+builder.objectType(AppNotFoundError, {
+  name: 'NotFoundError',
+  interfaces: [UserError],
+});
+
+builder.objectType(AppUnauthorizedError, {
+  name: 'UnauthorizedError',
+  interfaces: [UserError],
 });
