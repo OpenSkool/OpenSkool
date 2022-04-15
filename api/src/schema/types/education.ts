@@ -32,10 +32,10 @@ const EducationInput = builder.inputType('EducationInput', {
 builder.mutationField('createEducation', (t) =>
   t.field({
     type: Education,
-    nullable: true,
     args: {
       data: t.arg({ type: EducationInput }),
     },
+    errors: {},
     async resolve(root, { data }, ctx) {
       return EducationService.createEducation(data, ctx);
     },
@@ -45,11 +45,11 @@ builder.mutationField('createEducation', (t) =>
 builder.mutationField('updateEducation', (t) =>
   t.field({
     type: Education,
-    nullable: true,
     args: {
       id: t.arg.id(),
       data: t.arg({ type: EducationInput }),
     },
+    errors: {},
     async resolve(root, { id, data }, ctx) {
       return EducationService.updateEducation(id, data, ctx);
     },
@@ -59,10 +59,10 @@ builder.mutationField('updateEducation', (t) =>
 builder.mutationField('deleteEducation', (t) =>
   t.field({
     type: Education,
-    nullable: true,
     args: {
       id: t.arg.id(),
     },
+    errors: {},
     async resolve(root, { id }, ctx) {
       return EducationService.deleteEducation(id, ctx);
     },

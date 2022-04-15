@@ -1,11 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 
-import {
-  AppError,
-  HTTP_STATUS_BAD_REQUEST,
-  HTTP_STATUS_NOT_FOUND,
-} from './errors';
+import { AppError, AppNotFoundError } from './errors';
 import logger from './logger';
 
 export const prisma = new PrismaClient({
@@ -32,28 +28,28 @@ prisma.$on('query', (event) => {
 
 export function handlePrismaError(error: unknown): never | void {
   if (error instanceof PrismaClientKnownRequestError) {
-    const extensions = {
-      prisma: {
-        code: error.code,
-        message: error.message,
-        meta: error.meta,
-      },
+    const metadata: Record<string, unknown> = {
+      code: error.code,
+      message: error.message,
+      meta: error.meta,
     };
     if (error.code === 'P2003') {
-      throw new AppError('Foreign key constraint failed', {
-        extensions,
-        statusCode: HTTP_STATUS_BAD_REQUEST,
+      // Foreign key constraint failed on the field
+      throw new AppNotFoundError('Not found', {
+        cause: error,
+        prisma: { metadata },
       });
     } else if (error.code === 'P2025') {
-      throw new AppError('Not found', {
+      // An operation failed because it depends on one or more records that were required but not found.
+      throw new AppNotFoundError('Not found', {
         cause: error,
-        extensions,
-        statusCode: HTTP_STATUS_NOT_FOUND,
+        prisma: { metadata },
       });
     }
-    throw new AppError('Known prisma error occured', {
+    logger.error(error, 'known prisma error');
+    throw new AppError('Could not complete service request', {
       cause: error,
-      extensions,
+      prisma: { metadata },
     });
   }
 }

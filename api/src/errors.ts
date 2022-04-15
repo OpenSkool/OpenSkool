@@ -1,61 +1,52 @@
-export const HTTP_STATUS_BAD_REQUEST = 400;
-
-export const HTTP_STATUS_UNAUTHORIZED = 401;
-
-export const HTTP_STATUS_NOT_FOUND = 404;
-
-export const HTTP_STATUS_INTERNAL_SERVER_ERROR = 500;
-
-type AppErrorExtensions = Record<string, unknown>;
-
-interface AppErrorOptions {
-  extensions?: AppErrorExtensions;
+interface AppErrorMetadata {
   cause?: Error;
-  statusCode?: number;
+  path?: string[];
+  [key: string]: unknown;
 }
 
-export class AppError extends Error {
-  public extensions?: AppErrorExtensions;
+/* eslint default-param-last:off */
+/* eslint @typescript-eslint/default-param-last:error */
 
-  public statusCode?: number;
-
-  constructor(message: string, options?: AppErrorOptions) {
+export class AppError<T extends AppErrorMetadata> extends Error {
+  constructor(message: string, public metadata?: T) {
     super(message);
-    this.extensions = options?.extensions;
-    this.statusCode = options?.statusCode;
-    this.cause = options?.cause;
+    this.metadata = metadata;
     this.name = 'AppError';
   }
 }
 
-export class AppUnauthorizedError extends AppError {
-  constructor(
-    message = 'Unauthorized',
-    options: Omit<AppErrorOptions, 'statusCode'> = {},
-  ) {
-    super(message, options);
-    this.name = 'AppUnauthorizedError';
-    this.statusCode = HTTP_STATUS_UNAUTHORIZED;
+export class AppUserError<T extends AppErrorMetadata> extends Error {
+  constructor(public code: string, message: string, public metadata?: T) {
+    super(message);
+    this.metadata = metadata;
+    this.name = 'AppUserError';
   }
 }
 
-export interface AppValidationErrorExtensions extends AppErrorExtensions {
-  code: string;
-  path: string[];
+export class AppInputError<
+  T extends AppErrorMetadata & { path: string[] },
+> extends AppUserError<T> {
+  constructor(code: string, message: string, public metadata?: T) {
+    super(code, message);
+    this.metadata = metadata;
+    this.name = 'AppInputError';
+  }
 }
 
-export class AppValidationError extends AppError {
-  public extensions: AppValidationErrorExtensions;
+export class AppNotFoundError<
+  T extends AppErrorMetadata,
+> extends AppUserError<T> {
+  constructor(message = 'Not Found', metadata?: T) {
+    super('AE404', message, metadata);
+    this.name = 'AppNotFoundError';
+  }
+}
 
-  constructor(
-    message: string,
-    options: Omit<AppErrorOptions, 'statusCode'> & {
-      extensions: AppValidationErrorExtensions;
-    },
-  ) {
-    super(message, options);
-    this.extensions = options.extensions;
-    this.name = 'AppValidationError';
-    this.statusCode = HTTP_STATUS_BAD_REQUEST;
+export class AppUnauthorizedError<
+  T extends AppErrorMetadata,
+> extends AppUserError<T> {
+  constructor(message = 'Unauthorized', metadata?: T) {
+    super('AE401', message, metadata);
+    this.name = 'AppUnauthorizedError';
   }
 }

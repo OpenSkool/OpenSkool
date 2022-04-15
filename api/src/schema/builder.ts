@@ -1,4 +1,5 @@
 import SchemaBuilder from '@pothos/core';
+import ErrorsPlugin from '@pothos/plugin-errors';
 
 import { Context } from './context';
 
@@ -11,8 +12,7 @@ const builder = new SchemaBuilder<{
   };
 }>({
   defaultInputFieldRequiredness: true,
-
-  // plugins may add options that can  be provided here
+  plugins: [ErrorsPlugin],
 });
 
 builder.mutationType({});

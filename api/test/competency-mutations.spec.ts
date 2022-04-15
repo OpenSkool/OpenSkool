@@ -29,7 +29,7 @@ describe('createCompetency', () => {
             data: { frameworkId: $frameworkId, title: $title }
           ) {
             __typename
-            ... on BaseError {
+            ... on UserError {
               code
               path
             }
@@ -65,8 +65,8 @@ describe('createCompetency', () => {
           createRootCompetency(
             data: { frameworkId: $frameworkId, title: $title }
           ) {
-            ... on CreateCompetencySuccessPayload {
-              competency {
+            ... on MutationCreateRootCompetencySuccess {
+              data {
                 id
               }
             }
@@ -78,21 +78,21 @@ describe('createCompetency', () => {
         variables: { frameworkId: framework.id, title: 'Hello Root!' },
       },
     );
-    expect(response).toHaveProperty('data.createRootCompetency.competency');
+    expect(response).toHaveProperty('data.createRootCompetency.data');
   });
 
   test('should create competency in user locale', async () => {
     const person = await createPersonFixture();
     const response = await execute<{
-      createRootCompetency: { competency: { id: string } };
+      createRootCompetency: { data: { id: string } };
     }>(
       gql`
         mutation ($frameworkId: ID!, $title: String!) {
           createRootCompetency(
             data: { frameworkId: $frameworkId, title: $title }
           ) {
-            ... on CreateCompetencySuccessPayload {
-              competency {
+            ... on MutationCreateRootCompetencySuccess {
+              data {
                 id
               }
             }
@@ -104,11 +104,11 @@ describe('createCompetency', () => {
         variables: { frameworkId: framework.id, title: 'Hello World!' },
       },
     );
-    expect(response).toHaveProperty('data.createRootCompetency.competency.id');
+    expect(response).toHaveProperty('data.createRootCompetency.data.id');
     expect(
       await prisma.competency.findUnique({
         include: { translations: true },
-        where: { id: response.data.createRootCompetency.competency.id },
+        where: { id: response.data.createRootCompetency.data.id },
       }),
     ).toMatchObject({
       translations: [{ languageCode: Language.NL, title: 'Hello World!' }],
@@ -130,7 +130,7 @@ describe('createNestedCompetency', () => {
         mutation ($parentId: ID!, $title: String!) {
           createNestedCompetency(data: { parentId: $parentId, title: $title }) {
             __typename
-            ... on BaseError {
+            ... on UserError {
               code
               path
             }
@@ -166,8 +166,8 @@ describe('createNestedCompetency', () => {
       gql`
         mutation ($parentId: ID!, $title: String!) {
           createNestedCompetency(data: { parentId: $parentId, title: $title }) {
-            ... on CreateCompetencySuccessPayload {
-              competency {
+            ... on MutationCreateNestedCompetencySuccess {
+              data {
                 id
               }
             }
@@ -182,7 +182,7 @@ describe('createNestedCompetency', () => {
         },
       },
     );
-    expect(response).toHaveProperty('data.createNestedCompetency.competency');
+    expect(response).toHaveProperty('data.createNestedCompetency.data');
   });
 
   test('should create nested competency', async () => {
@@ -192,8 +192,8 @@ describe('createNestedCompetency', () => {
       gql`
         mutation ($parentId: ID!, $title: String!) {
           createNestedCompetency(data: { parentId: $parentId, title: $title }) {
-            ... on CreateCompetencySuccessPayload {
-              competency {
+            ... on MutationCreateNestedCompetencySuccess {
+              data {
                 __typename
               }
             }
@@ -208,9 +208,9 @@ describe('createNestedCompetency', () => {
         },
       },
     );
-    expect(response.data).toHaveProperty('createNestedCompetency.competency');
+    expect(response.data).toHaveProperty('createNestedCompetency.data');
     expect(response.data.createNestedCompetency).toHaveProperty(
-      'competency.__typename',
+      'data.__typename',
       'Competency',
     );
   });
@@ -232,7 +232,7 @@ describe('createRootCompetency', () => {
             data: { frameworkId: $frameworkId, title: $title }
           ) {
             __typename
-            ... on BaseError {
+            ... on UserError {
               code
               path
             }
@@ -264,8 +264,8 @@ describe('createRootCompetency', () => {
           createRootCompetency(
             data: { frameworkId: $frameworkId, title: $title }
           ) {
-            ... on CreateCompetencySuccessPayload {
-              competency {
+            ... on MutationCreateRootCompetencySuccess {
+              data {
                 __typename
               }
             }
@@ -281,7 +281,7 @@ describe('createRootCompetency', () => {
       },
     );
     expect(response.data).toHaveProperty(
-      'createRootCompetency.competency.__typename',
+      'createRootCompetency.data.__typename',
       'Competency',
     );
   });
@@ -344,7 +344,7 @@ describe('renameCompetency', () => {
         mutation ($id: ID!, $title: String!) {
           renameCompetency(id: $id, data: { title: $title }) {
             __typename
-            ... on BaseError {
+            ... on UserError {
               code
               path
             }
@@ -377,7 +377,7 @@ describe('renameCompetency', () => {
         mutation ($id: ID!, $title: String!) {
           renameCompetency(id: $id, data: { title: $title }) {
             __typename
-            ... on BaseError {
+            ... on UserError {
               code
               path
             }
@@ -416,7 +416,7 @@ describe('renameCompetency', () => {
         mutation ($id: ID!, $title: String!) {
           renameCompetency(id: $id, data: { title: $title }) {
             __typename
-            ... on BaseError {
+            ... on UserError {
               code
               path
             }
@@ -459,8 +459,8 @@ describe('renameCompetency', () => {
       gql`
         mutation ($id: ID!, $title: String!) {
           renameCompetency(id: $id, data: { title: $title }) {
-            ... on RenameCompetencySuccessPayload {
-              competency {
+            ... on MutationRenameCompetencySuccess {
+              data {
                 id
               }
             }
@@ -475,7 +475,7 @@ describe('renameCompetency', () => {
         },
       },
     );
-    expect(response).toHaveProperty('data.renameCompetency.competency');
+    expect(response).toHaveProperty('data.renameCompetency.data');
   });
 
   test('should rename competency', async () => {
@@ -485,8 +485,8 @@ describe('renameCompetency', () => {
       gql`
         mutation ($id: ID!, $title: String!) {
           renameCompetency(id: $id, data: { title: $title }) {
-            ... on RenameCompetencySuccessPayload {
-              competency {
+            ... on MutationRenameCompetencySuccess {
+              data {
                 title
               }
             }
@@ -502,7 +502,7 @@ describe('renameCompetency', () => {
       },
     );
     expect(response).toHaveProperty(
-      'data.renameCompetency.competency.title',
+      'data.renameCompetency.data.title',
       'Hello Universe!',
     );
   });

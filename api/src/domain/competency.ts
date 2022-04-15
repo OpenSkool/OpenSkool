@@ -8,9 +8,9 @@ import {
   Language,
 } from '@prisma/client';
 
-import { AppValidationError } from '../errors';
+import { AppInputError } from '../errors';
 import { prisma } from '../prisma';
-import { SchemaValidationErrorCode } from '../schema/constants';
+import { SchemaInputErrorCode } from '../schema/constants';
 import { first } from '../utils';
 import { DomainContext } from './context';
 import { handleServiceError, validateSingleLineString } from './helpers';
@@ -83,12 +83,11 @@ export async function createCompetency(
       where: { id: data.parentId },
     });
     if (parentCompetency == null) {
-      throw new AppValidationError('Foreign key constraint failed', {
-        extensions: {
-          code: SchemaValidationErrorCode.VALUE_NOT_VALID,
-          path: ['parentId'],
-        },
-      });
+      throw new AppInputError(
+        SchemaInputErrorCode.VALUE_NOT_VALID,
+        'parent competency not found',
+        { path: ['parentId'] },
+      );
     }
   }
 
@@ -125,12 +124,11 @@ export async function createNestedCompetency(
     select: { id: true, competencyFrameworkId: true },
   });
   if (parentCompetency == null) {
-    throw new AppValidationError('Foreign key constraint failed', {
-      extensions: {
-        code: SchemaValidationErrorCode.VALUE_NOT_VALID,
-        path: ['parentId'],
-      },
-    });
+    throw new AppInputError(
+      SchemaInputErrorCode.VALUE_NOT_VALID,
+      'parent competency not found',
+      { path: ['parentId'] },
+    );
   }
 
   try {
@@ -166,12 +164,11 @@ export async function createRootCompetency(
     select: { id: true },
   });
   if (framework == null) {
-    throw new AppValidationError('Foreign key constraint failed', {
-      extensions: {
-        code: SchemaValidationErrorCode.VALUE_NOT_VALID,
-        path: ['frameworkId'],
-      },
-    });
+    throw new AppInputError(
+      SchemaInputErrorCode.VALUE_NOT_VALID,
+      'framework not found',
+      { path: ['frameworkId'] },
+    );
   }
 
   try {
@@ -438,11 +435,10 @@ async function assertUniqueTitle(
     }, []);
   }
   if (siblingTitles.includes(title)) {
-    throw new AppValidationError('Title is not unique', {
-      extensions: {
-        code: SchemaValidationErrorCode.VALUE_NOT_UNIQUE,
-        path: ['title'],
-      },
-    });
+    throw new AppInputError(
+      SchemaInputErrorCode.VALUE_NOT_UNIQUE,
+      'Title is not unique',
+      { path: ['title'] },
+    );
   }
 }

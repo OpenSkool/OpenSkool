@@ -3,14 +3,9 @@ import type {
   CompetencyFrameworkModel,
   CompetencyModel,
 } from '../../domain/competency';
-import {
-  AppError,
-  AppUnauthorizedError,
-  AppValidationError,
-} from '../../errors';
+import { AppInputError, AppUnauthorizedError } from '../../errors';
 import builder from '../builder';
 import { Accountable } from './accountable';
-import { InputError } from './errors';
 import { Node } from './node';
 
 export const Competency = builder.objectRef<CompetencyModel>('Competency');
@@ -50,7 +45,7 @@ builder.objectType(Competency, {
           ctx,
         );
         if (parentCompetency == null) {
-          throw new AppError(
+          throw new Error(
             'expected Competency type to have a parent competency',
           );
         }
@@ -114,82 +109,26 @@ const CreateCompetencyFrameworkInput = builder.inputType(
   },
 );
 
-const CreateCompetencyFrameworkSuccessPayload = builder.objectRef<{
-  competencyFramework: CompetencyFrameworkModel;
-}>('CreateCompetencyFrameworkSuccessPayload');
-
-builder.objectType(CreateCompetencyFrameworkSuccessPayload, {
-  fields: (t) => ({
-    competencyFramework: t.expose('competencyFramework', {
-      type: CompetencyFramework,
-    }),
-  }),
-});
-
-const CreateCompetencyFrameworkPayload = builder.unionType(
-  'CreateCompetencyFrameworkPayload',
-  {
-    types: [InputError, CreateCompetencyFrameworkSuccessPayload],
-    resolveType: (item) => {
-      return 'competencyFramework' in item
-        ? 'CreateCompetencyFrameworkSuccessPayload'
-        : 'InputError';
-    },
-  },
-);
-
 builder.mutationField('createCompetencyFramework', (t) =>
   t.field({
-    type: CreateCompetencyFrameworkPayload,
+    type: CompetencyFramework,
     args: {
       data: t.arg({ type: CreateCompetencyFrameworkInput }),
     },
+    errors: {
+      types: [AppInputError, AppUnauthorizedError],
+    },
     async resolve(root, { data }, ctx) {
       if (ctx.userId == null) {
-        throw new AppUnauthorizedError();
+        throw new AppUnauthorizedError('');
       }
-      try {
-        const competencyFramework =
-          await CompetencyService.createCompetencyFramework(
-            { title: data.title },
-            ctx,
-          );
-        return { competencyFramework };
-      } catch (error) {
-        if (error instanceof AppValidationError) {
-          return {
-            __typename: 'InputError',
-            code: error.extensions.code,
-            message: error.message,
-            path: error.extensions.path,
-          };
-        }
-        throw error as Error;
-      }
+      return CompetencyService.createCompetencyFramework(
+        { title: data.title },
+        ctx,
+      );
     },
   }),
 );
-
-const CreateCompetencySuccessPayload = builder.objectRef<{
-  competency: CompetencyModel;
-}>('CreateCompetencySuccessPayload');
-
-builder.objectType(CreateCompetencySuccessPayload, {
-  fields: (t) => ({
-    competency: t.expose('competency', {
-      type: Competency,
-    }),
-  }),
-});
-
-const CreateCompetencyPayload = builder.unionType('CreateCompetencyPayload', {
-  types: [InputError, CreateCompetencySuccessPayload],
-  resolveType: (item) => {
-    return 'competency' in item
-      ? 'CreateCompetencySuccessPayload'
-      : 'InputError';
-  },
-});
 
 const CreateCompetencyInput = builder.inputType('CreateCompetencyInput', {
   fields: (t) => ({
@@ -200,35 +139,24 @@ const CreateCompetencyInput = builder.inputType('CreateCompetencyInput', {
 
 builder.mutationField('createCompetency', (t) =>
   t.field({
-    type: CreateCompetencyPayload,
+    type: Competency,
     args: {
       data: t.arg({ type: CreateCompetencyInput }),
+    },
+    errors: {
+      types: [AppInputError],
     },
     async resolve(root, { data }, ctx) {
       if (ctx.userId == null) {
         throw new AppUnauthorizedError();
       }
-      try {
-        const competency = await CompetencyService.createCompetency(
-          {
-            parentId: data.parentId ?? undefined,
-            title: data.title,
-          },
-          ctx,
-        );
-
-        return { competency };
-      } catch (error) {
-        if (error instanceof AppValidationError) {
-          return {
-            __typename: 'InputError',
-            code: error.extensions.code,
-            message: error.message,
-            path: error.extensions.path,
-          };
-        }
-        throw error as Error;
-      }
+      return CompetencyService.createCompetency(
+        {
+          parentId: data.parentId ?? undefined,
+          title: data.title,
+        },
+        ctx,
+      );
     },
   }),
 );
@@ -245,32 +173,18 @@ const CreateNestedCompetencyInput = builder.inputType(
 
 builder.mutationField('createNestedCompetency', (t) =>
   t.field({
-    type: CreateCompetencyPayload,
+    type: Competency,
     args: {
       data: t.arg({ type: CreateNestedCompetencyInput }),
+    },
+    errors: {
+      types: [AppInputError, AppUnauthorizedError],
     },
     async resolve(root, { data }, ctx) {
       if (ctx.userId == null) {
         throw new AppUnauthorizedError();
       }
-      try {
-        const competency = await CompetencyService.createNestedCompetency(
-          data,
-          ctx,
-        );
-
-        return { competency };
-      } catch (error) {
-        if (error instanceof AppValidationError) {
-          return {
-            __typename: 'InputError',
-            code: error.extensions.code,
-            message: error.message,
-            path: error.extensions.path,
-          };
-        }
-        throw error as Error;
-      }
+      return CompetencyService.createNestedCompetency(data, ctx);
     },
   }),
 );
@@ -287,31 +201,18 @@ const CreateRootCompetencyInput = builder.inputType(
 
 builder.mutationField('createRootCompetency', (t) =>
   t.field({
-    type: CreateCompetencyPayload,
+    type: Competency,
     args: {
       data: t.arg({ type: CreateRootCompetencyInput }),
+    },
+    errors: {
+      types: [AppInputError, AppUnauthorizedError],
     },
     async resolve(root, { data }, ctx) {
       if (ctx.userId == null) {
         throw new AppUnauthorizedError();
       }
-      try {
-        const competency = await CompetencyService.createRootCompetency(
-          data,
-          ctx,
-        );
-        return { competency };
-      } catch (error) {
-        if (error instanceof AppValidationError) {
-          return {
-            __typename: 'InputError',
-            code: error.extensions.code,
-            message: error.message,
-            path: error.extensions.path,
-          };
-        }
-        throw error as Error;
-      }
+      return CompetencyService.createRootCompetency(data, ctx);
     },
   }),
 );
@@ -329,25 +230,6 @@ builder.mutationField('deleteCompetency', (t) =>
   }),
 );
 
-const RenameCompetencySuccessPayload = builder.objectRef<{
-  competency: CompetencyModel;
-}>('RenameCompetencySuccessPayload');
-
-builder.objectType(RenameCompetencySuccessPayload, {
-  fields: (t) => ({
-    competency: t.expose('competency', { type: Competency }),
-  }),
-});
-
-const RenameCompetencyPayload = builder.unionType('RenameCompetencyPayload', {
-  types: [InputError, RenameCompetencySuccessPayload],
-  resolveType: (item) => {
-    return 'competency' in item
-      ? 'RenameCompetencySuccessPayload'
-      : 'InputError';
-  },
-});
-
 const RenameCompetencyInput = builder.inputType('RenameCompetencyInput', {
   fields: (t) => ({
     title: t.string(),
@@ -356,33 +238,19 @@ const RenameCompetencyInput = builder.inputType('RenameCompetencyInput', {
 
 builder.mutationField('renameCompetency', (t) =>
   t.field({
-    type: RenameCompetencyPayload,
+    type: Competency,
     args: {
       id: t.arg.id(),
       data: t.arg({ type: RenameCompetencyInput }),
+    },
+    errors: {
+      types: [AppInputError, AppUnauthorizedError],
     },
     async resolve(root, { id, data }, ctx) {
       if (ctx.userId == null) {
         throw new AppUnauthorizedError();
       }
-      try {
-        const competency = await CompetencyService.updateCompetencyTranslations(
-          id,
-          data,
-          ctx,
-        );
-        return { competency };
-      } catch (error) {
-        if (error instanceof AppValidationError) {
-          return {
-            __typename: 'InputError',
-            code: error.extensions.code,
-            message: error.message,
-            path: error.extensions.path,
-          };
-        }
-        throw error as Error;
-      }
+      return CompetencyService.updateCompetencyTranslations(id, data, ctx);
     },
   }),
 );

@@ -47,8 +47,8 @@ const competency = useResult(result);
 gql`
   mutation renameCompetency($id: ID!, $data: RenameCompetencyInput!) {
     renameCompetency(id: $id, data: $data) {
-      ... on RenameCompetencySuccessPayload {
-        competency {
+      ... on MutationRenameCompetencySuccess {
+        data {
           id
         }
       }
@@ -99,7 +99,7 @@ async function handleFormSubmit(): Promise<void> {
         }
         break;
       }
-      case 'RenameCompetencySuccessPayload':
+      case 'MutationRenameCompetencySuccess':
         router.push(`/manage/competencies/${props.id}`);
         break;
     }

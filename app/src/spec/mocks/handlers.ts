@@ -1,21 +1,21 @@
 import { graphql } from 'msw';
 
 import {
-  CreateCompetencySuccessPayload,
+  MutationCreateCompetencySuccess,
   DeleteCompetencyMutation,
   DeleteCompetencyMutationVariables,
   GetEditCompetencyQuery,
   GetSubCompetenciesQuery,
   MutationCreateCompetencyArgs,
   MutationRenameCompetencyArgs,
-  RenameCompetencySuccessPayload,
+  MutationRenameCompetencySuccess,
 } from '~/generated/graphql';
 
 // mutations
 
 export default [
   graphql.mutation<
-    { createCompetency: CreateCompetencySuccessPayload },
+    { createCompetency: MutationCreateCompetencySuccess },
     MutationCreateCompetencyArgs
   >('CreateCompetency', (req, res, ctx) => {
     const { variables } = req;
@@ -23,8 +23,8 @@ export default [
     return res(
       ctx.data({
         createCompetency: {
-          __typename: 'CreateCompetencySuccessPayload',
-          competency: {
+          __typename: 'MutationCreateCompetencySuccess',
+          data: {
             id: 'cuid',
             competencyFramework: {
               id: '1',
@@ -56,15 +56,15 @@ export default [
   ),
 
   graphql.mutation<
-    { renameCompetency: RenameCompetencySuccessPayload },
+    { renameCompetency: MutationRenameCompetencySuccess },
     MutationRenameCompetencyArgs
   >('renameCompetency', (req, res, ctx) => {
     const { variables } = req;
     return res(
       ctx.data({
         renameCompetency: {
-          __typename: 'RenameCompetencySuccessPayload',
-          competency: {
+          __typename: 'MutationRenameCompetencySuccess',
+          data: {
             id: 'cuid',
             competencyFramework: {
               id: '1',

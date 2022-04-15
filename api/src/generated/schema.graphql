@@ -8,12 +8,6 @@ interface Accountable {
   updatedBy: Person!
 }
 
-interface BaseError {
-  code: String!
-  message: String!
-  path: [String!]
-}
-
 """
 A competency can be an individual competence or a grouping of competences.
 """
@@ -47,23 +41,9 @@ input CreateCompetencyFrameworkInput {
   title: String!
 }
 
-union CreateCompetencyFrameworkPayload =
-    CreateCompetencyFrameworkSuccessPayload
-  | InputError
-
-type CreateCompetencyFrameworkSuccessPayload {
-  competencyFramework: CompetencyFramework!
-}
-
 input CreateCompetencyInput {
   parentId: ID
   title: String!
-}
-
-union CreateCompetencyPayload = CreateCompetencySuccessPayload | InputError
-
-type CreateCompetencySuccessPayload {
-  competency: Competency!
 }
 
 input CreateNestedCompetencyInput {
@@ -98,31 +78,98 @@ input EducationInput {
   title: String!
 }
 
-type InputError implements BaseError {
+type InputError implements UserError {
   code: String!
   message: String!
   path: [String!]
 }
 
 type Mutation {
-  createCompetency(data: CreateCompetencyInput!): CreateCompetencyPayload!
+  createCompetency(
+    data: CreateCompetencyInput!
+  ): MutationCreateCompetencyResult!
   createCompetencyFramework(
     data: CreateCompetencyFrameworkInput!
-  ): CreateCompetencyFrameworkPayload!
-  createEducation(data: EducationInput!): Education
+  ): MutationCreateCompetencyFrameworkResult!
+  createEducation(data: EducationInput!): MutationCreateEducationResult!
   createNestedCompetency(
     data: CreateNestedCompetencyInput!
-  ): CreateCompetencyPayload!
+  ): MutationCreateNestedCompetencyResult!
   createRootCompetency(
     data: CreateRootCompetencyInput!
-  ): CreateCompetencyPayload!
+  ): MutationCreateRootCompetencyResult!
   deleteCompetency(id: ID!): Competency
-  deleteEducation(id: ID!): Education
+  deleteEducation(id: ID!): MutationDeleteEducationResult!
   renameCompetency(
     data: RenameCompetencyInput!
     id: ID!
-  ): RenameCompetencyPayload!
-  updateEducation(data: EducationInput!, id: ID!): Education
+  ): MutationRenameCompetencyResult!
+  updateEducation(
+    data: EducationInput!
+    id: ID!
+  ): MutationUpdateEducationResult!
+}
+
+union MutationCreateCompetencyFrameworkResult =
+    InputError
+  | MutationCreateCompetencyFrameworkSuccess
+  | UnauthorizedError
+
+type MutationCreateCompetencyFrameworkSuccess {
+  data: CompetencyFramework!
+}
+
+union MutationCreateCompetencyResult =
+    InputError
+  | MutationCreateCompetencySuccess
+
+type MutationCreateCompetencySuccess {
+  data: Competency!
+}
+
+union MutationCreateEducationResult = MutationCreateEducationSuccess
+
+type MutationCreateEducationSuccess {
+  data: Education!
+}
+
+union MutationCreateNestedCompetencyResult =
+    InputError
+  | MutationCreateNestedCompetencySuccess
+  | UnauthorizedError
+
+type MutationCreateNestedCompetencySuccess {
+  data: Competency!
+}
+
+union MutationCreateRootCompetencyResult =
+    InputError
+  | MutationCreateRootCompetencySuccess
+  | UnauthorizedError
+
+type MutationCreateRootCompetencySuccess {
+  data: Competency!
+}
+
+union MutationDeleteEducationResult = MutationDeleteEducationSuccess
+
+type MutationDeleteEducationSuccess {
+  data: Education!
+}
+
+union MutationRenameCompetencyResult =
+    InputError
+  | MutationRenameCompetencySuccess
+  | UnauthorizedError
+
+type MutationRenameCompetencySuccess {
+  data: Competency!
+}
+
+union MutationUpdateEducationResult = MutationUpdateEducationSuccess
+
+type MutationUpdateEducationSuccess {
+  data: Education!
 }
 
 """
@@ -133,6 +180,12 @@ interface Node {
   A CUID for a resource
   """
   id: ID!
+}
+
+type NotFoundError implements UserError {
+  code: String!
+  message: String!
+  path: [String!]
 }
 
 interface Person implements Node {
@@ -158,12 +211,6 @@ input RenameCompetencyInput {
   title: String!
 }
 
-union RenameCompetencyPayload = InputError | RenameCompetencySuccessPayload
-
-type RenameCompetencySuccessPayload {
-  competency: Competency!
-}
-
 type Teacher implements Node & Person {
   displayName: String!
   firstName: String!
@@ -173,4 +220,16 @@ type Teacher implements Node & Person {
   """
   id: ID!
   lastName: String!
+}
+
+type UnauthorizedError implements UserError {
+  code: String!
+  message: String!
+  path: [String!]
+}
+
+interface UserError {
+  code: String!
+  message: String!
+  path: [String!]
 }
