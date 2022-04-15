@@ -1,47 +1,36 @@
-import { extendType, interfaceType, list, nonNull, objectType } from 'nexus';
+import type { Person as PersonModel } from '@prisma/client';
 
 import { PersonService } from '../../domain';
+import builder from '../builder';
+import { Node } from './node';
 
-export const Person = interfaceType({
+export const Person = builder.interfaceRef<PersonModel>('Person');
+
+builder.interfaceType(Person, {
   name: 'Person',
-  definition(t) {
-    t.implements('Node');
-    t.nonNull.string('displayName', {
-      resolve(parent, argumentz, ctx) {
+  interfaces: [Node],
+  fields: (t) => ({
+    displayName: t.string({
+      resolve(parent) {
         return `${parent.firstName} ${parent.lastName}`;
       },
-    });
-    t.nonNull.string('firstName');
-    t.nonNull.string('lastName');
-  },
-  resolveType(person) {
-    switch (person.role) {
-      default:
-        throw new Error(
-          `Could not resolve the type of data passed to interface type "Person"`,
-        );
-      case 'TEACHER':
-        return 'Teacher';
-    }
-  },
+    }),
+    firstName: t.exposeString('firstName'),
+    lastName: t.exposeString('lastName'),
+  }),
 });
 
-export const Teacher = objectType({
+export const Teacher = builder.objectRef<PersonModel>('Teacher');
+
+builder.objectType(Teacher, {
   name: 'Teacher',
-  definition(t) {
-    t.implements('Person');
-  },
-  sourceType: { export: 'Person', module: '@prisma/client' },
+  interfaces: [Node, Person],
+  isTypeOf: () => true,
 });
 
-export const PeopleQueries = extendType({
-  type: 'Query',
-  definition(t) {
-    t.nonNull.field('allPeople', {
-      type: list(nonNull(Person)),
-      async resolve(root, argumentz, ctx) {
-        return PersonService.getAllPeople();
-      },
-    });
-  },
-});
+builder.queryField('allPeople', (t) =>
+  t.field({
+    type: [Person],
+    resolve: () => PersonService.getAllPeople(),
+  }),
+);

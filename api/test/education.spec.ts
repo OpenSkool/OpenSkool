@@ -3,14 +3,13 @@ import { Language } from '@prisma/client';
 import gql from 'graphql-tag';
 import { expect, test } from 'vitest';
 
-import { NexusGenFieldTypes } from '../src/generated/nexus';
 import { prisma } from '../src/prisma';
 import { execute } from './client';
 
 test('create educations', async () => {
   const title = faker.commerce.productName();
   const response = await execute<
-    { createEducation: Pick<NexusGenFieldTypes['Education'], 'id' | 'title'> },
+    { createEducation: { id: string } },
     { title: string }
   >(
     gql`
@@ -50,7 +49,7 @@ test('update education', async () => {
   });
   const title = faker.commerce.productName();
   const response = await execute<
-    { updateEducation: Pick<NexusGenFieldTypes['Education'], 'id' | 'title'> },
+    { updateEducation: { id: string } },
     { id: string; title: string }
   >(
     gql`
@@ -89,7 +88,7 @@ test('delete education', async () => {
     },
   });
   const response = await execute<
-    { deleteEducation: Pick<NexusGenFieldTypes['Education'], 'id'> },
+    { deleteEducation: { id: string } },
     { id: string }
   >(
     gql`

@@ -1,32 +1,25 @@
-import { interfaceType, list, nonNull, objectType } from 'nexus';
+import builder from '../builder';
 
-export interface BaseErrorModel {
+interface BaseErrorModel {
   code: string;
   message: string;
-  path: string[];
+  path?: string[];
 }
 
-export const BaseError = interfaceType({
+export const BaseError = builder.interfaceRef<BaseErrorModel>('BaseError');
+
+builder.interfaceType(BaseError, {
   name: 'BaseError',
-  definition(t) {
-    t.nonNull.string('code');
-    t.nonNull.string('message');
-    t.field('path', {
-      type: list(nonNull('String')),
-    });
-  },
-  resolveType(data) {
-    throw new Error('Errors should include their typeName in the resolver');
-  },
+  fields: (t) => ({
+    code: t.exposeString('code'),
+    message: t.exposeString('message'),
+    path: t.exposeStringList('path', { nullable: true }),
+  }),
 });
 
-export const InputError = objectType({
+export const InputError = builder.objectRef<BaseErrorModel>('InputError');
+
+builder.objectType(InputError, {
   name: 'InputError',
-  definition(t) {
-    t.implements('BaseError');
-  },
-  sourceType: {
-    export: 'BaseErrorModel',
-    module: __filename,
-  },
+  interfaces: [BaseError],
 });
