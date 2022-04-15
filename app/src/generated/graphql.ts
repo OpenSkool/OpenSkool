@@ -572,7 +572,7 @@ export const RenameCompetencyDocument = {
     {
       kind: 'OperationDefinition',
       operation: 'mutation',
-      name: { kind: 'Name', value: 'RenameCompetency' },
+      name: { kind: 'Name', value: 'renameCompetency' },
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
@@ -760,7 +760,7 @@ export const DeleteCompetencyDocument = {
     {
       kind: 'OperationDefinition',
       operation: 'mutation',
-      name: { kind: 'Name', value: 'DeleteCompetency' },
+      name: { kind: 'Name', value: 'deleteCompetency' },
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
