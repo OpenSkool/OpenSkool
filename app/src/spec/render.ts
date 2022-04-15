@@ -2,7 +2,7 @@ import { render as originalRender, RenderResult } from '@testing-library/vue';
 import { DefaultApolloClient } from '@vue/apollo-composable';
 import { createI18n } from 'vue-i18n';
 
-import { apolloClient } from '~/api';
+import { apolloClient } from '~/apollo';
 import { formkit } from '~/formkit';
 import { pinia } from '~/pinia';
 import { router } from '~/router';
