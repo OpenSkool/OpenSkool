@@ -332,6 +332,19 @@ export type GetAllRootCompetenciesQuery = {
   }>;
 };
 
+export type GetAllCompetencyFrameworksQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetAllCompetencyFrameworksQuery = {
+  __typename?: 'Query';
+  allCompetencyFrameworks: Array<{
+    __typename?: 'CompetencyFramework';
+    id: string;
+    title: string;
+  }>;
+};
+
 export const BaseErrorFieldsFragmentDoc = {
   kind: 'Document',
   definitions: [
@@ -822,4 +835,33 @@ export const GetAllRootCompetenciesDocument = {
 } as unknown as DocumentNode<
   GetAllRootCompetenciesQuery,
   GetAllRootCompetenciesQueryVariables
+>;
+export const GetAllCompetencyFrameworksDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetAllCompetencyFrameworks' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'allCompetencyFrameworks' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  GetAllCompetencyFrameworksQuery,
+  GetAllCompetencyFrameworksQueryVariables
 >;

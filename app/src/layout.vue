@@ -44,6 +44,9 @@ const loading = useGlobalQueryLoading();
             Manage competencies
           </router-link>
         </li>
+        <li>
+          <router-link to="/manage/frameworks"> Manage frameworks </router-link>
+        </li>
       </ol>
     </nav>
     <suspense>

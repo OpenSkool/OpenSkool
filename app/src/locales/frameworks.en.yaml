@@ -1,0 +1,5 @@
+route:
+  index:
+    heading: Manage frameworks
+    action:
+      create: Create framework
