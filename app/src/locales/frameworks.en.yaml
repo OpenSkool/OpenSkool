@@ -9,6 +9,12 @@ route:
     heading: Create framework
     action:
       backButton: Frameworks
+  id:
+    index:
+      action:
+        backButton: Manage frameworks
+        new: New competency
+      heading: Manage competencies
   index:
     heading: Manage frameworks
     action:

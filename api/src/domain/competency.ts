@@ -276,13 +276,13 @@ export async function findFrameworkById(
   const languageCode = mapLocaleToLanguageCode(context.locale);
 
   try {
-    const competency = await prisma.competency.findUnique({
+    const competencyFramework = await prisma.competencyFramework.findUnique({
       include: { translations: true },
       where: { id },
     });
-    return competency == null
+    return competencyFramework == null
       ? null
-      : mapCompetencyToModel(competency, languageCode);
+      : mapCompetencyFrameworkToModel(competencyFramework, languageCode);
   } catch (error) {
     handleServiceError(error);
   }

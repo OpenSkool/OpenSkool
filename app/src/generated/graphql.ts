@@ -39,7 +39,7 @@ export type BaseError = {
 export type Competency = Accountable &
   Node & {
     __typename?: 'Competency';
-    competencyFramework: CompetencyFramework;
+    competencyFramework?: Maybe<CompetencyFramework>;
     createdAt: Scalars['DateTime'];
     createdBy: Person;
     /** A CUID for a resource */
@@ -191,9 +191,14 @@ export type Query = {
   allPeople: Array<Person>;
   allRootCompetencies: Array<Competency>;
   competency?: Maybe<Competency>;
+  competencyFramework?: Maybe<CompetencyFramework>;
 };
 
 export type QueryCompetencyArgs = {
+  id: Scalars['ID'];
+};
+
+export type QueryCompetencyFrameworkArgs = {
   id: Scalars['ID'];
 };
 
@@ -349,6 +354,24 @@ export type GetAllRootCompetenciesQuery = {
     id: string;
     title: string;
   }>;
+};
+
+export type GetFrameworkRootCompetenciesQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetFrameworkRootCompetenciesQuery = {
+  __typename?: 'Query';
+  competencyFramework?: {
+    __typename?: 'CompetencyFramework';
+    id: string;
+    title: string;
+    competencies: Array<{
+      __typename?: 'Competency';
+      id: string;
+      title: string;
+    }>;
+  } | null;
 };
 
 export type GetAllCompetencyFrameworksQueryVariables = Exact<{
@@ -937,6 +960,66 @@ export const GetAllRootCompetenciesDocument = {
 } as unknown as DocumentNode<
   GetAllRootCompetenciesQuery,
   GetAllRootCompetenciesQueryVariables
+>;
+export const GetFrameworkRootCompetenciesDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'getFrameworkRootCompetencies' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'competencyFramework' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'id' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'competencies' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  GetFrameworkRootCompetenciesQuery,
+  GetFrameworkRootCompetenciesQueryVariables
 >;
 export const GetAllCompetencyFrameworksDocument = {
   kind: 'Document',
