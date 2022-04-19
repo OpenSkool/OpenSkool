@@ -9,6 +9,7 @@ declare module 'vue' {
     DialogDescription: typeof import('@headlessui/vue')['DialogDescription']
     DialogOverlay: typeof import('@headlessui/vue')['DialogOverlay']
     DialogTitle: typeof import('@headlessui/vue')['DialogTitle']
+    CreateCompetencyFramework: typeof import('./../components/forms/create-competency-framework.vue')['default']
     FkListbox: typeof import('./../components/listbox/fk-listbox.vue')['default']
     LanguageSelect: typeof import('./../components/demo/language-select.vue')['default']
     Listbox: typeof import('@headlessui/vue')['Listbox']

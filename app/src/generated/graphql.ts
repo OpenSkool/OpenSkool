@@ -227,6 +227,25 @@ export type GetPeopleQuery = {
   allPeople: Array<{ __typename?: 'Teacher'; id: string; displayName: string }>;
 };
 
+export type CreateCompetencyFrameworkMutationVariables = Exact<{
+  data: CreateCompetencyFrameworkInput;
+}>;
+
+export type CreateCompetencyFrameworkMutation = {
+  __typename?: 'Mutation';
+  createCompetencyFramework:
+    | {
+        __typename?: 'CreateCompetencyFrameworkSuccessPayload';
+        competencyFramework: { __typename?: 'CompetencyFramework'; id: string };
+      }
+    | {
+        __typename?: 'InputError';
+        code: string;
+        message: string;
+        path?: Array<string> | null;
+      };
+};
+
 export type CreateCompetencyMutationVariables = Exact<{
   data: CreateCompetencyInput;
 }>;
@@ -392,6 +411,89 @@ export const GetPeopleDocument = {
     },
   ],
 } as unknown as DocumentNode<GetPeopleQuery, GetPeopleQueryVariables>;
+export const CreateCompetencyFrameworkDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'CreateCompetencyFramework' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'data' } },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'CreateCompetencyFrameworkInput' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'createCompetencyFramework' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'data' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'data' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: {
+                      kind: 'Name',
+                      value: 'CreateCompetencyFrameworkSuccessPayload',
+                    },
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'competencyFramework' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'BaseErrorFields' },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...BaseErrorFieldsFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<
+  CreateCompetencyFrameworkMutation,
+  CreateCompetencyFrameworkMutationVariables
+>;
 export const CreateCompetencyDocument = {
   kind: 'Document',
   definitions: [

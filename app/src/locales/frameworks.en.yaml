@@ -1,4 +1,14 @@
+form:
+  action:
+    create:
+      error: Something went wrong, framework could not be created.
+      label: Create framework
+  nameLabel: Framework name
 route:
+  create:
+    heading: Create framework
+    action:
+      backButton: Frameworks
   index:
     heading: Manage frameworks
     action:
