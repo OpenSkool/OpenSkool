@@ -28,7 +28,7 @@ const { error, loading, result } = useQuery<GetCompetencyFrameworkQuery>(
     }
   `,
   () => ({ id: props.frameworkId }),
-  { fetchPolicy: 'network-only' },
+  { fetchPolicy: 'cache-first' },
 );
 const competencyFramework = useResult(result);
 </script>
@@ -50,6 +50,8 @@ const competencyFramework = useResult(result);
     <h2 class="text-xl mb-3">
       {{ t('competencies.route.create.heading') }}
     </h2>
-    <!-- <create-competency></create-competency> -->
+    <create-root-competency
+      :framework-id="props.frameworkId"
+    ></create-root-competency>
   </template>
 </template>

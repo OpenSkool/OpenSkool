@@ -270,6 +270,25 @@ export type CreateCompetencyMutation = {
       };
 };
 
+export type CreateRootCompetencyMutationVariables = Exact<{
+  data: CreateRootCompetencyInput;
+}>;
+
+export type CreateRootCompetencyMutation = {
+  __typename?: 'Mutation';
+  createRootCompetency:
+    | {
+        __typename?: 'CreateCompetencySuccessPayload';
+        competency: { __typename?: 'Competency'; id: string };
+      }
+    | {
+        __typename?: 'InputError';
+        code: string;
+        message: string;
+        path?: Array<string> | null;
+      };
+};
+
 export type BaseErrorFieldsFragment = {
   __typename?: 'InputError';
   code: string;
@@ -612,6 +631,89 @@ export const CreateCompetencyDocument = {
 } as unknown as DocumentNode<
   CreateCompetencyMutation,
   CreateCompetencyMutationVariables
+>;
+export const CreateRootCompetencyDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'CreateRootCompetency' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'data' } },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'CreateRootCompetencyInput' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'createRootCompetency' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'data' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'data' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: {
+                      kind: 'Name',
+                      value: 'CreateCompetencySuccessPayload',
+                    },
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'competency' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'BaseErrorFields' },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...BaseErrorFieldsFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<
+  CreateRootCompetencyMutation,
+  CreateRootCompetencyMutationVariables
 >;
 export const GetCreateCompetencyParentDocument = {
   kind: 'Document',
