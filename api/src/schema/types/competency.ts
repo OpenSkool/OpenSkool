@@ -272,8 +272,8 @@ builder.mutationField('swapCompetencies', (t) =>
   t.field({
     type: MutationSwapCompetenciesSuccessData,
     args: {
-      leftCompetencyId: t.arg.string(),
-      rightCompetencyId: t.arg.string(),
+      leftCompetencyId: t.arg.id(),
+      rightCompetencyId: t.arg.id(),
     },
     errors: {
       types: [AppInputError, AppUnauthorizedError],
