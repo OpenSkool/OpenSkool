@@ -15,14 +15,14 @@ import {
 
 export default [
   graphql.mutation<
-    { createCompetency: CreateCompetencySuccessPayload },
+    { createNestedCompetency: CreateCompetencySuccessPayload },
     MutationCreateCompetencyArgs
-  >('CreateCompetency', (req, res, ctx) => {
+  >('CreateNestedCompetency', (req, res, ctx) => {
     const { variables } = req;
 
     return res(
       ctx.data({
-        createCompetency: {
+        createNestedCompetency: {
           __typename: 'CreateCompetencySuccessPayload',
           competency: {
             id: 'cuid',

@@ -8,7 +8,7 @@ import { useRouter } from 'vue-router';
 import { apolloClient } from '~/apollo';
 
 import { formkit } from '../../formkit';
-import CreateCompetency from './create-competency-form.vue';
+import CreateCompetencyForm from './create-competency-form.vue';
 
 const mockUseRouter = useRouter as unknown as MockedFunction<typeof useRouter>;
 
@@ -26,12 +26,16 @@ test('title is required', async () => {
     push,
   }));
   const user = userEvent.setup();
-  render(CreateCompetency, {
+  render(CreateCompetencyForm, {
     global: {
       plugins: [
         createI18n({ legacy: false, fallbackWarn: false, missingWarn: false }),
         formkit,
       ],
+    },
+    props: {
+      competencyId: 'cid',
+      frameworkId: 'cid',
     },
   });
   const submitButton = screen.getByRole('button', {
@@ -48,13 +52,17 @@ test('create competency', async () => {
     push,
   }));
   const user = userEvent.setup();
-  render(CreateCompetency, {
+  render(CreateCompetencyForm, {
     global: {
       plugins: [
         createI18n({ legacy: false, fallbackWarn: false, missingWarn: false }),
         formkit,
       ],
       provide: { [DefaultApolloClient]: apolloClient },
+    },
+    props: {
+      competencyId: 'cid',
+      frameworkId: 'cid',
     },
   });
 
