@@ -1,4 +1,4 @@
 <template>
   <h2 class="text-xl mb-3">Unauthorized</h2>
-  <p>Select a demo user from the upper-right select box.</p>
+  <p>You cannot access this page.</p>
 </template>

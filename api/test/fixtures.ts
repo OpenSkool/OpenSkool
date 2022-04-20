@@ -2,8 +2,9 @@ import {
   Competency,
   CompetencyFramework,
   Language,
-  Person,
+  User,
 } from '@prisma/client';
+import cuid from 'cuid';
 
 import { prisma } from '../src/prisma';
 
@@ -14,12 +15,12 @@ export async function createCompetencyFrameworkFixture({
   language?: Language;
   title?: string;
 } = {}): Promise<CompetencyFramework> {
-  const person = await createPersonFixture();
+  const user = await createUserFixture();
   return prisma.competencyFramework.create({
     data: {
-      createdById: person.id,
+      createdById: user.id,
       translations: { create: { languageCode: language, title } },
-      updatedById: person.id,
+      updatedById: user.id,
     },
   });
 }
@@ -33,19 +34,19 @@ export async function createCompetencyFixture({
   parentId?: string;
   title?: string;
 } = {}): Promise<Competency> {
-  const person = await createPersonFixture();
+  const user = await createUserFixture();
   return prisma.competency.create({
     data: {
-      createdById: person.id,
+      createdById: user.id,
       parentCompetencyId: parentId,
       translations: { create: { languageCode: language, title } },
-      updatedById: person.id,
+      updatedById: user.id,
     },
   });
 }
 
-export async function createPersonFixture(): Promise<Person> {
-  return prisma.person.create({
-    data: { firstName: 'Jos', lastName: 'Vermeulen', role: 'TEACHER' },
+export async function createUserFixture(): Promise<User> {
+  return prisma.user.create({
+    data: { id: cuid(), name: 'Joske Vermeulen' },
   });
 }

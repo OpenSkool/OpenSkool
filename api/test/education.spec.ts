@@ -25,7 +25,6 @@ test('create educations', async () => {
     `,
     { variables: { title } },
   );
-  console.dir(response.errors);
   expect(response).not.toHaveProperty('errors');
   expect(response).toHaveProperty('data.createEducation.data.id');
   const { createEducation } = response.data;

@@ -33,7 +33,7 @@ builder.objectType(Competency, {
         }
         const framework = await CompetencyService.findFrameworkById(
           parent.competencyFrameworkId,
-          ctx,
+          ctx.domain,
         );
         if (framework == null) {
           throw new Error('expected framework to be found');
@@ -50,7 +50,7 @@ builder.objectType(Competency, {
         }
         const parentCompetency = await CompetencyService.findCompetencyById(
           parent.parentCompetencyId,
-          ctx,
+          ctx.domain,
         );
         if (parentCompetency == null) {
           throw new Error(
@@ -64,7 +64,10 @@ builder.objectType(Competency, {
       type: [Competency],
       nullable: true,
       async resolve(parent, argumentz, ctx) {
-        return CompetencyService.findSubCompetenciesByParentId(parent.id, ctx);
+        return CompetencyService.findSubCompetenciesByParentId(
+          parent.id,
+          ctx.domain,
+        );
       },
     }),
     title: t.exposeString('title'),
@@ -78,7 +81,10 @@ builder.objectType(CompetencyFramework, {
     competencies: t.field({
       type: [Competency],
       async resolve(parent, argumentz, ctx) {
-        return CompetencyService.getFrameworkCompetencies(parent.id, ctx);
+        return CompetencyService.getFrameworkCompetencies(
+          parent.id,
+          ctx.domain,
+        );
       },
     }),
     title: t.exposeString('title'),
@@ -89,13 +95,13 @@ builder.queryFields((t) => ({
   allCompetencyFrameworks: t.field({
     type: [CompetencyFramework],
     async resolve(root, argumentz, ctx) {
-      return CompetencyService.getAllFrameworks(ctx);
+      return CompetencyService.getAllFrameworks(ctx.domain);
     },
   }),
   allRootCompetencies: t.field({
     type: [Competency],
     async resolve(root, { id }, ctx) {
-      return CompetencyService.getAllRootCompetencies(ctx);
+      return CompetencyService.getAllRootCompetencies(ctx.domain);
     },
   }),
   competency: t.field({
@@ -103,7 +109,7 @@ builder.queryFields((t) => ({
     nullable: true,
     type: Competency,
     async resolve(root, { id }, ctx) {
-      return CompetencyService.findCompetencyById(id, ctx);
+      return CompetencyService.findCompetencyById(id, ctx.domain);
     },
   }),
   competencyFramework: t.field({
@@ -111,7 +117,7 @@ builder.queryFields((t) => ({
     nullable: true,
     type: CompetencyFramework,
     async resolve(root, { id }, ctx) {
-      return CompetencyService.findFrameworkById(id, ctx);
+      return CompetencyService.findFrameworkById(id, ctx.domain);
     },
   }),
 }));
@@ -135,12 +141,12 @@ builder.mutationField('createCompetencyFramework', (t) =>
       types: [AppInputError, AppUnauthorizedError],
     },
     async resolve(root, { data }, ctx) {
-      if (ctx.userId == null) {
+      if (ctx.domain.userId == null) {
         throw new AppUnauthorizedError('');
       }
       return CompetencyService.createCompetencyFramework(
         { title: data.title },
-        ctx,
+        ctx.domain,
       );
     },
   }),
@@ -163,7 +169,7 @@ builder.mutationField('createCompetency', (t) =>
       types: [AppInputError],
     },
     async resolve(root, { data }, ctx) {
-      if (ctx.userId == null) {
+      if (ctx.domain.userId == null) {
         throw new AppUnauthorizedError();
       }
       return CompetencyService.createCompetency(
@@ -171,7 +177,7 @@ builder.mutationField('createCompetency', (t) =>
           parentId: data.parentId ?? undefined,
           title: data.title,
         },
-        ctx,
+        ctx.domain,
       );
     },
   }),
@@ -197,10 +203,10 @@ builder.mutationField('createNestedCompetency', (t) =>
       types: [AppInputError, AppUnauthorizedError],
     },
     async resolve(root, { data }, ctx) {
-      if (ctx.userId == null) {
+      if (ctx.domain.userId == null) {
         throw new AppUnauthorizedError();
       }
-      return CompetencyService.createNestedCompetency(data, ctx);
+      return CompetencyService.createNestedCompetency(data, ctx.domain);
     },
   }),
 );
@@ -225,10 +231,10 @@ builder.mutationField('createRootCompetency', (t) =>
       types: [AppInputError, AppUnauthorizedError],
     },
     async resolve(root, { data }, ctx) {
-      if (ctx.userId == null) {
+      if (ctx.domain.userId == null) {
         throw new AppUnauthorizedError();
       }
-      return CompetencyService.createRootCompetency(data, ctx);
+      return CompetencyService.createRootCompetency(data, ctx.domain);
     },
   }),
 );
@@ -241,7 +247,7 @@ builder.mutationField('deleteCompetency', (t) =>
       id: t.arg.id(),
     },
     async resolve(root, { id }, ctx) {
-      return CompetencyService.deleteCompetency(id, ctx);
+      return CompetencyService.deleteCompetency(id, ctx.domain);
     },
   }),
 );
@@ -263,10 +269,14 @@ builder.mutationField('renameCompetency', (t) =>
       types: [AppInputError, AppUnauthorizedError],
     },
     async resolve(root, { id, data }, ctx) {
-      if (ctx.userId == null) {
+      if (ctx.domain.userId == null) {
         throw new AppUnauthorizedError();
       }
-      return CompetencyService.updateCompetencyTranslations(id, data, ctx);
+      return CompetencyService.updateCompetencyTranslations(
+        id,
+        data,
+        ctx.domain,
+      );
     },
   }),
 );
@@ -295,13 +305,13 @@ builder.mutationField('swapCompetencies', (t) =>
       types: [AppInputError, AppNotFoundError, AppUnauthorizedError],
     },
     async resolve(root, { leftCompetencyId, rightCompetencyId }, ctx) {
-      if (ctx.userId == null) {
+      if (ctx.domain.userId == null) {
         throw new AppUnauthorizedError();
       }
       const [left, right] = await CompetencyService.swapCompetencies(
         leftCompetencyId,
         rightCompetencyId,
-        ctx,
+        ctx.domain,
       );
       return { left, right };
     },

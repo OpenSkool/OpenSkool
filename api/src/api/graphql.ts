@@ -18,15 +18,20 @@ interface IterableHeaders extends Headers {
   // values: () => IterableIterator<string>;
 }
 
-const graphqlPlugin: FastifyPluginAsync = async (app) => {
+export const graphqlRoutes: FastifyPluginAsync = async (app) => {
   const yogaServer = createServer<Context>({
     logging: app.log,
     schema,
     plugins: [
       useResponseCache({
         includeExtensionMetadata: true,
-        session: (context: Context) =>
-          `${context.userId ?? 'anonymous'}-${context.locale}`,
+        session: (context: Context) => {
+          const {
+            domain,
+            request: { session },
+          } = context;
+          return `${session.auth.user?.id ?? 'anonymous'}-${domain.locale}`;
+        },
         ttl: ms('2s'),
       }),
     ],
@@ -36,24 +41,18 @@ const graphqlPlugin: FastifyPluginAsync = async (app) => {
     url: '/',
     method: ['GET', 'POST', 'OPTIONS'],
     handler: async (request, reply) => {
-      const { authorization, 'accept-language': acceptLanguage = '' } =
-        request.headers;
+      const { 'accept-language': acceptLanguage = '' } = request.headers;
 
       const locale =
         acceptLanguageParser.pick(['en', 'nl'], acceptLanguage) ?? 'en';
 
-      let userId: string | null = null;
-      if (authorization != null) {
-        const prefix = 'demo-user-id: ';
-        if (authorization.toLocaleLowerCase().startsWith(prefix)) {
-          userId = authorization.slice(prefix.length);
-        }
-      }
       const context: Context = {
-        userId,
+        domain: {
+          locale,
+          userId: request.session.auth.user?.id ?? null,
+        },
         request,
         reply,
-        locale,
       };
       const response = await yogaServer.handleIncomingMessage(request, context);
 
@@ -73,5 +72,3 @@ const graphqlPlugin: FastifyPluginAsync = async (app) => {
     },
   });
 };
-
-export default graphqlPlugin;
