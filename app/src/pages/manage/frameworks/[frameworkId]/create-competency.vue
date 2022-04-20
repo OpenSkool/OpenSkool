@@ -5,8 +5,8 @@ meta:
 
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
-import { GetCompetencyFrameworkQuery } from '~/generated/graphql';
 
+import { GetCompetencyFrameworkQuery } from '~/generated/graphql';
 import { useI18nStore } from '~/i18n';
 
 const props = defineProps<{

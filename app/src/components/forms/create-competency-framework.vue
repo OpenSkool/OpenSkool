@@ -8,10 +8,6 @@ const { t } = useI18n();
 
 const router = useRouter();
 
-const props = defineProps<{
-  id?: string;
-}>();
-
 gql`
   mutation CreateCompetencyFramework($data: CreateCompetencyFrameworkInput!) {
     createCompetencyFramework(data: $data) {

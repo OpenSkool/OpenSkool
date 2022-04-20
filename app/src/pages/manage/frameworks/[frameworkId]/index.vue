@@ -1,19 +1,13 @@
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
 
-import {
-  GetFrameworkRootCompetenciesQuery,
-  DeleteCompetencyMutation,
-  DeleteCompetencyMutationVariables,
-} from '~/generated/graphql';
+import { GetFrameworkRootCompetenciesQuery } from '~/generated/graphql';
 import { useI18nStore } from '~/i18n';
 
 const i18nStore = useI18nStore();
 i18nStore.loadGlob(import.meta.glob('~/locales/frameworks.*.yaml'));
 
 const { t } = useI18n();
-
-const router = useRouter();
 
 const props = defineProps<{
   frameworkId: string; // route param
