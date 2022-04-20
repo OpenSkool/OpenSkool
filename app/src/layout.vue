@@ -40,11 +40,6 @@ const loading = useGlobalQueryLoading();
           <router-link to="/demo/ui">UI</router-link>
         </li>
         <li>
-          <router-link to="/manage/competencies">
-            Manage competencies
-          </router-link>
-        </li>
-        <li>
           <router-link to="/manage/frameworks"> Manage frameworks </router-link>
         </li>
       </ol>

@@ -362,19 +362,6 @@ export type DeleteCompetencyMutation = {
   deleteCompetency?: { __typename?: 'Competency'; id: string } | null;
 };
 
-export type GetAllRootCompetenciesQueryVariables = Exact<{
-  [key: string]: never;
-}>;
-
-export type GetAllRootCompetenciesQuery = {
-  __typename?: 'Query';
-  allRootCompetencies: Array<{
-    __typename?: 'Competency';
-    id: string;
-    title: string;
-  }>;
-};
-
 export type GetCompetencyFrameworkQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
