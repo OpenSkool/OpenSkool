@@ -70,7 +70,7 @@ const parent = computed(() => {
   if (competency.value?.competencyFramework != null) {
     return {
       title: competency.value.competencyFramework.title,
-      url: `/manage/frameworks/${competency.value.competencyFramework.id}/`,
+      url: `/manage/frameworks/${props.frameworkId}/`,
     };
   }
   return {
@@ -118,7 +118,7 @@ async function deleteCompetencyHandler(): Promise<void> {
     <h2 class="text-xl mb-3 flex items-center gap-1">
       {{ competency.title }}
       <router-link
-        :to="`/manage/frameworks/${competency.competencyFramework.id}/${competency.id}/edit`"
+        :to="`/manage/frameworks/${frameworkId}/${competencyId}/edit`"
       >
         <span class="sr-only">{{
           t('competencies.route.id.index.action.edit')
@@ -166,7 +166,7 @@ async function deleteCompetencyHandler(): Promise<void> {
     <h3 class="text-xl">{{ t('competencies.route.id.index.heading') }}</h3>
     <router-link
       class="btn btn-primary my-5"
-      :to="`/manage/frameworks/${competency.competencyFramework.id}/${competency.id}/create-competency`"
+      :to="`/manage/frameworks/${frameworkId}/${competencyId}/create-competency`"
     >
       {{ t('competencies.route.id.index.action.new') }}
     </router-link>
@@ -176,7 +176,7 @@ async function deleteCompetencyHandler(): Promise<void> {
         :key="subCompetency.id"
       >
         <router-link
-          :to="`/manage/frameworks/${competency.competencyFramework.id}/${subCompetency.id}`"
+          :to="`/manage/frameworks/${frameworkId}/${subCompetency.id}`"
         >
           {{ subCompetency.title }}
         </router-link>
