@@ -254,3 +254,40 @@ builder.mutationField('renameCompetency', (t) =>
     },
   }),
 );
+
+export const MutationSwapCompetenciesSuccessData = builder.objectRef<{
+  left: CompetencyModel;
+  right: CompetencyModel;
+}>('MutationSwapCompetenciesSuccessData');
+
+builder.objectType(MutationSwapCompetenciesSuccessData, {
+  name: 'MutationSwapCompetenciesSuccessData',
+  fields: (t) => ({
+    left: t.expose('left', { type: Competency }),
+    right: t.expose('right', { type: Competency }),
+  }),
+});
+
+builder.mutationField('swapCompetencies', (t) =>
+  t.field({
+    type: MutationSwapCompetenciesSuccessData,
+    args: {
+      leftCompetencyId: t.arg.string(),
+      rightCompetencyId: t.arg.string(),
+    },
+    errors: {
+      types: [AppInputError, AppUnauthorizedError],
+    },
+    async resolve(root, { leftCompetencyId, rightCompetencyId }, ctx) {
+      if (ctx.userId == null) {
+        throw new AppUnauthorizedError();
+      }
+      const [left, right] = await CompetencyService.swapCompetencies(
+        leftCompetencyId,
+        rightCompetencyId,
+        ctx,
+      );
+      return { left, right };
+    },
+  }),
+);

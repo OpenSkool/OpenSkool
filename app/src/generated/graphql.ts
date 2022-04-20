@@ -105,6 +105,7 @@ export type Mutation = {
   deleteCompetency?: Maybe<Competency>;
   deleteEducation: MutationDeleteEducationResult;
   renameCompetency: MutationRenameCompetencyResult;
+  swapCompetencies: MutationSwapCompetenciesResult;
   updateEducation: MutationUpdateEducationResult;
 };
 
@@ -139,6 +140,11 @@ export type MutationDeleteEducationArgs = {
 export type MutationRenameCompetencyArgs = {
   data: RenameCompetencyInput;
   id: Scalars['ID'];
+};
+
+export type MutationSwapCompetenciesArgs = {
+  leftCompetencyId: Scalars['String'];
+  rightCompetencyId: Scalars['String'];
 };
 
 export type MutationUpdateEducationArgs = {
@@ -207,6 +213,22 @@ export type MutationRenameCompetencyResult =
 export type MutationRenameCompetencySuccess = {
   __typename?: 'MutationRenameCompetencySuccess';
   data: Competency;
+};
+
+export type MutationSwapCompetenciesResult =
+  | InputError
+  | MutationSwapCompetenciesSuccess
+  | UnauthorizedError;
+
+export type MutationSwapCompetenciesSuccess = {
+  __typename?: 'MutationSwapCompetenciesSuccess';
+  data: MutationSwapCompetenciesSuccessData;
+};
+
+export type MutationSwapCompetenciesSuccessData = {
+  __typename?: 'MutationSwapCompetenciesSuccessData';
+  left: Competency;
+  right: Competency;
 };
 
 export type MutationUpdateEducationResult = MutationUpdateEducationSuccess;

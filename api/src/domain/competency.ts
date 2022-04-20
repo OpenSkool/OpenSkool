@@ -8,7 +8,7 @@ import {
   Language,
 } from '@prisma/client';
 
-import { AppInputError } from '../errors';
+import { AppInputError, AppNotFoundError } from '../errors';
 import { prisma } from '../prisma';
 import { SchemaInputErrorCode } from '../schema/constants';
 import { first } from '../utils';
@@ -239,6 +239,7 @@ export async function getAllRootCompetencies(
   try {
     const competencies = await prisma.competency.findMany({
       include: { translations: true },
+      orderBy: { sort: 'asc' },
       where: { parentCompetencyId: null },
     });
     return competencies.map((competency) =>
@@ -336,6 +337,7 @@ export async function findSubCompetenciesByParentId(
       .findUnique({ where: { id } })
       .subCompetencies({
         include: { translations: true },
+        orderBy: { sort: 'asc' },
       });
     if (subCompetencies.length === 0) {
       return null;
@@ -379,6 +381,56 @@ export async function updateCompetencyTranslations(
   } catch (error) {
     handleServiceError(error);
   }
+}
+
+export async function swapCompetencies(
+  leftCompetencyId: string,
+  rightCompetencyId: string,
+  context: DomainContext,
+): Promise<[CompetencyModel, CompetencyModel]> {
+  const [leftCompetency, rightCompetency] = await prisma.competency.findMany({
+    select: {
+      parentCompetencyId: true,
+      sort: true,
+    },
+    where: {
+      id: { in: [leftCompetencyId, rightCompetencyId] },
+    },
+  });
+  if (leftCompetency == null || rightCompetency == null) {
+    throw new AppNotFoundError();
+  }
+  if (
+    leftCompetency.parentCompetencyId !== rightCompetency.parentCompetencyId
+  ) {
+    throw new AppInputError(
+      'invalid-swap-competencies',
+      'The competencies must be in the same parent.',
+    );
+  }
+  const languageCode = mapLocaleToLanguageCode(context.locale);
+  const [leftResult, rightResult] = await prisma.$transaction([
+    prisma.competency.update({
+      data: {
+        sort: rightCompetency.sort,
+        updatedById: context.userId,
+      },
+      include: { translations: true },
+      where: { id: leftCompetencyId },
+    }),
+    prisma.competency.update({
+      data: {
+        sort: leftCompetency.sort,
+        updatedById: context.userId,
+      },
+      include: { translations: true },
+      where: { id: rightCompetencyId },
+    }),
+  ]);
+  return [
+    mapCompetencyToModel(leftResult, languageCode),
+    mapCompetencyToModel(rightResult, languageCode),
+  ];
 }
 
 async function assertUniqueTitle(
