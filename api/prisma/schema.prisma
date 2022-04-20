@@ -20,7 +20,8 @@ enum Role {
 }
 
 model Competency {
-  id String @id @default(cuid())
+  id   String @id @default(cuid())
+  sort Int    @default(autoincrement())
 
   createdAt   DateTime @default(now())
   createdBy   Person?  @relation("CompetencyToPersonCreated", fields: [createdById], references: [id])

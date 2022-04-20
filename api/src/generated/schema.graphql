@@ -104,6 +104,10 @@ type Mutation {
     data: RenameCompetencyInput!
     id: ID!
   ): MutationRenameCompetencyResult!
+  swapCompetencies(
+    leftCompetencyId: String!
+    rightCompetencyId: String!
+  ): MutationSwapCompetenciesResult!
   updateEducation(
     data: EducationInput!
     id: ID!
@@ -164,6 +168,20 @@ union MutationRenameCompetencyResult =
 
 type MutationRenameCompetencySuccess {
   data: Competency!
+}
+
+union MutationSwapCompetenciesResult =
+    InputError
+  | MutationSwapCompetenciesSuccess
+  | UnauthorizedError
+
+type MutationSwapCompetenciesSuccess {
+  data: MutationSwapCompetenciesSuccessData!
+}
+
+type MutationSwapCompetenciesSuccessData {
+  left: Competency!
+  right: Competency!
 }
 
 union MutationUpdateEducationResult = MutationUpdateEducationSuccess
