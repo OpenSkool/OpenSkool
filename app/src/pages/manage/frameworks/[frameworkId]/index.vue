@@ -2,7 +2,7 @@
 import { useI18n } from 'vue-i18n';
 
 import {
-  getFrameworkRootCompetenciesQuery,
+  GetFrameworkRootCompetenciesQuery,
   DeleteCompetencyMutation,
   DeleteCompetencyMutationVariables,
 } from '~/generated/graphql';
@@ -19,7 +19,7 @@ const props = defineProps<{
   frameworkId: string; // route param
 }>();
 
-const { error, loading, result } = useQuery<getFrameworkRootCompetenciesQuery>(
+const { error, loading, result } = useQuery<GetFrameworkRootCompetenciesQuery>(
   gql`
     query getFrameworkRootCompetencies($id: ID!) {
       competencyFramework(id: $id) {
