@@ -18,7 +18,7 @@ builder.queryField('allEducations', (t) =>
   t.field({
     type: [Education],
     async resolve(root, argumentz, ctx) {
-      return EducationService.getAllEducations(ctx);
+      return EducationService.getAllEducations(ctx.domain);
     },
   }),
 );
@@ -37,7 +37,7 @@ builder.mutationField('createEducation', (t) =>
     },
     errors: {},
     async resolve(root, { data }, ctx) {
-      return EducationService.createEducation(data, ctx);
+      return EducationService.createEducation(data, ctx.domain);
     },
   }),
 );
@@ -51,7 +51,7 @@ builder.mutationField('updateEducation', (t) =>
     },
     errors: {},
     async resolve(root, { id, data }, ctx) {
-      return EducationService.updateEducation(id, data, ctx);
+      return EducationService.updateEducation(id, data, ctx.domain);
     },
   }),
 );
@@ -64,7 +64,7 @@ builder.mutationField('deleteEducation', (t) =>
     },
     errors: {},
     async resolve(root, { id }, ctx) {
-      return EducationService.deleteEducation(id, ctx);
+      return EducationService.deleteEducation(id, ctx.domain);
     },
   }),
 );

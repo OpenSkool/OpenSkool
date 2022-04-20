@@ -1,7 +1,7 @@
 import routes from 'virtual:generated-pages';
 import { createRouter, createWebHistory } from 'vue-router';
 
-import { useDemoStore } from '~/demo-store';
+import { useAuthStore } from '~/auth';
 import { pinia } from '~/pinia';
 
 export const router = createRouter({
@@ -10,8 +10,8 @@ export const router = createRouter({
 });
 
 router.beforeResolve((to) => {
-  const demoStore = useDemoStore(pinia);
-  if (to.meta.requireDemoUser === true && demoStore.demoUserId == null) {
+  const authStore = useAuthStore(pinia);
+  if (to.meta.requireAuthentication === true && !authStore.isLoggedIn) {
     return '/401';
   }
 });

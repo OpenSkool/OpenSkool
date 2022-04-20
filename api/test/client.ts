@@ -3,7 +3,7 @@ import { DocumentNode, GraphQLError } from 'graphql';
 
 import schema from '../src/schema';
 import type { Context } from '../src/schema/context';
-import { createPersonFixture } from './fixtures';
+import { createUserFixture } from './fixtures';
 
 export interface GraphQlResponse<TData> {
   data: TData;
@@ -30,13 +30,10 @@ export async function execute<
   const headers: HeadersInit = {};
   let userId: string | null = null;
   if (spec?.userId == null) {
-    const person = await createPersonFixture();
-    userId = person.id;
+    const user = await createUserFixture();
+    userId = user.id;
   } else if (spec.userId !== false) {
     userId = spec.userId;
-  }
-  if (userId != null) {
-    headers.authorization = `demo-user-id: ${userId}`;
   }
   if (spec?.locale != null) {
     headers['accept-language'] = spec.locale;
@@ -45,10 +42,12 @@ export async function execute<
     document,
     headers,
     serverContext: {
-      locale: spec?.locale ?? 'en',
+      domain: {
+        locale: spec?.locale ?? 'en',
+        userId: userId ?? null,
+      },
       reply: {} as any,
       request: {} as any,
-      userId,
     },
     variables,
   });

@@ -1,14 +1,12 @@
 import * as Db from '@prisma/client';
 
-import { PersonService } from '../../domain';
+import { UserService } from '../../domain';
 import builder from '../builder';
 import { Person } from './person';
 
-const DELETED_USER: Db.Person = {
+const DELETED_USER: Db.User = {
   id: '__DELETED_USER__',
-  firstName: 'Deleted',
-  lastName: 'User',
-  role: 'EXTERNAL',
+  name: 'Deleted',
 };
 
 interface IAccountable {
@@ -32,8 +30,8 @@ builder.interfaceType(Accountable, {
         if (parent.createdById == null) {
           return DELETED_USER;
         }
-        const person = await PersonService.findPersonById(parent.createdById);
-        return person ?? DELETED_USER;
+        const user = await UserService.findUserById(parent.createdById);
+        return user ?? DELETED_USER;
       },
     }),
     updatedAt: t.expose('updatedAt', { type: 'DateTime' }),
@@ -43,8 +41,8 @@ builder.interfaceType(Accountable, {
         if (parent.updatedById == null) {
           return DELETED_USER;
         }
-        const person = await PersonService.findPersonById(parent.updatedById);
-        return person ?? DELETED_USER;
+        const user = await UserService.findUserById(parent.updatedById);
+        return user ?? DELETED_USER;
       },
     }),
   }),

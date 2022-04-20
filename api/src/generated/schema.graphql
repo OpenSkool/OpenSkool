@@ -208,14 +208,11 @@ type NotFoundError implements UserError {
 }
 
 interface Person implements Node {
-  displayName: String!
-  firstName: String!
-
   """
   A CUID for a resource
   """
   id: ID!
-  lastName: String!
+  name: String!
 }
 
 type Query {
@@ -232,14 +229,11 @@ input RenameCompetencyInput {
 }
 
 type Teacher implements Node & Person {
-  displayName: String!
-  firstName: String!
-
   """
   A CUID for a resource
   """
   id: ID!
-  lastName: String!
+  name: String!
 }
 
 type UnauthorizedError implements UserError {

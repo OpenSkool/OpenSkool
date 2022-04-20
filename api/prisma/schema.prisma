@@ -12,23 +12,16 @@ enum Language {
   EN
 }
 
-enum Role {
-  ADMIN
-  EXTERNAL
-  STUDENT
-  TEACHER
-}
-
 model Competency {
   id   String @id @default(cuid())
   sort Int    @default(autoincrement())
 
   createdAt   DateTime @default(now())
-  createdBy   Person?  @relation("CompetencyToPersonCreated", fields: [createdById], references: [id])
+  createdBy   User?    @relation("CompetencyToUserCreated", fields: [createdById], references: [id])
   createdById String?
 
   updatedAt   DateTime @updatedAt
-  updatedBy   Person?  @relation("CompetencyToPersonUpdated", fields: [updatedById], references: [id])
+  updatedBy   User?    @relation("CompetencyToUserUpdated", fields: [updatedById], references: [id])
   updatedById String?
 
   competencyFramework   CompetencyFramework? @relation(fields: [competencyFrameworkId], references: [id])
@@ -55,11 +48,11 @@ model CompetencyFramework {
   id String @id @default(cuid())
 
   createdAt   DateTime @default(now())
-  createdBy   Person?  @relation("CompetencyFrameworkToPersonCreated", fields: [createdById], references: [id])
+  createdBy   User?    @relation("CompetencyFrameworkToUserCreated", fields: [createdById], references: [id])
   createdById String?
 
   updatedAt   DateTime @updatedAt
-  updatedBy   Person?  @relation("CompetencyFrameworkToPersonUpdated", fields: [updatedById], references: [id])
+  updatedBy   User?    @relation("CompetencyFrameworkToUserUpdated", fields: [updatedById], references: [id])
   updatedById String?
 
   competencies Competency[]
@@ -81,11 +74,11 @@ model Education {
   id String @id @default(cuid())
 
   createdAt   DateTime @default(now())
-  createdBy   Person?  @relation("EducationToPersonCreated", fields: [createdById], references: [id])
+  createdBy   User?    @relation("EducationToUserCreated", fields: [createdById], references: [id])
   createdById String?
 
   updatedAt   DateTime @updatedAt
-  updatedBy   Person?  @relation("EducationToPersonUpdated", fields: [updatedById], references: [id])
+  updatedBy   User?    @relation("EducationToUserUpdated", fields: [updatedById], references: [id])
   updatedById String?
 
   translations EducationTranslation[]
@@ -101,18 +94,16 @@ model EducationTranslation {
   @@unique([educationId, languageCode])
 }
 
-model Person {
-  id String @id @default(cuid())
+model User {
+  id String @id
 
-  competenciesCreated         Competency[]          @relation("CompetencyToPersonCreated")
-  competenciesUpdated         Competency[]          @relation("CompetencyToPersonUpdated")
-  competencyFrameworksCreated CompetencyFramework[] @relation("CompetencyFrameworkToPersonCreated")
-  competencyFrameworksUpdated CompetencyFramework[] @relation("CompetencyFrameworkToPersonUpdated")
+  competenciesCreated         Competency[]          @relation("CompetencyToUserCreated")
+  competenciesUpdated         Competency[]          @relation("CompetencyToUserUpdated")
+  competencyFrameworksCreated CompetencyFramework[] @relation("CompetencyFrameworkToUserCreated")
+  competencyFrameworksUpdated CompetencyFramework[] @relation("CompetencyFrameworkToUserUpdated")
 
-  educationsCreated Education[] @relation("EducationToPersonCreated")
-  educationsUpdated Education[] @relation("EducationToPersonUpdated")
+  educationsCreated Education[] @relation("EducationToUserCreated")
+  educationsUpdated Education[] @relation("EducationToUserUpdated")
 
-  firstName String
-  lastName  String
-  role      Role
+  name String
 }

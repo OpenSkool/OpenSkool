@@ -7,7 +7,7 @@ import { execute, GraphQlResponse } from './client';
 import {
   createCompetencyFixture,
   createCompetencyFrameworkFixture,
-  createPersonFixture,
+  createUserFixture,
 } from './fixtures';
 
 async function getAllRootCompetencies(): Promise<
@@ -71,7 +71,7 @@ describe('createCompetency', () => {
   });
 
   test('no error on duplicate title with different locale', async () => {
-    const person = await createPersonFixture();
+    const user = await createUserFixture();
     await createCompetencyFixture({
       title: 'Hello Root!',
       language: Language.EN,
@@ -91,7 +91,7 @@ describe('createCompetency', () => {
         }
       `,
       {
-        spec: { locale: 'nl', userId: person.id },
+        spec: { locale: 'nl', userId: user.id },
         variables: { frameworkId: framework.id, title: 'Hello Root!' },
       },
     );
@@ -99,7 +99,7 @@ describe('createCompetency', () => {
   });
 
   test('should create competency in user locale', async () => {
-    const person = await createPersonFixture();
+    const user = await createUserFixture();
     const response = await execute<{
       createRootCompetency: { data: { id: string } };
     }>(
@@ -117,7 +117,7 @@ describe('createCompetency', () => {
         }
       `,
       {
-        spec: { locale: 'nl', userId: person.id },
+        spec: { locale: 'nl', userId: user.id },
         variables: { frameworkId: framework.id, title: 'Hello World!' },
       },
     );
@@ -172,7 +172,7 @@ describe('createNestedCompetency', () => {
   });
 
   test('no error on duplicate title not within same parent', async () => {
-    const person = await createPersonFixture();
+    const user = await createUserFixture();
     const parent1 = await createCompetencyFixture({ title: 'Hello Parent 1!' });
     const parent2 = await createCompetencyFixture({ title: 'Hello Parent 2!' });
     await createCompetencyFixture({
@@ -192,7 +192,7 @@ describe('createNestedCompetency', () => {
         }
       `,
       {
-        spec: { userId: person.id },
+        spec: { userId: user.id },
         variables: {
           parentId: parent2.id,
           title: 'Hello Child!',
@@ -203,7 +203,7 @@ describe('createNestedCompetency', () => {
   });
 
   test('should create nested competency', async () => {
-    const person = await createPersonFixture();
+    const user = await createUserFixture();
     const parent = await createCompetencyFixture({ title: 'Parent Title' });
     const response = await execute<{ createNestedCompetency: unknown }>(
       gql`
@@ -218,7 +218,7 @@ describe('createNestedCompetency', () => {
         }
       `,
       {
-        spec: { userId: person.id },
+        spec: { userId: user.id },
         variables: {
           parentId: parent.id,
           title: 'Hello World!',
@@ -274,7 +274,7 @@ describe('createRootCompetency', () => {
   });
 
   test('should create root competency', async () => {
-    const person = await createPersonFixture();
+    const user = await createUserFixture();
     const response = await execute<{ createRootCompetency: unknown }>(
       gql`
         mutation ($frameworkId: ID!, $title: String!) {
@@ -290,7 +290,7 @@ describe('createRootCompetency', () => {
         }
       `,
       {
-        spec: { userId: person.id },
+        spec: { userId: user.id },
         variables: {
           frameworkId: framework.id,
           title: 'Hello Root!',
@@ -306,7 +306,7 @@ describe('createRootCompetency', () => {
 
 describe('deleteCompetency', () => {
   test('should delete competency', async () => {
-    const person = await createPersonFixture();
+    const user = await createUserFixture();
     const competency = await createCompetencyFixture();
     const response = await execute<
       { deleteCompetency: { id: string } },
@@ -320,7 +320,7 @@ describe('deleteCompetency', () => {
         }
       `,
       {
-        spec: { userId: person.id },
+        spec: { userId: user.id },
         variables: { id: competency.id },
       },
     );
@@ -331,7 +331,7 @@ describe('deleteCompetency', () => {
   });
 
   test('should delete competency and all its descendants', async () => {
-    const person = await createPersonFixture();
+    const user = await createUserFixture();
     const root = await createCompetencyFixture();
     const parent = await createCompetencyFixture({ parentId: root.id });
     const child = await createCompetencyFixture({ parentId: parent.id });
@@ -343,7 +343,7 @@ describe('deleteCompetency', () => {
           }
         }
       `,
-      { spec: { userId: person.id }, variables: { id: root.id } },
+      { spec: { userId: user.id }, variables: { id: root.id } },
     );
     expect(
       await prisma.competency.findUnique({ where: { id: child.id } }),
@@ -353,7 +353,7 @@ describe('deleteCompetency', () => {
 
 describe('renameCompetency', () => {
   test('error on invalid title', async () => {
-    const person = await createPersonFixture();
+    const user = await createUserFixture();
 
     const competency = await createCompetencyFixture();
     const response = await execute<{ renameCompetency: unknown }>(
@@ -369,7 +369,7 @@ describe('renameCompetency', () => {
         }
       `,
       {
-        spec: { userId: person.id },
+        spec: { userId: user.id },
         variables: {
           id: competency.id,
           title: '  ',
@@ -458,7 +458,7 @@ describe('renameCompetency', () => {
   });
 
   test('no error on duplicate title not within same parent', async () => {
-    const person = await createPersonFixture();
+    const user = await createUserFixture();
 
     const parent1 = await createCompetencyFixture({ title: 'Hello Parent 1!' });
     await createCompetencyFixture({
@@ -485,7 +485,7 @@ describe('renameCompetency', () => {
         }
       `,
       {
-        spec: { userId: person.id },
+        spec: { userId: user.id },
         variables: {
           id: child2.id,
           title: 'Hello Child 1!',
@@ -496,7 +496,7 @@ describe('renameCompetency', () => {
   });
 
   test('should rename competency', async () => {
-    const person = await createPersonFixture();
+    const user = await createUserFixture();
     const competency = await createCompetencyFixture();
     const response = await execute<{ renameCompetency: unknown }>(
       gql`
@@ -511,7 +511,7 @@ describe('renameCompetency', () => {
         }
       `,
       {
-        spec: { userId: person.id },
+        spec: { userId: user.id },
         variables: {
           id: competency.id,
           title: 'Hello Universe!',
@@ -527,7 +527,7 @@ describe('renameCompetency', () => {
 
 describe('swapCompetencies', () => {
   test('should swap two competencies', async () => {
-    const person = await createPersonFixture();
+    const user = await createUserFixture();
     const competency1 = await createCompetencyFixture({
       title: 'Test competency 1',
     });
@@ -557,7 +557,7 @@ describe('swapCompetencies', () => {
         }
       `,
       {
-        spec: { userId: person.id },
+        spec: { userId: user.id },
         variables: {
           leftCompetencyId: competency1.id,
           rightCompetencyId: competency2.id,
@@ -581,7 +581,7 @@ describe('swapCompetencies', () => {
   });
 
   test('should return an `NotFound` error', async () => {
-    const person = await createPersonFixture();
+    const user = await createUserFixture();
     const competency1 = await createCompetencyFixture({
       title: 'Test competency 1',
     });
@@ -597,7 +597,7 @@ describe('swapCompetencies', () => {
         }
       `,
       {
-        spec: { userId: person.id },
+        spec: { userId: user.id },
         variables: {
           leftCompetencyId: competency1.id,
           rightCompetencyId: 'some_non_existing_id',
@@ -611,7 +611,7 @@ describe('swapCompetencies', () => {
   });
 
   test('should return an `InputError` error', async () => {
-    const person = await createPersonFixture();
+    const user = await createUserFixture();
     const rootCompetency1 = await createCompetencyFixture({
       title: 'Root competency 1',
     });
@@ -638,7 +638,7 @@ describe('swapCompetencies', () => {
         }
       `,
       {
-        spec: { userId: person.id },
+        spec: { userId: user.id },
         variables: {
           leftCompetencyId: competency1.id,
           rightCompetencyId: competency2.id,

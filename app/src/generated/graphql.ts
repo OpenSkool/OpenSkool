@@ -253,11 +253,9 @@ export type NotFoundError = UserError & {
 };
 
 export type Person = {
-  displayName: Scalars['String'];
-  firstName: Scalars['String'];
   /** A CUID for a resource */
   id: Scalars['ID'];
-  lastName: Scalars['String'];
+  name: Scalars['String'];
 };
 
 export type Query = {
@@ -285,11 +283,9 @@ export type RenameCompetencyInput = {
 export type Teacher = Node &
   Person & {
     __typename?: 'Teacher';
-    displayName: Scalars['String'];
-    firstName: Scalars['String'];
     /** A CUID for a resource */
     id: Scalars['ID'];
-    lastName: Scalars['String'];
+    name: Scalars['String'];
   };
 
 export type UnauthorizedError = UserError & {
@@ -303,13 +299,6 @@ export type UserError = {
   code: Scalars['String'];
   message: Scalars['String'];
   path?: Maybe<Array<Scalars['String']>>;
-};
-
-export type GetPeopleQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetPeopleQuery = {
-  __typename?: 'Query';
-  allPeople: Array<{ __typename?: 'Teacher'; id: string; displayName: string }>;
 };
 
 export type CreateCompetencyFrameworkMutationVariables = Exact<{
@@ -601,32 +590,6 @@ export const BaseErrorFieldsFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<BaseErrorFieldsFragment, unknown>;
-export const GetPeopleDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'getPeople' },
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'allPeople' },
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'displayName' } },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<GetPeopleQuery, GetPeopleQueryVariables>;
 export const CreateCompetencyFrameworkDocument = {
   kind: 'Document',
   definitions: [

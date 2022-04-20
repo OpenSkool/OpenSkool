@@ -1798,10 +1798,12 @@ __metadata:
     "@prisma/client": ^3.10.0
     "@sinclair/typebox": ^0.23.4
     "@types/accept-language-parser": ^1.5.3
+    "@types/cuid": ^2
     "@types/dotenv-flow": ^3.2.0
     "@types/pino": ^6.3.12
     "@types/prettier": ^2
     accept-language-parser: ^1.5.0
+    cuid: ^2.1.8
     dotenv-flow: ^3.2.0
     esbuild: ^0.14.31
     esbuild-node-externals: ^1.4.1
@@ -1816,6 +1818,7 @@ __metadata:
     graphql: ^16.3.0
     graphql-scalars: ^1.17.0
     graphql-tag: ^2.12.6
+    jose: ^4.6.2
     mercurius-integration-testing: ^4.0.0
     ms: 3.0.0-canary.1
     nodemon: ^2.0.15
@@ -1827,6 +1830,7 @@ __metadata:
     read-pkg-up: ^9.1.0
     typescript: ~4.6.3
     vitest: 0.9.3
+    zod: ^3.14.4
   languageName: unknown
   linkType: soft
 
@@ -2095,6 +2099,15 @@ __metadata:
   version: 0.4.1
   resolution: "@types/cookie@npm:0.4.1"
   checksum: 3275534ed69a76c68eb1a77d547d75f99fedc80befb75a3d1d03662fb08d697e6f8b1274e12af1a74c6896071b11510631ba891f64d30c78528d0ec45a9c1a18
+  languageName: node
+  linkType: hard
+
+"@types/cuid@npm:^2":
+  version: 2.0.1
+  resolution: "@types/cuid@npm:2.0.1"
+  dependencies:
+    cuid: "*"
+  checksum: 54eef4216441081cb3e6159315a353da7b72d6fda02830af68dc4fd2a4d95908673f32304cbf522ad032053e7bbe4ecb03be94983bdc15e47348cdc982d85b3f
   languageName: node
   linkType: hard
 
@@ -3928,6 +3941,13 @@ __metadata:
   version: 2.6.19
   resolution: "csstype@npm:2.6.19"
   checksum: 72b51ddd30ba308d08373cd890e79526efdc19a9762941845040055f75353992f2d8d4cf4db282a8e1d3d9d2a39c989c65fe32b7b2655f08d313660c4048d2d6
+  languageName: node
+  linkType: hard
+
+"cuid@npm:*, cuid@npm:^2.1.8":
+  version: 2.1.8
+  resolution: "cuid@npm:2.1.8"
+  checksum: 12b85b3f5150a6f0b9e4f345c8d98299d74647419151751fa1132f6702fe2b5388ceceb1c9b49bad7cab1b3ac033c7cedea8ffc034930f90005b8a4345025288
   languageName: node
   linkType: hard
 
@@ -6841,6 +6861,13 @@ __metadata:
   version: 4.6.1
   resolution: "jose@npm:4.6.1"
   checksum: f701b41ef385e819a2a6369f2c63277ed51694bac4c0dac211e58f71a7b902b5c42cb0fbaf922e5a14d6f02219f0cb4e1128147f6cbd003f9f6abb7b8f7b91e5
+  languageName: node
+  linkType: hard
+
+"jose@npm:^4.6.2":
+  version: 4.6.2
+  resolution: "jose@npm:4.6.2"
+  checksum: 72c1b7850b8d70171936d4c054494f896faea022ce3477890bd1a705e28bc9e66582bd7eed3bf3de6991efaec0f480cabbbbb7478cb831fbacd49c58bd214207
   languageName: node
   linkType: hard
 
@@ -11314,5 +11341,12 @@ __metadata:
   version: 0.8.15
   resolution: "zen-observable@npm:0.8.15"
   checksum: b7289084bc1fc74a559b7259faa23d3214b14b538a8843d2b001a35e27147833f4107590b1b44bf5bc7f6dfe6f488660d3a3725f268e09b3925b3476153b7821
+  languageName: node
+  linkType: hard
+
+"zod@npm:^3.14.4":
+  version: 3.14.4
+  resolution: "zod@npm:3.14.4"
+  checksum: 30e75dc1e4e1d6ce5695750d1906b6b918779b8aa446f5db77eb2b8344d08f29344b5d0115034a9e695fd5a627d23c5c03d67efe58fe16fbb91dee9dc08761bc
   languageName: node
   linkType: hard

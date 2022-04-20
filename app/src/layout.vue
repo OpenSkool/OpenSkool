@@ -1,7 +1,13 @@
 <script lang="ts" setup>
 import { useGlobalQueryLoading } from '@vue/apollo-composable';
 
+import { useAuthStore } from './auth';
+
 const loading = useGlobalQueryLoading();
+
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+
+const authStore = useAuthStore();
 </script>
 
 <template>
@@ -24,7 +30,22 @@ const loading = useGlobalQueryLoading();
         <h1 v-t="'global.title'" class="text-4xl my-5 text-primary1-700"></h1>
         <div class="flex gap-6">
           <language-select />
-          <user-select />
+          <div class="flex gap-3 items-center">
+            <ri-shield-user-fill />
+            <template v-if="authStore.isLoggedIn">
+              {{ authStore.name }}
+              <a class="btn btn-primary" :href="`${apiBaseUrl}/openid/logout`">
+                Logout
+              </a>
+            </template>
+            <a
+              v-else
+              class="btn btn-primary"
+              :href="`${apiBaseUrl}/openid/connect`"
+            >
+              Connect
+            </a>
+          </div>
         </div>
       </div>
     </div>

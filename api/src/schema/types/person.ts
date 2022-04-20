@@ -1,26 +1,20 @@
-import type { Person as PersonModel } from '@prisma/client';
+import type { User as UserModel } from '@prisma/client';
 
-import { PersonService } from '../../domain';
+import { UserService } from '../../domain';
 import builder from '../builder';
 import { Node } from './node';
 
-export const Person = builder.interfaceRef<PersonModel>('Person');
+export const Person = builder.interfaceRef<UserModel>('Person');
 
 builder.interfaceType(Person, {
   name: 'Person',
   interfaces: [Node],
   fields: (t) => ({
-    displayName: t.string({
-      resolve(parent) {
-        return `${parent.firstName} ${parent.lastName}`;
-      },
-    }),
-    firstName: t.exposeString('firstName'),
-    lastName: t.exposeString('lastName'),
+    name: t.exposeString('name'),
   }),
 });
 
-export const Teacher = builder.objectRef<PersonModel>('Teacher');
+export const Teacher = builder.objectRef<UserModel>('Teacher');
 
 builder.objectType(Teacher, {
   name: 'Teacher',
@@ -31,6 +25,6 @@ builder.objectType(Teacher, {
 builder.queryField('allPeople', (t) =>
   t.field({
     type: [Person],
-    resolve: () => PersonService.getAllPeople(),
+    resolve: () => UserService.getAllUsers(),
   }),
 );

@@ -1,6 +1,6 @@
 <route lang="yaml">
 meta:
-  requireDemoUser: true
+  requireAuthentication: true
 </route>
 
 <script lang="ts" setup>

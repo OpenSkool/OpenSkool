@@ -1,8 +1,9 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 
+import { DomainContext } from '../domain';
+
 export interface Context {
-  locale: string;
+  domain: DomainContext;
   request: FastifyRequest;
   reply: FastifyReply;
-  userId: string | null;
 }

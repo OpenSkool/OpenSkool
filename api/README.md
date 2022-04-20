@@ -23,6 +23,22 @@ We use [prisma migrate](https://www.prisma.io/migrate/) to manage our database s
 yarn workspace @os/api prisma migrate reset
 ```
 
+#### First seed
+
+Add a seed user, that matches an existing user from your local Keycloak instance, to your local env file.
+
+```ini
+# api/.env.local
+SEED_USER_ID="" # Eg. 6a29704b-b0de-4a59-8a81-5778efd6b10a
+SEED_USER_NAME="" # Eg. Dieter Luypaert
+```
+
+Go on to seed the database.
+
+```sh
+yarn workspace @os/api prisma db seed
+```
+
 #### Start
 
 Run `yarn workspace @os/api dev` to start the api in development mode.

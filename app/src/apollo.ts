@@ -5,20 +5,14 @@ import {
 } from '@apollo/client/core';
 import { setContext } from '@apollo/client/link/context';
 
-import { useDemoStore } from './demo-store';
 import { getLocaleString } from './i18n';
-import { pinia } from './pinia';
 
-const authLink = setContext(
+const enrichLink = setContext(
   (operation, previousContext: { headers?: Record<string, string> }) => {
-    const demoStore = useDemoStore(pinia);
     const headers: Record<string, string> = {
       ...previousContext.headers,
       'accept-language': getLocaleString(),
     };
-    if (demoStore.demoUserId != null) {
-      headers.authorization = `demo-user-id: ${demoStore.demoUserId}`;
-    }
     return { headers };
   },
 );
@@ -35,5 +29,5 @@ export const apolloClient = new ApolloClient({
       fetchPolicy: 'cache-and-network',
     },
   },
-  link: authLink.concat(httpLink),
+  link: enrichLink.concat(httpLink),
 });
