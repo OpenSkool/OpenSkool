@@ -334,6 +334,19 @@ export type RenameCompetencyMutation = {
       };
 };
 
+export type GetAllRootCompetenciesQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetAllRootCompetenciesQuery = {
+  __typename?: 'Query';
+  allRootCompetencies: Array<{
+    __typename?: 'Competency';
+    id: string;
+    title: string;
+  }>;
+};
+
 export type GetSubCompetenciesQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -344,6 +357,11 @@ export type GetSubCompetenciesQuery = {
     __typename?: 'Competency';
     id: string;
     title: string;
+    competencyFramework?: {
+      __typename?: 'CompetencyFramework';
+      id: string;
+      title: string;
+    } | null;
     parent?: { __typename?: 'Competency'; id: string; title: string } | null;
     subCompetencies?: Array<{
       __typename?: 'Competency';
@@ -897,6 +915,35 @@ export const RenameCompetencyDocument = {
   RenameCompetencyMutation,
   RenameCompetencyMutationVariables
 >;
+export const GetAllRootCompetenciesDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetAllRootCompetencies' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'allRootCompetencies' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  GetAllRootCompetenciesQuery,
+  GetAllRootCompetenciesQueryVariables
+>;
 export const GetSubCompetenciesDocument = {
   kind: 'Document',
   definitions: [
@@ -936,31 +983,24 @@ export const GetSubCompetenciesDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'title' } },
                 {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'Competency' },
-                  },
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'competencyFramework' },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'parent' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' },
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'title' },
-                            },
-                          ],
-                        },
-                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'parent' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'title' } },
                     ],
                   },
                 },
@@ -1033,35 +1073,6 @@ export const DeleteCompetencyDocument = {
 } as unknown as DocumentNode<
   DeleteCompetencyMutation,
   DeleteCompetencyMutationVariables
->;
-export const GetAllRootCompetenciesDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'GetAllRootCompetencies' },
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'allRootCompetencies' },
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<
-  GetAllRootCompetenciesQuery,
-  GetAllRootCompetenciesQueryVariables
 >;
 export const GetCompetencyFrameworkDocument = {
   kind: 'Document',
