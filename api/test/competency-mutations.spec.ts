@@ -507,3 +507,40 @@ describe('renameCompetency', () => {
     );
   });
 });
+
+describe.only('swapCompetencies', () => {
+  test('should swap two competencies', async () => {
+    const person = await createPersonFixture();
+    const competency1 = await createCompetencyFixture({
+      title: 'Test competency 1',
+    });
+    const competency2 = await createCompetencyFixture({
+      title: 'Test competency 2',
+    });
+    expect(competency2.sort).toBeGreaterThan(competency1.sort);
+    const response = await execute<{ swapCompetencies: unknown }>(
+      gql`
+        mutation ($leftCompetencyId: ID!, $rightCompetencyId: ID!) {
+          swapCompetencies(
+            leftCompetencyId: $leftCompetencyId
+            rightCompetencyId: $rightCompetencyId
+          ) {
+            __typename
+          }
+        }
+      `,
+      {
+        spec: { userId: person.id },
+        variables: {
+          leftCompetencyId: competency1.id,
+          rightCompetencyId: competency2.id,
+        },
+      },
+    );
+    expect(response).toHaveProperty(
+      'data.swapCompetencies.__typename',
+      'MutationSwapCompetenciesSuccess',
+    );
+    //    expect(competency2.sort).toBeGreaterThan(competency1.sort);
+  });
+});
