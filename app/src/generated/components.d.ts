@@ -4,7 +4,6 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
-    CreateCompetency: typeof import('./../components/forms/create-competency.vue')['default']
     CreateCompetencyForm: typeof import('./../components/forms/create-competency-form.vue')['default']
     CreateCompetencyFramework: typeof import('./../components/forms/create-competency-framework.vue')['default']
     CreateRootCompetency: typeof import('./../components/forms/create-root-competency.vue')['default']
