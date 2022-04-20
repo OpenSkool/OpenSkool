@@ -30,7 +30,7 @@ Run `yarn workspace @os/api dev` to start the api in development mode.
 ### Type-safety
 
 The Api has complete type safety from database access through GraphQL exposure
-thanks to the power of [Prisma](https://www.prisma.io/) and [Nexus](https://nexusjs.org/).
+thanks to the power of [Prisma](https://www.prisma.io/) and [Pothos](https://pothos-graphql.dev).
 
 ```mermaid
 flowchart
@@ -42,18 +42,13 @@ flowchart
     pmsql[[prisma/migrations/**/*.sql]]
     primig <-.-> pmsql
 
-    nexsch["src/schema/**/* (Nexus)"]
-    nexgen{ }
-    nexsch -.-> |nexus generate| nexgen
+    schema["src/schema/**/* (Pothos)"]
+    schema -.-> |codegen| codgen
 
-    nexgengql[[src/generated/graphql.schema]]
-    nexgentyp[[src/generated/nexus.ts]]
-    nexgen -.-> nexgengql
-    nexgen -.-> nexgentyp
-    nexsch --> nexgentyp
+    codgen[[src/generated/graphql.schema]]
 
     domain[src/services/**]
-    nexsch --> domain
+    schema --> domain
   end
 
   subgraph node_modules
@@ -76,14 +71,13 @@ flowchart
   - Use `prisma db [push|pull]` to sync the Prisma schema with the DB.
   - Use `prisma migrate [dev|deploy|reset]` to apply/record database changes as migrations.
 - `src/schema/**/*`: single-source of truth of our GraphQL API.
-  - Use `nexus:generate` to generate a type-safe GraphQL server. This is done automatically and continuously when running the Api during development.
+  - Use `generate:codegen` to generate GraphQL DSL. This is done automatically and continuously when running the Api during development.
 
 #### Generated files
 
 - `node_modules/@prisma/client`: The Prisma client used for type-safe access to the database data.
 - `prisma/migrations/**/*.sql`: Migrations managed by `prisma migrate`.
-- `src/generated/nexus.ts`: Types generated and subsequently used by Nexus to provide a type-safe GraphQL API.
-- `src/generated/graphql.schema`: GraphQL schema used by our IDE for Intellisense, and by the App for type-safe API access.
+- `src/generated/graphql.schema`: GraphQL SDL used by our IDE for Intellisense, and by the App for type-safe API access.
 
 #### Command reference
 
