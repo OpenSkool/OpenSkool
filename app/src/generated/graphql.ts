@@ -356,6 +356,19 @@ export type GetAllRootCompetenciesQuery = {
   }>;
 };
 
+export type GetCompetencyFrameworkQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetCompetencyFrameworkQuery = {
+  __typename?: 'Query';
+  competencyFramework?: {
+    __typename?: 'CompetencyFramework';
+    id: string;
+    title: string;
+  } | null;
+};
+
 export type GetFrameworkRootCompetenciesQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -960,6 +973,55 @@ export const GetAllRootCompetenciesDocument = {
 } as unknown as DocumentNode<
   GetAllRootCompetenciesQuery,
   GetAllRootCompetenciesQueryVariables
+>;
+export const GetCompetencyFrameworkDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'getCompetencyFramework' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'competencyFramework' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'id' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  GetCompetencyFrameworkQuery,
+  GetCompetencyFrameworkQueryVariables
 >;
 export const GetFrameworkRootCompetenciesDocument = {
   kind: 'Document',

@@ -58,7 +58,7 @@ const competencyFramework = useResult(result);
     <h3 class="text-xl">{{ t('frameworks.route.id.index.heading') }}</h3>
     <router-link
       class="btn btn-primary my-5"
-      :to="`/manage/competencies/${competencyFramework.id}/create`"
+      :to="`/manage/frameworks/${competencyFramework.id}/create-competency`"
     >
       {{ t('frameworks.route.id.index.action.new') }}
     </router-link>
