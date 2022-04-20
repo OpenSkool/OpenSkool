@@ -5,12 +5,13 @@
 declare module 'vue' {
   export interface GlobalComponents {
     CreateCompetency: typeof import('./../components/forms/create-competency.vue')['default']
+    CreateCompetencyForm: typeof import('./../components/forms/create-competency-form.vue')['default']
+    CreateCompetencyFramework: typeof import('./../components/forms/create-competency-framework.vue')['default']
+    CreateRootCompetency: typeof import('./../components/forms/create-root-competency.vue')['default']
     Dialog: typeof import('@headlessui/vue')['Dialog']
     DialogDescription: typeof import('@headlessui/vue')['DialogDescription']
     DialogOverlay: typeof import('@headlessui/vue')['DialogOverlay']
     DialogTitle: typeof import('@headlessui/vue')['DialogTitle']
-    CreateCompetencyFramework: typeof import('./../components/forms/create-competency-framework.vue')['default']
-    CreateRootCompetency: typeof import('./../components/forms/create-root-competency.vue')['default']
     FkListbox: typeof import('./../components/listbox/fk-listbox.vue')['default']
     LanguageSelect: typeof import('./../components/demo/language-select.vue')['default']
     Listbox: typeof import('@headlessui/vue')['Listbox']

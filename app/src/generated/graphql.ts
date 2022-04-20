@@ -232,6 +232,25 @@ export type GetPeopleQuery = {
   allPeople: Array<{ __typename?: 'Teacher'; id: string; displayName: string }>;
 };
 
+export type CreateNestedCompetencyMutationVariables = Exact<{
+  data: CreateNestedCompetencyInput;
+}>;
+
+export type CreateNestedCompetencyMutation = {
+  __typename?: 'Mutation';
+  createNestedCompetency:
+    | {
+        __typename?: 'CreateCompetencySuccessPayload';
+        competency: { __typename?: 'Competency'; id: string };
+      }
+    | {
+        __typename?: 'InputError';
+        code: string;
+        message: string;
+        path?: Array<string> | null;
+      };
+};
+
 export type CreateCompetencyFrameworkMutationVariables = Exact<{
   data: CreateCompetencyFrameworkInput;
 }>;
@@ -242,25 +261,6 @@ export type CreateCompetencyFrameworkMutation = {
     | {
         __typename?: 'CreateCompetencyFrameworkSuccessPayload';
         competencyFramework: { __typename?: 'CompetencyFramework'; id: string };
-      }
-    | {
-        __typename?: 'InputError';
-        code: string;
-        message: string;
-        path?: Array<string> | null;
-      };
-};
-
-export type CreateCompetencyMutationVariables = Exact<{
-  data: CreateCompetencyInput;
-}>;
-
-export type CreateCompetencyMutation = {
-  __typename?: 'Mutation';
-  createCompetency:
-    | {
-        __typename?: 'CreateCompetencySuccessPayload';
-        competency: { __typename?: 'Competency'; id: string };
       }
     | {
         __typename?: 'InputError';
@@ -303,48 +303,6 @@ export type GetCreateCompetencyParentQueryVariables = Exact<{
 export type GetCreateCompetencyParentQuery = {
   __typename?: 'Query';
   competency?: { __typename?: 'Competency'; title: string } | null;
-};
-
-export type GetEditCompetencyQueryVariables = Exact<{
-  id: Scalars['ID'];
-}>;
-
-export type GetEditCompetencyQuery = {
-  __typename?: 'Query';
-  competency?: { __typename?: 'Competency'; title: string } | null;
-};
-
-export type RenameCompetencyMutationVariables = Exact<{
-  id: Scalars['ID'];
-  data: RenameCompetencyInput;
-}>;
-
-export type RenameCompetencyMutation = {
-  __typename?: 'Mutation';
-  renameCompetency:
-    | {
-        __typename?: 'InputError';
-        code: string;
-        message: string;
-        path?: Array<string> | null;
-      }
-    | {
-        __typename?: 'RenameCompetencySuccessPayload';
-        competency: { __typename?: 'Competency'; id: string };
-      };
-};
-
-export type GetAllRootCompetenciesQueryVariables = Exact<{
-  [key: string]: never;
-}>;
-
-export type GetAllRootCompetenciesQuery = {
-  __typename?: 'Query';
-  allRootCompetencies: Array<{
-    __typename?: 'Competency';
-    id: string;
-    title: string;
-  }>;
 };
 
 export type GetSubCompetenciesQueryVariables = Exact<{
@@ -471,6 +429,89 @@ export const GetPeopleDocument = {
     },
   ],
 } as unknown as DocumentNode<GetPeopleQuery, GetPeopleQueryVariables>;
+export const CreateNestedCompetencyDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'CreateNestedCompetency' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'data' } },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'CreateNestedCompetencyInput' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'createNestedCompetency' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'data' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'data' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: {
+                      kind: 'Name',
+                      value: 'CreateCompetencySuccessPayload',
+                    },
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'competency' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'BaseErrorFields' },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...BaseErrorFieldsFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<
+  CreateNestedCompetencyMutation,
+  CreateNestedCompetencyMutationVariables
+>;
 export const CreateCompetencyFrameworkDocument = {
   kind: 'Document',
   definitions: [
@@ -553,89 +594,6 @@ export const CreateCompetencyFrameworkDocument = {
 } as unknown as DocumentNode<
   CreateCompetencyFrameworkMutation,
   CreateCompetencyFrameworkMutationVariables
->;
-export const CreateCompetencyDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'CreateCompetency' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'data' } },
-          type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: { kind: 'Name', value: 'CreateCompetencyInput' },
-            },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'createCompetency' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'data' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'data' },
-                },
-              },
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: {
-                      kind: 'Name',
-                      value: 'CreateCompetencySuccessPayload',
-                    },
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'competency' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
-                {
-                  kind: 'FragmentSpread',
-                  name: { kind: 'Name', value: 'BaseErrorFields' },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-    ...BaseErrorFieldsFragmentDoc.definitions,
-  ],
-} as unknown as DocumentNode<
-  CreateCompetencyMutation,
-  CreateCompetencyMutationVariables
 >;
 export const CreateRootCompetencyDocument = {
   kind: 'Document',
@@ -767,182 +725,6 @@ export const GetCreateCompetencyParentDocument = {
 } as unknown as DocumentNode<
   GetCreateCompetencyParentQuery,
   GetCreateCompetencyParentQueryVariables
->;
-export const GetEditCompetencyDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'getEditCompetency' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'competency' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'id' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'id' },
-                },
-              },
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<
-  GetEditCompetencyQuery,
-  GetEditCompetencyQueryVariables
->;
-export const RenameCompetencyDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'renameCompetency' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
-          },
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'data' } },
-          type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: { kind: 'Name', value: 'RenameCompetencyInput' },
-            },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'renameCompetency' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'id' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'id' },
-                },
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'data' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'data' },
-                },
-              },
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: {
-                      kind: 'Name',
-                      value: 'RenameCompetencySuccessPayload',
-                    },
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'competency' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
-                {
-                  kind: 'FragmentSpread',
-                  name: { kind: 'Name', value: 'BaseErrorFields' },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-    ...BaseErrorFieldsFragmentDoc.definitions,
-  ],
-} as unknown as DocumentNode<
-  RenameCompetencyMutation,
-  RenameCompetencyMutationVariables
->;
-export const GetAllRootCompetenciesDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'GetAllRootCompetencies' },
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'allRootCompetencies' },
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<
-  GetAllRootCompetenciesQuery,
-  GetAllRootCompetenciesQueryVariables
 >;
 export const GetSubCompetenciesDocument = {
   kind: 'Document',

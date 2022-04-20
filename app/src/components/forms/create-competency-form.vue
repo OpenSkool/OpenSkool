@@ -2,19 +2,20 @@
 import { FormKitNode } from '@formkit/core';
 import { useI18n } from 'vue-i18n';
 
-import { CreateCompetencyDocument } from '~/generated/graphql';
+import { CreateNestedCompetencyDocument } from '~/generated/graphql';
 
 const { t } = useI18n();
 
 const router = useRouter();
 
 const props = defineProps<{
-  id?: string;
+  competencyId: string;
+  frameworkId: string;
 }>();
 
 gql`
-  mutation CreateCompetency($data: CreateCompetencyInput!) {
-    createCompetency(data: $data) {
+  mutation CreateNestedCompetency($data: CreateNestedCompetencyInput!) {
+    createNestedCompetency(data: $data) {
       ... on CreateCompetencySuccessPayload {
         competency {
           id
@@ -25,7 +26,9 @@ gql`
   }
 `;
 
-const { mutate: createCompetency } = useMutation(CreateCompetencyDocument);
+const { mutate: createNestedCompetency } = useMutation(
+  CreateNestedCompetencyDocument,
+);
 
 const formErrors = ref<string[]>([]);
 const formNode = ref<FormKitNode>();
@@ -34,19 +37,19 @@ const formValues = ref<{ title: string }>({ title: '' });
 async function handleFormSubmit(): Promise<void> {
   formErrors.value = [];
   try {
-    const response = await createCompetency({
-      data: { parentId: props.id, title: formValues.value.title },
+    const response = await createNestedCompetency({
+      data: { parentId: props.competencyId, title: formValues.value.title },
     });
-    switch (response?.data?.createCompetency.__typename) {
+    switch (response?.data?.createNestedCompetency.__typename) {
       default:
         console.error(
           'unexpected mutation response',
-          response?.data?.createCompetency,
+          response?.data?.createNestedCompetency,
         );
         formErrors.value.push(t('competencies.form.action.create.error'));
         return;
       case 'InputError': {
-        const mutationError = response.data.createCompetency;
+        const mutationError = response.data.createNestedCompetency;
         const fieldNode =
           mutationError.path == null
             ? undefined
@@ -59,11 +62,9 @@ async function handleFormSubmit(): Promise<void> {
         break;
       }
       case 'CreateCompetencySuccessPayload':
-        if (props.id == null) {
-          router.push('/manage/competencies');
-        } else {
-          router.push(`/manage/competencies/${props.id}`);
-        }
+        router.push(
+          `/manage/frameworks/${props.frameworkId}/${props.competencyId}`,
+        );
         break;
     }
   } catch (error) {

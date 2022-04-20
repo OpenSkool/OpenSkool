@@ -166,7 +166,7 @@ async function deleteCompetencyHandler(): Promise<void> {
     <h3 class="text-xl">{{ t('competencies.route.id.index.heading') }}</h3>
     <router-link
       class="btn btn-primary my-5"
-      :to="`/manage/frameworks/${competency.competencyFramework.id}/${competency.id}/create`"
+      :to="`/manage/frameworks/${competency.competencyFramework.id}/${competency.id}/create-competency`"
     >
       {{ t('competencies.route.id.index.action.new') }}
     </router-link>
