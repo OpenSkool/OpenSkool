@@ -25,7 +25,10 @@ const frameworks = useResult(result);
 
 <template>
   <h2 class="text-xl mb-3">{{ t('frameworks.route.index.heading') }}</h2>
-  <router-link class="btn btn-primary my-5" to="/manage/frameworks/create">
+  <router-link
+    class="btn btn-primary my-5"
+    to="/manage/frameworks/create-framework"
+  >
     {{ t('frameworks.route.index.action.create') }}
   </router-link>
   <ol class="list-decimal">
