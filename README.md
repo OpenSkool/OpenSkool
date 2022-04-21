@@ -55,3 +55,15 @@ Start all containers.
 ```sh
 docker-compose up -d
 ```
+
+## Setup
+
+### Databases
+
+You'll need to set up 2 databases to run the application, and one more to run the API integration tests. Either use the docker-compose or setup up your own databases. In case of Docker everything is already configured correctly for you.
+
+### Keycloak
+
+Open the [Keycloak Admin panel](http://localhost:8080/realms/master) and log in with your root credentials. (`keycloak` / `keycloak` when using Docker)
+
+Create [a realm](https://www.keycloak.org/docs/latest/server_admin/index.html#configuring-realms) called "os-local" for your local "Skool" to store your local users in.

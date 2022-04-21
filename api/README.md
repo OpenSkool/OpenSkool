@@ -13,6 +13,40 @@ If you use a manual PG setup, create a `.env.local` file with the correct creden
 DATABASE_URL="postgresql://openskool:openskool@localhost:5432/openskool"
 ```
 
+### Keycloak
+
+#### Create OAuth client
+
+You'll need to configure an OAuth client in Keycloak for your local API to use. Navigate in the [Keycloak Admin](http://localhost:8080) to Realms > your-realm > Clients – to create a new client.
+
+- Client id: `os-local-app` (Or whatever you want)
+- Root URL: `http://localhost:3030` (Or wherever you run your local App)
+
+Open the client settings and update these settings.
+
+- Access Type: `confidential`
+
+Configure this client in your `env` files.
+
+```ini
+# api/.env.local
+AUTH_CLIENT_ID="" # Eg. os-local-app
+AUTH_CLIENT_SECRET="" # You can find the secret in the credentials tabs.
+AUTH_ISSUER="" # Eg. http://localhost:8080/realms/os-local
+```
+
+#### Create user
+
+You'll need to create a user in your Skool Realm in order to use the App and run the database seed.
+
+Create a user in your realm and configure the seed variables with your new users data.
+
+```ini
+# api/.env.local
+SEED_USER_ID=""
+SEED_USER_NAME=""
+```
+
 #### Initialize schema
 
 We use [prisma migrate](https://www.prisma.io/migrate/) to manage our database schema.
