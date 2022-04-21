@@ -17,10 +17,11 @@ DATABASE_URL="postgresql://openskool:openskool@localhost:5432/openskool"
 
 We use [prisma migrate](https://www.prisma.io/migrate/) to manage our database schema.
 
-`prisma migrate reset` reset the database, applies all migrations, and seeds in some data.
-
 ```sh
-yarn workspace @os/api prisma migrate reset
+# Push the database schema to our database
+yarn workspace @os/api prisma:push
+# Push the database schema to our test database
+yarn workspace @os/api prisma:push:test
 ```
 
 #### First seed
