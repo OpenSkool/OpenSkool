@@ -10,11 +10,11 @@ import {
   createPersonFixture,
 } from './fixtures';
 
-async function expectCompetenciesToBeInThisOrder(
+async function areCompetenciesInThisOrder(
   competenceId1: string,
   competenceId2: string,
-): Promise<void> {
-  const response = await execute<{
+): Promise<boolean> {
+  const { data, errors } = await execute<{
     allRootCompetencies: Array<{ id: string }>;
   }>(
     gql`
@@ -26,10 +26,12 @@ async function expectCompetenciesToBeInThisOrder(
     `,
     {},
   );
-  expect(response).not.toHaveProperty('errors');
-  const [competence1, competence2] = response.data.allRootCompetencies;
-  expect(competence1?.id).toBe(competenceId1);
-  expect(competence2?.id).toBe(competenceId2);
+  const [competence1, competence2] = data.allRootCompetencies;
+  return (
+    !errors &&
+    competence1?.id === competenceId1 &&
+    competence2?.id === competenceId2
+  );
 }
 
 beforeEach(async () => {
@@ -540,7 +542,9 @@ describe('swapCompetencies', () => {
       title: 'Test competency 2',
     });
     expect(competency2.sort).toBeGreaterThan(competency1.sort);
-    await expectCompetenciesToBeInThisOrder(competency1.id, competency2.id);
+    expect(
+      await areCompetenciesInThisOrder(competency1.id, competency2.id),
+    ).toBe(true);
     const response = await execute<{ swapCompetencies: unknown }>(
       gql`
         mutation ($leftCompetencyId: ID!, $rightCompetencyId: ID!) {
@@ -564,7 +568,9 @@ describe('swapCompetencies', () => {
       'data.swapCompetencies.__typename',
       'MutationSwapCompetenciesSuccess',
     );
-    await expectCompetenciesToBeInThisOrder(competency2.id, competency1.id);
+    expect(
+      await areCompetenciesInThisOrder(competency2.id, competency1.id),
+    ).toBe(true);
   });
 
   test('should return an `NotFound` error', async () => {
