@@ -6,6 +6,28 @@ import { prisma } from '../src/prisma';
 import { execute } from './client';
 import { createCompetencyFixture } from './fixtures';
 
+export async function expectCompetencyWithIdToHaveTitle(
+  id: string,
+  title: string,
+  locale = 'nl',
+): Promise<void> {
+  const response = await execute<{ competency: { title: string } }>(
+    gql`
+      query ($id: ID!) {
+        competency(id: $id) {
+          title
+        }
+      }
+    `,
+    {
+      spec: { locale },
+      variables: { id },
+    },
+  );
+  expect(response).not.toHaveProperty('errors');
+  expect(response).toHaveProperty('data.competency.title', title);
+}
+
 beforeEach(async () => {
   await prisma.competency.deleteMany();
 });
@@ -34,21 +56,11 @@ describe('competency', () => {
       language: Language.EN,
       title: 'Hello World!',
     });
-    const response = await execute<{ competency: { title: string } }>(
-      gql`
-        query ($id: ID!) {
-          competency(id: $id) {
-            title
-          }
-        }
-      `,
-      {
-        spec: { locale: 'en' },
-        variables: { id: competency.id },
-      },
+    await expectCompetencyWithIdToHaveTitle(
+      competency.id,
+      'Hello World!',
+      'en',
     );
-    expect(response).not.toHaveProperty('errors');
-    expect(response).toHaveProperty('data.competency.title', 'Hello World!');
   });
 
   test('get title in default locale with user fallback locale', async () => {
@@ -56,21 +68,11 @@ describe('competency', () => {
       language: Language.EN,
       title: 'Hello World!',
     });
-    const response = await execute<{ competency: { title: string } }>(
-      gql`
-        query ($id: ID!) {
-          competency(id: $id) {
-            title
-          }
-        }
-      `,
-      {
-        spec: { locale: 'nl' },
-        variables: { id: competency.id },
-      },
+    await expectCompetencyWithIdToHaveTitle(
+      competency.id,
+      'Hello World!',
+      'nl',
     );
-    expect(response).not.toHaveProperty('errors');
-    expect(response).toHaveProperty('data.competency.title', 'Hello World!');
   });
 
   test('get title in other locale with user prefered locale', async () => {
@@ -78,21 +80,11 @@ describe('competency', () => {
       language: Language.NL,
       title: 'Hallo Wereld!',
     });
-    const response = await execute<{ competency: { title: string } }>(
-      gql`
-        query ($id: ID!) {
-          competency(id: $id) {
-            title
-          }
-        }
-      `,
-      {
-        spec: { locale: 'nl' },
-        variables: { id: competency.id },
-      },
+    await expectCompetencyWithIdToHaveTitle(
+      competency.id,
+      'Hallo Wereld!',
+      'nl',
     );
-    expect(response).not.toHaveProperty('errors');
-    expect(response).toHaveProperty('data.competency.title', 'Hallo Wereld!');
   });
 
   test('get title in other locale with user fallback locale', async () => {
@@ -100,22 +92,10 @@ describe('competency', () => {
       language: Language.NL,
       title: 'Hallo Wereld!',
     });
-    const response = await execute<
-      { competency: { title: string } },
-      { id: string }
-    >(
-      gql`
-        query ($id: ID!) {
-          competency(id: $id) {
-            title
-          }
-        }
-      `,
-      {
-        spec: { locale: 'en' },
-        variables: { id: competency.id },
-      },
+    await expectCompetencyWithIdToHaveTitle(
+      competency.id,
+      'Hallo Wereld!',
+      'en',
     );
-    expect(response).toHaveProperty('data.competency.title', 'Hallo Wereld!');
   });
 });

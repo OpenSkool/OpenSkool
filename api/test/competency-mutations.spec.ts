@@ -10,6 +10,28 @@ import {
   createPersonFixture,
 } from './fixtures';
 
+async function expectCompetenciesToBeInThisOrder(
+  competenceId1: string,
+  competenceId2: string,
+): Promise<void> {
+  const response = await execute<{
+    allRootCompetencies: Array<{ id: string }>;
+  }>(
+    gql`
+      query GetAllRootCompetencies {
+        allRootCompetencies {
+          id
+        }
+      }
+    `,
+    {},
+  );
+  expect(response).not.toHaveProperty('errors');
+  const [competence1, competence2] = response.data.allRootCompetencies;
+  expect(competence1?.id).toBe(competenceId1);
+  expect(competence2?.id).toBe(competenceId2);
+}
+
 beforeEach(async () => {
   await prisma.competency.deleteMany();
 });
@@ -508,7 +530,7 @@ describe('renameCompetency', () => {
   });
 });
 
-describe.only('swapCompetencies', () => {
+describe('swapCompetencies', () => {
   test('should swap two competencies', async () => {
     const person = await createPersonFixture();
     const competency1 = await createCompetencyFixture({
@@ -518,6 +540,7 @@ describe.only('swapCompetencies', () => {
       title: 'Test competency 2',
     });
     expect(competency2.sort).toBeGreaterThan(competency1.sort);
+    await expectCompetenciesToBeInThisOrder(competency1.id, competency2.id);
     const response = await execute<{ swapCompetencies: unknown }>(
       gql`
         mutation ($leftCompetencyId: ID!, $rightCompetencyId: ID!) {
@@ -541,6 +564,77 @@ describe.only('swapCompetencies', () => {
       'data.swapCompetencies.__typename',
       'MutationSwapCompetenciesSuccess',
     );
-    //    expect(competency2.sort).toBeGreaterThan(competency1.sort);
+    await expectCompetenciesToBeInThisOrder(competency2.id, competency1.id);
+  });
+
+  test('should return an `NotFound` error', async () => {
+    const person = await createPersonFixture();
+    const competency1 = await createCompetencyFixture({
+      title: 'Test competency 1',
+    });
+    const response = await execute<{ swapCompetencies: unknown }>(
+      gql`
+        mutation ($leftCompetencyId: ID!, $rightCompetencyId: ID!) {
+          swapCompetencies(
+            leftCompetencyId: $leftCompetencyId
+            rightCompetencyId: $rightCompetencyId
+          ) {
+            __typename
+          }
+        }
+      `,
+      {
+        spec: { userId: person.id },
+        variables: {
+          leftCompetencyId: competency1.id,
+          rightCompetencyId: 'some_non_existing_id',
+        },
+      },
+    );
+    expect(response).toHaveProperty(
+      'data.swapCompetencies.__typename',
+      'NotFoundError',
+    );
+  });
+
+  test('should return an `NotFound` error', async () => {
+    const person = await createPersonFixture();
+    const rootCompetency1 = await createCompetencyFixture({
+      title: 'Root competency 1',
+    });
+    const rootCompetency2 = await createCompetencyFixture({
+      title: 'Root competency 2',
+    });
+    const competency1 = await createCompetencyFixture({
+      title: 'Test competency 1',
+      parentId: rootCompetency1.id,
+    });
+    const competency2 = await createCompetencyFixture({
+      title: 'Test competency 1',
+      parentId: rootCompetency2.id,
+    });
+    const response = await execute<{ swapCompetencies: unknown }>(
+      gql`
+        mutation ($leftCompetencyId: ID!, $rightCompetencyId: ID!) {
+          swapCompetencies(
+            leftCompetencyId: $leftCompetencyId
+            rightCompetencyId: $rightCompetencyId
+          ) {
+            __typename
+          }
+        }
+      `,
+      {
+        spec: { userId: person.id },
+        variables: {
+          leftCompetencyId: competency1.id,
+          rightCompetencyId: competency2.id,
+        },
+      },
+    );
+    expect(response).toHaveProperty(
+      'data.swapCompetencies.__typename',
+      'InputError',
+    );
   });
 });

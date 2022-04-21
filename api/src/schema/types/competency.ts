@@ -3,7 +3,11 @@ import type {
   CompetencyFrameworkModel,
   CompetencyModel,
 } from '../../domain/competency';
-import { AppInputError, AppUnauthorizedError } from '../../errors';
+import {
+  AppInputError,
+  AppNotFoundError,
+  AppUnauthorizedError,
+} from '../../errors';
 import builder from '../builder';
 import { Accountable } from './accountable';
 import { Node } from './node';
@@ -276,7 +280,7 @@ builder.mutationField('swapCompetencies', (t) =>
       rightCompetencyId: t.arg.id(),
     },
     errors: {
-      types: [AppInputError, AppUnauthorizedError],
+      types: [AppInputError, AppNotFoundError, AppUnauthorizedError],
     },
     async resolve(root, { leftCompetencyId, rightCompetencyId }, ctx) {
       if (ctx.userId == null) {
