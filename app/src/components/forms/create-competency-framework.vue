@@ -11,8 +11,8 @@ const router = useRouter();
 gql`
   mutation CreateCompetencyFramework($data: CreateCompetencyFrameworkInput!) {
     createCompetencyFramework(data: $data) {
-      ... on CreateCompetencyFrameworkSuccessPayload {
-        competencyFramework {
+      ... on MutationCreateCompetencyFrameworkSuccess {
+        data {
           id
         }
       }
@@ -56,7 +56,7 @@ async function handleFormSubmit(): Promise<void> {
         }
         break;
       }
-      case 'CreateCompetencyFrameworkSuccessPayload':
+      case 'MutationCreateCompetencyFrameworkSuccess':
         router.push('/manage/frameworks');
         break;
     }

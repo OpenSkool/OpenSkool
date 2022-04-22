@@ -105,8 +105,8 @@ type Mutation {
     id: ID!
   ): MutationRenameCompetencyResult!
   swapCompetencies(
-    leftCompetencyId: String!
-    rightCompetencyId: String!
+    leftCompetencyId: ID!
+    rightCompetencyId: ID!
   ): MutationSwapCompetenciesResult!
   updateEducation(
     data: EducationInput!

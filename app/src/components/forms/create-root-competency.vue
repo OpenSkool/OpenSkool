@@ -15,9 +15,14 @@ const props = defineProps<{
 gql`
   mutation CreateRootCompetency($data: CreateRootCompetencyInput!) {
     createRootCompetency(data: $data) {
-      ... on CreateCompetencySuccessPayload {
-        competency {
-          id
+      ... on MutationCreateRootCompetencySuccess {
+        data {
+          competencyFramework {
+            competencies {
+              id
+              title
+            }
+          }
         }
       }
       ...BaseErrorFields
@@ -60,7 +65,7 @@ async function handleFormSubmit(): Promise<void> {
         }
         break;
       }
-      case 'CreateCompetencySuccessPayload':
+      case 'MutationCreateRootCompetencySuccess':
         router.push(`/manage/frameworks/${props.frameworkId}`);
         break;
     }
