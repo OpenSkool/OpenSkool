@@ -34,7 +34,6 @@ test('title is required', async () => {
       ],
     },
     props: {
-      competencyId: 'cuid',
       frameworkId: 'cuid',
     },
   });
@@ -46,7 +45,7 @@ test('title is required', async () => {
   expect(push).not.toHaveBeenCalled();
 });
 
-test('create competency submit', async () => {
+test('create rootCompetency submit', async () => {
   const push = vi.fn();
   mockUseRouter.mockImplementationOnce((): any => ({
     push,

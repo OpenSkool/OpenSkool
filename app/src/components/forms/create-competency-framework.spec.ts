@@ -8,7 +8,7 @@ import { useRouter } from 'vue-router';
 import { apolloClient } from '~/apollo';
 
 import { formkit } from '../../formkit';
-import CreateCompetencyForm from './create-competency-form.vue';
+import CreateCompetencyFramework from './create-competency-framework.vue';
 
 const mockUseRouter = useRouter as unknown as MockedFunction<typeof useRouter>;
 
@@ -26,33 +26,29 @@ test('title is required', async () => {
     push,
   }));
   const user = userEvent.setup();
-  render(CreateCompetencyForm, {
+  render(CreateCompetencyFramework, {
     global: {
       plugins: [
         createI18n({ legacy: false, fallbackWarn: false, missingWarn: false }),
         formkit,
       ],
     },
-    props: {
-      competencyId: 'cuid',
-      frameworkId: 'cuid',
-    },
   });
   const submitButton = screen.getByRole('button', {
-    name: /competencies.form.action.create.label/i,
+    name: 'frameworks.form.action.create.label',
   });
   user.click(submitButton);
-  await screen.findByText('Competencies.form.nameLabel is required.');
+  await screen.findByText('Frameworks.form.nameLabel is required.');
   expect(push).not.toHaveBeenCalled();
 });
 
-test('create competency submit', async () => {
+test('create competencyFramework submit', async () => {
   const push = vi.fn();
   mockUseRouter.mockImplementationOnce((): any => ({
     push,
   }));
   const user = userEvent.setup();
-  render(CreateCompetencyForm, {
+  render(CreateCompetencyFramework, {
     global: {
       plugins: [
         createI18n({ legacy: false, fallbackWarn: false, missingWarn: false }),
@@ -60,19 +56,15 @@ test('create competency submit', async () => {
       ],
       provide: { [DefaultApolloClient]: apolloClient },
     },
-    props: {
-      competencyId: 'cuid',
-      frameworkId: 'cuid',
-    },
   });
 
   const titleInput: HTMLInputElement = screen.getByRole('textbox', {
-    name: /competencies.form.namelabel/i,
+    name: 'frameworks.form.nameLabel',
   });
   await user.type(titleInput, 'Hello World!');
 
   const submitButton = screen.getByRole('button', {
-    name: /competencies.form.action.create.label/i,
+    name: 'frameworks.form.action.create.label',
   });
   await user.click(submitButton);
 

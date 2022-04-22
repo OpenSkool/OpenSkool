@@ -1,12 +1,14 @@
 import { graphql } from 'msw';
 
 import {
+  CreateCompetencyFrameworkSuccessPayload,
   CreateCompetencySuccessPayload,
   DeleteCompetencyMutation,
   DeleteCompetencyMutationVariables,
   GetEditCompetencyQuery,
   GetSubCompetenciesQuery,
   MutationCreateCompetencyArgs,
+  MutationCreateCompetencyFrameworkArgs,
   MutationRenameCompetencyArgs,
   RenameCompetencySuccessPayload,
 } from '~/generated/graphql';
@@ -36,6 +38,55 @@ export default [
             title: variables.data.title,
             updatedAt: '2022-04-01T00:00:00.000Z',
             updatedBy: {} as any,
+          },
+        },
+      }),
+    );
+  }),
+
+  graphql.mutation<
+    { createRootCompetency: CreateCompetencySuccessPayload },
+    MutationCreateCompetencyArgs
+  >('CreateRootCompetency', (req, res, ctx) => {
+    const { variables } = req;
+
+    return res(
+      ctx.data({
+        createRootCompetency: {
+          __typename: 'CreateCompetencySuccessPayload',
+          competency: {
+            id: 'cuid',
+            competencyFramework: {
+              id: '1',
+              competencies: [],
+              title: 'CanMEDS 2015',
+            },
+            createdAt: '2022-04-01T00:00:00.000Z',
+            createdBy: {} as any,
+            title: variables.data.title,
+            updatedAt: '2022-04-01T00:00:00.000Z',
+            updatedBy: {} as any,
+          },
+        },
+      }),
+    );
+  }),
+
+  graphql.mutation<
+    { createCompetencyFramework: CreateCompetencyFrameworkSuccessPayload },
+    MutationCreateCompetencyFrameworkArgs
+  >('CreateCompetencyFramework', (req, res, ctx) => {
+    const { variables } = req;
+
+    return res(
+      ctx.data({
+        createCompetencyFramework: {
+          __typename: 'CreateCompetencyFrameworkSuccessPayload',
+          competencyFramework: {
+            __typename: 'CompetencyFramework',
+            competencies: [],
+            id: 'cuid',
+            title: variables.data.title,
           },
         },
       }),
@@ -104,7 +155,7 @@ export default [
           __typename: 'Query',
           competency: {
             __typename: 'Competency',
-            title: 'Informatics',
+            title: 'Title defined in handlers.ts',
           },
         }),
       );
