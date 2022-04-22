@@ -15,7 +15,8 @@ i18nStore.loadGlob(import.meta.glob('~/locales/competencies.*.yaml'));
 const { t } = useI18n();
 
 const props = defineProps<{
-  id: string; // route param
+  competencyId: string;
+  frameworkId: string;
 }>();
 
 gql`
@@ -32,7 +33,7 @@ const {
   result,
 } = useQuery(
   GetCreateCompetencyParentDocument,
-  { id: props.id },
+  { id: props.competencyId },
   { fetchPolicy: 'network-only' },
 );
 const competency = useResult(result);
@@ -49,12 +50,15 @@ const competency = useResult(result);
     <div>Not Found</div>
   </template>
   <template v-else>
-    <ui-backbutton :to="`/manage/competencies/${id}`">
+    <ui-backbutton :to="`/manage/frameworks/${frameworkId}/${competencyId}`">
       {{ competency.title }}
     </ui-backbutton>
     <h2 class="text-xl mb-3">
       {{ t('competencies.route.id.create.heading') }}
     </h2>
-    <create-competency :id="id"></create-competency>
+    <create-competency-form
+      :competency-id="competencyId"
+      :framework-id="frameworkId"
+    ></create-competency-form>
   </template>
 </template>

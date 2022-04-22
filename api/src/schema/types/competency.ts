@@ -22,9 +22,13 @@ builder.objectType(Competency, {
   fields: (t) => ({
     competencyFramework: t.field({
       type: CompetencyFramework,
+      nullable: true,
       async resolve(parent, argumentz, ctx) {
+        if (parent.competencyFrameworkId == null) {
+          return null;
+        }
         const framework = await CompetencyService.findFrameworkById(
-          parent.id,
+          parent.competencyFrameworkId,
           ctx,
         );
         if (framework == null) {
@@ -96,6 +100,14 @@ builder.queryFields((t) => ({
     type: Competency,
     async resolve(root, { id }, ctx) {
       return CompetencyService.findCompetencyById(id, ctx);
+    },
+  }),
+  competencyFramework: t.field({
+    args: { id: t.arg.id() },
+    nullable: true,
+    type: CompetencyFramework,
+    async resolve(root, { id }, ctx) {
+      return CompetencyService.findFrameworkById(id, ctx);
     },
   }),
 }));

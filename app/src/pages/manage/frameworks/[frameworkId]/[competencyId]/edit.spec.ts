@@ -10,9 +10,9 @@ import edit from './edit.vue';
 test('input field has prefilled value', async () => {
   render(edit);
   const titleInput: HTMLInputElement = await screen.findByRole('textbox', {
-    name: /form.namelabel/i,
+    name: 'competencies.form.nameLabel',
   });
-  expect(titleInput.value).toBe('Informatics');
+  expect(titleInput.value).toBe('Title defined in handlers.ts');
 });
 
 test('alert shows when empty field is submitted', async () => {
@@ -21,7 +21,7 @@ test('alert shows when empty field is submitted', async () => {
   const push = spyOn(router, 'push');
   const user = userEvent.setup();
   const titleInput: HTMLInputElement = await screen.findByRole('textbox', {
-    name: /form.namelabel/i,
+    name: 'competencies.form.nameLabel',
   });
   await user.clear(titleInput);
   const submitButton = screen.getByRole('button', {

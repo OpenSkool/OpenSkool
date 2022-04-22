@@ -16,7 +16,8 @@ const { t } = useI18n();
 const router = useRouter();
 
 const props = defineProps<{
-  id: string; // route param
+  competencyId: string;
+  frameworkId: string;
 }>();
 
 const isDeleteModalOpen = ref(false);
@@ -28,11 +29,13 @@ const { error, loading, result } = useQuery<GetSubCompetenciesQuery>(
       competency(id: $id) {
         id
         title
-        ... on Competency {
-          parent {
-            id
-            title
-          }
+        competencyFramework {
+          id
+          title
+        }
+        parent {
+          id
+          title
         }
         subCompetencies {
           id
@@ -41,7 +44,7 @@ const { error, loading, result } = useQuery<GetSubCompetenciesQuery>(
       }
     }
   `,
-  () => ({ id: props.id }),
+  () => ({ id: props.competencyId }),
   { fetchPolicy: 'network-only' },
 );
 const competency = useResult(result);
@@ -61,12 +64,18 @@ const parent = computed(() => {
   if (competency.value?.parent != null) {
     return {
       title: competency.value.parent.title,
-      url: `/manage/competencies/${competency.value.parent.id}`,
+      url: `/manage/frameworks/${props.frameworkId}/${competency.value.parent.id}`,
+    };
+  }
+  if (competency.value?.competencyFramework != null) {
+    return {
+      title: competency.value.competencyFramework.title,
+      url: `/manage/frameworks/${props.frameworkId}/`,
     };
   }
   return {
-    title: t('competencies.route.id.index.action.backButton'),
-    url: '/manage/competencies',
+    title: t('competencies.route.index.action.backButton'),
+    url: '/manage/frameworks/',
   };
 });
 
@@ -74,7 +83,7 @@ async function deleteCompetencyHandler(): Promise<void> {
   try {
     deleteErrorMessage.value = null;
     const response = await deleteCompetency({
-      id: props.id,
+      id: props.competencyId,
     });
     if (response?.data) {
       isDeleteModalOpen.value = false;
@@ -108,7 +117,9 @@ async function deleteCompetencyHandler(): Promise<void> {
     </ui-backbutton>
     <h2 class="text-xl mb-3 flex items-center gap-1">
       {{ competency.title }}
-      <router-link :to="`/manage/competencies/${competency.id}/edit`">
+      <router-link
+        :to="`/manage/frameworks/${frameworkId}/${competencyId}/edit`"
+      >
         <span class="sr-only">{{
           t('competencies.route.id.index.action.edit')
         }}</span>
@@ -155,7 +166,7 @@ async function deleteCompetencyHandler(): Promise<void> {
     <h3 class="text-xl">{{ t('competencies.route.id.index.heading') }}</h3>
     <router-link
       class="btn btn-primary my-5"
-      :to="`/manage/competencies/${competency.id}/create`"
+      :to="`/manage/frameworks/${frameworkId}/${competencyId}/create-competency`"
     >
       {{ t('competencies.route.id.index.action.new') }}
     </router-link>
@@ -164,7 +175,9 @@ async function deleteCompetencyHandler(): Promise<void> {
         v-for="subCompetency of competency.subCompetencies"
         :key="subCompetency.id"
       >
-        <router-link :to="`/manage/competencies/${subCompetency.id}`">
+        <router-link
+          :to="`/manage/frameworks/${frameworkId}/${subCompetency.id}`"
+        >
           {{ subCompetency.title }}
         </router-link>
       </li>

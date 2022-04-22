@@ -8,7 +8,7 @@ import { useRouter } from 'vue-router';
 import { apolloClient } from '~/apollo';
 
 import { formkit } from '../../formkit';
-import CreateCompetency from './create-competency.vue';
+import CreateCompetencyForm from './create-competency-form.vue';
 
 const mockUseRouter = useRouter as unknown as MockedFunction<typeof useRouter>;
 
@@ -26,29 +26,32 @@ test('title is required', async () => {
     push,
   }));
   const user = userEvent.setup();
-  render(CreateCompetency, {
+  render(CreateCompetencyForm, {
     global: {
       plugins: [
         createI18n({ legacy: false, fallbackWarn: false, missingWarn: false }),
         formkit,
       ],
     },
+    props: {
+      frameworkId: 'cuid',
+    },
   });
   const submitButton = screen.getByRole('button', {
-    name: /form.action.create.label/i,
+    name: /competencies.form.action.create.label/i,
   });
   user.click(submitButton);
   await screen.findByText('Competencies.form.nameLabel is required.');
   expect(push).not.toHaveBeenCalled();
 });
 
-test('create competency', async () => {
+test('create rootCompetency submit', async () => {
   const push = vi.fn();
   mockUseRouter.mockImplementationOnce((): any => ({
     push,
   }));
   const user = userEvent.setup();
-  render(CreateCompetency, {
+  render(CreateCompetencyForm, {
     global: {
       plugins: [
         createI18n({ legacy: false, fallbackWarn: false, missingWarn: false }),
@@ -56,15 +59,19 @@ test('create competency', async () => {
       ],
       provide: { [DefaultApolloClient]: apolloClient },
     },
+    props: {
+      competencyId: 'cuid',
+      frameworkId: 'cuid',
+    },
   });
 
   const titleInput: HTMLInputElement = screen.getByRole('textbox', {
-    name: /form.namelabel/i,
+    name: /competencies.form.namelabel/i,
   });
   await user.type(titleInput, 'Hello World!');
 
   const submitButton = screen.getByRole('button', {
-    name: /form.action.create.label/i,
+    name: /competencies.form.action.create.label/i,
   });
   await user.click(submitButton);
 

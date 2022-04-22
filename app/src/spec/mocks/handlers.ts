@@ -1,30 +1,32 @@
 import { graphql } from 'msw';
 
 import {
-  MutationCreateCompetencySuccess,
+  CreateCompetencyFrameworkSuccessPayload,
+  CreateCompetencySuccessPayload,
   DeleteCompetencyMutation,
   DeleteCompetencyMutationVariables,
   GetEditCompetencyQuery,
   GetSubCompetenciesQuery,
   MutationCreateCompetencyArgs,
+  MutationCreateCompetencyFrameworkArgs,
   MutationRenameCompetencyArgs,
-  MutationRenameCompetencySuccess,
+  RenameCompetencySuccessPayload,
 } from '~/generated/graphql';
 
 // mutations
 
 export default [
   graphql.mutation<
-    { createCompetency: MutationCreateCompetencySuccess },
+    { createNestedCompetency: CreateCompetencySuccessPayload },
     MutationCreateCompetencyArgs
-  >('CreateCompetency', (req, res, ctx) => {
+  >('CreateNestedCompetency', (req, res, ctx) => {
     const { variables } = req;
 
     return res(
       ctx.data({
-        createCompetency: {
-          __typename: 'MutationCreateCompetencySuccess',
-          data: {
+        createNestedCompetency: {
+          __typename: 'CreateCompetencySuccessPayload',
+          competency: {
             id: 'cuid',
             competencyFramework: {
               id: '1',
@@ -36,6 +38,55 @@ export default [
             title: variables.data.title,
             updatedAt: '2022-04-01T00:00:00.000Z',
             updatedBy: {} as any,
+          },
+        },
+      }),
+    );
+  }),
+
+  graphql.mutation<
+    { createRootCompetency: CreateCompetencySuccessPayload },
+    MutationCreateCompetencyArgs
+  >('CreateRootCompetency', (req, res, ctx) => {
+    const { variables } = req;
+
+    return res(
+      ctx.data({
+        createRootCompetency: {
+          __typename: 'CreateCompetencySuccessPayload',
+          competency: {
+            id: 'cuid',
+            competencyFramework: {
+              id: '1',
+              competencies: [],
+              title: 'CanMEDS 2015',
+            },
+            createdAt: '2022-04-01T00:00:00.000Z',
+            createdBy: {} as any,
+            title: variables.data.title,
+            updatedAt: '2022-04-01T00:00:00.000Z',
+            updatedBy: {} as any,
+          },
+        },
+      }),
+    );
+  }),
+
+  graphql.mutation<
+    { createCompetencyFramework: CreateCompetencyFrameworkSuccessPayload },
+    MutationCreateCompetencyFrameworkArgs
+  >('CreateCompetencyFramework', (req, res, ctx) => {
+    const { variables } = req;
+
+    return res(
+      ctx.data({
+        createCompetencyFramework: {
+          __typename: 'CreateCompetencyFrameworkSuccessPayload',
+          competencyFramework: {
+            __typename: 'CompetencyFramework',
+            competencies: [],
+            id: 'cuid',
+            title: variables.data.title,
           },
         },
       }),
@@ -56,15 +107,15 @@ export default [
   ),
 
   graphql.mutation<
-    { renameCompetency: MutationRenameCompetencySuccess },
+    { renameCompetency: RenameCompetencySuccessPayload },
     MutationRenameCompetencyArgs
   >('renameCompetency', (req, res, ctx) => {
     const { variables } = req;
     return res(
       ctx.data({
         renameCompetency: {
-          __typename: 'MutationRenameCompetencySuccess',
-          data: {
+          __typename: 'RenameCompetencySuccessPayload',
+          competency: {
             id: 'cuid',
             competencyFramework: {
               id: '1',
@@ -104,7 +155,7 @@ export default [
           __typename: 'Query',
           competency: {
             __typename: 'Competency',
-            title: 'Informatics',
+            title: 'Title defined in handlers.ts',
           },
         }),
       );

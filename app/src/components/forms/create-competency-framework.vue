@@ -2,21 +2,17 @@
 import { FormKitNode } from '@formkit/core';
 import { useI18n } from 'vue-i18n';
 
-import { CreateCompetencyDocument } from '~/generated/graphql';
+import { CreateCompetencyFrameworkDocument } from '~/generated/graphql';
 
 const { t } = useI18n();
 
 const router = useRouter();
 
-const props = defineProps<{
-  id?: string;
-}>();
-
 gql`
-  mutation CreateCompetency($data: CreateCompetencyInput!) {
-    createCompetency(data: $data) {
-      ... on MutationCreateCompetencySuccess {
-        data {
+  mutation CreateCompetencyFramework($data: CreateCompetencyFrameworkInput!) {
+    createCompetencyFramework(data: $data) {
+      ... on CreateCompetencyFrameworkSuccessPayload {
+        competencyFramework {
           id
         }
       }
@@ -25,7 +21,9 @@ gql`
   }
 `;
 
-const { mutate: createCompetency } = useMutation(CreateCompetencyDocument);
+const { mutate: createCompetencyFramework } = useMutation(
+  CreateCompetencyFrameworkDocument,
+);
 
 const formErrors = ref<string[]>([]);
 const formNode = ref<FormKitNode>();
@@ -34,19 +32,19 @@ const formValues = ref<{ title: string }>({ title: '' });
 async function handleFormSubmit(): Promise<void> {
   formErrors.value = [];
   try {
-    const response = await createCompetency({
-      data: { parentId: props.id, title: formValues.value.title },
+    const response = await createCompetencyFramework({
+      data: { title: formValues.value.title },
     });
-    switch (response?.data?.createCompetency.__typename) {
+    switch (response?.data?.createCompetencyFramework.__typename) {
       default:
         console.error(
           'unexpected mutation response',
-          response?.data?.createCompetency,
+          response?.data?.createCompetencyFramework,
         );
-        formErrors.value.push(t('competencies.form.action.create.error'));
+        formErrors.value.push(t('frameworks.form.action.create.error'));
         return;
       case 'InputError': {
-        const mutationError = response.data.createCompetency;
+        const mutationError = response.data.createCompetencyFramework;
         const fieldNode =
           mutationError.path == null
             ? undefined
@@ -58,17 +56,13 @@ async function handleFormSubmit(): Promise<void> {
         }
         break;
       }
-      case 'MutationCreateCompetencySuccess':
-        if (props.id == null) {
-          router.push('/manage/competencies');
-        } else {
-          router.push(`/manage/competencies/${props.id}`);
-        }
+      case 'CreateCompetencyFrameworkSuccessPayload':
+        router.push('/manage/frameworks');
         break;
     }
   } catch (error) {
     console.error('crash during execution', error);
-    formErrors.value.push(t('competencies.form.action.create.error'));
+    formErrors.value.push(t('frameworks.form.action.create.error'));
   }
 }
 </script>
@@ -77,14 +71,14 @@ async function handleFormSubmit(): Promise<void> {
   <FormKit
     v-model="formValues"
     type="form"
-    :submit-label="t('competencies.form.action.create.label')"
+    :submit-label="t('frameworks.form.action.create.label')"
     :errors="formErrors"
     @node="formNode = $event"
     @submit="handleFormSubmit"
   >
     <FormKit
       name="title"
-      :label="t('competencies.form.nameLabel')"
+      :label="t('frameworks.form.nameLabel')"
       type="text"
       validation="required"
     />

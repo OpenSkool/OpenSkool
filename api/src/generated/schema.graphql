@@ -12,7 +12,7 @@ interface Accountable {
 A competency can be an individual competence or a grouping of competences.
 """
 type Competency implements Accountable & Node {
-  competencyFramework: CompetencyFramework!
+  competencyFramework: CompetencyFramework
   createdAt: DateTime!
   createdBy: Person!
 
@@ -223,6 +223,7 @@ type Query {
   allPeople: [Person!]!
   allRootCompetencies: [Competency!]!
   competency(id: ID!): Competency
+  competencyFramework(id: ID!): CompetencyFramework
 }
 
 input RenameCompetencyInput {

@@ -2,6 +2,7 @@ route:
   index:
     heading: Manage competencies
     action:
+      backButton: Manage frameworks
       create: Create competency
   create:
     heading: Create competency

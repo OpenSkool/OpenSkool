@@ -18,7 +18,7 @@ export function render(component: any): RenderResult {
       ],
       provide: { [DefaultApolloClient]: apolloClient },
     },
-    props: { id: 'ciud' },
+    props: { competencyId: 'cuid', frameworkId: 'ciud' },
   });
   return utils;
 }

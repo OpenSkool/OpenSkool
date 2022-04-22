@@ -22,7 +22,8 @@ const { t } = useI18n();
 const router = useRouter();
 
 const props = defineProps<{
-  id: string; // route param
+  competencyId: string;
+  frameworkId: string;
 }>();
 
 gql`
@@ -39,7 +40,7 @@ const {
   result,
 } = useQuery(
   GetEditCompetencyDocument,
-  { id: props.id },
+  { id: props.competencyId },
   { fetchPolicy: 'network-only' },
 );
 const competency = useResult(result);
@@ -47,8 +48,8 @@ const competency = useResult(result);
 gql`
   mutation renameCompetency($id: ID!, $data: RenameCompetencyInput!) {
     renameCompetency(id: $id, data: $data) {
-      ... on MutationRenameCompetencySuccess {
-        data {
+      ... on RenameCompetencySuccessPayload {
+        competency {
           id
         }
       }
@@ -75,7 +76,7 @@ async function handleFormSubmit(): Promise<void> {
   formErrors.value = [];
   try {
     const response = await renameCompetency({
-      id: props.id,
+      id: props.competencyId,
       data: formValues.value,
     });
     switch (response?.data?.renameCompetency.__typename) {
@@ -99,8 +100,10 @@ async function handleFormSubmit(): Promise<void> {
         }
         break;
       }
-      case 'MutationRenameCompetencySuccess':
-        router.push(`/manage/competencies/${props.id}`);
+      case 'RenameCompetencySuccessPayload':
+        router.push(
+          `/manage/frameworks/${props.frameworkId}/${props.competencyId}`,
+        );
         break;
     }
   } catch (error) {
@@ -121,7 +124,7 @@ async function handleFormSubmit(): Promise<void> {
     <div>Not Found</div>
   </template>
   <template v-else>
-    <ui-backbutton :to="`/manage/competencies/${id}`">
+    <ui-backbutton :to="`/manage/frameworks/${frameworkId}/${competencyId}`">
       {{ competency.title }}
     </ui-backbutton>
     <h2 class="text-xl mb-3">{{ t('competencies.route.id.edit.heading') }}</h2>
