@@ -3,15 +3,14 @@ import gql from 'graphql-tag';
 import { beforeEach, describe, expect, test } from 'vitest';
 
 import { prisma } from '../src/prisma';
-import { execute } from './client';
+import { execute, GraphQlResponse } from './client';
 import { createCompetencyFixture } from './fixtures';
 
-export async function hasCompetencyThisTitle(
+export async function getCompetencyForIdAndLocale(
   id: string,
-  title: string,
-  locale = 'nl',
-): Promise<boolean> {
-  const response = await execute<{ competency: { title: string } }>(
+  locale: string,
+): Promise<GraphQlResponse<{ competency: { title: string } }>> {
+  return execute<{ competency: { title: string } }>(
     gql`
       query ($id: ID!) {
         competency(id: $id) {
@@ -24,7 +23,6 @@ export async function hasCompetencyThisTitle(
       variables: { id },
     },
   );
-  return !response.errors && response.data.competency.title === title;
 }
 
 beforeEach(async () => {
@@ -55,9 +53,9 @@ describe('competency', () => {
       language: Language.EN,
       title: 'Hello World!',
     });
-    expect(
-      await hasCompetencyThisTitle(competency.id, 'Hello World!', 'en'),
-    ).toBe(true);
+    const response = await getCompetencyForIdAndLocale(competency.id, 'en');
+    expect(response.errors).toBeUndefined();
+    expect(response).toHaveProperty('data.competency.title', 'Hello World!');
   });
 
   test('get title in default locale with user fallback locale', async () => {
@@ -65,9 +63,9 @@ describe('competency', () => {
       language: Language.EN,
       title: 'Hello World!',
     });
-    expect(
-      await hasCompetencyThisTitle(competency.id, 'Hello World!', 'nl'),
-    ).toBe(true);
+    const response = await getCompetencyForIdAndLocale(competency.id, 'en');
+    expect(response.errors).toBeUndefined();
+    expect(response).toHaveProperty('data.competency.title', 'Hello World!');
   });
 
   test('get title in other locale with user prefered locale', async () => {
@@ -75,9 +73,9 @@ describe('competency', () => {
       language: Language.NL,
       title: 'Hallo Wereld!',
     });
-    expect(
-      await hasCompetencyThisTitle(competency.id, 'Hallo Wereld!', 'nl'),
-    ).toBe(true);
+    const response = await getCompetencyForIdAndLocale(competency.id, 'nl');
+    expect(response.errors).toBeUndefined();
+    expect(response).toHaveProperty('data.competency.title', 'Hallo Wereld!');
   });
 
   test('get title in other locale with user fallback locale', async () => {
@@ -85,8 +83,8 @@ describe('competency', () => {
       language: Language.NL,
       title: 'Hallo Wereld!',
     });
-    expect(
-      await hasCompetencyThisTitle(competency.id, 'Hallo Wereld!', 'en'),
-    ).toBe(true);
+    const response = await getCompetencyForIdAndLocale(competency.id, 'en');
+    expect(response.errors).toBeUndefined();
+    expect(response).toHaveProperty('data.competency.title', 'Hallo Wereld!');
   });
 });

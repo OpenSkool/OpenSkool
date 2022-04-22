@@ -3,18 +3,17 @@ import gql from 'graphql-tag';
 import { beforeAll, beforeEach, describe, expect, test } from 'vitest';
 
 import { prisma } from '../src/prisma';
-import { execute } from './client';
+import { execute, GraphQlResponse } from './client';
 import {
   createCompetencyFixture,
   createCompetencyFrameworkFixture,
   createPersonFixture,
 } from './fixtures';
 
-async function areCompetenciesInThisOrder(
-  competenceId1: string,
-  competenceId2: string,
-): Promise<boolean> {
-  const { data, errors } = await execute<{
+async function getAllRootCompetencies(): Promise<
+  GraphQlResponse<{ allRootCompetencies: Array<{ id: string }> }>
+> {
+  return execute<{
     allRootCompetencies: Array<{ id: string }>;
   }>(
     gql`
@@ -25,12 +24,6 @@ async function areCompetenciesInThisOrder(
       }
     `,
     {},
-  );
-  const [competence1, competence2] = data.allRootCompetencies;
-  return (
-    !errors &&
-    competence1?.id === competenceId1 &&
-    competence2?.id === competenceId2
   );
 }
 
@@ -542,9 +535,16 @@ describe('swapCompetencies', () => {
       title: 'Test competency 2',
     });
     expect(competency2.sort).toBeGreaterThan(competency1.sort);
-    expect(
-      await areCompetenciesInThisOrder(competency1.id, competency2.id),
-    ).toBe(true);
+    let response2 = await getAllRootCompetencies();
+    expect(response2.errors).toBeUndefined();
+    expect(response2).toHaveProperty(
+      'data.allRootCompetencies.0.id',
+      competency1.id,
+    );
+    expect(response2).toHaveProperty(
+      'data.allRootCompetencies.1.id',
+      competency2.id,
+    );
     const response = await execute<{ swapCompetencies: unknown }>(
       gql`
         mutation ($leftCompetencyId: ID!, $rightCompetencyId: ID!) {
@@ -568,9 +568,16 @@ describe('swapCompetencies', () => {
       'data.swapCompetencies.__typename',
       'MutationSwapCompetenciesSuccess',
     );
-    expect(
-      await areCompetenciesInThisOrder(competency2.id, competency1.id),
-    ).toBe(true);
+    response2 = await getAllRootCompetencies();
+    expect(response2.errors).toBeUndefined();
+    expect(response2).toHaveProperty(
+      'data.allRootCompetencies.0.id',
+      competency2.id,
+    );
+    expect(response2).toHaveProperty(
+      'data.allRootCompetencies.1.id',
+      competency1.id,
+    );
   });
 
   test('should return an `NotFound` error', async () => {
@@ -603,7 +610,7 @@ describe('swapCompetencies', () => {
     );
   });
 
-  test('should return an `NotFound` error', async () => {
+  test('should return an `InputError` error', async () => {
     const person = await createPersonFixture();
     const rootCompetency1 = await createCompetencyFixture({
       title: 'Root competency 1',
