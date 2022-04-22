@@ -170,17 +170,10 @@ async function deleteCompetencyHandler(): Promise<void> {
     >
       {{ t('competencies.route.id.index.action.new') }}
     </router-link>
-    <ol class="list-decimal">
-      <li
-        v-for="subCompetency of competency.subCompetencies"
-        :key="subCompetency.id"
-      >
-        <router-link
-          :to="`/manage/frameworks/${frameworkId}/${subCompetency.id}`"
-        >
-          {{ subCompetency.title }}
-        </router-link>
-      </li>
-    </ol>
+    <competency-list
+      v-if="competency.subCompetencies"
+      :framework-id="frameworkId"
+      :competencies="competency.subCompetencies"
+    ></competency-list>
   </template>
 </template>

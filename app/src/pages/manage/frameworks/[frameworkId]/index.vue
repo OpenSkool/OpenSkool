@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
 
+import CompetencyList from '~/components/list/competency-list.vue';
 import { GetFrameworkRootCompetenciesQuery } from '~/generated/graphql';
 import { useI18nStore } from '~/i18n';
 
@@ -56,17 +57,9 @@ const competencyFramework = useResult(result);
     >
       {{ t('frameworks.route.id.index.action.new') }}
     </router-link>
-    <ol class="list-decimal">
-      <li
-        v-for="competency of competencyFramework.competencies"
-        :key="competency.id"
-      >
-        <router-link
-          :to="`/manage/frameworks/${competencyFramework.id}/${competency.id}`"
-        >
-          {{ competency.title }}
-        </router-link>
-      </li>
-    </ol>
+    <competency-list
+      :framework-id="frameworkId"
+      :competencies="competencyFramework.competencies"
+    ></competency-list>
   </template>
 </template>
