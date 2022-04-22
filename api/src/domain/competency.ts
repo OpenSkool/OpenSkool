@@ -298,6 +298,7 @@ export async function getFrameworkCompetencies(
       .competencies({
         where: { parentCompetencyId: null },
         include: { translations: true },
+        orderBy: { sort: 'asc' },
       });
     return competencies.map((competency) =>
       mapCompetencyToModel(competency, languageCode),
