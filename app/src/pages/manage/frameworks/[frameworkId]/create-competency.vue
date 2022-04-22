@@ -10,7 +10,7 @@ import { GetCompetencyFrameworkQuery } from '~/generated/graphql';
 import { useI18nStore } from '~/i18n';
 
 const props = defineProps<{
-  frameworkId: string; // route param
+  frameworkId: string;
 }>();
 
 const i18nStore = useI18nStore();

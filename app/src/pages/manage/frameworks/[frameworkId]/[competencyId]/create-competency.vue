@@ -15,7 +15,7 @@ i18nStore.loadGlob(import.meta.glob('~/locales/competencies.*.yaml'));
 const { t } = useI18n();
 
 const props = defineProps<{
-  competencyId: string; // route param
+  competencyId: string;
   frameworkId: string;
 }>();
 

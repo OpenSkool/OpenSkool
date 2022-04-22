@@ -10,7 +10,7 @@ i18nStore.loadGlob(import.meta.glob('~/locales/frameworks.*.yaml'));
 const { t } = useI18n();
 
 const props = defineProps<{
-  frameworkId: string; // route param
+  frameworkId: string;
 }>();
 
 const { error, loading, result } = useQuery<GetFrameworkRootCompetenciesQuery>(

@@ -22,7 +22,7 @@ const { t } = useI18n();
 const router = useRouter();
 
 const props = defineProps<{
-  competencyId: string; // route param
+  competencyId: string;
   frameworkId: string;
 }>();
 
