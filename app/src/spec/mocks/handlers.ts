@@ -1,23 +1,24 @@
 import { graphql } from 'msw';
 
 import {
-  CreateCompetencyFrameworkSuccessPayload,
-  CreateCompetencySuccessPayload,
   DeleteCompetencyMutation,
   DeleteCompetencyMutationVariables,
   GetEditCompetencyQuery,
   GetSubCompetenciesQuery,
   MutationCreateCompetencyArgs,
   MutationCreateCompetencyFrameworkArgs,
+  MutationCreateCompetencyFrameworkSuccess,
+  MutationCreateNestedCompetencySuccess,
+  MutationCreateRootCompetencySuccess,
   MutationRenameCompetencyArgs,
-  RenameCompetencySuccessPayload,
+  MutationRenameCompetencySuccess,
 } from '~/generated/graphql';
 
 // mutations
 
 export default [
   graphql.mutation<
-    { createNestedCompetency: CreateCompetencySuccessPayload },
+    { createNestedCompetency: MutationCreateNestedCompetencySuccess },
     MutationCreateCompetencyArgs
   >('CreateNestedCompetency', (req, res, ctx) => {
     const { variables } = req;
@@ -25,8 +26,8 @@ export default [
     return res(
       ctx.data({
         createNestedCompetency: {
-          __typename: 'CreateCompetencySuccessPayload',
-          competency: {
+          __typename: 'MutationCreateNestedCompetencySuccess',
+          data: {
             id: 'cuid',
             competencyFramework: {
               id: '1',
@@ -45,7 +46,7 @@ export default [
   }),
 
   graphql.mutation<
-    { createRootCompetency: CreateCompetencySuccessPayload },
+    { createRootCompetency: MutationCreateRootCompetencySuccess },
     MutationCreateCompetencyArgs
   >('CreateRootCompetency', (req, res, ctx) => {
     const { variables } = req;
@@ -53,8 +54,8 @@ export default [
     return res(
       ctx.data({
         createRootCompetency: {
-          __typename: 'CreateCompetencySuccessPayload',
-          competency: {
+          __typename: 'MutationCreateRootCompetencySuccess',
+          data: {
             id: 'cuid',
             competencyFramework: {
               id: '1',
@@ -73,7 +74,7 @@ export default [
   }),
 
   graphql.mutation<
-    { createCompetencyFramework: CreateCompetencyFrameworkSuccessPayload },
+    { createCompetencyFramework: MutationCreateCompetencyFrameworkSuccess },
     MutationCreateCompetencyFrameworkArgs
   >('CreateCompetencyFramework', (req, res, ctx) => {
     const { variables } = req;
@@ -81,8 +82,8 @@ export default [
     return res(
       ctx.data({
         createCompetencyFramework: {
-          __typename: 'CreateCompetencyFrameworkSuccessPayload',
-          competencyFramework: {
+          __typename: 'MutationCreateCompetencyFrameworkSuccess',
+          data: {
             __typename: 'CompetencyFramework',
             competencies: [],
             id: 'cuid',
@@ -107,15 +108,15 @@ export default [
   ),
 
   graphql.mutation<
-    { renameCompetency: RenameCompetencySuccessPayload },
+    { renameCompetency: MutationRenameCompetencySuccess },
     MutationRenameCompetencyArgs
   >('renameCompetency', (req, res, ctx) => {
     const { variables } = req;
     return res(
       ctx.data({
         renameCompetency: {
-          __typename: 'RenameCompetencySuccessPayload',
-          competency: {
+          __typename: 'MutationRenameCompetencySuccess',
+          data: {
             id: 'cuid',
             competencyFramework: {
               id: '1',

@@ -16,8 +16,8 @@ const props = defineProps<{
 gql`
   mutation CreateNestedCompetency($data: CreateNestedCompetencyInput!) {
     createNestedCompetency(data: $data) {
-      ... on CreateCompetencySuccessPayload {
-        competency {
+      ... on MutationCreateNestedCompetencySuccess {
+        data {
           id
         }
       }
@@ -61,7 +61,7 @@ async function handleFormSubmit(): Promise<void> {
         }
         break;
       }
-      case 'CreateCompetencySuccessPayload':
+      case 'MutationCreateNestedCompetencySuccess':
         router.push(
           `/manage/frameworks/${props.frameworkId}/${props.competencyId}`,
         );

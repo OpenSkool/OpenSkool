@@ -143,8 +143,8 @@ export type MutationRenameCompetencyArgs = {
 };
 
 export type MutationSwapCompetenciesArgs = {
-  leftCompetencyId: Scalars['String'];
-  rightCompetencyId: Scalars['String'];
+  leftCompetencyId: Scalars['ID'];
+  rightCompetencyId: Scalars['ID'];
 };
 
 export type MutationUpdateEducationArgs = {
@@ -319,11 +319,17 @@ export type CreateNestedCompetencyMutation = {
   __typename?: 'Mutation';
   createNestedCompetency:
     | {
-        __typename?: 'CreateCompetencySuccessPayload';
-        competency: { __typename?: 'Competency'; id: string };
+        __typename?: 'InputError';
+        code: string;
+        message: string;
+        path?: Array<string> | null;
       }
     | {
-        __typename?: 'InputError';
+        __typename?: 'MutationCreateNestedCompetencySuccess';
+        data: { __typename?: 'Competency'; id: string };
+      }
+    | {
+        __typename?: 'UnauthorizedError';
         code: string;
         message: string;
         path?: Array<string> | null;
@@ -338,11 +344,17 @@ export type CreateCompetencyFrameworkMutation = {
   __typename?: 'Mutation';
   createCompetencyFramework:
     | {
-        __typename?: 'CreateCompetencyFrameworkSuccessPayload';
-        competencyFramework: { __typename?: 'CompetencyFramework'; id: string };
+        __typename?: 'InputError';
+        code: string;
+        message: string;
+        path?: Array<string> | null;
       }
     | {
-        __typename?: 'InputError';
+        __typename?: 'MutationCreateCompetencyFrameworkSuccess';
+        data: { __typename?: 'CompetencyFramework'; id: string };
+      }
+    | {
+        __typename?: 'UnauthorizedError';
         code: string;
         message: string;
         path?: Array<string> | null;
@@ -363,8 +375,24 @@ export type CreateRootCompetencyMutation = {
         path?: Array<string> | null;
       }
     | {
-        __typename?: 'MutationCreateCompetencySuccess';
-        data: { __typename?: 'Competency'; id: string };
+        __typename?: 'MutationCreateRootCompetencySuccess';
+        data: {
+          __typename?: 'Competency';
+          competencyFramework?: {
+            __typename?: 'CompetencyFramework';
+            competencies: Array<{
+              __typename?: 'Competency';
+              id: string;
+              title: string;
+            }>;
+          } | null;
+        };
+      }
+    | {
+        __typename?: 'UnauthorizedError';
+        code: string;
+        message: string;
+        path?: Array<string> | null;
       };
 };
 
@@ -607,7 +635,7 @@ export const CreateNestedCompetencyDocument = {
                     kind: 'NamedType',
                     name: {
                       kind: 'Name',
-                      value: 'MutationCreateCompetencySuccess',
+                      value: 'MutationCreateNestedCompetencySuccess',
                     },
                   },
                   selectionSet: {
@@ -690,7 +718,7 @@ export const CreateCompetencyFrameworkDocument = {
                     kind: 'NamedType',
                     name: {
                       kind: 'Name',
-                      value: 'CreateCompetencyFrameworkSuccessPayload',
+                      value: 'MutationCreateCompetencyFrameworkSuccess',
                     },
                   },
                   selectionSet: {
@@ -698,7 +726,7 @@ export const CreateCompetencyFrameworkDocument = {
                     selections: [
                       {
                         kind: 'Field',
-                        name: { kind: 'Name', value: 'competencyFramework' },
+                        name: { kind: 'Name', value: 'data' },
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
@@ -773,7 +801,7 @@ export const CreateRootCompetencyDocument = {
                     kind: 'NamedType',
                     name: {
                       kind: 'Name',
-                      value: 'CreateCompetencySuccessPayload',
+                      value: 'MutationCreateRootCompetencySuccess',
                     },
                   },
                   selectionSet: {
@@ -781,13 +809,44 @@ export const CreateRootCompetencyDocument = {
                     selections: [
                       {
                         kind: 'Field',
-                        name: { kind: 'Name', value: 'competency' },
+                        name: { kind: 'Name', value: 'data' },
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
                             {
                               kind: 'Field',
-                              name: { kind: 'Name', value: 'id' },
+                              name: {
+                                kind: 'Name',
+                                value: 'competencyFramework',
+                              },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: {
+                                      kind: 'Name',
+                                      value: 'competencies',
+                                    },
+                                    selectionSet: {
+                                      kind: 'SelectionSet',
+                                      selections: [
+                                        {
+                                          kind: 'Field',
+                                          name: { kind: 'Name', value: 'id' },
+                                        },
+                                        {
+                                          kind: 'Field',
+                                          name: {
+                                            kind: 'Name',
+                                            value: 'title',
+                                          },
+                                        },
+                                      ],
+                                    },
+                                  },
+                                ],
+                              },
                             },
                           ],
                         },
