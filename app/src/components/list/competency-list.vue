@@ -59,14 +59,14 @@ async function moveCompetency(
       </router-link>
       <button
         v-if="index !== 0"
-        @click="moveCompetency(competencies[index - 1].id, competency.id)"
+        @click="moveCompetency((competencies[index - 1] as Competency).id, competency.id)"
       >
         <span class="sr-only">{{ t('competencies.list.action.moveUp') }}</span>
         <ri-arrow-up-fill aria-hidden />
       </button>
       <button
         v-if="competencies.length !== index + 1"
-        @click="moveCompetency(competency.id, competencies[index + 1].id)"
+        @click="moveCompetency(competency.id, (competencies[index + 1] as Competency).id)"
       >
         <span class="sr-only">{{
           t('competencies.list.action.moveDown')
