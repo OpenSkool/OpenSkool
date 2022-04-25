@@ -4,6 +4,7 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
+    CompetencyList: typeof import('./../components/list/competency-list.vue')['default']
     CreateCompetencyForm: typeof import('./../components/forms/create-competency-form.vue')['default']
     CreateCompetencyFramework: typeof import('./../components/forms/create-competency-framework.vue')['default']
     CreateRootCompetency: typeof import('./../components/forms/create-root-competency.vue')['default']
@@ -21,8 +22,10 @@ declare module 'vue' {
     MenuButton: typeof import('@headlessui/vue')['MenuButton']
     MenuItem: typeof import('@headlessui/vue')['MenuItem']
     MenuItems: typeof import('@headlessui/vue')['MenuItems']
+    RiArrowDownFill: typeof import('~icons/ri/arrow-down-fill')['default']
     RiArrowDropDownLine: typeof import('~icons/ri/arrow-drop-down-line')['default']
     RiArrowLeftSLine: typeof import('~icons/ri/arrow-left-s-line')['default']
+    RiArrowUpFill: typeof import('~icons/ri/arrow-up-fill')['default']
     RiCheckFill: typeof import('~icons/ri/check-fill')['default']
     RiDeleteBinFill: typeof import('~icons/ri/delete-bin-fill')['default']
     RiEdit2Fill: typeof import('~icons/ri/edit2-fill')['default']

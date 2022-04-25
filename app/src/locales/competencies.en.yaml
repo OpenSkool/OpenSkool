@@ -36,3 +36,7 @@ form:
       error: Something went wrong, competency could not be renamed.
       label: Edit competency
   nameLabel: Competency name
+list:
+  action:
+    moveUp: Move competency up
+    moveDown: Move competency down

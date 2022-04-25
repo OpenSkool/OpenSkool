@@ -218,6 +218,7 @@ export type MutationRenameCompetencySuccess = {
 export type MutationSwapCompetenciesResult =
   | InputError
   | MutationSwapCompetenciesSuccess
+  | NotFoundError
   | UnauthorizedError;
 
 export type MutationSwapCompetenciesSuccess = {
@@ -394,6 +395,27 @@ export type CreateRootCompetencyMutation = {
         message: string;
         path?: Array<string> | null;
       };
+};
+
+export type SwapCompetenciesMutationVariables = Exact<{
+  leftCompetencyId: Scalars['ID'];
+  rightCompetencyId: Scalars['ID'];
+}>;
+
+export type SwapCompetenciesMutation = {
+  __typename?: 'Mutation';
+  swapCompetencies:
+    | { __typename?: 'InputError' }
+    | {
+        __typename: 'MutationSwapCompetenciesSuccess';
+        data: {
+          __typename?: 'MutationSwapCompetenciesSuccessData';
+          left: { __typename?: 'Competency'; id: string };
+          right: { __typename?: 'Competency'; id: string };
+        };
+      }
+    | { __typename?: 'NotFoundError' }
+    | { __typename?: 'UnauthorizedError' };
 };
 
 type BaseErrorFields_InputError_Fragment = {
@@ -869,6 +891,129 @@ export const CreateRootCompetencyDocument = {
 } as unknown as DocumentNode<
   CreateRootCompetencyMutation,
   CreateRootCompetencyMutationVariables
+>;
+export const SwapCompetenciesDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'swapCompetencies' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'leftCompetencyId' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'rightCompetencyId' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'swapCompetencies' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'leftCompetencyId' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'leftCompetencyId' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'rightCompetencyId' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'rightCompetencyId' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: {
+                      kind: 'Name',
+                      value: 'MutationSwapCompetenciesSuccess',
+                    },
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: '__typename' },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'data' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'left' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' },
+                                  },
+                                ],
+                              },
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'right' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' },
+                                  },
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  SwapCompetenciesMutation,
+  SwapCompetenciesMutationVariables
 >;
 export const GetCreateCompetencyParentDocument = {
   kind: 'Document',

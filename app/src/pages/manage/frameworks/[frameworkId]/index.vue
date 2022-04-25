@@ -2,7 +2,7 @@
 import { useI18n } from 'vue-i18n';
 
 import CompetencyList from '~/components/list/competency-list.vue';
-import { GetFrameworkRootCompetenciesQuery } from '~/generated/graphql';
+import { GetFrameworkRootCompetenciesDocument } from '~/generated/graphql';
 import { useI18nStore } from '~/i18n';
 
 const i18nStore = useI18nStore();
@@ -14,22 +14,25 @@ const props = defineProps<{
   frameworkId: string;
 }>();
 
-const { error, loading, result } = useQuery<GetFrameworkRootCompetenciesQuery>(
-  gql`
-    query getFrameworkRootCompetencies($id: ID!) {
-      competencyFramework(id: $id) {
+gql`
+  query getFrameworkRootCompetencies($id: ID!) {
+    competencyFramework(id: $id) {
+      id
+      title
+      competencies {
         id
         title
-        competencies {
-          id
-          title
-        }
       }
     }
-  `,
+  }
+`;
+
+const { result, error, loading } = useQuery(
+  GetFrameworkRootCompetenciesDocument,
   () => ({ id: props.frameworkId }),
   { fetchPolicy: 'network-only' },
 );
+
 const competencyFramework = useResult(result);
 </script>
 
@@ -60,6 +63,7 @@ const competencyFramework = useResult(result);
     <competency-list
       :framework-id="frameworkId"
       :competencies="competencyFramework.competencies"
+      :refetch-queries="['getFrameworkRootCompetencies']"
     ></competency-list>
   </template>
 </template>

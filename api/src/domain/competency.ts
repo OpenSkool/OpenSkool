@@ -391,11 +391,15 @@ export async function swapCompetencies(
 ): Promise<[CompetencyModel, CompetencyModel]> {
   const [leftCompetency, rightCompetency] = await prisma.competency.findMany({
     select: {
+      id: true,
       parentCompetencyId: true,
       sort: true,
     },
     where: {
       id: { in: [leftCompetencyId, rightCompetencyId] },
+    },
+    orderBy: {
+      sort: 'asc',
     },
   });
   if (leftCompetency == null || rightCompetency == null) {
