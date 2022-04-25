@@ -2,9 +2,9 @@
 import { useI18n } from 'vue-i18n';
 
 import {
-  GetSubCompetenciesQuery,
   DeleteCompetencyMutation,
   DeleteCompetencyMutationVariables,
+  GetSubCompetenciesDocument,
 } from '~/generated/graphql';
 import { useI18nStore } from '~/i18n';
 
@@ -23,27 +23,29 @@ const props = defineProps<{
 const isDeleteModalOpen = ref(false);
 const deleteErrorMessage = ref();
 
-const { error, loading, result } = useQuery<GetSubCompetenciesQuery>(
-  gql`
-    query getSubCompetencies($id: ID!) {
-      competency(id: $id) {
+gql`
+  query getSubCompetencies($id: ID!) {
+    competency(id: $id) {
+      id
+      title
+      competencyFramework {
         id
         title
-        competencyFramework {
-          id
-          title
-        }
-        parent {
-          id
-          title
-        }
-        subCompetencies {
-          id
-          title
-        }
+      }
+      parent {
+        id
+        title
+      }
+      subCompetencies {
+        id
+        title
       }
     }
-  `,
+  }
+`;
+
+const { error, loading, result } = useQuery(
+  GetSubCompetenciesDocument,
   () => ({ id: props.competencyId }),
   { fetchPolicy: 'network-only' },
 );
@@ -174,6 +176,7 @@ async function deleteCompetencyHandler(): Promise<void> {
       v-if="competency.subCompetencies"
       :framework-id="frameworkId"
       :competencies="competency.subCompetencies"
+      :refetch-queries="['getSubCompetencies']"
     ></competency-list>
   </template>
 </template>
