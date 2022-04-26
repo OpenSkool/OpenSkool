@@ -5,8 +5,8 @@
 declare module 'vue' {
   export interface GlobalComponents {
     CompetencyList: typeof import('./../components/list/competency-list.vue')['default']
-    CreateCompetencyForm: typeof import('./../components/forms/create-competency-form.vue')['default']
     CreateCompetencyFramework: typeof import('./../components/forms/create-competency-framework.vue')['default']
+    CreateNestedCompetency: typeof import('./../components/forms/create-nested-competency.vue')['default']
     CreateRootCompetency: typeof import('./../components/forms/create-root-competency.vue')['default']
     Dialog: typeof import('@headlessui/vue')['Dialog']
     DialogDescription: typeof import('@headlessui/vue')['DialogDescription']
