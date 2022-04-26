@@ -32,6 +32,10 @@ beforeEach(async () => {
 });
 
 describe('createCompetencyFramework', () => {
+  beforeEach(async () => {
+    await prisma.competencyFramework.deleteMany();
+  });
+
   test('error on invalid title', async () => {
     const response = await execute<{
       createCompetencyFramework: { data: { title: string } };
@@ -92,10 +96,10 @@ describe('createCompetencyFramework', () => {
       'InputError',
     );
     expect(response).toHaveProperty(
-      'data.createRootCompetency.code',
+      'data.createCompetencyFramework.code',
       'valueNotUnique',
     );
-    expect(response).toHaveProperty('data.createRootCompetency.path', [
+    expect(response).toHaveProperty('data.createCompetencyFramework.path', [
       'title',
     ]);
   });
@@ -124,6 +128,7 @@ describe('createCompetencyFramework', () => {
         variables: { title: 'Hello Framework!' },
       },
     );
+
     expect(response).toHaveProperty('data.createCompetencyFramework.data');
   });
 
