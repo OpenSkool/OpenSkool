@@ -70,46 +70,6 @@ function mapCompetencyFrameworkToModel(
   };
 }
 
-export async function createCompetency(
-  data: { parentId?: string; title: string },
-  context: DomainContext,
-): Promise<CompetencyModel> {
-  const languageCode = mapLocaleToLanguageCode(context.locale);
-
-  const title = validateSingleLineString(data.title);
-  await assertUniqueTitle(title, { parentId: data.parentId }, context);
-  if (data.parentId != null) {
-    const parentCompetency = await prisma.competency.findUnique({
-      where: { id: data.parentId },
-    });
-    if (parentCompetency == null) {
-      throw new AppInputError(
-        SchemaInputErrorCode.VALUE_NOT_VALID,
-        'parent competency not found',
-        { path: ['parentId'] },
-      );
-    }
-  }
-
-  try {
-    const competency = await prisma.competency.create({
-      data: {
-        createdById: context.userId,
-        updatedById: context.userId,
-        parentCompetencyId: data.parentId,
-
-        translations: { create: { languageCode, title } },
-      },
-      include: {
-        translations: true,
-      },
-    });
-    return mapCompetencyToModel(competency, languageCode);
-  } catch (error) {
-    handleServiceError(error);
-  }
-}
-
 export async function createNestedCompetency(
   data: { parentId: string; title: string },
   context: DomainContext,

@@ -24,8 +24,8 @@ model Competency {
   updatedBy   User?    @relation("CompetencyToUserUpdated", fields: [updatedById], references: [id])
   updatedById String?
 
-  competencyFramework   CompetencyFramework? @relation(fields: [competencyFrameworkId], references: [id])
-  competencyFrameworkId String?
+  competencyFramework   CompetencyFramework @relation(fields: [competencyFrameworkId], references: [id])
+  competencyFrameworkId String
 
   subCompetencies    Competency[] @relation("CompetencyToCompetency")
   parentCompetency   Competency?  @relation("CompetencyToCompetency", fields: [parentCompetencyId], onDelete: Cascade, references: [id])

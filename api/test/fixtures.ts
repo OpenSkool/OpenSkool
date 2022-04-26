@@ -35,9 +35,16 @@ export async function createCompetencyFixture({
   title?: string;
 } = {}): Promise<Competency> {
   const user = await createUserFixture();
+  const framework = await prisma.competencyFramework.create({
+    data: {
+      createdById: user.id,
+      translations: { create: { languageCode: language, title: 'Framework' } },
+    },
+  });
   return prisma.competency.create({
     data: {
       createdById: user.id,
+      competencyFrameworkId: framework.id,
       parentCompetencyId: parentId,
       translations: { create: { languageCode: language, title } },
       updatedById: user.id,
