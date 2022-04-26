@@ -36,6 +36,7 @@ gql`
           }
         }
       }
+      ...BaseErrorFields
     }
   }
 `;
@@ -48,7 +49,19 @@ async function moveCompetency(
   leftCompetencyId: string,
   rightCompetencyId: string,
 ): Promise<void> {
-  await swapCompetencies({ leftCompetencyId, rightCompetencyId });
+  const response = await swapCompetencies({
+    leftCompetencyId,
+    rightCompetencyId,
+  });
+  if (
+    response?.data?.swapCompetencies.__typename !==
+    'MutationSwapCompetenciesSuccess'
+  ) {
+    console.error(
+      'unexpected mutation response',
+      response?.data?.swapCompetencies,
+    );
+  }
 }
 </script>
 <template>
