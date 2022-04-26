@@ -61,6 +61,7 @@ const competencyFramework = useResult(result);
       {{ t('frameworks.route.id.index.action.new') }}
     </router-link>
     <competency-list
+      v-if="competencyFramework.competencies.length > 0"
       :framework-id="frameworkId"
       :competencies="competencyFramework.competencies"
       :refetch-queries="['getFrameworkRootCompetencies']"
