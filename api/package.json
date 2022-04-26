@@ -18,8 +18,7 @@
     "preview": "FORCE_COLOR=1 NODE_ENV=production node -r dotenv-flow/config dist/server.js",
     "prisma:test": "DATABASE_URL='postgresql://openskool:openskool@localhost:5433/openskool-test' prisma",
     "start": "node dist/server.js",
-    "test": "tsc --noEmit",
-    "test:integration": "vitest run"
+    "test": "tsc --noEmit && vitest run"
   },
   "dependencies": {
     "@envelop/response-cache": "^2.3.0",
