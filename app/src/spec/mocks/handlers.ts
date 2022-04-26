@@ -175,6 +175,10 @@ export default [
               title: 'custom title',
               id: 'cuid',
             },
+            competencyFramework: {
+              id: 'cuid',
+              title: 'custom title',
+            },
             subCompetencies: [
               {
                 id: 'cuid',
