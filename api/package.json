@@ -16,8 +16,7 @@
     "lint": "eslint --cache --ext .cjs,.ts .",
     "postinstall": "yarn run generate:prisma",
     "preview": "FORCE_COLOR=1 NODE_ENV=production node -r dotenv-flow/config dist/server.js",
-    "prisma:push": "prisma db push",
-    "prisma:push:test": "DATABASE_URL='postgresql://openskool:openskool@localhost:5433/openskool-test' prisma db push",
+    "prisma:test": "DATABASE_URL='postgresql://openskool:openskool@localhost:5433/openskool-test' prisma",
     "start": "node dist/server.js",
     "test": "tsc --noEmit",
     "test:integration": "vitest run"
