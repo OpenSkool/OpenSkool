@@ -19,6 +19,4 @@ jobs:
         run: yarn install --immutable
 
       - name: Test
-        run: |
-          yarn run build
-          yarn turbo run lint test
+        run: yarn turbo run build lint test
