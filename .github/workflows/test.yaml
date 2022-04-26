@@ -29,3 +29,19 @@ jobs:
           export DATABASE_URL="${DATABASE_URL}&sslcert=$(pwd)/test-db.cert"
           yarn workspace @os/api prisma migrate deploy
           yarn turbo run build lint test
+
+      - name: Api Test Report
+        uses: dorny/test-reporter@v1
+        if: success() || failure()
+        with:
+          name: Api Tests
+          path: api/test.xml
+          reporter: java-junit
+
+      - name: App Test Report
+        uses: dorny/test-reporter@v1
+        if: success() || failure()
+        with:
+          name: App Tests
+          path: app/test.xml
+          reporter: java-junit
