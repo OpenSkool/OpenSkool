@@ -26,11 +26,7 @@ builder.objectType(Competency, {
   fields: (t) => ({
     competencyFramework: t.field({
       type: CompetencyFramework,
-      nullable: true,
       async resolve(parent, argumentz, ctx) {
-        if (parent.competencyFrameworkId == null) {
-          return null;
-        }
         const framework = await CompetencyService.findFrameworkById(
           parent.competencyFrameworkId,
           ctx.domain,
@@ -146,37 +142,6 @@ builder.mutationField('createCompetencyFramework', (t) =>
       }
       return CompetencyService.createCompetencyFramework(
         { title: data.title },
-        ctx.domain,
-      );
-    },
-  }),
-);
-
-const CreateCompetencyInput = builder.inputType('CreateCompetencyInput', {
-  fields: (t) => ({
-    parentId: t.id({ required: false }),
-    title: t.string(),
-  }),
-});
-
-builder.mutationField('createCompetency', (t) =>
-  t.field({
-    type: Competency,
-    args: {
-      data: t.arg({ type: CreateCompetencyInput }),
-    },
-    errors: {
-      types: [AppInputError],
-    },
-    async resolve(root, { data }, ctx) {
-      if (ctx.domain.userId == null) {
-        throw new AppUnauthorizedError();
-      }
-      return CompetencyService.createCompetency(
-        {
-          parentId: data.parentId ?? undefined,
-          title: data.title,
-        },
         ctx.domain,
       );
     },

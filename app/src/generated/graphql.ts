@@ -33,7 +33,7 @@ export type Accountable = {
 export type Competency = Accountable &
   Node & {
     __typename?: 'Competency';
-    competencyFramework?: Maybe<CompetencyFramework>;
+    competencyFramework: CompetencyFramework;
     createdAt: Scalars['DateTime'];
     createdBy: Person;
     /** A CUID for a resource */
@@ -368,14 +368,14 @@ export type CreateRootCompetencyMutation = {
         __typename?: 'MutationCreateRootCompetencySuccess';
         data: {
           __typename?: 'Competency';
-          competencyFramework?: {
+          competencyFramework: {
             __typename?: 'CompetencyFramework';
             competencies: Array<{
               __typename?: 'Competency';
               id: string;
               title: string;
             }>;
-          } | null;
+          };
         };
       }
     | {
@@ -502,11 +502,11 @@ export type GetSubCompetenciesQuery = {
     __typename?: 'Competency';
     id: string;
     title: string;
-    competencyFramework?: {
+    competencyFramework: {
       __typename?: 'CompetencyFramework';
       id: string;
       title: string;
-    } | null;
+    };
     parent?: { __typename?: 'Competency'; id: string; title: string } | null;
     subCompetencies?: Array<{
       __typename?: 'Competency';
