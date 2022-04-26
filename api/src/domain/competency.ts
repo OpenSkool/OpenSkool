@@ -196,6 +196,7 @@ export async function createCompetencyFramework(
   const languageCode = mapLocaleToLanguageCode(context.locale);
 
   const title = validateSingleLineString(data.title);
+  await assertUniqueFrameworkTitle({ title: data.title, context });
 
   try {
     const competencyFramework = await prisma.competencyFramework.create({
@@ -431,6 +432,49 @@ export async function swapCompetencies(
     mapCompetencyToModel(leftResult, languageCode),
     mapCompetencyToModel(rightResult, languageCode),
   ];
+}
+
+async function assertUniqueFrameworkTitle({
+  title,
+  context,
+  id,
+}: {
+  title: string;
+  context: DomainContext;
+  id?: string;
+}): Promise<void> | never {
+  const languageCode = mapLocaleToLanguageCode(context.locale);
+
+  let siblingTitles: string[] = [];
+
+  const siblings = await prisma.competencyFramework.findMany({
+    select: {
+      translations: {
+        select: { title: true },
+        where: { languageCode },
+      },
+    },
+    where: {
+      id: { not: id },
+      translations: { some: { languageCode } },
+    },
+  });
+
+  siblingTitles = siblings.reduce<string[]>((titles, competency) => {
+    const translation = first(competency.translations);
+    if (translation != null) {
+      titles.push(translation.title);
+    }
+    return titles;
+  }, []);
+
+  if (siblingTitles.includes(title)) {
+    throw new AppInputError(
+      SchemaInputErrorCode.VALUE_NOT_UNIQUE,
+      'Title is not unique',
+      { path: ['title'] },
+    );
+  }
 }
 
 async function assertUniqueTitle(

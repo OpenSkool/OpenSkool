@@ -218,6 +218,7 @@ export type MutationRenameCompetencySuccess = {
 export type MutationSwapCompetenciesResult =
   | InputError
   | MutationSwapCompetenciesSuccess
+  | NotFoundError
   | UnauthorizedError;
 
 export type MutationSwapCompetenciesSuccess = {
