@@ -405,7 +405,12 @@ export type SwapCompetenciesMutationVariables = Exact<{
 export type SwapCompetenciesMutation = {
   __typename?: 'Mutation';
   swapCompetencies:
-    | { __typename?: 'InputError' }
+    | {
+        __typename?: 'InputError';
+        code: string;
+        message: string;
+        path?: Array<string> | null;
+      }
     | {
         __typename: 'MutationSwapCompetenciesSuccess';
         data: {
@@ -414,8 +419,18 @@ export type SwapCompetenciesMutation = {
           right: { __typename?: 'Competency'; id: string };
         };
       }
-    | { __typename?: 'NotFoundError' }
-    | { __typename?: 'UnauthorizedError' };
+    | {
+        __typename?: 'NotFoundError';
+        code: string;
+        message: string;
+        path?: Array<string> | null;
+      }
+    | {
+        __typename?: 'UnauthorizedError';
+        code: string;
+        message: string;
+        path?: Array<string> | null;
+      };
 };
 
 type BaseErrorFields_InputError_Fragment = {
@@ -1004,12 +1019,17 @@ export const SwapCompetenciesDocument = {
                     ],
                   },
                 },
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'BaseErrorFields' },
+                },
               ],
             },
           },
         ],
       },
     },
+    ...BaseErrorFieldsFragmentDoc.definitions,
   ],
 } as unknown as DocumentNode<
   SwapCompetenciesMutation,
