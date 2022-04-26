@@ -53,9 +53,13 @@ We use [prisma migrate](https://www.prisma.io/migrate/) to manage our database s
 
 ```sh
 # Push the database schema to our database
-yarn workspace @os/api prisma:push
+yarn workspace @os/api prisma db push
 # Push the database schema to our test database
-yarn workspace @os/api prisma:push:test
+yarn workspace @os/api prisma:test db push
+# Reset our database
+yarn workspace @os/api prisma migrate reset
+# Reset our test database
+yarn workspace @os/api prisma:test migrate reset
 ```
 
 #### First seed
