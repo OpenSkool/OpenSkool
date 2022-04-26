@@ -312,31 +312,6 @@ export type GetPeopleQuery = {
   allPeople: Array<{ __typename?: 'Teacher'; id: string; displayName: string }>;
 };
 
-export type CreateNestedCompetencyMutationVariables = Exact<{
-  data: CreateNestedCompetencyInput;
-}>;
-
-export type CreateNestedCompetencyMutation = {
-  __typename?: 'Mutation';
-  createNestedCompetency:
-    | {
-        __typename?: 'InputError';
-        code: string;
-        message: string;
-        path?: Array<string> | null;
-      }
-    | {
-        __typename?: 'MutationCreateNestedCompetencySuccess';
-        data: { __typename?: 'Competency'; id: string };
-      }
-    | {
-        __typename?: 'UnauthorizedError';
-        code: string;
-        message: string;
-        path?: Array<string> | null;
-      };
-};
-
 export type CreateCompetencyFrameworkMutationVariables = Exact<{
   data: CreateCompetencyFrameworkInput;
 }>;
@@ -353,6 +328,31 @@ export type CreateCompetencyFrameworkMutation = {
     | {
         __typename?: 'MutationCreateCompetencyFrameworkSuccess';
         data: { __typename?: 'CompetencyFramework'; id: string };
+      }
+    | {
+        __typename?: 'UnauthorizedError';
+        code: string;
+        message: string;
+        path?: Array<string> | null;
+      };
+};
+
+export type CreateNestedCompetencyMutationVariables = Exact<{
+  data: CreateNestedCompetencyInput;
+}>;
+
+export type CreateNestedCompetencyMutation = {
+  __typename?: 'Mutation';
+  createNestedCompetency:
+    | {
+        __typename?: 'InputError';
+        code: string;
+        message: string;
+        path?: Array<string> | null;
+      }
+    | {
+        __typename?: 'MutationCreateNestedCompetencySuccess';
+        data: { __typename?: 'Competency'; id: string };
       }
     | {
         __typename?: 'UnauthorizedError';
@@ -627,89 +627,6 @@ export const GetPeopleDocument = {
     },
   ],
 } as unknown as DocumentNode<GetPeopleQuery, GetPeopleQueryVariables>;
-export const CreateNestedCompetencyDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'CreateNestedCompetency' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'data' } },
-          type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: { kind: 'Name', value: 'CreateNestedCompetencyInput' },
-            },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'createNestedCompetency' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'data' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'data' },
-                },
-              },
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: {
-                      kind: 'Name',
-                      value: 'MutationCreateNestedCompetencySuccess',
-                    },
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'data' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
-                {
-                  kind: 'FragmentSpread',
-                  name: { kind: 'Name', value: 'BaseErrorFields' },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-    ...BaseErrorFieldsFragmentDoc.definitions,
-  ],
-} as unknown as DocumentNode<
-  CreateNestedCompetencyMutation,
-  CreateNestedCompetencyMutationVariables
->;
 export const CreateCompetencyFrameworkDocument = {
   kind: 'Document',
   definitions: [
@@ -792,6 +709,89 @@ export const CreateCompetencyFrameworkDocument = {
 } as unknown as DocumentNode<
   CreateCompetencyFrameworkMutation,
   CreateCompetencyFrameworkMutationVariables
+>;
+export const CreateNestedCompetencyDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'CreateNestedCompetency' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'data' } },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'CreateNestedCompetencyInput' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'createNestedCompetency' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'data' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'data' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: {
+                      kind: 'Name',
+                      value: 'MutationCreateNestedCompetencySuccess',
+                    },
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'data' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'BaseErrorFields' },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...BaseErrorFieldsFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<
+  CreateNestedCompetencyMutation,
+  CreateNestedCompetencyMutationVariables
 >;
 export const CreateRootCompetencyDocument = {
   kind: 'Document',
