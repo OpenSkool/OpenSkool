@@ -19,7 +19,7 @@ DATABASE_URL="postgresql://openskool:openskool@localhost:5432/openskool"
 
 You'll need to configure an OAuth client in Keycloak for your local API to use. Navigate in the [Keycloak Admin](http://localhost:8080/admin/master/console) to Realms > your-realm > Clients – to create a new client.
 
-- Client id: `os-local-app` (Or whatever you want)
+- Client id: `os-local-api` (Or whatever you want)
 - Root URL: `http://localhost:3030` (Or wherever you run your local App)
 
 Open the client settings and update these settings.
@@ -30,7 +30,7 @@ Configure this client in your `env` files.
 
 ```ini
 # api/.env.local
-AUTH_CLIENT_ID="" # Eg. os-local-app
+AUTH_CLIENT_ID="" # Eg. os-local-api
 AUTH_CLIENT_SECRET="" # You can find the secret in the credentials tabs.
 AUTH_ISSUER="" # Eg. http://localhost:8080/realms/os-local
 ```
