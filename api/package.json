@@ -65,7 +65,6 @@
     "eslint": "^8.12.0",
     "fast-glob": "^3.2.11",
     "graphql-tag": "^2.12.6",
-    "mercurius-integration-testing": "^4.0.0",
     "nodemon": "^2.0.15",
     "pino-pretty": "^7.6.0",
     "prettier": "^2.6.2",
