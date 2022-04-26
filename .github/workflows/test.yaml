@@ -7,6 +7,8 @@ jobs:
     name: Test
     runs-on: ubuntu-18.04
 
+    concurrency: 1
+
     steps:
       - uses: actions/checkout@v2
 
@@ -19,4 +21,11 @@ jobs:
         run: yarn install --immutable
 
       - name: Test
-        run: yarn turbo run build lint test
+        env:
+          CERT: ${{ secrets.API_TEST_DATABASE_CERTIFICATE }}
+          DATABASE_URL: ${{ secrets.API_TEST_DATABASE_URL }}
+        run: |
+          echo "$CERT" | base64 --decode > ./test-db.cert
+          export DATABASE_URL="${DATABASE_URL}&sslcert=$(pwd)/test-db.cert"
+          yarn workspace @os/api prisma migrate deploy
+          yarn turbo run build lint test
