@@ -200,7 +200,7 @@ describe('createCompetency', () => {
   });
 
   test('error on duplicate title with same locale', async () => {
-    const person = await createPersonFixture();
+    const person = await createUserFixture();
     await createCompetencyFixture({
       title: 'Hello Root!',
       language: Language.EN,
