@@ -1800,6 +1800,7 @@ __metadata:
     "@types/accept-language-parser": ^1.5.3
     "@types/cuid": ^2
     "@types/dotenv-flow": ^3.2.0
+    "@types/is-ci": ^3
     "@types/pino": ^6.3.12
     "@types/prettier": ^2
     accept-language-parser: ^1.5.0
@@ -1818,6 +1819,7 @@ __metadata:
     graphql: ^16.3.0
     graphql-scalars: ^1.17.0
     graphql-tag: ^2.12.6
+    is-ci: ^3.0.1
     jose: ^4.6.2
     ms: 3.0.0-canary.1
     nodemon: ^2.0.15
@@ -2114,6 +2116,15 @@ __metadata:
   version: 3.2.0
   resolution: "@types/dotenv-flow@npm:3.2.0"
   checksum: ff11155349578fe76f0b69556f3e22e13115b17a7684cef1dec9f5d7fdaa1bfc1848b1337e3d08093687a3e372cf1b4b0fd0c9900a2db62031a3ee02ffabe3e6
+  languageName: node
+  linkType: hard
+
+"@types/is-ci@npm:^3":
+  version: 3.0.0
+  resolution: "@types/is-ci@npm:3.0.0"
+  dependencies:
+    ci-info: ^3.1.0
+  checksum: 7c1f1f16c1fa2134de7400d82766c83fa76057261ba890628af77a09382ebb92d945bb077b98cfcf3d40ab1469c9ffbd2278112867edbe57aa655f53547eb139
   languageName: node
   linkType: hard
 
@@ -3570,7 +3581,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ci-info@npm:^3.3.0":
+"ci-info@npm:^3.1.0, ci-info@npm:^3.2.0, ci-info@npm:^3.3.0":
   version: 3.3.0
   resolution: "ci-info@npm:3.3.0"
   checksum: c3d86fe374938ecda5093b1ba39acb535d8309185ba3f23587747c6a057e63f45419b406d880304dbc0e1d72392c9a33e42fe9a1e299209bc0ded5efaa232b66
@@ -6455,6 +6466,17 @@ __metadata:
   bin:
     is-ci: bin.js
   checksum: 77b869057510f3efa439bbb36e9be429d53b3f51abd4776eeea79ab3b221337fe1753d1e50058a9e2c650d38246108beffb15ccfd443929d77748d8c0cc90144
+  languageName: node
+  linkType: hard
+
+"is-ci@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "is-ci@npm:3.0.1"
+  dependencies:
+    ci-info: ^3.2.0
+  bin:
+    is-ci: bin.js
+  checksum: 192c66dc7826d58f803ecae624860dccf1899fc1f3ac5505284c0a5cf5f889046ffeb958fa651e5725d5705c5bcb14f055b79150ea5fcad7456a9569de60260e
   languageName: node
   linkType: hard
 
