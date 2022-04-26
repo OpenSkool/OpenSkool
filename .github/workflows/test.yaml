@@ -15,8 +15,10 @@ jobs:
           cache: yarn
           node-version: 16.8
 
-      - name: Yarn
+      - name: Install
+        run: yarn install --immutable
+
+      - name: Test
         run: |
-          yarn install --immutable
           yarn run build
           yarn turbo run lint test
