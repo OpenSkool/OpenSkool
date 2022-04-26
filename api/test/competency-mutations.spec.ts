@@ -31,6 +31,130 @@ beforeEach(async () => {
   await prisma.competency.deleteMany();
 });
 
+describe('createCompetencyFramework', () => {
+  test('error on invalid title', async () => {
+    const response = await execute<{
+      createCompetencyFramework: { data: { title: string } };
+    }>(
+      gql`
+        mutation ($title: String!) {
+          createCompetencyFramework(data: { title: $title }) {
+            __typename
+            ... on UserError {
+              code
+              path
+            }
+          }
+        }
+      `,
+      {
+        variables: {
+          title: '  ',
+        },
+      },
+    );
+    expect(response).toHaveProperty(
+      'data.createCompetencyFramework.__typename',
+      'InputError',
+    );
+    expect(response.data.createCompetencyFramework).toMatchObject({
+      code: 'valueNotValid',
+      path: ['title'],
+    });
+  });
+
+  test('error on duplicate title with same locale', async () => {
+    await createCompetencyFrameworkFixture({
+      title: 'Hello Framework!',
+      language: Language.EN,
+    });
+    const response = await execute<{
+      createCompetencyFramework: { data: { title: string } };
+    }>(
+      gql`
+        mutation ($title: String!) {
+          createCompetencyFramework(data: { title: $title }) {
+            __typename
+            ... on UserError {
+              code
+              path
+            }
+          }
+        }
+      `,
+      {
+        spec: { locale: 'en' },
+        variables: { title: 'Hello Framework!' },
+      },
+    );
+    expect(response).toHaveProperty(
+      'data.createCompetencyFramework.__typename',
+      'InputError',
+    );
+    expect(response).toHaveProperty(
+      'data.createRootCompetency.code',
+      'valueNotUnique',
+    );
+    expect(response).toHaveProperty('data.createRootCompetency.path', [
+      'title',
+    ]);
+  });
+
+  test('no error on duplicate title with different locale', async () => {
+    await createCompetencyFrameworkFixture({
+      title: 'Hello Framework!',
+      language: Language.EN,
+    });
+    const response = await execute<{
+      createCompetencyFramework: { data: { title: string } };
+    }>(
+      gql`
+        mutation ($title: String!) {
+          createCompetencyFramework(data: { title: $title }) {
+            ... on MutationCreateCompetencyFrameworkSuccess {
+              data {
+                title
+              }
+            }
+          }
+        }
+      `,
+      {
+        spec: { locale: 'nl' },
+        variables: { title: 'Hello Framework!' },
+      },
+    );
+    expect(response).toHaveProperty('data.createCompetencyFramework.data');
+  });
+
+  test('create competency framework in user locale', async () => {
+    await createCompetencyFrameworkFixture({
+      title: 'Hello Framework!',
+      language: Language.EN,
+    });
+    const response = await execute<{
+      createCompetencyFramework: { data: { title: string } };
+    }>(
+      gql`
+        mutation ($title: String!) {
+          createCompetencyFramework(data: { title: $title }) {
+            ... on MutationCreateCompetencyFrameworkSuccess {
+              data {
+                title
+              }
+            }
+          }
+        }
+      `,
+      {
+        spec: { locale: 'nl' },
+        variables: { title: 'Hello Framework!' },
+      },
+    );
+    expect(response).toHaveProperty('data.createCompetencyFramework.data');
+  });
+});
+
 describe('createCompetency', () => {
   let framework: CompetencyFramework;
 
@@ -68,6 +192,49 @@ describe('createCompetency', () => {
       code: 'valueNotValid',
       path: ['title'],
     });
+  });
+
+  test('error on duplicate title with same locale', async () => {
+    const person = await createPersonFixture();
+    await createCompetencyFixture({
+      title: 'Hello Root!',
+      language: Language.EN,
+    });
+    const response = await execute<{ createRootCompetency: unknown }>(
+      gql`
+        mutation ($frameworkId: ID!, $title: String!) {
+          createRootCompetency(
+            data: { frameworkId: $frameworkId, title: $title }
+          ) {
+            __typename
+            ... on MutationCreateRootCompetencySuccess {
+              data {
+                id
+              }
+            }
+            ... on InputError {
+              code
+              path
+            }
+          }
+        }
+      `,
+      {
+        spec: { locale: 'en', userId: person.id },
+        variables: { frameworkId: framework.id, title: 'Hello Root!' },
+      },
+    );
+    expect(response).toHaveProperty(
+      'data.createRootCompetency.__typename',
+      'InputError',
+    );
+    expect(response).toHaveProperty(
+      'data.createRootCompetency.code',
+      'valueNotUnique',
+    );
+    expect(response).toHaveProperty('data.createRootCompetency.path', [
+      'title',
+    ]);
   });
 
   test('no error on duplicate title with different locale', async () => {
