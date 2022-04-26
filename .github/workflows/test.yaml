@@ -10,12 +10,12 @@ jobs:
     concurrency: 1
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
         with:
           cache: yarn
-          node-version: 16.8
+          node-version-file: '.nvmrc'
 
       - name: Install
         run: yarn install --immutable
