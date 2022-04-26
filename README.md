@@ -47,7 +47,7 @@ Some rules of thumb.
 
 ## Docker
 
-There is a `docker-compose.yml` in the root of the project containing a postgres
+There is a `docker-compose.yaml` in the root of the project containing a postgres
 database. It is not mandatory to use this but it's there for your convenience.
 
 Start all containers.
