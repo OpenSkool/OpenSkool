@@ -5,6 +5,10 @@ module.exports = {
     // Disabled because VSCode ESLint extension misrapports these two rules.
     'import/extensions': 'off',
     'import/no-unresolved': 'off',
+    'unicorn/expiring-todo-comments': [
+      'error',
+      { allowWarningComments: false, ignore: ['#\\d+'] },
+    ],
   },
   overrides: [
     {
