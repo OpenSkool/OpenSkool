@@ -57,11 +57,6 @@ export type CreateCompetencyFrameworkInput = {
   title: Scalars['String'];
 };
 
-export type CreateCompetencyInput = {
-  parentId?: InputMaybe<Scalars['ID']>;
-  title: Scalars['String'];
-};
-
 export type CreateNestedCompetencyInput = {
   parentId: Scalars['ID'];
   title: Scalars['String'];
@@ -97,7 +92,6 @@ export type InputError = UserError & {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createCompetency: MutationCreateCompetencyResult;
   createCompetencyFramework: MutationCreateCompetencyFrameworkResult;
   createEducation: MutationCreateEducationResult;
   createNestedCompetency: MutationCreateNestedCompetencyResult;
@@ -107,10 +101,6 @@ export type Mutation = {
   renameCompetency: MutationRenameCompetencyResult;
   swapCompetencies: MutationSwapCompetenciesResult;
   updateEducation: MutationUpdateEducationResult;
-};
-
-export type MutationCreateCompetencyArgs = {
-  data: CreateCompetencyInput;
 };
 
 export type MutationCreateCompetencyFrameworkArgs = {
@@ -160,15 +150,6 @@ export type MutationCreateCompetencyFrameworkResult =
 export type MutationCreateCompetencyFrameworkSuccess = {
   __typename?: 'MutationCreateCompetencyFrameworkSuccess';
   data: CompetencyFramework;
-};
-
-export type MutationCreateCompetencyResult =
-  | InputError
-  | MutationCreateCompetencySuccess;
-
-export type MutationCreateCompetencySuccess = {
-  __typename?: 'MutationCreateCompetencySuccess';
-  data: Competency;
 };
 
 export type MutationCreateEducationResult = MutationCreateEducationSuccess;
