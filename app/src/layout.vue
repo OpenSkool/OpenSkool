@@ -3,11 +3,11 @@ import { useGlobalQueryLoading } from '@vue/apollo-composable';
 
 import { useAuthStore } from './auth';
 
-const loading = useGlobalQueryLoading();
-
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
 const authStore = useAuthStore();
+const loading = useGlobalQueryLoading();
+const route = useRoute();
 </script>
 
 <template>
@@ -34,14 +34,17 @@ const authStore = useAuthStore();
             <ri-shield-user-fill />
             <template v-if="authStore.isLoggedIn">
               {{ authStore.name }}
-              <a class="btn btn-primary" :href="`${apiBaseUrl}/openid/logout`">
+              <a
+                class="btn btn-primary"
+                :href="`${apiBaseUrl}/openid/logout?from=${route.path}`"
+              >
                 Logout
               </a>
             </template>
             <a
               v-else
               class="btn btn-primary"
-              :href="`${apiBaseUrl}/openid/connect`"
+              :href="`${apiBaseUrl}/openid/connect?from=${route.path}`"
             >
               Connect
             </a>
