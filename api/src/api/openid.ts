@@ -80,9 +80,13 @@ export const openIdRoutes: FastifyPluginAsync = async (app) => {
     reply.redirect(
       client.endSessionUrl({
         id_token_hint: idToken,
-        post_logout_redirect_uri: app.config.APP_BASE_URL,
+        post_logout_redirect_uri: `${app.config.API_BASE_URL}${app.prefix}/logout/callback`,
       }),
     );
+  });
+
+  app.get('/logout/callback', async (request, reply) => {
+    reply.redirect(app.config.APP_BASE_URL);
   });
 };
 
