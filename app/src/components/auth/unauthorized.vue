@@ -3,7 +3,6 @@ import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
-const redirectUri = new URL(window.location.href);
 </script>
 <template>
   <p>
@@ -11,7 +10,7 @@ const redirectUri = new URL(window.location.href);
   </p>
   <a
     class="btn btn-primary"
-    :href="`${apiBaseUrl}/openid/connect?redirect_uri=${redirectUri}`"
+    :href="`${apiBaseUrl}/openid/connect?from=${$route.path}`"
   >
     {{ t('global.auth.action.login') }}
   </a>
