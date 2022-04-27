@@ -8,7 +8,6 @@ const schema = Type.Object({
   AUTH_CLIENT_ID: Type.String(),
   AUTH_CLIENT_SECRET: Type.String(),
   AUTH_ISSUER: Type.String(),
-  AUTH_PKCE_ENABLED: Type.Boolean(),
 
   API_BASE_URL: Type.String(),
   HOST: Type.String(),

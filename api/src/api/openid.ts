@@ -30,20 +30,13 @@ export const openIdRoutes: FastifyPluginAsync = async (app) => {
   });
 
   app.get('/connect', async (request, reply) => {
-    let authUrl: string;
-    if (app.config.AUTH_PKCE_ENABLED) {
-      const codeVerifier = generators.codeVerifier();
-      request.session.openId.codeVerifier = codeVerifier;
-      authUrl = client.authorizationUrl({
-        code_challenge: generators.codeChallenge(codeVerifier),
-        code_challenge_method: 'S256',
-        scope: 'openid email profile',
-      });
-    } else {
-      authUrl = client.authorizationUrl({
-        scope: 'openid email profile',
-      });
-    }
+    const codeVerifier = generators.codeVerifier();
+    request.session.openId.codeVerifier = codeVerifier;
+    const authUrl = client.authorizationUrl({
+      code_challenge: generators.codeChallenge(codeVerifier),
+      code_challenge_method: 'S256',
+      scope: 'openid email profile',
+    });
     reply.redirect(authUrl);
   });
 
