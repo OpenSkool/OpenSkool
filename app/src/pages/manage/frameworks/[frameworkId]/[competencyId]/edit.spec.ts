@@ -1,11 +1,19 @@
 import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/vue';
-import { expect, spyOn, test } from 'vitest';
+import { expect, spyOn, test, vi } from 'vitest';
 
 import { router } from '~/router';
 import { render } from '~/spec/render';
 
 import edit from './edit.vue';
+
+vi.mock('~/auth', () => {
+  return {
+    useAuthStore: vi.fn().mockImplementation(() => {
+      return { isLoggedIn: true };
+    }),
+  };
+});
 
 test('input field has prefilled value', async () => {
   render(edit);
