@@ -56,9 +56,9 @@ const competency = useResult(result);
     <h2 class="text-xl mb-3">
       {{ t('competencies.route.id.create.heading') }}
     </h2>
-    <create-competency-form
+    <create-nested-competency
       :competency-id="competencyId"
       :framework-id="frameworkId"
-    ></create-competency-form>
+    ></create-nested-competency>
   </template>
 </template>
