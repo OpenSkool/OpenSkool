@@ -70,9 +70,16 @@ export const openIdRoutes: FastifyPluginAsync = async (app) => {
   });
 
   app.get('/logout', async (request, reply) => {
+    if (request.session.openId.tokenSet == null) {
+      request.log.warn(`logout failed: no token set`);
+      reply.redirect(app.config.APP_BASE_URL);
+      return;
+    }
+    const { id_token: idToken } = request.session.openId.tokenSet;
     await request.session.destroy();
     reply.redirect(
       client.endSessionUrl({
+        id_token_hint: idToken,
         post_logout_redirect_uri: app.config.APP_BASE_URL,
       }),
     );
