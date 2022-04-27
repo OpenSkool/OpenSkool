@@ -41,11 +41,6 @@ input CreateCompetencyFrameworkInput {
   title: String!
 }
 
-input CreateCompetencyInput {
-  parentId: ID
-  title: String!
-}
-
 input CreateNestedCompetencyInput {
   parentId: ID!
   title: String!
@@ -85,9 +80,6 @@ type InputError implements UserError {
 }
 
 type Mutation {
-  createCompetency(
-    data: CreateCompetencyInput!
-  ): MutationCreateCompetencyResult!
   createCompetencyFramework(
     data: CreateCompetencyFrameworkInput!
   ): MutationCreateCompetencyFrameworkResult!
@@ -121,14 +113,6 @@ union MutationCreateCompetencyFrameworkResult =
 
 type MutationCreateCompetencyFrameworkSuccess {
   data: CompetencyFramework!
-}
-
-union MutationCreateCompetencyResult =
-    InputError
-  | MutationCreateCompetencySuccess
-
-type MutationCreateCompetencySuccess {
-  data: Competency!
 }
 
 union MutationCreateEducationResult = MutationCreateEducationSuccess

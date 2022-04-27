@@ -5,10 +5,11 @@ import {
   DeleteCompetencyMutationVariables,
   GetEditCompetencyQuery,
   GetSubCompetenciesQuery,
-  MutationCreateCompetencyArgs,
   MutationCreateCompetencyFrameworkArgs,
   MutationCreateCompetencyFrameworkSuccess,
+  MutationCreateNestedCompetencyArgs,
   MutationCreateNestedCompetencySuccess,
+  MutationCreateRootCompetencyArgs,
   MutationCreateRootCompetencySuccess,
   MutationRenameCompetencyArgs,
   MutationRenameCompetencySuccess,
@@ -19,7 +20,7 @@ import {
 export default [
   graphql.mutation<
     { createNestedCompetency: MutationCreateNestedCompetencySuccess },
-    MutationCreateCompetencyArgs
+    MutationCreateNestedCompetencyArgs
   >('CreateNestedCompetency', (req, res, ctx) => {
     const { variables } = req;
 
@@ -47,7 +48,7 @@ export default [
 
   graphql.mutation<
     { createRootCompetency: MutationCreateRootCompetencySuccess },
-    MutationCreateCompetencyArgs
+    MutationCreateRootCompetencyArgs
   >('CreateRootCompetency', (req, res, ctx) => {
     const { variables } = req;
 
