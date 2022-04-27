@@ -94,12 +94,13 @@ export const openIdRoutes: FastifyPluginAsync = async (app) => {
 
 export const openIdRequestHook: onRequestAsyncHookHandler = async (request) => {
   request.session.openId ??= {};
-  if (request.session.openId.tokenSet != null) {
-    const tokenSet = new TokenSet(request.session.openId.tokenSet);
-    if (tokenSet.expired()) {
-      await request.session.destroy();
-    }
-  }
+  // TODO #153 reimplement when we auto refresh tokens
+  // if (request.session.openId.tokenSet != null) {
+  //   const tokenSet = new TokenSet(request.session.openId.tokenSet);
+  //   if (tokenSet.expired()) {
+  //     await request.session.destroy();
+  //   }
+  // }
 };
 
 const zIdToken = z.object({
