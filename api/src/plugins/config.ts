@@ -18,7 +18,7 @@ const schema = Type.Object({
       Type.Literal('production'),
       Type.Literal('test'),
     ],
-    { default: 'development' },
+    { default: 'production' },
   ),
   PORT: Type.Number(),
 
