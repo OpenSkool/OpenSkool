@@ -50,9 +50,11 @@ export const openIdRoutes: FastifyPluginAsync = async (app) => {
   app.get('/connect/callback', async (request, reply) => {
     const parameters = client.callbackParams(request.raw);
     if (parameters.error != null) {
-      throw new Error(
-        `OAuth error: ${parameters.error} ${parameters.error_description}`,
+      request.log.warn(
+        `oauth callback error: ${parameters.error} ${parameters.error_description}`,
       );
+      reply.redirect(app.config.APP_BASE_URL);
+      return;
     }
     const { codeVerifier } = request.session.openId;
     request.session.openId.codeVerifier = undefined;
