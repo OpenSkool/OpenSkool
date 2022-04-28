@@ -14,7 +14,7 @@ const route = useRoute();
   <div class="container mx-auto px-5">
     <div class="relative">
       <div class="flex items-center justify-between">
-        <div class="absolute -ml-10 mt-1">
+        <div class="absolute -ml-12 mt-1">
           <TransitionRoot
             :show="loading"
             enter="duration-100 ease-out"
@@ -24,23 +24,26 @@ const route = useRoute();
             leave-from="opacity-100"
             leave-to="opacity-0"
           >
-            <ri-loader-fill class="text-2xl text-secondary-500 spin" />
+            <ri-loader-fill class="text-xl text-secondary-500 spin" />
           </TransitionRoot>
         </div>
-        <h1 v-t="'global.title'" class="text-4xl my-5 text-primary1-700"></h1>
-        <div class="flex gap-6">
+        <h1 v-t="'global.title'" class="text-3xl my-5 text-primary1-700"></h1>
+        <div class="flex gap-8">
           <language-select />
-          <div class="flex gap-3 items-center">
-            <ri-shield-user-fill />
-            <template v-if="authStore.isLoggedIn">
-              {{ authStore.name }}
-              <a
-                class="btn btn-primary"
-                :href="`${apiBaseUrl}/openid/logout?from=${route.path}`"
-              >
-                Logout
-              </a>
-            </template>
+          <div class="flex gap-3 items-center text-base">
+            <div class="flex gap-2 items-center">
+              <ri-shield-user-fill />
+              <template v-if="authStore.isLoggedIn">
+                {{ authStore.name }}
+              </template>
+            </div>
+            <a
+              v-if="authStore.isLoggedIn"
+              class="btn btn-primary"
+              :href="`${apiBaseUrl}/openid/logout?from=${route.path}`"
+            >
+              Logout
+            </a>
             <a
               v-else
               class="btn btn-primary"
@@ -52,7 +55,7 @@ const route = useRoute();
         </div>
       </div>
     </div>
-    <nav class="my-5">
+    <nav class="my-5 text-base">
       <ol class="flex gap-5">
         <li>
           <router-link to="/">Home</router-link>

@@ -23,7 +23,7 @@ defineEmits<
         p="x-3 y-2"
         focus-visible:ring="2 offset-2 primary1-500"
       >
-        <div class="truncate">{{ selectedLabel ?? '–' }}</div>
+        <div class="text-base truncate">{{ selectedLabel ?? '–' }}</div>
         <ri-arrow-drop-down-line aria-hidden="true" />
       </ListboxButton>
       <transition
@@ -35,7 +35,7 @@ defineEmits<
           v-slot="{ open }"
           class="absolute w-full py-1 mt-1 overflow-auto bg-white rounded-md shadow-lg max-h-60 focus:outline-none z-10"
           ring="1 black opacity-5"
-          text="base sm:sm"
+          text="base"
         >
           <slot v-bind="{ open }"></slot>
         </ListboxOptions>
