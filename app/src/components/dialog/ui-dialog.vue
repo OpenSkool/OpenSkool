@@ -29,7 +29,8 @@ defineEmits<(event: 'close') => void>();
           leave-to="opacity-0 scale-50"
         >
           <div
-            class="relative z-10 max-w-sm mx-auto my-8 shadow-xl rounded-2xl p-6 bg-white"
+            class="relative z-10 max-w-lg mx-auto my-8 shadow-xl rounded-2xl p-6 bg-white"
+            v-bind="$attrs"
           >
             <DialogTitle v-if="$slots.title">
               <slot name="title" />

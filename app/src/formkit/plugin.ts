@@ -8,12 +8,12 @@ import { generateClasses } from './helpers';
 
 const BOX = {
   fieldset: 'max-w-md border border-gray-400 rounded-md px-4 pb-2',
-  legend: 'font-bold text-sm p-2',
+  legend: 'font-bold text-base p-2',
   wrapper: 'flex items-center mb-1 cursor-pointer',
   help: 'mb-2',
   input:
     'form-check-input appearance-none h-5 w-5 mr-2 border border-gray-500 rounded-sm bg-white checked:bg-primary1-500 focus:outline-none focus:ring-0 transition duration-200',
-  label: 'text-sm text-gray-700 mt-1',
+  label: 'text-base text-gray-700 mt-1',
 };
 
 const BUTTON = {
@@ -43,10 +43,10 @@ export function formkit(app: App): void {
       config: {
         classes: generateClasses({
           global: {
-            help: 'text-xs text-gray-500',
+            help: 'text-sm text-gray-500',
             label: 'block mb-1 font-bold text-sm formkit-invalid:text-red-500',
             messages: 'list-none p-0 mt-1 mb-0',
-            message: 'text-red-500 mb-1 text-xs',
+            message: 'text-red-500 mb-1 text-sm',
             outer: 'mb-5 opacity-100 formkit-disabled:opacity-40',
           },
           button: BUTTON,
