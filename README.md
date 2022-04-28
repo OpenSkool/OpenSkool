@@ -45,10 +45,11 @@ Some rules of thumb.
 - `.env[.*].local` is the only one gitignored. Sensitive values should only go in these.
 - None of these files are used in deployment environments. The mode is a reference to the `NODE_ENV` value, and not an indication of an actual deployment environment.
 
-## Docker
+## Setup
 
-There is a `docker-compose.yaml` in the root of the project containing a postgres
-database. It is not mandatory to use this but it's there for your convenience.
+### Docker
+
+There is a `docker-compose.yaml` in the root of the project containing some services required for development.
 
 Start all containers.
 
@@ -56,11 +57,7 @@ Start all containers.
 docker-compose up -d
 ```
 
-## Setup
-
-### Databases
-
-You'll need to set up 2 databases to run the application, and one more to run the API integration tests. Either use the docker-compose or setup up your own databases. In case of Docker everything is already configured correctly for you.
+This will start a [Keycloak dev instance](http://localhost:8080) amd 3 databases.
 
 ### Keycloak
 
