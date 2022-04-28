@@ -9,7 +9,7 @@ import ms from 'ms';
 import { prismaPlugin } from '../plugins/prisma';
 import { authRequestHook, authRoutes } from './auth';
 import { graphqlRoutes } from './graphql';
-import { openIdRequestHook, openIdRoutes } from './openid';
+import { openIdPlugin, openIdRequestHook, openIdRoutes } from './openid';
 
 const HTTP_NO_CONTENT = 204;
 
@@ -33,6 +33,7 @@ const apiPlugin: FastifyPluginAsync = async (app) => {
     .addHook('onRequest', authRequestHook)
     .register(authRoutes)
     .register(graphqlRoutes, { prefix: '/graphql' })
+    .register(openIdPlugin)
     .register(openIdRoutes, { prefix: '/openid' });
 
   app.get('/', async (request, reply) => {
