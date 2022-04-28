@@ -25,6 +25,8 @@
     "preview": {
       "dependsOn": ["build"]
     },
-    "test": {}
+    "test": {
+      "outputs": ["test.xml"]
+    }
   }
 }
