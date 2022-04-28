@@ -9,9 +9,9 @@
   "scripts": {
     "build": "yarn turbo run build",
     "clean": "yarn turbo run clean",
+    "codegen": "yarn turbo run codegen",
     "dev": "yarn turbo run dev",
     "format": "yarn prettier --write .",
-    "generate": "yarn turbo run generate",
     "lint": "yarn turbo run lint",
     "preview": "yarn turbo run preview",
     "test": "yarn turbo run test"

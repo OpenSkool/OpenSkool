@@ -100,7 +100,7 @@ flowchart
     schema["src/schema/**/* (Pothos)"]
     schema -.-> |codegen| codgen
 
-    codgen[[src/generated/graphql.schema]]
+    codgen[[src/codegen/graphql.schema]]
 
     domain[src/services/**]
     schema --> domain
@@ -126,13 +126,13 @@ flowchart
   - Use `prisma db [push|pull]` to sync the Prisma schema with the DB.
   - Use `prisma migrate [dev|deploy|reset]` to apply/record database changes as migrations.
 - `src/schema/**/*`: single-source of truth of our GraphQL API.
-  - Use `generate:codegen` to generate GraphQL DSL. This is done automatically and continuously when running the Api during development.
+  - Use `codegen` to generate GraphQL DSL. This is done automatically and continuously when running the Api during development.
 
 #### Generated files
 
 - `node_modules/@prisma/client`: The Prisma client used for type-safe access to the database data.
 - `prisma/migrations/**/*.sql`: Migrations managed by `prisma migrate`.
-- `src/generated/graphql.schema`: GraphQL SDL used by our IDE for Intellisense, and by the App for type-safe API access.
+- `src/codegen/graphql.schema`: GraphQL SDL used by our IDE for Intellisense, and by the App for type-safe API access.
 
 #### Command reference
 

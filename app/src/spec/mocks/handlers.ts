@@ -13,7 +13,7 @@ import {
   MutationCreateRootCompetencySuccess,
   MutationRenameCompetencyArgs,
   MutationRenameCompetencySuccess,
-} from '~/generated/graphql';
+} from '~/codegen/graphql';
 
 // mutations
 

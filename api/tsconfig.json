@@ -5,5 +5,5 @@
   "compilerOptions": {
     "baseUrl": "."
   },
-  "include": ["src", "test", "*.ts", "prisma"]
+  "include": ["src", "scripts", "test", "*.ts", "prisma"]
 }

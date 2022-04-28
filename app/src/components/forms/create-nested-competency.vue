@@ -2,7 +2,7 @@
 import { FormKitNode } from '@formkit/core';
 import { useI18n } from 'vue-i18n';
 
-import { CreateNestedCompetencyDocument } from '~/generated/graphql';
+import { CreateNestedCompetencyDocument } from '~/codegen/graphql';
 
 const { t } = useI18n();
 

@@ -2,7 +2,7 @@
 import { FormKitNode } from '@formkit/core';
 import { useI18n } from 'vue-i18n';
 
-import { CreateRootCompetencyDocument } from '~/generated/graphql';
+import { CreateRootCompetencyDocument } from '~/codegen/graphql';
 
 const { t } = useI18n();
 
