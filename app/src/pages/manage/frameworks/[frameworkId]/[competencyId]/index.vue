@@ -5,7 +5,7 @@ import {
   DeleteCompetencyMutation,
   DeleteCompetencyMutationVariables,
   GetSubCompetenciesDocument,
-} from '~/generated/graphql';
+} from '~/codegen/graphql';
 import { useI18nStore } from '~/i18n';
 
 const i18nStore = useI18nStore();

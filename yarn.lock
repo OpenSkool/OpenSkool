@@ -913,7 +913,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graphql-codegen/cli@npm:2.6.2, @graphql-codegen/cli@npm:^2.6.2":
+"@graphql-codegen/cli@npm:2.6.2":
   version: 2.6.2
   resolution: "@graphql-codegen/cli@npm:2.6.2"
   dependencies:
@@ -1786,8 +1786,6 @@ __metadata:
     "@envelop/response-cache": ^2.3.0
     "@faker-js/faker": ^6.1.2
     "@fastify/session": ^8.1.0
-    "@graphql-codegen/cli": ^2.6.2
-    "@graphql-codegen/schema-ast": ^2.4.1
     "@graphql-yoga/common": ^2.0.0
     "@graphql-yoga/node": ^2.0.0
     "@hapi/boom": ^9.1.4

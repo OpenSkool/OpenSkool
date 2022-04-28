@@ -51,14 +51,14 @@ export default defineConfig({
           ],
         },
       ],
-      dts: 'src/generated/auto-imports.d.ts',
+      dts: 'src/vite-types/auto-imports.d.ts',
     }),
     {
       ...Codegen({ runOnBuild: false }),
       apply: 'serve',
     },
     Components({
-      dts: 'src/generated/components.d.ts',
+      dts: 'src/vite-types/components.d.ts',
       resolvers: [
         HeadlessUiResolver(),
         IconsResolver({

@@ -9,12 +9,10 @@
   "scripts": {
     "build": "node scripts/build.cjs",
     "clean": "rm -rf .eslintcache .turbo/ dist/",
+    "codegen": "node -r dotenv-flow/config -r esbuild-register scripts/codegen.ts",
     "dev": "FORCE_COLOR=1 NODE_ENV=development nodemon src/server.ts",
-    "generate": "yarn run generate:prisma",
-    "generate:codegen": "graphql-codegen",
-    "generate:prisma": "prisma generate",
     "lint": "eslint --cache --ext .cjs,.ts .",
-    "postinstall": "yarn run generate:prisma",
+    "postinstall": "yarn run prisma generate",
     "preview": "FORCE_COLOR=1 NODE_ENV=production node -r dotenv-flow/config dist/server.js",
     "prisma:test": "DATABASE_URL='postgresql://openskool:openskool@localhost:5433/openskool-test' prisma",
     "start": "node dist/server.js",
@@ -47,8 +45,6 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^6.1.2",
-    "@graphql-codegen/cli": "^2.6.2",
-    "@graphql-codegen/schema-ast": "^2.4.1",
     "@os/eslint-config": "workspace:*",
     "@os/tsconfig": "workspace:*",
     "@types/accept-language-parser": "^1.5.3",

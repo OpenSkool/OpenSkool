@@ -4,28 +4,29 @@
   "globalDependencies": [".env.local", ".env.*.local"],
   "pipeline": {
     "build": {
+      "dependsOn": ["codegen"],
       "outputs": ["dist/**"]
-    },
-    "generate": {
-      "cache": false
-    },
-    "@os/app#generate": {
-      "dependsOn": ["@os/api#generate"]
     },
     "clean": {
       "cache": false
+    },
+    "codegen": {
+      "dependsOn": ["^codegen"],
+      "outputs": ["src/codegen/**"]
     },
     "dev": {
       "cache": false,
       "dependsOn": ["^dev"]
     },
     "lint": {
+      "dependsOn": ["codegen"],
       "outputs": [".eslintcache"]
     },
     "preview": {
       "dependsOn": ["build"]
     },
     "test": {
+      "dependsOn": ["codegen"],
       "outputs": ["test.xml"]
     }
   }

@@ -1,12 +1,12 @@
 documents: ./src/**/*.{gql,ts,vue}
-schema: ../api/src/generated/schema.graphql
+schema: ../api/src/codegen/schema.graphql
 
 hooks:
   afterAllFileWrite:
     - prettier --write
 
 generates:
-  src/generated/graphql.ts:
+  src/codegen/graphql.ts:
     plugins:
       - typescript
       - typescript-operations

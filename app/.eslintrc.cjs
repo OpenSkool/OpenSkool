@@ -1,7 +1,7 @@
 module.exports = {
   root: true,
   extends: '@os',
-  ignorePatterns: ['src/generated/**'],
+  ignorePatterns: ['src/codegen/**', 'src/vite-types/**'],
   parserOptions: {
     extraFileExtensions: ['.vue'],
     tsconfigRootDir: __dirname,

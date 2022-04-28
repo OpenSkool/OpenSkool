@@ -36,7 +36,7 @@ flowchart
     srcvue --> srcdoc
     typegen{ }
     srcdoc -.-> typegen
-    gents[["src/generated/graphql.ts"]]
+    gents[["src/codegen/graphql.ts"]]
     typegen -.-> |dev:generate| gents
     srcvue --> gents
   end
@@ -51,4 +51,4 @@ flowchart
 
 #### Generated files
 
-- `src/generated/graphql.ts`: TypeScript types based on the Api's GraphQL Schema and our App's GraphQL Documents.
+- `src/codegen/graphql.ts`: TypeScript types based on the Api's GraphQL Schema and our App's GraphQL Documents.

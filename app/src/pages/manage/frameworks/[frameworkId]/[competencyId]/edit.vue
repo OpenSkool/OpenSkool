@@ -10,7 +10,7 @@ import { useI18n } from 'vue-i18n';
 import {
   GetEditCompetencyDocument,
   RenameCompetencyDocument,
-} from '~/generated/graphql';
+} from '~/codegen/graphql';
 import { useI18nStore } from '~/i18n';
 import { assert } from '~/utils';
 
