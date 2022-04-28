@@ -26,6 +26,9 @@
       "dependsOn": ["build"]
     },
     "test": {
+      "dependsOn": ["codegen"]
+    },
+    "test:ci": {
       "dependsOn": ["codegen"],
       "outputs": ["coverage/**", "test.xml"]
     }

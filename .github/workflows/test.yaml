@@ -28,7 +28,7 @@ jobs:
           echo "$CERT" | base64 --decode > ./test-db.cert
           export DATABASE_URL="${DATABASE_URL}&sslcert=$(pwd)/test-db.cert"
           yarn workspace @os/api prisma migrate deploy
-          yarn turbo run build lint test
+          yarn turbo run lint test:ci
 
       - name: Api Test Report
         uses: dorny/test-reporter@v1
