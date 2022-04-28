@@ -1,0 +1,10 @@
+{
+  "name": "@os/infrastructure",
+  "dependencies": {
+    "@pulumi/digitalocean": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^16",
+    "typescript": "^3.7.7"
+  }
+}
