@@ -27,7 +27,7 @@
     },
     "test": {
       "dependsOn": ["codegen"],
-      "outputs": ["test.xml"]
+      "outputs": ["coverage/**", "test.xml"]
     }
   }
 }

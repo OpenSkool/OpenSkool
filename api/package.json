@@ -16,7 +16,7 @@
     "preview": "FORCE_COLOR=1 NODE_ENV=production node -r dotenv-flow/config dist/server.js",
     "prisma:test": "DATABASE_URL='postgresql://openskool:openskool@localhost:5433/openskool-test' prisma",
     "start": "node dist/server.js",
-    "test": "tsc --noEmit && vitest run --reporter=junit --outputFile=test.xml"
+    "test": "tsc --noEmit && vitest run --coverage --reporter=junit --outputFile=test.xml"
   },
   "dependencies": {
     "@envelop/response-cache": "^2.3.0",
@@ -53,6 +53,7 @@
     "@types/is-ci": "^3",
     "@types/pino": "^6.3.12",
     "@types/prettier": "^2",
+    "c8": "^7.11.2",
     "cuid": "^2.1.8",
     "dotenv-flow": "^3.2.0",
     "esbuild": "^0.14.31",

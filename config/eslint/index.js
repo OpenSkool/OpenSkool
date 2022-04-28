@@ -1,6 +1,6 @@
 module.exports = {
   extends: 'noise',
-  ignorePatterns: ['dist/', 'node_modules/'],
+  ignorePatterns: ['coverage/', 'dist/', 'node_modules/'],
   rules: {
     // Disabled because VSCode ESLint extension misrapports these two rules.
     'import/extensions': 'off',

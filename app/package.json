@@ -13,7 +13,7 @@
     "dev": "FORCE_COLOR=1 vite",
     "lint": "eslint --cache --ext .cjs,.js,.ts,.vue .",
     "preview": "vite preview",
-    "test": "vue-tsc --noEmit && vitest run --reporter=junit --outputFile=test.xml"
+    "test": "vue-tsc --noEmit && vitest run --coverage --reporter=junit --outputFile=test.xml"
   },
   "files": [],
   "dependencies": {
@@ -48,6 +48,7 @@
     "@types/prettier": "^2",
     "@vitejs/plugin-vue": "^2.3.1",
     "autoprefixer": "^10.4.4",
+    "c8": "^7.11.2",
     "eslint": "^8.12.0",
     "jsdom": "^19.0.0",
     "msw": "^0.39.2",
