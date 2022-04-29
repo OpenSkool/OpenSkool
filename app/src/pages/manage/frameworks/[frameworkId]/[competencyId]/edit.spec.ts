@@ -1,6 +1,6 @@
 import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/vue';
-import { expect, spyOn, test, vi } from 'vitest';
+import { expect, test, vi } from 'vitest';
 
 import { router } from '~/router';
 import { render } from '~/spec/render';
@@ -26,7 +26,7 @@ test('input field has prefilled value', async () => {
 test('alert shows when empty field is submitted', async () => {
   render(edit);
   await router.isReady();
-  const push = spyOn(router, 'push');
+  const push = vi.spyOn(router, 'push');
   const user = userEvent.setup();
   const titleInput: HTMLInputElement = await screen.findByRole('textbox', {
     name: 'competencies.form.nameLabel',
@@ -43,7 +43,7 @@ test('alert shows when empty field is submitted', async () => {
 test('form submission works', async () => {
   render(edit);
   await router.isReady();
-  const push = spyOn(router, 'push');
+  const push = vi.spyOn(router, 'push');
   const user = userEvent.setup();
   const submitButton = await screen.findByRole('button', {
     name: 'competencies.form.action.edit.label',
