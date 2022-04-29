@@ -1,6 +1,6 @@
 import userEvent from '@testing-library/user-event';
 import { screen, waitFor } from '@testing-library/vue';
-import { expect, spyOn, test } from 'vitest';
+import { expect, test, vi } from 'vitest';
 
 import { router } from '~/router';
 import { render } from '~/spec/render';
@@ -10,7 +10,7 @@ import index from './index.vue';
 test('delete competency works', async () => {
   render(index);
   await router.isReady();
-  const replace = spyOn(router, 'replace');
+  const replace = vi.spyOn(router, 'replace');
   const user = userEvent.setup();
   const openDeleteModalButton: HTMLButtonElement = await screen.findByRole(
     'button',

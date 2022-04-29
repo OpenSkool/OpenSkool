@@ -9,10 +9,10 @@ import IconsResolver from 'unplugin-icons/resolver';
 import Icons from 'unplugin-icons/vite';
 import { HeadlessUiResolver } from 'unplugin-vue-components/resolvers';
 import Components from 'unplugin-vue-components/vite';
-import { defineConfig } from 'vite';
 import Codegen from 'vite-plugin-graphql-codegen';
 import Pages from 'vite-plugin-pages';
 import WindiCSS from 'vite-plugin-windicss';
+import { defineConfig } from 'vitest/config';
 
 const windiConfigFilepath =
   process.env.WINDI_THEME == null

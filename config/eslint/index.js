@@ -26,7 +26,7 @@ module.exports = {
     {
       files: ['**/**.spec.ts'],
       rules: {
-        'no-magic-numbers': 'off',
+        '@typescript-eslint/no-magic-numbers': 'off',
       },
     },
   ],
