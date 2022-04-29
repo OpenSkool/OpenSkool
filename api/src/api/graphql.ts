@@ -3,6 +3,7 @@ import { Readable } from 'stream';
 import { useResponseCache } from '@envelop/response-cache';
 import { createServer } from '@graphql-yoga/node';
 import acceptLanguageParser from 'accept-language-parser';
+import { create } from 'cross-undici-fetch';
 import { FastifyPluginAsync } from 'fastify';
 import ms from 'ms';
 
@@ -11,17 +12,10 @@ import type { Context } from '../schema/context';
 
 const HTTP_STATUS_NO_CONTENT = 204;
 
-interface IterableHeaders extends Headers {
-  // [Symbol.iterator]: () => IterableIterator<[string, string]>;
-  entries: () => IterableIterator<[string, string]>;
-  // keys: () => IterableIterator<string>;
-  // values: () => IterableIterator<string>;
-}
-
 export const graphqlRoutes: FastifyPluginAsync = async (app) => {
   const yogaServer = createServer<Context>({
+    fetchAPI: create({ useNodeFetch: false }),
     logging: app.log,
-    schema,
     plugins: [
       useResponseCache({
         includeExtensionMetadata: true,
@@ -35,6 +29,7 @@ export const graphqlRoutes: FastifyPluginAsync = async (app) => {
         ttl: ms('2s'),
       }),
     ],
+    schema,
   });
 
   app.route({
@@ -56,11 +51,12 @@ export const graphqlRoutes: FastifyPluginAsync = async (app) => {
       };
       const response = await yogaServer.handleIncomingMessage(request, context);
 
-      for (const [key, value] of (
-        response.headers as IterableHeaders
-      ).entries()) {
-        reply.header(key, value);
-      }
+      /* eslint-disable-next-line unicorn/no-array-for-each */
+      response.headers.forEach((value, key) => {
+        if (!key.startsWith('access-control-')) {
+          reply.header(key, value);
+        }
+      });
 
       if (response.body == null) {
         reply.status(HTTP_STATUS_NO_CONTENT);
