@@ -66,6 +66,7 @@ export default defineConfig({
           prefix: false,
         }),
       ],
+      types: [],
     }),
     Icons({ compiler: 'vue3' }),
     Pages({
