@@ -1,3 +1,5 @@
 .yarn/
 .yarnrc.yml
 dist
+
+app/src/vite-types/
