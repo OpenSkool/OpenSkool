@@ -1,9 +1,9 @@
+import cookiePlugin from '@fastify/cookie';
+import corsPlugin from '@fastify/cors';
 import sessionPlugin from '@fastify/session';
 import * as Boom from '@hapi/boom';
 import { Static, Type } from '@sinclair/typebox';
 import type { FastifyPluginAsync } from 'fastify';
-import cookiePlugin from 'fastify-cookie';
-import corsPlugin from 'fastify-cors';
 import ms from 'ms';
 
 import { prismaPlugin } from '../plugins/prisma';
