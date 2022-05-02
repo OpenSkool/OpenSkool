@@ -7,7 +7,7 @@ import type { FastifyPluginAsync } from 'fastify';
 import ms from 'ms';
 
 import { prismaPlugin } from '../plugins/prisma';
-import { authRequestHook, authRoutes } from './auth';
+import { authRequestHook } from './auth';
 import { graphqlRoutes } from './graphql';
 import { openIdPlugin, openIdRequestHook, openIdRoutes } from './openid';
 
@@ -31,7 +31,6 @@ const apiPlugin: FastifyPluginAsync = async (app) => {
     })
     .addHook('onRequest', openIdRequestHook)
     .addHook('onRequest', authRequestHook)
-    .register(authRoutes)
     .register(graphqlRoutes, { prefix: '/graphql' })
     .register(openIdPlugin)
     .register(openIdRoutes, { prefix: '/openid' });
