@@ -1,16 +1,14 @@
-<route lang="yaml">
-meta:
-  requireAuthentication: true
-</route>
-
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
 
-import { GetCreateCompetencyParentDocument } from '~/codegen/graphql';
+import { useAuthStore } from '~/auth';
+import { GetCreateCompetencyParentDocument } from '~/generated/graphql';
 import { useI18nStore } from '~/i18n';
 
 const i18nStore = useI18nStore();
 i18nStore.loadGlob(import.meta.glob('~/locales/competencies.*.yaml'));
+
+const authStore = useAuthStore();
 
 const { t } = useI18n();
 
@@ -36,29 +34,35 @@ const {
   { id: props.competencyId },
   { fetchPolicy: 'network-only' },
 );
+
 const competency = useResult(result);
 </script>
 
 <template>
-  <template v-if="getCreateCompetencyParentError">
-    <p>Something went wrong</p>
-  </template>
-  <template v-else-if="loading">
-    <div>Loading</div>
-  </template>
-  <template v-else-if="competency == null">
-    <div>Not Found</div>
+  <template v-if="authStore.isLoggedIn">
+    <template v-if="getCreateCompetencyParentError">
+      <p>Something went wrong</p>
+    </template>
+    <template v-else-if="loading">
+      <div>Loading</div>
+    </template>
+    <template v-else-if="competency == null">
+      <div>Not Found</div>
+    </template>
+    <template v-else>
+      <ui-backbutton :to="`/manage/frameworks/${frameworkId}/${competencyId}`">
+        {{ competency.title }}
+      </ui-backbutton>
+      <h2 class="text-xl mb-3">
+        {{ t('competencies.route.id.create.heading') }}
+      </h2>
+      <create-nested-competency
+        :competency-id="competencyId"
+        :framework-id="frameworkId"
+      ></create-nested-competency>
+    </template>
   </template>
   <template v-else>
-    <ui-backbutton :to="`/manage/frameworks/${frameworkId}/${competencyId}`">
-      {{ competency.title }}
-    </ui-backbutton>
-    <h2 class="text-xl mb-3">
-      {{ t('competencies.route.id.create.heading') }}
-    </h2>
-    <create-nested-competency
-      :competency-id="competencyId"
-      :framework-id="frameworkId"
-    ></create-nested-competency>
+    <unauthorized></unauthorized>
   </template>
 </template>

@@ -1,18 +1,16 @@
-<route lang="yaml">
-meta:
-  requireAuthentication: true
-</route>
-
 <script lang="ts" setup>
 import { FormKitNode } from '@formkit/core';
 import { useI18n } from 'vue-i18n';
 
+import { useAuthStore } from '~/auth';
 import {
   GetEditCompetencyDocument,
   RenameCompetencyDocument,
 } from '~/codegen/graphql';
 import { useI18nStore } from '~/i18n';
 import { assert } from '~/utils';
+
+const authStore = useAuthStore();
 
 const i18nStore = useI18nStore();
 i18nStore.loadGlob(import.meta.glob('~/locales/competencies.*.yaml'));
@@ -114,35 +112,43 @@ async function handleFormSubmit(): Promise<void> {
 </script>
 
 <template>
-  <template v-if="getEditCompetencyError">
-    <p>Something went wrong</p>
-  </template>
-  <template v-else-if="loading">
-    <div>Loading</div>
-  </template>
-  <template v-else-if="competency == null">
-    <div>Not Found</div>
+  <template v-if="authStore.isLoggedIn">
+    <template v-if="getEditCompetencyError">
+      <p>Something went wrong</p>
+    </template>
+    <template v-else-if="loading">
+      <div>Loading</div>
+    </template>
+    <template v-else-if="competency == null">
+      <div>Not Found</div>
+    </template>
+    <template v-else>
+      <ui-backbutton :to="`/manage/frameworks/${frameworkId}/${competencyId}`">
+        {{ competency.title }}
+      </ui-backbutton>
+      <h2 class="text-xl mb-3">
+        {{ t('competencies.route.id.edit.heading') }}
+      </h2>
+
+      <FormKit
+        v-if="formValues != null"
+        v-model="formValues"
+        type="form"
+        :submit-label="t('competencies.form.action.edit.label')"
+        :errors="formErrors"
+        @submit="handleFormSubmit"
+        @node="formNode = $event"
+      >
+        <FormKit
+          name="title"
+          :label="t('competencies.form.nameLabel')"
+          type="text"
+          validation="required"
+        />
+      </FormKit>
+    </template>
   </template>
   <template v-else>
-    <ui-backbutton :to="`/manage/frameworks/${frameworkId}/${competencyId}`">
-      {{ competency.title }}
-    </ui-backbutton>
-    <h2 class="text-xl mb-3">{{ t('competencies.route.id.edit.heading') }}</h2>
-    <FormKit
-      v-if="formValues != null"
-      v-model="formValues"
-      type="form"
-      :submit-label="t('competencies.form.action.edit.label')"
-      :errors="formErrors"
-      @submit="handleFormSubmit"
-      @node="formNode = $event"
-    >
-      <FormKit
-        name="title"
-        :label="t('competencies.form.nameLabel')"
-        type="text"
-        validation="required"
-      />
-    </FormKit>
+    <unauthorized></unauthorized>
   </template>
 </template>

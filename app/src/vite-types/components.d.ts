@@ -47,6 +47,8 @@ declare module 'vue' {
     UiMenuItem: typeof import('./../components/menu/ui-menu-item.vue')['default']
     UiMenuItemButton: typeof import('./../components/menu/ui-menu-item-button.vue')['default']
     UiSwitch: typeof import('./../components/switch/ui-switch.vue')['default']
+    UserSelect: typeof import('./../components/demo/user-select.vue')['default']
+    Unauthorized: typeof import('./../components/auth/unauthorized.vue')['default']
   }
 }
 

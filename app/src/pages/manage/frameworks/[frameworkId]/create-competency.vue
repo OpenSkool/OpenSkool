@@ -1,13 +1,11 @@
-<route lang="yaml">
-meta:
-  requireDemoUser: true
-</route>
-
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
 
-import { GetCompetencyFrameworkQuery } from '~/codegen/graphql';
+import { useAuthStore } from '~/auth';
+import { GetCompetencyFrameworkQuery } from '~/generated/graphql';
 import { useI18nStore } from '~/i18n';
+
+const authStore = useAuthStore();
 
 const props = defineProps<{
   frameworkId: string;
@@ -34,24 +32,29 @@ const competencyFramework = useResult(result);
 </script>
 
 <template>
-  <template v-if="error">
-    <p>Something went wrong</p>
-  </template>
-  <template v-else-if="loading">
-    <div>Loading</div>
-  </template>
-  <template v-else-if="competencyFramework == null">
-    <div>Not Found</div>
+  <template v-if="authStore.isLoggedIn">
+    <template v-if="error">
+      <p>Something went wrong</p>
+    </template>
+    <template v-else-if="loading">
+      <div>Loading</div>
+    </template>
+    <template v-else-if="competencyFramework == null">
+      <div>Not Found</div>
+    </template>
+    <template v-else>
+      <ui-backbutton :to="`/manage/frameworks/${competencyFramework?.id}`">
+        {{ competencyFramework.title }}
+      </ui-backbutton>
+      <h2 class="text-xl mb-3">
+        {{ t('competencies.route.create.heading') }}
+      </h2>
+      <create-root-competency
+        :framework-id="props.frameworkId"
+      ></create-root-competency>
+    </template>
   </template>
   <template v-else>
-    <ui-backbutton :to="`/manage/frameworks/${competencyFramework?.id}`">
-      {{ competencyFramework.title }}
-    </ui-backbutton>
-    <h2 class="text-xl mb-3">
-      {{ t('competencies.route.create.heading') }}
-    </h2>
-    <create-root-competency
-      :framework-id="props.frameworkId"
-    ></create-root-competency>
+    <unauthorized></unauthorized>
   </template>
 </template>
