@@ -67,6 +67,13 @@ export type CreateRootCompetencyInput = {
   title: Scalars['String'];
 };
 
+/** The currently authenticated user */
+export type CurrentUser = Node & {
+  __typename?: 'CurrentUser';
+  id: Scalars['ID'];
+  name: Scalars['String'];
+};
+
 export type Education = Accountable &
   Node & {
     __typename?: 'Education';
@@ -259,6 +266,7 @@ export type Query = {
   allRootCompetencies: Array<Competency>;
   competency?: Maybe<QueryCompetencyResult>;
   competencyFramework?: Maybe<QueryCompetencyFrameworkResult>;
+  currentUser?: Maybe<CurrentUser>;
 };
 
 export type QueryCompetencyArgs = {
@@ -308,6 +316,13 @@ export type UserError = {
   code: Scalars['String'];
   message: Scalars['String'];
   path?: Maybe<Array<Scalars['String']>>;
+};
+
+export type AuthCurrentUserQueryVariables = Exact<{ [key: string]: never }>;
+
+export type AuthCurrentUserQuery = {
+  __typename?: 'Query';
+  currentUser?: { __typename?: 'CurrentUser'; id: string; name: string } | null;
 };
 
 export type CreateCompetencyFrameworkMutationVariables = Exact<{
@@ -683,6 +698,35 @@ export const BaseErrorFieldsFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<BaseErrorFieldsFragment, unknown>;
+export const AuthCurrentUserDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'authCurrentUser' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'currentUser' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  AuthCurrentUserQuery,
+  AuthCurrentUserQueryVariables
+>;
 export const CreateCompetencyFrameworkDocument = {
   kind: 'Document',
   definitions: [

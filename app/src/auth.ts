@@ -1,35 +1,35 @@
 import { defineStore } from 'pinia';
 
-import { pinia } from './pinia';
+import { apolloClient } from '~/apollo';
+import { AuthCurrentUserDocument, CurrentUser } from '~/codegen/graphql';
+import { pinia } from '~/pinia';
 
-const HTTP_STATUS_NO_CONTENT = 204;
-
-interface AuthStatus {
-  authId: string;
-  name: string;
-}
+gql`
+  query authCurrentUser {
+    currentUser {
+      id
+      name
+    }
+  }
+`;
 
 export const useAuthStore = defineStore('auth', () => {
-  const status = ref<AuthStatus>();
+  const currentUser = ref<CurrentUser | null>(null);
 
   async function refresh(): Promise<void> {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/whoami`,
-        { credentials: 'include' },
-      );
-      if (response.status === HTTP_STATUS_NO_CONTENT) {
-        return;
-      }
-      status.value = (await response.json()) as AuthStatus;
+      const currentUserQuery = await apolloClient.query({
+        query: AuthCurrentUserDocument,
+      });
+      currentUser.value = currentUserQuery.data.currentUser ?? null;
     } catch (error) {
       console.error(error);
     }
   }
 
   return {
-    name: computed(() => status.value?.name),
-    isLoggedIn: computed(() => status.value != null),
+    name: computed(() => currentUser.value?.name),
+    isLoggedIn: computed(() => currentUser.value != null),
     refresh,
   };
 });
