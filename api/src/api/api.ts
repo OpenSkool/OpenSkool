@@ -7,9 +7,9 @@ import type { FastifyPluginAsync } from 'fastify';
 import ms from 'ms';
 
 import { prismaPlugin } from '../plugins/prisma';
-import { authRequestHook } from './auth';
+import { authPlugin } from './auth';
 import { graphqlRoutes } from './graphql';
-import { openIdPlugin, openIdRequestHook, openIdRoutes } from './openid';
+import { openIdPlugin } from './openid';
 
 const HTTP_NO_CONTENT = 204;
 
@@ -29,11 +29,9 @@ const apiPlugin: FastifyPluginAsync = async (app) => {
       },
       secret: app.config.SESSION_SECRET,
     })
-    .addHook('onRequest', openIdRequestHook)
-    .addHook('onRequest', authRequestHook)
-    .register(graphqlRoutes, { prefix: '/graphql' })
-    .register(openIdPlugin)
-    .register(openIdRoutes, { prefix: '/openid' });
+    .register(openIdPlugin, { prefix: '/openid' })
+    .register(authPlugin)
+    .register(graphqlRoutes, { prefix: '/graphql' });
 
   app.get('/', async (request, reply) => {
     reply.status(HTTP_NO_CONTENT);
