@@ -101,7 +101,10 @@ export default [
       return res(
         ctx.data({
           deleteCompetency: {
-            id: 'cuid',
+            __typename: 'MutationDeleteCompetencySuccess',
+            data: {
+              id: 'cuid',
+            },
           },
         }),
       );
@@ -156,8 +159,10 @@ export default [
         ctx.data({
           __typename: 'Query',
           competency: {
-            __typename: 'Competency',
-            title: 'Title defined in handlers.ts',
+            __typename: 'QueryCompetencySuccess',
+            data: {
+              title: 'Title defined in handlers.ts',
+            },
           },
         }),
       );
@@ -169,23 +174,27 @@ export default [
     (req, res, ctx) => {
       return res(
         ctx.data({
+          __typename: 'Query',
           competency: {
-            id: 'cuid',
-            title: 'custom title',
-            parent: {
-              title: 'custom title',
-              id: 'cuid',
-            },
-            competencyFramework: {
+            __typename: 'QueryCompetencySuccess',
+            data: {
               id: 'cuid',
               title: 'custom title',
-            },
-            subCompetencies: [
-              {
+              parent: {
+                title: 'custom title',
+                id: 'cuid',
+              },
+              competencyFramework: {
                 id: 'cuid',
                 title: 'custom title',
               },
-            ],
+              subCompetencies: [
+                {
+                  id: 'cuid',
+                  title: 'custom title',
+                },
+              ],
+            },
           },
         }),
       );

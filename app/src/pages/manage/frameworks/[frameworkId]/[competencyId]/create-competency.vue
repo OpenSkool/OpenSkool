@@ -20,7 +20,12 @@ const props = defineProps<{
 gql`
   query getCreateCompetencyParent($id: ID!) {
     competency(id: $id) {
-      title
+      ... on QueryCompetencySuccess {
+        data {
+          title
+        }
+      }
+      ...BaseErrorFields
     }
   }
 `;
@@ -46,12 +51,9 @@ const competency = useResult(result);
     <template v-else-if="loading">
       <div>Loading</div>
     </template>
-    <template v-else-if="competency == null">
-      <div>Not Found</div>
-    </template>
-    <template v-else>
+    <template v-else-if="competency?.__typename == 'QueryCompetencySuccess'">
       <ui-backbutton :to="`/manage/frameworks/${frameworkId}/${competencyId}`">
-        {{ competency.title }}
+        {{ competency.data.title }}
       </ui-backbutton>
       <h2 class="text-xl mb-3">
         {{ t('competencies.route.id.create.heading') }}
@@ -60,6 +62,9 @@ const competency = useResult(result);
         :competency-id="competencyId"
         :framework-id="frameworkId"
       ></create-nested-competency>
+    </template>
+    <template v-else>
+      <div>Not Found</div>
     </template>
   </template>
   <template v-else>

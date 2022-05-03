@@ -31,9 +31,6 @@ builder.objectType(Competency, {
           parent.competencyFrameworkId,
           ctx.domain,
         );
-        if (framework == null) {
-          throw new Error('expected framework to be found');
-        }
         return framework;
       },
     }),
@@ -48,11 +45,6 @@ builder.objectType(Competency, {
           parent.parentCompetencyId,
           ctx.domain,
         );
-        if (parentCompetency == null) {
-          throw new Error(
-            'expected Competency type to have a parent competency',
-          );
-        }
         return parentCompetency;
       },
     }),
@@ -104,6 +96,9 @@ builder.queryFields((t) => ({
     args: { id: t.arg.id() },
     nullable: true,
     type: Competency,
+    errors: {
+      types: [AppNotFoundError],
+    },
     async resolve(root, { id }, ctx) {
       return CompetencyService.findCompetencyById(id, ctx.domain);
     },
@@ -112,6 +107,9 @@ builder.queryFields((t) => ({
     args: { id: t.arg.id() },
     nullable: true,
     type: CompetencyFramework,
+    errors: {
+      types: [AppNotFoundError],
+    },
     async resolve(root, { id }, ctx) {
       return CompetencyService.findFrameworkById(id, ctx.domain);
     },
@@ -165,7 +163,7 @@ builder.mutationField('createNestedCompetency', (t) =>
       data: t.arg({ type: CreateNestedCompetencyInput }),
     },
     errors: {
-      types: [AppInputError, AppUnauthorizedError],
+      types: [AppInputError, AppNotFoundError, AppUnauthorizedError],
     },
     async resolve(root, { data }, ctx) {
       if (ctx.domain.userId == null) {
@@ -193,7 +191,7 @@ builder.mutationField('createRootCompetency', (t) =>
       data: t.arg({ type: CreateRootCompetencyInput }),
     },
     errors: {
-      types: [AppInputError, AppUnauthorizedError],
+      types: [AppInputError, AppNotFoundError, AppUnauthorizedError],
     },
     async resolve(root, { data }, ctx) {
       if (ctx.domain.userId == null) {
@@ -210,6 +208,9 @@ builder.mutationField('deleteCompetency', (t) =>
     nullable: true,
     args: {
       id: t.arg.id(),
+    },
+    errors: {
+      types: [AppNotFoundError],
     },
     async resolve(root, { id }, ctx) {
       return CompetencyService.deleteCompetency(id, ctx.domain);
@@ -231,7 +232,7 @@ builder.mutationField('renameCompetency', (t) =>
       data: t.arg({ type: RenameCompetencyInput }),
     },
     errors: {
-      types: [AppInputError, AppUnauthorizedError],
+      types: [AppInputError, AppNotFoundError, AppUnauthorizedError],
     },
     async resolve(root, { id, data }, ctx) {
       if (ctx.domain.userId == null) {

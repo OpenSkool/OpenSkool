@@ -27,7 +27,13 @@ const props = defineProps<{
 gql`
   query getEditCompetency($id: ID!) {
     competency(id: $id) {
-      title
+      __typename
+      ... on QueryCompetencySuccess {
+        data {
+          title
+        }
+      }
+      ...BaseErrorFields
     }
   }
 `;
@@ -46,6 +52,7 @@ const competency = useResult(result);
 gql`
   mutation renameCompetency($id: ID!, $data: RenameCompetencyInput!) {
     renameCompetency(id: $id, data: $data) {
+      __typename
       ... on MutationRenameCompetencySuccess {
         data {
           id
@@ -63,8 +70,8 @@ const formErrors = ref<string[]>([]);
 const formValues = ref<{ title: string }>();
 
 watch(result, () => {
-  if (competency.value != null) {
-    formValues.value = { title: competency.value.title };
+  if (competency.value?.__typename === 'QueryCompetencySuccess') {
+    formValues.value = { title: competency.value.data.title };
   }
 });
 
@@ -119,17 +126,13 @@ async function handleFormSubmit(): Promise<void> {
     <template v-else-if="loading">
       <div>Loading</div>
     </template>
-    <template v-else-if="competency == null">
-      <div>Not Found</div>
-    </template>
-    <template v-else>
+    <template v-else-if="competency?.__typename == 'QueryCompetencySuccess'">
       <ui-backbutton :to="`/manage/frameworks/${frameworkId}/${competencyId}`">
-        {{ competency.title }}
+        {{ competency.data.title }}
       </ui-backbutton>
       <h2 class="text-xl mb-3">
         {{ t('competencies.route.id.edit.heading') }}
       </h2>
-
       <FormKit
         v-if="formValues != null"
         v-model="formValues"
@@ -146,6 +149,9 @@ async function handleFormSubmit(): Promise<void> {
           validation="required"
         />
       </FormKit>
+    </template>
+    <template v-else>
+      <div>Not Found</div>
     </template>
   </template>
   <template v-else>

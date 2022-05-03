@@ -17,12 +17,17 @@ const props = defineProps<{
 gql`
   query getFrameworkRootCompetencies($id: ID!) {
     competencyFramework(id: $id) {
-      id
-      title
-      competencies {
-        id
-        title
+      ... on QueryCompetencyFrameworkSuccess {
+        data {
+          id
+          title
+          competencies {
+            id
+            title
+          }
+        }
       }
+      ...BaseErrorFields
     }
   }
 `;
@@ -43,28 +48,32 @@ const competencyFramework = useResult(result);
   <template v-else-if="loading">
     <div>Loading</div>
   </template>
-  <template v-else-if="competencyFramework == null">
-    <div>Not Found</div>
-  </template>
-  <template v-else>
+  <template
+    v-else-if="
+      competencyFramework?.__typename === 'QueryCompetencyFrameworkSuccess'
+    "
+  >
     <ui-backbutton to="/manage/frameworks">
       {{ t('frameworks.route.id.index.action.backButton') }}
     </ui-backbutton>
     <h2 class="text-xl mb-3 flex items-center gap-1">
-      {{ competencyFramework.title }}
+      {{ competencyFramework.data.title }}
     </h2>
     <h3 class="text-xl">{{ t('frameworks.route.id.index.heading') }}</h3>
     <router-link
       class="btn btn-primary my-5"
-      :to="`/manage/frameworks/${competencyFramework.id}/create-competency`"
+      :to="`/manage/frameworks/${competencyFramework.data.id}/create-competency`"
     >
       {{ t('frameworks.route.id.index.action.new') }}
     </router-link>
     <competency-list
-      v-if="competencyFramework.competencies.length > 0"
+      v-if="competencyFramework.data.competencies.length > 0"
       :framework-id="frameworkId"
-      :competencies="competencyFramework.competencies"
+      :competencies="competencyFramework.data.competencies"
       :refetch-queries="['getFrameworkRootCompetencies']"
     ></competency-list>
+  </template>
+  <template v-else>
+    <div>Not Found</div>
   </template>
 </template>
