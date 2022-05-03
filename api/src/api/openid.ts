@@ -129,6 +129,24 @@ export const openIdRoutes: FastifyPluginAsync = async (app) => {
 
 export const openIdRequestHook: onRequestAsyncHookHandler = async (request) => {
   request.session.openId ??= {};
+  if (request.session.openId.tokenSet == null) {
+    return;
+  }
+  const tokenSet = new TokenSet(request.session.openId.tokenSet);
+  if (tokenSet.expired()) {
+    try {
+      request.session.openId.tokenSet =
+        await request.server.openId.client.refresh(new TokenSet(tokenSet));
+    } catch (error) {
+      if (
+        !(error instanceof Error) ||
+        !error.message.startsWith('invalid_grant')
+      ) {
+        request.log.warn(error);
+      }
+      request.session.openId.tokenSet = undefined;
+    }
+  }
 };
 
 const zIdToken = z.object({
