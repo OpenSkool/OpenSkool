@@ -2,7 +2,7 @@
 import { useI18n } from 'vue-i18n';
 
 import { useAuthStore } from '~/auth';
-import { GetCompetencyFrameworkQuery } from '~/codegen/graphql';
+import { GetCompetencyFrameworkDocument } from '~/codegen/graphql';
 import { useI18nStore } from '~/i18n';
 
 const authStore = useAuthStore();
@@ -16,15 +16,21 @@ i18nStore.loadGlob(import.meta.glob('~/locales/competencies.*.yaml'));
 
 const { t } = useI18n();
 
-const { error, loading, result } = useQuery<GetCompetencyFrameworkQuery>(
-  gql`
-    query getCompetencyFramework($id: ID!) {
-      competencyFramework(id: $id) {
-        id
-        title
+gql`
+  query getCompetencyFramework($id: ID!) {
+    competencyFramework(id: $id) {
+      ... on QueryCompetencyFrameworkSuccess {
+        data {
+          id
+          title
+        }
       }
+      ...BaseErrorFields
     }
-  `,
+  }
+`;
+const { error, loading, result } = useQuery(
+  GetCompetencyFrameworkDocument,
   () => ({ id: props.frameworkId }),
   { fetchPolicy: 'cache-first' },
 );
@@ -39,12 +45,13 @@ const competencyFramework = useResult(result);
     <template v-else-if="loading">
       <div>Loading</div>
     </template>
-    <template v-else-if="competencyFramework == null">
-      <div>Not Found</div>
-    </template>
-    <template v-else>
-      <ui-backbutton :to="`/manage/frameworks/${competencyFramework?.id}`">
-        {{ competencyFramework.title }}
+    <template
+      v-else-if="
+        competencyFramework?.__typename == 'QueryCompetencyFrameworkSuccess'
+      "
+    >
+      <ui-backbutton :to="`/manage/frameworks/${competencyFramework.data.id}`">
+        {{ competencyFramework.data.title }}
       </ui-backbutton>
       <h2 class="text-xl mb-3">
         {{ t('competencies.route.create.heading') }}
@@ -52,6 +59,9 @@ const competencyFramework = useResult(result);
       <create-root-competency
         :framework-id="props.frameworkId"
       ></create-root-competency>
+    </template>
+    <template v-else>
+      <div>Not Found</div>
     </template>
   </template>
   <template v-else>

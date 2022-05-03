@@ -90,7 +90,7 @@ type Mutation {
   createRootCompetency(
     data: CreateRootCompetencyInput!
   ): MutationCreateRootCompetencyResult!
-  deleteCompetency(id: ID!): Competency
+  deleteCompetency(id: ID!): MutationDeleteCompetencyResult
   deleteEducation(id: ID!): MutationDeleteEducationResult!
   renameCompetency(
     data: RenameCompetencyInput!
@@ -124,6 +124,7 @@ type MutationCreateEducationSuccess {
 union MutationCreateNestedCompetencyResult =
     InputError
   | MutationCreateNestedCompetencySuccess
+  | NotFoundError
   | UnauthorizedError
 
 type MutationCreateNestedCompetencySuccess {
@@ -133,9 +134,18 @@ type MutationCreateNestedCompetencySuccess {
 union MutationCreateRootCompetencyResult =
     InputError
   | MutationCreateRootCompetencySuccess
+  | NotFoundError
   | UnauthorizedError
 
 type MutationCreateRootCompetencySuccess {
+  data: Competency!
+}
+
+union MutationDeleteCompetencyResult =
+    MutationDeleteCompetencySuccess
+  | NotFoundError
+
+type MutationDeleteCompetencySuccess {
   data: Competency!
 }
 
@@ -148,6 +158,7 @@ type MutationDeleteEducationSuccess {
 union MutationRenameCompetencyResult =
     InputError
   | MutationRenameCompetencySuccess
+  | NotFoundError
   | UnauthorizedError
 
 type MutationRenameCompetencySuccess {
@@ -204,8 +215,22 @@ type Query {
   allEducations: [Education!]!
   allPeople: [Person!]!
   allRootCompetencies: [Competency!]!
-  competency(id: ID!): Competency
-  competencyFramework(id: ID!): CompetencyFramework
+  competency(id: ID!): QueryCompetencyResult
+  competencyFramework(id: ID!): QueryCompetencyFrameworkResult
+}
+
+union QueryCompetencyFrameworkResult =
+    NotFoundError
+  | QueryCompetencyFrameworkSuccess
+
+type QueryCompetencyFrameworkSuccess {
+  data: CompetencyFramework!
+}
+
+union QueryCompetencyResult = NotFoundError | QueryCompetencySuccess
+
+type QueryCompetencySuccess {
+  data: Competency!
 }
 
 input RenameCompetencyInput {

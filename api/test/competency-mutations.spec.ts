@@ -199,6 +199,38 @@ describe('createCompetency', () => {
     });
   });
 
+  test('error on framework not found', async () => {
+    const response = await execute<{ createRootCompetency: unknown }>(
+      gql`
+        mutation ($frameworkId: ID!, $title: String!) {
+          createRootCompetency(
+            data: { frameworkId: $frameworkId, title: $title }
+          ) {
+            __typename
+            ... on UserError {
+              code
+              path
+            }
+          }
+        }
+      `,
+      {
+        variables: {
+          frameworkId: 'non-existing-framework-id',
+          title: 'Test title',
+        },
+      },
+    );
+    expect(response).toHaveProperty(
+      'data.createRootCompetency.__typename',
+      'NotFoundError',
+    );
+    expect(response.data.createRootCompetency).toMatchObject({
+      code: 'AE404',
+      path: ['frameworkId'],
+    });
+  });
+
   test('error on duplicate title with same locale', async () => {
     const person = await createUserFixture();
     await createCompetencyFixture({
@@ -374,6 +406,43 @@ describe('createNestedCompetency', () => {
     expect(response).toHaveProperty('data.createNestedCompetency.data');
   });
 
+  test('error on parent not found', async () => {
+    const parent = await createCompetencyFixture({
+      title: 'Hello Parent!',
+    });
+    await createCompetencyFixture({
+      title: 'Hello Child!',
+      parentId: parent.id,
+    });
+    const response = await execute<{ createNestedCompetency: unknown }>(
+      gql`
+        mutation ($parentId: ID!, $title: String!) {
+          createNestedCompetency(data: { parentId: $parentId, title: $title }) {
+            __typename
+            ... on UserError {
+              code
+              path
+            }
+          }
+        }
+      `,
+      {
+        variables: {
+          parentId: 'non-existing-parent-id',
+          title: 'Hello Child!',
+        },
+      },
+    );
+    expect(response).toHaveProperty(
+      'data.createNestedCompetency.__typename',
+      'NotFoundError',
+    );
+    expect(response.data.createNestedCompetency).toMatchObject({
+      code: 'AE404',
+      path: ['parentId'],
+    });
+  });
+
   test('should create nested competency', async () => {
     const user = await createUserFixture();
     const parent = await createCompetencyFixture({ title: 'Parent Title' });
@@ -445,6 +514,38 @@ describe('createRootCompetency', () => {
     });
   });
 
+  test('error on framework not found', async () => {
+    const response = await execute<{ createRootCompetency: unknown }>(
+      gql`
+        mutation ($frameworkId: ID!, $title: String!) {
+          createRootCompetency(
+            data: { frameworkId: $frameworkId, title: $title }
+          ) {
+            __typename
+            ... on UserError {
+              code
+              path
+            }
+          }
+        }
+      `,
+      {
+        variables: {
+          frameworkId: 'non-existing-framework-id',
+          title: 'Test title',
+        },
+      },
+    );
+    expect(response).toHaveProperty(
+      'data.createRootCompetency.__typename',
+      'NotFoundError',
+    );
+    expect(response.data.createRootCompetency).toMatchObject({
+      code: 'AE404',
+      path: ['frameworkId'],
+    });
+  });
+
   test('should create root competency', async () => {
     const user = await createUserFixture();
     const response = await execute<{ createRootCompetency: unknown }>(
@@ -477,6 +578,40 @@ describe('createRootCompetency', () => {
 });
 
 describe('deleteCompetency', () => {
+  test('error on competency not found', async () => {
+    const user = await createUserFixture();
+    const response = await execute<
+      { deleteCompetency: { id: string } },
+      { id: string }
+    >(
+      gql`
+        mutation ($id: ID!) {
+          deleteCompetency(id: $id) {
+            __typename
+            ... on MutationDeleteCompetencySuccess {
+              data {
+                id
+              }
+            }
+            ... on UserError {
+              code
+              message
+            }
+          }
+        }
+      `,
+      {
+        spec: { userId: user.id },
+        variables: { id: 'non-existing-id' },
+      },
+    );
+    expect(response).toHaveProperty(
+      'data.deleteCompetency.__typename',
+      'NotFoundError',
+    );
+    expect(response).toHaveProperty('data.deleteCompetency.code', 'AE404');
+  });
+
   test('should delete competency', async () => {
     const user = await createUserFixture();
     const competency = await createCompetencyFixture();
@@ -487,7 +622,11 @@ describe('deleteCompetency', () => {
       gql`
         mutation ($id: ID!) {
           deleteCompetency(id: $id) {
-            id
+            ... on MutationDeleteCompetencySuccess {
+              data {
+                id
+              }
+            }
           }
         }
       `,
@@ -496,7 +635,10 @@ describe('deleteCompetency', () => {
         variables: { id: competency.id },
       },
     );
-    expect(response).toHaveProperty('data.deleteCompetency.id', competency.id);
+    expect(response).toHaveProperty(
+      'data.deleteCompetency.data.id',
+      competency.id,
+    );
     expect(
       await prisma.competency.findUnique({ where: { id: competency.id } }),
     ).toBe(null);
@@ -511,7 +653,11 @@ describe('deleteCompetency', () => {
       gql`
         mutation ($id: ID!) {
           deleteCompetency(id: $id) {
-            id
+            ... on MutationDeleteCompetencySuccess {
+              data {
+                id
+              }
+            }
           }
         }
       `,
@@ -524,6 +670,35 @@ describe('deleteCompetency', () => {
 });
 
 describe('renameCompetency', () => {
+  test('error on competency not found', async () => {
+    const user = await createUserFixture();
+    const response = await execute<{ renameCompetency: unknown }>(
+      gql`
+        mutation ($id: ID!, $title: String!) {
+          renameCompetency(id: $id, data: { title: $title }) {
+            __typename
+            ... on UserError {
+              code
+              path
+            }
+          }
+        }
+      `,
+      {
+        spec: { userId: user.id },
+        variables: {
+          id: 'non-existing-id',
+          title: 'Test title',
+        },
+      },
+    );
+    expect(response).toHaveProperty(
+      'data.renameCompetency.__typename',
+      'NotFoundError',
+    );
+    expect(response.data.renameCompetency).toMatchObject({ code: 'AE404' });
+  });
+
   test('error on invalid title', async () => {
     const user = await createUserFixture();
 

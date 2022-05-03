@@ -76,20 +76,19 @@ export async function createNestedCompetency(
 ): Promise<CompetencyModel> {
   const languageCode = mapLocaleToLanguageCode(context.locale);
 
-  const title = validateSingleLineString(data.title);
-  await assertUniqueTitle(title, { parentId: data.parentId }, context);
-
   const parentCompetency = await prisma.competency.findUnique({
     where: { id: data.parentId },
     select: { id: true, competencyFrameworkId: true },
   });
+
   if (parentCompetency == null) {
-    throw new AppInputError(
-      SchemaInputErrorCode.VALUE_NOT_VALID,
-      'parent competency not found',
-      { path: ['parentId'] },
-    );
+    throw new AppNotFoundError('parent competency not found', {
+      path: ['parentId'],
+    });
   }
+
+  const title = validateSingleLineString(data.title);
+  await assertUniqueTitle(title, { parentId: data.parentId }, context);
 
   try {
     const competency = await prisma.competency.create({
@@ -124,11 +123,9 @@ export async function createRootCompetency(
     select: { id: true },
   });
   if (framework == null) {
-    throw new AppInputError(
-      SchemaInputErrorCode.VALUE_NOT_VALID,
-      'framework not found',
-      { path: ['frameworkId'] },
-    );
+    throw new AppNotFoundError('framework not found', {
+      path: ['frameworkId'],
+    });
   }
 
   try {
@@ -231,7 +228,7 @@ export async function getAllFrameworks(
 export async function findFrameworkById(
   id: string,
   context: DomainContext,
-): Promise<CompetencyFrameworkModel | null> {
+): Promise<CompetencyFrameworkModel> {
   const languageCode = mapLocaleToLanguageCode(context.locale);
 
   try {
@@ -239,9 +236,10 @@ export async function findFrameworkById(
       include: { translations: true },
       where: { id },
     });
-    return competencyFramework == null
-      ? null
-      : mapCompetencyFrameworkToModel(competencyFramework, languageCode);
+    if (competencyFramework == null) {
+      throw new AppNotFoundError();
+    }
+    return mapCompetencyFrameworkToModel(competencyFramework, languageCode);
   } catch (error) {
     handleServiceError(error);
   }
@@ -272,7 +270,7 @@ export async function getFrameworkCompetencies(
 export async function findCompetencyById(
   id: string,
   context: DomainContext,
-): Promise<CompetencyModel | null> {
+): Promise<CompetencyModel> {
   const languageCode = mapLocaleToLanguageCode(context.locale);
 
   try {
@@ -280,9 +278,10 @@ export async function findCompetencyById(
       include: { translations: true },
       where: { id },
     });
-    return competency == null
-      ? null
-      : mapCompetencyToModel(competency, languageCode);
+    if (competency == null) {
+      throw new AppNotFoundError();
+    }
+    return mapCompetencyToModel(competency, languageCode);
   } catch (error) {
     handleServiceError(error);
   }

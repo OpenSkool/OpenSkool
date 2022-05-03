@@ -2,8 +2,7 @@
 import { useI18n } from 'vue-i18n';
 
 import {
-  DeleteCompetencyMutation,
-  DeleteCompetencyMutationVariables,
+  DeleteCompetencyDocument,
   GetSubCompetenciesDocument,
 } from '~/codegen/graphql';
 import { useI18nStore } from '~/i18n';
@@ -26,20 +25,26 @@ const deleteErrorMessage = ref();
 gql`
   query getSubCompetencies($id: ID!) {
     competency(id: $id) {
-      id
-      title
-      competencyFramework {
-        id
-        title
+      __typename
+      ... on QueryCompetencySuccess {
+        data {
+          id
+          title
+          competencyFramework {
+            id
+            title
+          }
+          parent {
+            id
+            title
+          }
+          subCompetencies {
+            id
+            title
+          }
+        }
       }
-      parent {
-        id
-        title
-      }
-      subCompetencies {
-        id
-        title
-      }
+      ...BaseErrorFields
     }
   }
 `;
@@ -51,27 +56,33 @@ const { error, loading, result } = useQuery(
 );
 const competency = useResult(result);
 
-const { mutate: deleteCompetency } = useMutation<
-  DeleteCompetencyMutation,
-  DeleteCompetencyMutationVariables
->(gql`
+gql`
   mutation deleteCompetency($id: ID!) {
     deleteCompetency(id: $id) {
-      id
+      __typename
+      ... on MutationDeleteCompetencySuccess {
+        data {
+          id
+        }
+      }
+      ...BaseErrorFields
     }
   }
-`);
+`;
+
+const { mutate: deleteCompetency } = useMutation(DeleteCompetencyDocument);
 
 const parent = computed(() => {
-  if (competency.value?.parent != null) {
+  if (competency.value?.__typename === 'QueryCompetencySuccess') {
+    if (competency.value.data.parent != null) {
+      const { id, title } = competency.value.data.parent;
+      return {
+        title,
+        url: `/manage/frameworks/${props.frameworkId}/${id}`,
+      };
+    }
     return {
-      title: competency.value.parent.title,
-      url: `/manage/frameworks/${props.frameworkId}/${competency.value.parent.id}`,
-    };
-  }
-  if (competency.value?.competencyFramework != null) {
-    return {
-      title: competency.value.competencyFramework.title,
+      title: competency.value.data.competencyFramework.title,
       url: `/manage/frameworks/${props.frameworkId}/`,
     };
   }
@@ -110,15 +121,12 @@ async function deleteCompetencyHandler(): Promise<void> {
   <template v-else-if="loading">
     <div>Loading</div>
   </template>
-  <template v-else-if="competency == null">
-    <div>Not Found</div>
-  </template>
-  <template v-else>
+  <template v-else-if="competency?.__typename == 'QueryCompetencySuccess'">
     <ui-backbutton :to="`${parent.url}`">
       {{ parent.title }}
     </ui-backbutton>
     <h2 class="text-xl mb-3 flex items-center gap-1">
-      {{ competency.title }}
+      {{ competency.data.title }}
       <router-link
         :to="`/manage/frameworks/${frameworkId}/${competencyId}/edit`"
       >
@@ -142,7 +150,7 @@ async function deleteCompetencyHandler(): Promise<void> {
       <p>
         {{ t('competencies.route.id.index.confirmDeleteModal.message') }}
       </p>
-      <p class="text-gray-500">{{ competency.title }}</p>
+      <p class="text-gray-500">{{ competency.data.title }}</p>
       <p v-if="deleteErrorMessage" class="text-red-600">
         {{ deleteErrorMessage }}
       </p>
@@ -173,10 +181,13 @@ async function deleteCompetencyHandler(): Promise<void> {
       {{ t('competencies.route.id.index.action.new') }}
     </router-link>
     <competency-list
-      v-if="competency.subCompetencies"
+      v-if="competency.data.subCompetencies"
       :framework-id="frameworkId"
-      :competencies="competency.subCompetencies"
+      :competencies="competency.data.subCompetencies"
       :refetch-queries="['getSubCompetencies']"
     ></competency-list>
+  </template>
+  <template v-else>
+    <div>Not Found</div>
   </template>
 </template>
