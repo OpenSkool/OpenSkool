@@ -1,6 +1,6 @@
 import assert from 'assert';
 
-import { onRequestAsyncHookHandler } from 'fastify';
+import plugin from 'fastify-plugin';
 
 import { prisma } from '../prisma';
 import { decodeIdToken } from './openid';
@@ -20,24 +20,29 @@ declare module 'fastify' {
   }
 }
 
-export const authRequestHook: onRequestAsyncHookHandler = async (request) => {
-  request.session.auth ??= { user: null };
-  const { tokenSet } = request.session.openId;
-  if (tokenSet == null) {
-    request.session.auth.user = null;
-    return;
-  }
-  const idToken = tokenSet.id_token;
-  assert(idToken, 'id token is not defined');
-  const jwt = decodeIdToken(idToken);
-  const existingUser = await prisma.user.findUnique({
-    select: { id: true },
-    where: { id: jwt.sub },
-  });
-  if (existingUser == null) {
-    await prisma.user.create({
-      data: { id: jwt.sub, name: jwt.name },
+export const authPlugin = plugin(async (app) => {
+  app.addHook('onRequest', async (request) => {
+    request.session.auth ??= { user: null };
+    const { tokenSet } = request.session.openId;
+    if (tokenSet == null) {
+      request.session.auth.user = null;
+      return;
+    }
+    const idToken = tokenSet.id_token;
+    assert(idToken, 'id token is not defined');
+    const jwt = decodeIdToken(idToken);
+    const existingUser = await prisma.user.findUnique({
+      select: { id: true },
+      where: { id: jwt.sub },
     });
-  }
-  request.session.auth.user = { id: jwt.sub, name: jwt.name };
-};
+    if (existingUser == null) {
+      await prisma.user.create({
+        data: { id: jwt.sub, name: jwt.name },
+      });
+    }
+    request.session.auth.user = {
+      id: jwt.sub,
+      name: jwt.name,
+    };
+  });
+});
