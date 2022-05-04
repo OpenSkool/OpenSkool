@@ -236,6 +236,7 @@ describe('createCompetency', () => {
     await createCompetencyFixture({
       title: 'Hello Root!',
       language: Language.EN,
+      frameworkId: framework.id,
     });
     const response = await execute<{ createRootCompetency: unknown }>(
       gql`
@@ -244,12 +245,7 @@ describe('createCompetency', () => {
             data: { frameworkId: $frameworkId, title: $title }
           ) {
             __typename
-            ... on MutationCreateRootCompetencySuccess {
-              data {
-                id
-              }
-            }
-            ... on InputError {
+            ... on UserError {
               code
               path
             }
@@ -482,7 +478,10 @@ describe('createRootCompetency', () => {
   });
 
   test('error on duplicate title at root', async () => {
-    await createCompetencyFixture({ title: 'Hello Root!' });
+    await createCompetencyFixture({
+      title: 'Hello Root!',
+      frameworkId: framework.id,
+    });
     const response = await execute<{ createRootCompetency: unknown }>(
       gql`
         mutation ($frameworkId: ID!, $title: String!) {

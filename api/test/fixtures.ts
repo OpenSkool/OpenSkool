@@ -28,10 +28,12 @@ export async function createCompetencyFrameworkFixture({
 export async function createCompetencyFixture({
   language = Language.EN,
   parentId,
+  frameworkId,
   title = 'Hello World!',
 }: {
   language?: Language;
   parentId?: string;
+  frameworkId?: string;
   title?: string;
 } = {}): Promise<Competency> {
   const user = await createUserFixture();
@@ -41,10 +43,13 @@ export async function createCompetencyFixture({
       translations: { create: { languageCode: language, title: 'Framework' } },
     },
   });
+  const competencyFrameworkId =
+    frameworkId == null ? framework.id : frameworkId;
+
   return prisma.competency.create({
     data: {
       createdById: user.id,
-      competencyFrameworkId: framework.id,
+      competencyFrameworkId,
       parentCompetencyId: parentId,
       translations: { create: { languageCode: language, title } },
       updatedById: user.id,

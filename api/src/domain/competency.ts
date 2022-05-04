@@ -116,7 +116,11 @@ export async function createRootCompetency(
   const languageCode = mapLocaleToLanguageCode(context.locale);
 
   const title = validateSingleLineString(data.title);
-  await assertUniqueTitle(title, { parentId: undefined }, context);
+  await assertUniqueTitle(
+    title,
+    { parentId: undefined, frameworkId: data.frameworkId },
+    context,
+  );
 
   const framework = await prisma.competencyFramework.findUnique({
     where: { id: data.frameworkId },
@@ -443,7 +447,15 @@ async function assertUniqueFrameworkTitle({
 
 async function assertUniqueTitle(
   title: string,
-  { id, parentId }: { id?: string; parentId: string | undefined },
+  {
+    id,
+    parentId,
+    frameworkId,
+  }: {
+    id?: string;
+    parentId: string | undefined;
+    frameworkId?: string;
+  },
   context: DomainContext,
 ): Promise<void> | never {
   const languageCode = mapLocaleToLanguageCode(context.locale);
@@ -461,6 +473,7 @@ async function assertUniqueTitle(
       where: {
         id: { not: id },
         parentCompetencyId: null,
+        competencyFrameworkId: frameworkId,
         translations: { some: { languageCode } },
       },
     });
