@@ -545,6 +545,45 @@ describe('createRootCompetency', () => {
     });
   });
 
+  test('should create root competency with the same name as a competency from another framework', async () => {
+    const user = await createUserFixture();
+    const newFramework = await createCompetencyFrameworkFixture({
+      title: 'Test framework 2',
+      language: Language.EN,
+    });
+    await createCompetencyFixture({
+      title: 'Hello Root!',
+      language: Language.EN,
+      frameworkId: newFramework.id,
+    });
+    const response = await execute<{ createRootCompetency: unknown }>(
+      gql`
+        mutation ($frameworkId: ID!, $title: String!) {
+          createRootCompetency(
+            data: { frameworkId: $frameworkId, title: $title }
+          ) {
+            ... on MutationCreateRootCompetencySuccess {
+              data {
+                __typename
+              }
+            }
+          }
+        }
+      `,
+      {
+        spec: { userId: user.id },
+        variables: {
+          frameworkId: framework.id,
+          title: 'Hello Root!',
+        },
+      },
+    );
+    expect(response.data).toHaveProperty(
+      'createRootCompetency.data.__typename',
+      'Competency',
+    );
+  });
+
   test('should create root competency', async () => {
     const user = await createUserFixture();
     const response = await execute<{ createRootCompetency: unknown }>(
