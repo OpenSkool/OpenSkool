@@ -19,6 +19,8 @@ export type Scalars = {
   Float: number;
   /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
   DateTime: any;
+  /** The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
+  JSON: any;
 };
 
 /** An accountable resource tracks when and by whom it was created and last updated. */
@@ -70,8 +72,19 @@ export type CreateRootCompetencyInput = {
 /** The currently authenticated user */
 export type CurrentUser = Node & {
   __typename?: 'CurrentUser';
+  abilityRules: Array<CurrentUserAbilityRule>;
   id: Scalars['ID'];
   name: Scalars['String'];
+};
+
+export type CurrentUserAbilityRule = {
+  __typename?: 'CurrentUserAbilityRule';
+  action: Array<Scalars['String']>;
+  conditions?: Maybe<Scalars['JSON']>;
+  fields?: Maybe<Array<Scalars['String']>>;
+  inverted: Scalars['Boolean'];
+  reason?: Maybe<Scalars['String']>;
+  subject: Array<Scalars['String']>;
 };
 
 export type Education = Accountable &
@@ -322,7 +335,20 @@ export type AuthCurrentUserQueryVariables = Exact<{ [key: string]: never }>;
 
 export type AuthCurrentUserQuery = {
   __typename?: 'Query';
-  currentUser?: { __typename?: 'CurrentUser'; id: string; name: string } | null;
+  currentUser?: {
+    __typename?: 'CurrentUser';
+    id: string;
+    name: string;
+    abilityRules: Array<{
+      __typename?: 'CurrentUserAbilityRule';
+      action: Array<string>;
+      conditions?: any | null;
+      fields?: Array<string> | null;
+      inverted: boolean;
+      reason?: string | null;
+      subject: Array<string>;
+    }>;
+  } | null;
 };
 
 export type CreateCompetencyFrameworkMutationVariables = Exact<{
@@ -715,6 +741,39 @@ export const AuthCurrentUserDocument = {
               kind: 'SelectionSet',
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'abilityRules' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'action' },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'conditions' },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'fields' },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'inverted' },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'reason' },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'subject' },
+                      },
+                    ],
+                  },
+                },
                 { kind: 'Field', name: { kind: 'Name', value: 'name' } },
               ],
             },

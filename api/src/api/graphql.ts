@@ -22,9 +22,9 @@ export const graphqlRoutes: FastifyPluginAsync = async (app) => {
         session: (context: Context) => {
           const {
             domain,
-            request: { session },
+            request: { auth },
           } = context;
-          return `${session.auth.user?.id ?? 'anonymous'}-${domain.locale}`;
+          return `${auth.user?.id ?? 'anonymous'}-${domain.locale}`;
         },
         ttl: ms('2s'),
       }),
@@ -44,7 +44,7 @@ export const graphqlRoutes: FastifyPluginAsync = async (app) => {
       const context: Context = {
         domain: {
           locale,
-          userId: request.session.auth.user?.id ?? null,
+          userId: request.auth.user?.id ?? null,
         },
         request,
         reply,

@@ -3,9 +3,11 @@ import assert from 'assert';
 import plugin from 'fastify-plugin';
 
 import { prisma } from '../prisma';
+import { AppAbility, buildAbility } from './ability';
 import { decodeIdToken } from './openid';
 
 interface Auth {
+  ability: AppAbility;
   user: AuthUser | null;
 }
 
@@ -15,17 +17,23 @@ export interface AuthUser {
 }
 
 declare module 'fastify' {
-  interface Session {
+  interface FastifyRequest {
     auth: Auth;
   }
 }
 
+const ANONYMOUS: Auth = {
+  ability: buildAbility(null),
+  user: null,
+};
+
 export const authPlugin = plugin(async (app) => {
+  app.decorateRequest('auth', ANONYMOUS);
+
   app.addHook('onRequest', async (request) => {
-    request.session.auth ??= { user: null };
     const { tokenSet } = request.session.openId;
     if (tokenSet == null) {
-      request.session.auth.user = null;
+      request.auth = ANONYMOUS;
       return;
     }
     const idToken = tokenSet.id_token;
@@ -40,9 +48,13 @@ export const authPlugin = plugin(async (app) => {
         data: { id: jwt.sub, name: jwt.name },
       });
     }
-    request.session.auth.user = {
+    const user: AuthUser = {
       id: jwt.sub,
       name: jwt.name,
+    };
+    request.auth = {
+      ability: buildAbility(user.id),
+      user,
     };
   });
 });
