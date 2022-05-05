@@ -1,6 +1,4 @@
-import type { User as UserModel } from '@prisma/client';
-
-import { UserService } from '../../domain';
+import { UserModel, UserService } from '../../domain';
 import builder from '../builder';
 import { Node } from './node';
 
