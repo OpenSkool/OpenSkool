@@ -1,7 +1,13 @@
 import { Static, Type } from '@sinclair/typebox';
 import { FastifyPluginAsync, onRequestAsyncHookHandler } from 'fastify';
 import plugin from 'fastify-plugin';
-import { decodeJwt, JWTPayload } from 'jose';
+import {
+  decodeJwt,
+  JWTPayload,
+  createRemoteJWKSet,
+  jwtVerify,
+  errors,
+} from 'jose';
 import { Client, Issuer, generators, TokenSet } from 'openid-client';
 import { z } from 'zod';
 
@@ -136,11 +142,20 @@ export const openIdRequestHook: onRequestAsyncHookHandler = async (request) => {
   if (tokenSet.expired()) {
     try {
       request.session.openId.tokenSet =
-        await request.server.openId.client.refresh(new TokenSet(tokenSet));
+        await request.server.openId.client.refresh(tokenSet);
+      if (request.session.openId.tokenSet.access_token != null) {
+        const JWKS = createRemoteJWKSet(
+          new URL(
+            `${request.server.config.AUTH_ISSUER}/protocol/openid-connect/certs`,
+          ),
+        );
+        await jwtVerify(request.session.openId.tokenSet.access_token, JWKS);
+      }
     } catch (error) {
       if (
-        !(error instanceof Error) ||
-        !error.message.startsWith('invalid_grant')
+        (!(error instanceof Error) ||
+          !error.message.startsWith('invalid_grant')) &&
+        !(error instanceof errors.JOSEError)
       ) {
         request.log.warn(error);
       }
