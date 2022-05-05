@@ -203,7 +203,8 @@ export type MutationCreateRootCompetencySuccess = {
 
 export type MutationDeleteCompetencyResult =
   | MutationDeleteCompetencySuccess
-  | NotFoundError;
+  | NotFoundError
+  | UnauthorizedError;
 
 export type MutationDeleteCompetencySuccess = {
   __typename?: 'MutationDeleteCompetencySuccess';
@@ -634,6 +635,12 @@ export type DeleteCompetencyMutation = {
       }
     | {
         __typename: 'NotFoundError';
+        code: string;
+        message: string;
+        path?: Array<string> | null;
+      }
+    | {
+        __typename: 'UnauthorizedError';
         code: string;
         message: string;
         path?: Array<string> | null;

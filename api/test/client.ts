@@ -1,6 +1,8 @@
 import { createServer } from '@graphql-yoga/common';
+import { FastifyReply, FastifyRequest } from 'fastify';
 import { DocumentNode, GraphQLError } from 'graphql';
 
+import { buildAbility } from '../src/api/ability';
 import schema from '../src/schema';
 import type { Context } from '../src/schema/context';
 import { createUserFixture } from './fixtures';
@@ -46,8 +48,12 @@ export async function execute<
         locale: spec?.locale ?? 'en',
         userId: userId ?? null,
       },
-      reply: {} as any,
-      request: {} as any,
+      reply: {} as unknown as FastifyReply,
+      request: {
+        auth: {
+          ability: buildAbility(userId),
+        },
+      } as unknown as FastifyRequest,
     },
     variables,
   });
