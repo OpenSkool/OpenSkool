@@ -50,6 +50,7 @@ export default defineConfig({
             'useSubscription',
           ],
           'vue-i18n': ['useI18n'],
+          '~/ability': ['useAppAbility'],
         },
       ],
       dts: 'src/vite-types/auto-imports.d.ts',

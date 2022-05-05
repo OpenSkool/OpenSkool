@@ -708,6 +708,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@casl/vue@npm:^2.1.2":
+  version: 2.1.2
+  resolution: "@casl/vue@npm:2.1.2"
+  peerDependencies:
+    "@casl/ability": ^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.1.0
+    vue: ^3.0.0
+  checksum: e88e3dace974c74c342775f8d48af79e23c842dad993fe732801a2b2f72d34a2a6b32c202d360fe1e547c8e37f0368509d2a9142e97748e25b0ebc4a55852ee9
+  languageName: node
+  linkType: hard
+
 "@endemolshinegroup/cosmiconfig-typescript-loader@npm:3.0.2":
   version: 3.0.2
   resolution: "@endemolshinegroup/cosmiconfig-typescript-loader@npm:3.0.2"
@@ -1900,6 +1910,8 @@ __metadata:
   resolution: "@os/app@workspace:app"
   dependencies:
     "@apollo/client": ^3.6.1
+    "@casl/ability": ^5.4.3
+    "@casl/vue": ^2.1.2
     "@formkit/core": ^1.0.0-beta.6
     "@formkit/i18n": ^1.0.0-beta.6
     "@formkit/vue": ^1.0.0-beta.6

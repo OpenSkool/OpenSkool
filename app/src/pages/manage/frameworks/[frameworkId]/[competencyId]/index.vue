@@ -9,6 +9,7 @@ const i18nStore = useI18nStore();
 i18nStore.loadGlob(import.meta.glob('~/locales/competencies.*.yaml'));
 
 const { t } = useI18n();
+const ability = useAppAbility();
 
 const router = useRouter();
 
@@ -126,6 +127,7 @@ async function deleteCompetencyHandler(): Promise<void> {
     <h2 class="text-xl mb-3 flex items-center gap-1">
       {{ competency.data.title }}
       <router-link
+        v-if="ability.can('update', 'Competency')"
         :to="`/manage/frameworks/${frameworkId}/${competencyId}/edit`"
       >
         <span class="sr-only">{{
@@ -135,6 +137,7 @@ async function deleteCompetencyHandler(): Promise<void> {
       </router-link>
     </h2>
     <button
+      v-if="ability.can('delete', 'Competency')"
       class="btn btn-primary mb-3"
       type="button"
       @click="isDeleteModalOpen = true"
@@ -173,6 +176,7 @@ async function deleteCompetencyHandler(): Promise<void> {
     </ui-dialog>
     <h3 class="text-xl">{{ t('competencies.route.id.index.heading') }}</h3>
     <router-link
+      v-if="ability.can('create', 'Competency')"
       class="btn btn-primary my-5"
       :to="`/manage/frameworks/${frameworkId}/${competencyId}/create-competency`"
     >
