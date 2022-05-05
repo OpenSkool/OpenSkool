@@ -24,14 +24,16 @@ gql`
 export const useAuthStore = defineStore('auth', () => {
   const currentUser = ref<CurrentUser | null>(null);
 
-  async function refresh(): Promise<void> {
+  async function refresh(): Promise<CurrentUser | null> {
     try {
       const currentUserQuery = await apolloClient.query({
         query: AuthCurrentUserDocument,
       });
       currentUser.value = currentUserQuery.data.currentUser ?? null;
+      return currentUser.value;
     } catch (error) {
       console.error(error);
+      return null;
     }
   }
 
@@ -42,7 +44,7 @@ export const useAuthStore = defineStore('auth', () => {
   };
 });
 
-export async function initAuth(): Promise<void> {
+export async function initAuth(): Promise<CurrentUser | null> {
   const authStore = useAuthStore(pinia);
-  await authStore.refresh();
+  return authStore.refresh();
 }

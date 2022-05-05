@@ -5,6 +5,7 @@ import { useI18nStore } from '~/i18n';
 const i18nStore = useI18nStore();
 i18nStore.loadGlob(import.meta.glob('~/locales/frameworks.*.yaml'));
 
+const ability = useAppAbility();
 const { t } = useI18n();
 
 gql`
@@ -24,6 +25,7 @@ const frameworks = useResult(result);
 <template>
   <h2 class="text-xl mb-3">{{ t('frameworks.route.index.heading') }}</h2>
   <router-link
+    v-if="ability.can('create', 'CompetencyFramework')"
     class="btn btn-primary my-5"
     to="/manage/frameworks/create-framework"
   >
