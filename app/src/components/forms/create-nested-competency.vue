@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { FormKitNode } from '@formkit/core';
-import { useI18n } from 'vue-i18n';
 
 import { CreateNestedCompetencyDocument } from '~/codegen/graphql';
 

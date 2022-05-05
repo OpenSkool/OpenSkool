@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { useI18n } from 'vue-i18n';
-
 import { useI18nStore } from '~/i18n';
 
 const i18nStore = useI18nStore();

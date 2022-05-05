@@ -46,6 +46,7 @@ declare global {
   const useAttrs: typeof import('vue')['useAttrs']
   const useCssModule: typeof import('vue')['useCssModule']
   const useCssVars: typeof import('vue')['useCssVars']
+  const useI18n: typeof import('vue-i18n')['useI18n']
   const useMutation: typeof import('@vue/apollo-composable')['useMutation']
   const useQuery: typeof import('@vue/apollo-composable')['useQuery']
   const useResult: typeof import('@vue/apollo-composable')['useResult']

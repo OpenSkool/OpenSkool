@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { useI18n } from 'vue-i18n';
-
 import { GetFrameworkRootCompetenciesDocument } from '~/codegen/graphql';
 import CompetencyList from '~/components/list/competency-list.vue';
 import { useI18nStore } from '~/i18n';

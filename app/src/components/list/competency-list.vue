@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { useI18n } from 'vue-i18n';
-
 import { SwapCompetenciesDocument } from '~/codegen/graphql';
 import { useI18nStore } from '~/i18n';
 
