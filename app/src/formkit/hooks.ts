@@ -1,5 +1,4 @@
 import { FormKitVuePlugin } from '@formkit/vue';
-import { useI18n } from 'vue-i18n';
 
 import { assert } from '~/utils';
 

@@ -49,6 +49,7 @@ export default defineConfig({
             'useResult',
             'useSubscription',
           ],
+          'vue-i18n': ['useI18n'],
         },
       ],
       dts: 'src/vite-types/auto-imports.d.ts',
