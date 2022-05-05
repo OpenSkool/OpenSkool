@@ -1,8 +1,8 @@
-import { CompetencyService } from '../../domain';
-import type {
+import {
   CompetencyFrameworkModel,
   CompetencyModel,
-} from '../../domain/competency';
+  CompetencyService,
+} from '../../domain';
 import {
   AppInputError,
   AppNotFoundError,
