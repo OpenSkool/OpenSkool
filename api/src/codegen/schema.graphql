@@ -55,8 +55,18 @@ input CreateRootCompetencyInput {
 The currently authenticated user
 """
 type CurrentUser implements Node {
+  abilityRules: [CurrentUserAbilityRule!]!
   id: ID!
   name: String!
+}
+
+type CurrentUserAbilityRule {
+  action: [String!]!
+  conditions: JSON
+  fields: [String!]
+  inverted: Boolean!
+  reason: String
+  subject: [String!]!
 }
 
 """
@@ -86,6 +96,11 @@ type InputError implements UserError {
   message: String!
   path: [String!]
 }
+
+"""
+The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
 
 type Mutation {
   createCompetencyFramework(

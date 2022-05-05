@@ -8,6 +8,14 @@ gql`
   query authCurrentUser {
     currentUser {
       id
+      abilityRules {
+        action
+        conditions
+        fields
+        inverted
+        reason
+        subject
+      }
       name
     }
   }
