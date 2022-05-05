@@ -138,19 +138,19 @@ export const openIdRequestHook: onRequestAsyncHookHandler = async (request) => {
   if (request.session.openId.tokenSet == null) {
     return;
   }
-  const tokenSet = new TokenSet(request.session.openId.tokenSet);
+  let tokenSet = new TokenSet(request.session.openId.tokenSet);
   if (tokenSet.expired()) {
     try {
-      request.session.openId.tokenSet =
-        await request.server.openId.client.refresh(tokenSet);
-      if (request.session.openId.tokenSet.access_token != null) {
+      tokenSet = await request.server.openId.client.refresh(tokenSet);
+      if (tokenSet.access_token != null) {
         const JWKS = createRemoteJWKSet(
           new URL(
             `${request.server.config.AUTH_ISSUER}/protocol/openid-connect/certs`,
           ),
         );
-        await jwtVerify(request.session.openId.tokenSet.access_token, JWKS);
+        await jwtVerify(tokenSet.access_token, JWKS);
       }
+      request.session.openId.tokenSet = tokenSet;
     } catch (error) {
       if (
         (!(error instanceof Error) ||
