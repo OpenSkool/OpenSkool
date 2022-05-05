@@ -167,6 +167,7 @@ type MutationCreateRootCompetencySuccess {
 union MutationDeleteCompetencyResult =
     MutationDeleteCompetencySuccess
   | NotFoundError
+  | UnauthorizedError
 
 type MutationDeleteCompetencySuccess {
   data: Competency!

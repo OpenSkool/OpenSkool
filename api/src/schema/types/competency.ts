@@ -135,8 +135,8 @@ builder.mutationField('createCompetencyFramework', (t) =>
       types: [AppInputError, AppUnauthorizedError],
     },
     async resolve(root, { data }, ctx) {
-      if (ctx.domain.userId == null) {
-        throw new AppUnauthorizedError('');
+      if (ctx.request.auth.ability.cannot('create', 'CompetencyFramework')) {
+        throw new AppUnauthorizedError();
       }
       return CompetencyService.createCompetencyFramework(
         { title: data.title },
@@ -166,7 +166,7 @@ builder.mutationField('createNestedCompetency', (t) =>
       types: [AppInputError, AppNotFoundError, AppUnauthorizedError],
     },
     async resolve(root, { data }, ctx) {
-      if (ctx.domain.userId == null) {
+      if (ctx.request.auth.ability.cannot('create', 'Competency')) {
         throw new AppUnauthorizedError();
       }
       return CompetencyService.createNestedCompetency(data, ctx.domain);
@@ -194,7 +194,7 @@ builder.mutationField('createRootCompetency', (t) =>
       types: [AppInputError, AppNotFoundError, AppUnauthorizedError],
     },
     async resolve(root, { data }, ctx) {
-      if (ctx.domain.userId == null) {
+      if (ctx.request.auth.ability.cannot('create', 'Competency')) {
         throw new AppUnauthorizedError();
       }
       return CompetencyService.createRootCompetency(data, ctx.domain);
@@ -210,9 +210,12 @@ builder.mutationField('deleteCompetency', (t) =>
       id: t.arg.id(),
     },
     errors: {
-      types: [AppNotFoundError],
+      types: [AppNotFoundError, AppUnauthorizedError],
     },
     async resolve(root, { id }, ctx) {
+      if (ctx.request.auth.ability.cannot('delete', 'Competency')) {
+        throw new AppUnauthorizedError();
+      }
       return CompetencyService.deleteCompetency(id, ctx.domain);
     },
   }),
@@ -235,7 +238,7 @@ builder.mutationField('renameCompetency', (t) =>
       types: [AppInputError, AppNotFoundError, AppUnauthorizedError],
     },
     async resolve(root, { id, data }, ctx) {
-      if (ctx.domain.userId == null) {
+      if (ctx.request.auth.ability.cannot('update', 'Competency')) {
         throw new AppUnauthorizedError();
       }
       return CompetencyService.updateCompetencyTranslations(
@@ -271,7 +274,7 @@ builder.mutationField('swapCompetencies', (t) =>
       types: [AppInputError, AppNotFoundError, AppUnauthorizedError],
     },
     async resolve(root, { leftCompetencyId, rightCompetencyId }, ctx) {
-      if (ctx.domain.userId == null) {
+      if (ctx.request.auth.ability.cannot('update', 'Competency')) {
         throw new AppUnauthorizedError();
       }
       const [left, right] = await CompetencyService.swapCompetencies(
