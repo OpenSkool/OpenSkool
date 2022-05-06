@@ -18,7 +18,7 @@ declare module 'fastify' {
     openId: {
       codeVerifier?: string;
       state?: { from?: string };
-      tokenSet?: TokenSet;
+      tokenSet?: AppTokenSet;
     };
   }
 }
@@ -50,20 +50,20 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
       if (request.session.openId.tokenSet == null) {
         return;
       }
-      const tokenSet = new TokenSet(request.session.openId.tokenSet);
+      const tokenSet = parseTokenSet(request.session.openId.tokenSet);
       if (tokenSet.expired()) {
         request.session.openId.tokenSet = undefined;
         try {
-          const freshTokenSet = await openIdClient.refresh(tokenSet);
-          if (freshTokenSet.access_token != null) {
-            const JWKS = createRemoteJWKSet(
-              new URL(
-                `${request.server.config.AUTH_ISSUER}/protocol/openid-connect/certs`,
-              ),
-            );
-            await jwtVerify(freshTokenSet.access_token, JWKS);
-            request.session.openId.tokenSet = freshTokenSet;
-          }
+          const freshTokenSet = parseTokenSet(
+            await openIdClient.refresh(tokenSet),
+          );
+          const JWKS = createRemoteJWKSet(
+            new URL(
+              `${request.server.config.AUTH_ISSUER}/protocol/openid-connect/certs`,
+            ),
+          );
+          await jwtVerify(freshTokenSet.access_token, JWKS);
+          request.session.openId.tokenSet = freshTokenSet;
         } catch (error) {
           if (
             (!(error instanceof Error) ||
@@ -111,10 +111,12 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
       request.session.openId.codeVerifier = undefined;
       request.session.openId.state = undefined;
       try {
-        const tokenSet = await openIdClient.callback(
-          absoluteUrl('/connect/callback'),
-          parameters,
-          { code_verifier: codeVerifier },
+        const tokenSet = parseTokenSet(
+          await openIdClient.callback(
+            absoluteUrl('/connect/callback'),
+            parameters,
+            { code_verifier: codeVerifier },
+          ),
         );
         request.session.openId.tokenSet = tokenSet;
         const appUrl = new URL(app.config.APP_BASE_URL);
@@ -168,6 +170,25 @@ const zIdToken = z.object({
   sub: z.string(),
 });
 
-export const decodeIdToken = (
-  token: string,
-): JWTPayload & z.infer<typeof zIdToken> => zIdToken.parse(decodeJwt(token));
+type AppIdToken = JWTPayload & z.infer<typeof zIdToken>;
+
+export function decodeIdToken(token: string): AppIdToken {
+  return zIdToken.parse(decodeJwt(token));
+}
+
+const zCodeFlowTokenSet = z.object({
+  access_token: z.string(),
+  token_type: z.string(),
+  id_token: z.string(),
+  refresh_token: z.string(),
+  expires_in: z.number(),
+  expires_at: z.number(),
+  session_state: z.string(),
+  scope: z.string(),
+});
+
+type AppTokenSet = TokenSet & z.infer<typeof zCodeFlowTokenSet>;
+
+function parseTokenSet(tokenSet: TokenSet): AppTokenSet {
+  return new TokenSet(zCodeFlowTokenSet.parse(tokenSet)) as AppTokenSet;
+}
