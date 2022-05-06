@@ -118,21 +118,27 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
       request.session.openId.codeVerifier = undefined;
       request.session.openId.state = undefined;
       try {
-        const tokenSet = parseTokenSet(
+        const newTokenSet = parseTokenSet(
           await openIdClient.callback(
             absoluteUrl('/connect/callback'),
             parameters,
             { code_verifier: codeVerifier },
           ),
         );
-        request.session.openId.tokenSet = tokenSet;
+        await jwtVerify(newTokenSet.access_token, JWKS);
+        request.log.debug('tokenSet validated');
+        request.session.openId.tokenSet = newTokenSet;
         const appUrl = new URL(app.config.APP_BASE_URL);
         appUrl.pathname = state?.from ?? '/';
         reply.redirect(appUrl.toString());
       } catch (error) {
-        request.log.warn(error, 'openid callback could not verify token');
-        reply.status(HTTP_STATUS_BAD_REQUEST);
-        reply.send({ error: 'invalid callback' });
+        if (error instanceof JoseError) {
+          request.log.debug(error, 'JWT is not valid');
+        } else {
+          request.log.warn(error, 'openid callback could not verify token');
+          reply.status(HTTP_STATUS_BAD_REQUEST);
+          reply.send({ error: 'invalid callback' });
+        }
       }
     });
 
