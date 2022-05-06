@@ -4,7 +4,7 @@ import plugin from 'fastify-plugin';
 import {
   createRemoteJWKSet,
   decodeJwt,
-  errors,
+  errors as joseErrors,
   JWTPayload,
   jwtVerify,
 } from 'jose';
@@ -12,6 +12,8 @@ import { Issuer, generators, TokenSet } from 'openid-client';
 import { z } from 'zod';
 
 import { HTTP_STATUS_BAD_REQUEST } from '../errors';
+
+const { JOSEError: JoseError } = joseErrors;
 
 declare module 'fastify' {
   interface Session {
@@ -45,6 +47,10 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
       response_types: ['code'],
     });
 
+    const JWKS = createRemoteJWKSet(
+      new URL(`${app.config.AUTH_ISSUER}/protocol/openid-connect/certs`),
+    );
+
     app.addHook('onRequest', async (request) => {
       request.session.openId ??= {};
       if (request.session.openId.tokenSet == null) {
@@ -52,25 +58,26 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
       }
       const tokenSet = parseTokenSet(request.session.openId.tokenSet);
       if (tokenSet.expired()) {
+        request.log.debug('tokenSet expired');
         request.session.openId.tokenSet = undefined;
         try {
           const freshTokenSet = parseTokenSet(
             await openIdClient.refresh(tokenSet),
           );
-          const JWKS = createRemoteJWKSet(
-            new URL(
-              `${request.server.config.AUTH_ISSUER}/protocol/openid-connect/certs`,
-            ),
-          );
+          request.log.debug('tokenSet refreshed');
           await jwtVerify(freshTokenSet.access_token, JWKS);
+          request.log.debug('tokenSet validated');
           request.session.openId.tokenSet = freshTokenSet;
         } catch (error) {
           if (
-            (!(error instanceof Error) ||
-              !error.message.startsWith('invalid_grant')) &&
-            !(error instanceof errors.JOSEError)
+            error instanceof Error &&
+            error.message.startsWith('invalid_grant')
           ) {
-            request.log.warn(error);
+            request.log.debug(error);
+          } else if (error instanceof JoseError) {
+            request.log.debug(error, 'JWT token is not valid');
+          } else {
+            request.log.error(error, 'refresh failed for unknown reason');
           }
         }
       }
