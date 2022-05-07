@@ -34,9 +34,10 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
       `${app.prefix}${localPath(relativePath)}`;
 
     const absoluteUrl = (relativePath: string): string => {
-      const url = new URL(app.config.API_BASE_URL);
-      url.pathname = globalPath(relativePath);
-      return url.toString();
+      return new URL(
+        globalPath(relativePath),
+        app.config.API_BASE_URL,
+      ).toString();
     };
 
     const authIssuer = await Issuer.discover(app.config.AUTH_ISSUER);
@@ -48,7 +49,7 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
     });
 
     const JWKS = createRemoteJWKSet(
-      new URL(`${app.config.AUTH_ISSUER}/protocol/openid-connect/certs`),
+      new URL('./protocol/openid-connect/certs', app.config.AUTH_ISSUER),
     );
 
     app.addHook('onRequest', async (request) => {
@@ -128,9 +129,9 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
         await jwtVerify(newTokenSet.access_token, JWKS);
         request.log.debug('tokenSet validated');
         request.session.openId.tokenSet = newTokenSet;
-        const appUrl = new URL(app.config.APP_BASE_URL);
-        appUrl.pathname = state?.from ?? '/';
-        reply.redirect(appUrl.toString());
+        reply.redirect(
+          new URL(state?.from ?? '/', app.config.APP_BASE_URL).toString(),
+        );
       } catch (error) {
         if (error instanceof JoseError) {
           request.log.debug(error, 'JWT is not valid');
@@ -169,11 +170,11 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
     });
 
     app.get(localPath('/logout/callback'), async (request, reply) => {
-      const appUrl = new URL(app.config.APP_BASE_URL);
       const { state } = request.session.openId;
       request.session.openId.state = undefined;
-      appUrl.pathname = state?.from ?? '/';
-      reply.redirect(appUrl.toString());
+      reply.redirect(
+        new URL(state?.from ?? '/', app.config.APP_BASE_URL).toString(),
+      );
     });
   },
 );

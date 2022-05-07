@@ -48,3 +48,13 @@ export async function initAuth(): Promise<CurrentUser | null> {
   const authStore = useAuthStore(pinia);
   return authStore.refresh();
 }
+
+export const authConnectUrl = new URL(
+  '/openid/connect',
+  import.meta.env.VITE_API_BASE_URL,
+);
+
+export const authLogoutUrl = new URL(
+  '/openid/logout',
+  import.meta.env.VITE_API_BASE_URL,
+);
