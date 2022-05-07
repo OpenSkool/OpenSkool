@@ -9,7 +9,7 @@
   "scripts": {
     "build": "rollup -c",
     "clean": "rm -rf .eslintcache .turbo/ dist/",
-    "codegen": "node -r dotenv-flow/config -r esbuild-register scripts/codegen.ts",
+    "codegen": "esno -r dotenv-flow/config scripts/codegen.ts",
     "dev": "FORCE_COLOR=1 NODE_ENV=development nodemon src/server.ts",
     "lint": "eslint --cache --ext .cjs,.ts .",
     "postinstall": "yarn run prisma generate",
@@ -62,8 +62,8 @@
     "c8": "^7.11.2",
     "cuid": "^2.1.8",
     "dotenv-flow": "^3.2.0",
-    "esbuild-register": "^3.3.2",
     "eslint": "^8.14.0",
+    "esno": "^0.14.1",
     "fast-glob": "^3.2.11",
     "graphql-tag": "^2.12.6",
     "is-ci": "^3.0.1",
@@ -78,7 +78,7 @@
   },
   "nodemonConfig": {
     "execMap": {
-      "ts": "node --inspect -r dotenv-flow/config -r esbuild-register"
+      "ts": "esno --inspect -r dotenv-flow/config"
     },
     "ext": "lock,ts",
     "watch": [
@@ -87,6 +87,6 @@
     ]
   },
   "prisma": {
-    "seed": "node -r dotenv-flow/config -r esbuild-register prisma/seed.ts"
+    "seed": "esno -r dotenv-flow/config prisma/seed.ts"
   }
 }
