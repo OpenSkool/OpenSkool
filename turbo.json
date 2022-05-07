@@ -19,7 +19,7 @@
       "dependsOn": ["^dev"]
     },
     "lint": {
-      "dependsOn": ["codegen"],
+      "dependsOn": ["^build", "codegen"],
       "outputs": [".eslintcache"]
     },
     "preview": {
