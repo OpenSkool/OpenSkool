@@ -1877,7 +1877,6 @@ __metadata:
     dotenv-flow: ^3.2.0
     eslint: ^8.14.0
     esno: ^0.14.1
-    fast-glob: ^3.2.11
     fastify: ^3.29.0
     fastify-plugin: ^3.0.1
     graphql: ^16.4.0
@@ -1923,7 +1922,6 @@ __metadata:
     "@os/eslint-config": "workspace:*"
     "@testing-library/user-event": ^14.1.1
     "@testing-library/vue": ^6.5.1
-    "@types/prettier": ^2.6.0
     "@vitejs/plugin-vue": ^2.3.1
     "@vue/apollo-composable": ^4.0.0-alpha.16
     "@vueuse/core": ^8.3.1
