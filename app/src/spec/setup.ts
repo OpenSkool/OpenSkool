@@ -7,6 +7,13 @@ import { apolloClient } from '~/apollo';
 
 import server from './mocks/server';
 
+// These imports trigger Vitest / `unplugin-vue-components` to register all
+// components that don't have tests.
+// https://github.com/antfu/unplugin-vue-components/issues/380
+import '~/layout.vue';
+import '~/pages/demo/forms.vue';
+import '~/pages/demo/ui.vue';
+
 const IntersectionObserverMock = vi.fn(() => ({
   disconnect: vi.fn(),
   observe: vi.fn(),
