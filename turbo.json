@@ -23,6 +23,7 @@
       "outputs": [".eslintcache"]
     },
     "preview": {
+      "cache": false,
       "dependsOn": ["build"]
     },
     "test": {
