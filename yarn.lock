@@ -1875,8 +1875,8 @@ __metadata:
     cross-undici-fetch: ^0.3.1
     cuid: ^2.1.8
     dotenv-flow: ^3.2.0
-    esbuild-register: ^3.3.2
     eslint: ^8.14.0
+    esno: ^0.14.1
     fast-glob: ^3.2.11
     fastify: ^3.29.0
     fastify-plugin: ^3.0.1
@@ -3437,6 +3437,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"builtins@npm:^4.0.0":
+  version: 4.1.0
+  resolution: "builtins@npm:4.1.0"
+  dependencies:
+    semver: ^7.0.0
+  checksum: 3524f5a5898c3f77a73fee2e0046e676abbb0acc18db1e495676ee07fbef1537134b0e9c4da525f4cb12ba3cd1b430a26c373d32b59b80a5c048f8ace31b595f
+  languageName: node
+  linkType: hard
+
 "c8@npm:^7.11.2":
   version: 7.11.2
   resolution: "c8@npm:7.11.2"
@@ -4697,6 +4706,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"esbuild-node-loader@npm:^0.6.5":
+  version: 0.6.5
+  resolution: "esbuild-node-loader@npm:0.6.5"
+  dependencies:
+    esbuild: ">=0.13.12"
+  checksum: 564a60a0827f9461e250381462aa1397c01680e9673ed75b5aa80939e868ac1538882c2a7bdcdd04defa9a85a593db16720ac44dddd87e51ab91f1182ee9c03e
+  languageName: node
+  linkType: hard
+
 "esbuild-openbsd-64@npm:0.14.38":
   version: 0.14.38
   resolution: "esbuild-openbsd-64@npm:0.14.38"
@@ -4741,7 +4759,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esbuild@npm:^0.14.27":
+"esbuild@npm:>=0.13.0, esbuild@npm:>=0.13.12, esbuild@npm:^0.14.27":
   version: 0.14.38
   resolution: "esbuild@npm:0.14.38"
   dependencies:
@@ -5121,6 +5139,22 @@ __metadata:
   bin:
     eslint: bin/eslint.js
   checksum: d8896393832e154e1381a21041cfe4d12a73a76fac26ea27cabbc0e5fdac87918ad651f07f804ef6faacd3868572de3c1ec5d96edf5502bc999eff0c423638f7
+  languageName: node
+  linkType: hard
+
+"esno@npm:^0.14.1":
+  version: 0.14.1
+  resolution: "esno@npm:0.14.1"
+  dependencies:
+    cross-spawn: ^7.0.3
+    esbuild: ">=0.13.0"
+    esbuild-node-loader: ^0.6.5
+    esbuild-register: ^3.3.2
+    import-meta-resolve: ^1.1.1
+  bin:
+    esmo: esmo.mjs
+    esno: esno.js
+  checksum: 1d1b15c10e610577a83be0b071b3794c2c89d7257287f8d4379ffe75844c1b238d5c3938163e8451740e233563b34596caf81cf053d8c64e118a2b29015b3808
   languageName: node
   linkType: hard
 
@@ -6197,6 +6231,15 @@ __metadata:
   version: 2.1.0
   resolution: "import-lazy@npm:2.1.0"
   checksum: 05294f3b9dd4971d3a996f0d2f176410fb6745d491d6e73376429189f5c1c3d290548116b2960a7cf3e89c20cdf11431739d1d2d8c54b84061980795010e803a
+  languageName: node
+  linkType: hard
+
+"import-meta-resolve@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "import-meta-resolve@npm:1.1.1"
+  dependencies:
+    builtins: ^4.0.0
+  checksum: 2024161e169c45ed25a9f51d984a432a9cc342c35737f9410266bab237ca2f756c1f80c15e2297df83c92f585743d5105291f2ad24094a513f804c6023ea1472
   languageName: node
   linkType: hard
 
@@ -9303,14 +9346,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:^7.3.2, semver@npm:^7.3.4, semver@npm:^7.3.5":
-  version: 7.3.5
-  resolution: "semver@npm:7.3.5"
+"semver@npm:^7.0.0, semver@npm:^7.3.2, semver@npm:^7.3.4, semver@npm:^7.3.5":
+  version: 7.3.7
+  resolution: "semver@npm:7.3.7"
   dependencies:
     lru-cache: ^6.0.0
   bin:
     semver: bin/semver.js
-  checksum: 5eafe6102bea2a7439897c1856362e31cc348ccf96efd455c8b5bc2c61e6f7e7b8250dc26b8828c1d76a56f818a7ee907a36ae9fb37a599d3d24609207001d60
+  checksum: 2fa3e877568cd6ce769c75c211beaed1f9fce80b28338cadd9d0b6c40f2e2862bafd62c19a6cff42f3d54292b7c623277bcab8816a2b5521cf15210d43e75232
   languageName: node
   linkType: hard
 
