@@ -15,8 +15,7 @@
       "outputs": ["src/codegen/**"]
     },
     "dev": {
-      "cache": false,
-      "dependsOn": ["^dev"]
+      "cache": false
     },
     "lint": {
       "dependsOn": ["^build", "codegen"],
