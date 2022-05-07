@@ -19,7 +19,7 @@ const enrichLink = setContext(
 
 const httpLink = createHttpLink({
   credentials: 'include',
-  uri: `${import.meta.env.VITE_API_BASE_URL}/graphql`,
+  uri: new URL('./graphql', import.meta.env.VITE_API_BASE_URL).toString(),
 });
 
 export const apolloClient = new ApolloClient({

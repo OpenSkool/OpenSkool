@@ -32,7 +32,7 @@ Configure this client in your `env` files.
 # api/.env.local
 AUTH_CLIENT_ID="" # Eg. os-local-api
 AUTH_CLIENT_SECRET="" # You can find the secret in the credentials tabs.
-AUTH_ISSUER="" # Eg. http://localhost:8080/realms/os-local
+AUTH_ISSUER="" # Eg. http://localhost:8080/realms/os-local/
 ```
 
 #### Create user

@@ -1,13 +1,23 @@
 <script lang="ts" setup>
 import { useGlobalQueryLoading } from '@vue/apollo-composable';
 
-import { useAuthStore } from './auth';
-
-const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+import { useAuthStore, authConnectUrl, authLogoutUrl } from '~/auth';
 
 const authStore = useAuthStore();
-const loading = useGlobalQueryLoading();
+
 const route = useRoute();
+const connectHref = computed(() => {
+  const connectUrl = new URL(authConnectUrl);
+  connectUrl.searchParams.set('from', route.path);
+  return connectUrl.toString();
+});
+const logoutHref = computed(() => {
+  const connectUrl = new URL(authLogoutUrl);
+  connectUrl.searchParams.set('from', route.path);
+  return connectUrl.toString();
+});
+
+const loading = useGlobalQueryLoading();
 </script>
 
 <template>
@@ -25,17 +35,11 @@ const route = useRoute();
           <a
             v-if="authStore.isLoggedIn"
             class="btn btn-primary"
-            :href="`${apiBaseUrl}/openid/logout?from=${route.path}`"
+            :href="logoutHref"
           >
             Logout
           </a>
-          <a
-            v-else
-            class="btn btn-primary"
-            :href="`${apiBaseUrl}/openid/connect?from=${route.path}`"
-          >
-            Connect
-          </a>
+          <a v-else class="btn btn-primary" :href="connectHref"> Connect </a>
         </div>
       </div>
     </div>
