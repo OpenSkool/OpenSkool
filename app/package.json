@@ -27,7 +27,6 @@
     "@os/ability": "workspace:*",
     "@vue/apollo-composable": "^4.0.0-alpha.16",
     "@vueuse/core": "^8.3.1",
-    "focus-trap": "^6.9.0",
     "graphql": "^16.4.0",
     "pinia": "^2.0.13",
     "the-new-css-reset": "^1.5.1",
