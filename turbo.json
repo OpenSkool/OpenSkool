@@ -4,7 +4,7 @@
   "globalDependencies": [".env.local", ".env.*.local"],
   "pipeline": {
     "build": {
-      "dependsOn": ["codegen"],
+      "dependsOn": ["^build", "codegen"],
       "outputs": ["dist/**"]
     },
     "clean": {
@@ -26,10 +26,11 @@
       "dependsOn": ["build"]
     },
     "test": {
-      "dependsOn": ["codegen"]
+      "dependsOn": ["^build", "codegen"],
+      "outputs": ["coverage/**"]
     },
     "test:ci": {
-      "dependsOn": ["codegen"],
+      "dependsOn": ["^build", "codegen"],
       "outputs": ["coverage/**", "test.xml"]
     }
   }

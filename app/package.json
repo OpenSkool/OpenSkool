@@ -19,12 +19,12 @@
   "files": [],
   "dependencies": {
     "@apollo/client": "^3.6.1",
-    "@casl/ability": "^5.4.3",
     "@casl/vue": "^2.1.2",
     "@formkit/core": "^1.0.0-beta.6",
     "@formkit/i18n": "^1.0.0-beta.6",
     "@formkit/vue": "^1.0.0-beta.6",
     "@headlessui/vue": "^1.6.0",
+    "@os/ability": "workspace:*",
     "@vue/apollo-composable": "^4.0.0-alpha.16",
     "@vueuse/core": "^8.3.1",
     "focus-trap": "^6.9.0",

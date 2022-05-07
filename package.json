@@ -30,6 +30,7 @@
   "workspaces": [
     "api",
     "app",
-    "config/*"
+    "config/*",
+    "libs/*"
   ]
 }
