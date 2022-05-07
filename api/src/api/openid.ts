@@ -11,8 +11,6 @@ import {
 import { Issuer, generators, TokenSet } from 'openid-client';
 import { z } from 'zod';
 
-import { HTTP_STATUS_BAD_REQUEST } from '../errors';
-
 const { JOSEError: JoseError } = joseErrors;
 
 declare module 'fastify' {
@@ -76,7 +74,7 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
           ) {
             request.log.debug(error);
           } else if (error instanceof JoseError) {
-            request.log.debug(error, 'JWT token is not valid');
+            request.log.debug(error, 'JWT token could not be validated');
           } else {
             request.log.error(error, 'refresh failed for unknown reason');
           }
@@ -118,6 +116,7 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
       const { codeVerifier, state } = request.session.openId;
       request.session.openId.codeVerifier = undefined;
       request.session.openId.state = undefined;
+      const redirectUrl = new URL(state?.from ?? '/', app.config.APP_BASE_URL);
       try {
         const newTokenSet = parseTokenSet(
           await openIdClient.callback(
@@ -129,17 +128,16 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
         await jwtVerify(newTokenSet.access_token, JWKS);
         request.log.debug('tokenSet validated');
         request.session.openId.tokenSet = newTokenSet;
-        reply.redirect(
-          new URL(state?.from ?? '/', app.config.APP_BASE_URL).toString(),
-        );
+        reply.redirect(redirectUrl.toString());
       } catch (error) {
         if (error instanceof JoseError) {
-          request.log.debug(error, 'JWT is not valid');
+          request.log.warn(error, 'JWT could not be validated');
+          redirectUrl.searchParams.set('error', 'jwt_error');
         } else {
           request.log.warn(error, 'openid callback could not verify token');
-          reply.status(HTTP_STATUS_BAD_REQUEST);
-          reply.send({ error: 'invalid callback' });
+          redirectUrl.searchParams.set('error', 'unknown');
         }
+        reply.redirect(redirectUrl.toString());
       }
     });
 

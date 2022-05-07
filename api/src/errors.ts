@@ -1,5 +1,3 @@
-export const HTTP_STATUS_BAD_REQUEST = 400;
-
 interface AppErrorMetadata {
   cause?: Error;
   path?: string[];
