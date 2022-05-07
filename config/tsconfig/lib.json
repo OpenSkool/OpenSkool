@@ -4,8 +4,6 @@
   "compilerOptions": {
     "lib": ["ESNext"],
     "module": "ESNext",
-    "noEmit": true,
-    "sourceMap": true,
     "target": "ES2021"
   }
 }

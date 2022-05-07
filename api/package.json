@@ -29,6 +29,7 @@
     "@graphql-yoga/common": "^2.3.0",
     "@graphql-yoga/node": "^2.3.0",
     "@hapi/boom": "^9.1.4",
+    "@os/ability": "workspace:*",
     "@pothos/core": "^3.8.0",
     "@pothos/plugin-errors": "^3.3.0",
     "@prisma/client": "^3.13.0",

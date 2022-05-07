@@ -12,7 +12,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['*.{cjs,js,ts}', '**/scripts/**/*'],
+      files: ['*.{cjs,mjs,js,ts}', '**/scripts/**/*'],
       extends: ['noise/node', 'noise/node/script'],
     },
     {
