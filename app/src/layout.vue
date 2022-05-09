@@ -79,7 +79,7 @@ const route = useRoute();
 
 <style scoped>
 :global(html, body) {
-  @apply antialiased font-sans bg-blue-gray-100;
+  @apply antialiased font-sans bg-gray-100;
 }
 
 :global(a) {
