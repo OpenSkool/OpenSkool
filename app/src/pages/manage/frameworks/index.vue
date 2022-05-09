@@ -6,7 +6,6 @@ const i18nStore = useI18nStore();
 i18nStore.loadGlob(import.meta.glob('~/locales/frameworks.*.yaml'));
 
 const ability = useAppAbility();
-const { t } = useI18n();
 
 gql`
   query GetAllCompetencyFrameworks {
@@ -23,14 +22,17 @@ const frameworks = useResult(result);
 </script>
 
 <template>
-  <h2 class="text-xl mb-3">{{ t('frameworks.route.index.heading') }}</h2>
+  <ui-title
+    is="h2"
+    v-t="'frameworks.route.index.heading'"
+    class="text-xl mb-3"
+  />
   <router-link
     v-if="ability.can('create', 'CompetencyFramework')"
+    v-t="'frameworks.route.index.action.create'"
     class="btn btn-primary my-5"
     to="/manage/frameworks/create-framework"
-  >
-    {{ t('frameworks.route.index.action.create') }}
-  </router-link>
+  />
   <ol class="list-decimal">
     <li v-for="framework of frameworks" :key="framework.id">
       <router-link :to="`/manage/frameworks/${framework.id}`">

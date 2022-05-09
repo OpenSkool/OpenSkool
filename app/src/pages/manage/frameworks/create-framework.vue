@@ -15,9 +15,9 @@ const { t } = useI18n();
     <ui-backbutton to="/manage/frameworks">
       {{ t('frameworks.route.create.action.backButton') }}
     </ui-backbutton>
-    <h2 class="text-xl mb-3">
+    <ui-title class="text-xl mb-3">
       {{ t('frameworks.route.create.heading') }}
-    </h2>
+    </ui-title>
     <create-competency-framework />
   </template>
   <template v-else>

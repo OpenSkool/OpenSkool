@@ -124,18 +124,16 @@ async function deleteCompetencyHandler(): Promise<void> {
     <ui-backbutton :to="`${parent.url}`">
       {{ parent.title }}
     </ui-backbutton>
-    <h2 class="text-xl mb-3 flex items-center gap-1">
+    <ui-title is="h2" class="text-xl mb-3">
       {{ competency.data.title }}
       <router-link
         v-if="ability.can('update', 'Competency')"
         :to="`/manage/frameworks/${frameworkId}/${competencyId}/edit`"
       >
-        <span class="sr-only">{{
-          t('competencies.route.id.index.action.edit')
-        }}</span>
+        <span v-t="'competencies.route.id.index.action.edit'" class="sr-only" />
         <ri-edit-box-fill aria-hidden />
       </router-link>
-    </h2>
+    </ui-title>
     <button
       v-if="ability.can('delete', 'Competency')"
       class="btn btn-primary mb-3"
@@ -174,14 +172,12 @@ async function deleteCompetencyHandler(): Promise<void> {
         </button>
       </div>
     </ui-dialog>
-    <h3 class="text-xl">{{ t('competencies.route.id.index.heading') }}</h3>
     <router-link
       v-if="ability.can('create', 'Competency')"
+      v-t="'competencies.route.id.index.action.new'"
       class="btn btn-primary my-5"
       :to="`/manage/frameworks/${frameworkId}/${competencyId}/create-competency`"
-    >
-      {{ t('competencies.route.id.index.action.new') }}
-    </router-link>
+    />
     <competency-list
       v-if="competency.data.subCompetencies"
       :framework-id="frameworkId"
