@@ -9,6 +9,7 @@ import ms from 'ms';
 import { prismaPlugin } from '../plugins/prisma';
 import { authPlugin } from './auth';
 import { graphqlRoutes } from './graphql';
+import { healthPlugin } from './health';
 import { openIdPlugin } from './openid';
 
 const HTTP_NO_CONTENT = 204;
@@ -29,6 +30,7 @@ const apiPlugin: FastifyPluginAsync = async (app) => {
       },
       secret: app.config.SESSION_SECRET,
     })
+    .register(healthPlugin)
     .register(openIdPlugin, { prefix: '/openid' })
     .register(authPlugin)
     .register(graphqlRoutes, { prefix: '/graphql' });
