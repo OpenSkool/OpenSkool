@@ -6,15 +6,9 @@ defineProps<{
 
 <template>
   <button
-    class="inline-flex items-center p-2 rounded-lg text-primary-600 font-medium select-none hover:bg-primary-200 focus:outline-none"
+    class="inline-flex items-center p-2 rounded-lg text-primary-600 select-none hover:bg-primary-200 focus:outline-none"
     focus-visible:ring="2 offset-2 primary-500"
   >
-    <slot></slot>
+    <slot />
   </button>
 </template>
-
-<style scoped>
-button {
-  @apply focus:outline-none;
-}
-</style>
