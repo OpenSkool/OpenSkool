@@ -14,13 +14,8 @@ import Pages from 'vite-plugin-pages';
 import WindiCSS from 'vite-plugin-windicss';
 import { defineConfig } from 'vitest/config';
 
-const windiConfigFilepath =
-  process.env.WINDI_THEME == null
-    ? undefined
-    : `themes/${process.env.WINDI_THEME}.ts`;
-if (windiConfigFilepath != null) {
-  fs.accessSync(windiConfigFilepath);
-}
+const windiConfigFilepath = `themes/${process.env.WINDI_THEME ?? 'default'}.ts`;
+fs.accessSync(windiConfigFilepath);
 
 export default defineConfig({
   build: {

@@ -76,22 +76,13 @@ const isProjectAwesome = ref<boolean>(true);
       <ui-menu label="Options">
         <ui-menu-item v-slot="{ active }">
           <ui-menu-item-button v-bind="{ active }">
-            <ri-pencil-fill
-              aria-hidden="true"
-              :class="[active ? 'text-white' : 'text-primary1-400']"
-            />
+            <ri-pencil-fill aria-hidden="true" class="text-secondary-400" />
             Edit
           </ui-menu-item-button>
         </ui-menu-item>
         <ui-menu-item v-slot="{ active }">
-          <ui-menu-item-button
-            v-bind="{ active }"
-            :class="active ? 'bg-red-500 text-white' : 'text-gray-900'"
-          >
-            <ri-delete-bin-fill
-              aria-hidden="true"
-              :class="[active ? 'text-white' : 'text-primary1-400']"
-            />
+          <ui-menu-item-button v-bind="{ active }" class="">
+            <ri-delete-bin-fill aria-hidden="true" class="text-danger-400" />
             Delete
           </ui-menu-item-button>
         </ui-menu-item>
