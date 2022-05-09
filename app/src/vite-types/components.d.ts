@@ -47,7 +47,9 @@ declare module '@vue/runtime-core' {
     UiMenu: typeof import('./../components/menu/ui-menu.vue')['default']
     UiMenuItem: typeof import('./../components/menu/ui-menu-item.vue')['default']
     UiMenuItemButton: typeof import('./../components/menu/ui-menu-item-button.vue')['default']
+    UiSubtitle: typeof import('./../components/title/ui-subtitle.vue')['default']
     UiSwitch: typeof import('./../components/switch/ui-switch.vue')['default']
+    UiTitle: typeof import('./../components/title/ui-title.vue')['default']
     Unauthorized: typeof import('./../components/auth/unauthorized.vue')['default']
   }
 }

@@ -20,7 +20,9 @@ const isProjectAwesome = ref<boolean>(true);
 <template>
   <div class="flex gap-10 flex-col items-start">
     <div>
-      <h2 class="text-xl mb-3">Buttons</h2>
+      <ui-title is="h2" class="text-xl mb-3">Title</ui-title>
+      <ui-subtitle is="h3" class="mb-3">Subtitle</ui-subtitle>
+      <ui-title is="h2" class="text-xl mb-3">Buttons</ui-title>
       <div class="flex gap-3">
         <button class="btn btn-primary text-base">Button</button>
         <ui-icon-button label="Bug">
@@ -29,7 +31,7 @@ const isProjectAwesome = ref<boolean>(true);
       </div>
     </div>
     <div>
-      <h2 class="text-xl mb-3">Dialog</h2>
+      <ui-title is="h2" class="text-xl mb-3">Dialog</ui-title>
       <button
         class="btn btn-primary text-base"
         type="button"
@@ -57,7 +59,7 @@ const isProjectAwesome = ref<boolean>(true);
       </ui-dialog>
     </div>
     <div>
-      <h2 class="text-xl mb-3">Listbox (select)</h2>
+      <ui-title is="h2" class="text-xl mb-3">Listbox (select)</ui-title>
       <ui-listbox
         v-model="selectedEducation"
         :selected-label="selectedEducation?.name"
@@ -72,7 +74,7 @@ const isProjectAwesome = ref<boolean>(true);
       </ui-listbox>
     </div>
     <div>
-      <h2 class="text-xl mb-3">Menu</h2>
+      <ui-title is="h2" class="text-xl mb-3">Menu</ui-title>
       <ui-menu label="Options">
         <ui-menu-item v-slot="{ active }">
           <ui-menu-item-button v-bind="{ active }">
@@ -89,7 +91,7 @@ const isProjectAwesome = ref<boolean>(true);
       </ui-menu>
     </div>
     <div>
-      <h2 class="text-xl mb-3">Switch</h2>
+      <ui-title is="h2" class="text-xl mb-3">Switch</ui-title>
       <ui-switch v-model="isProjectAwesome" label="Is this project awesome?" />
     </div>
   </div>

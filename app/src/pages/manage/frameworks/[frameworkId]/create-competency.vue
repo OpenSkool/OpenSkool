@@ -12,8 +12,6 @@ const props = defineProps<{
 const i18nStore = useI18nStore();
 i18nStore.loadGlob(import.meta.glob('~/locales/competencies.*.yaml'));
 
-const { t } = useI18n();
-
 gql`
   query getCompetencyFramework($id: ID!) {
     competencyFramework(id: $id) {
@@ -51,18 +49,18 @@ const competencyFramework = useResult(result);
       <ui-backbutton :to="`/manage/frameworks/${competencyFramework.data.id}`">
         {{ competencyFramework.data.title }}
       </ui-backbutton>
-      <h2 class="text-xl mb-3">
-        {{ t('competencies.route.create.heading') }}
-      </h2>
-      <create-root-competency
-        :framework-id="props.frameworkId"
-      ></create-root-competency>
+      <ui-title
+        is="h2"
+        v-t="'competencies.route.create.heading'"
+        class="text-xl mb-3"
+      />
+      <create-root-competency :framework-id="props.frameworkId" />
     </template>
     <template v-else>
       <div>Not Found</div>
     </template>
   </template>
   <template v-else>
-    <unauthorized></unauthorized>
+    <unauthorized />
   </template>
 </template>

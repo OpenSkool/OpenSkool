@@ -7,7 +7,6 @@ const i18nStore = useI18nStore();
 i18nStore.loadGlob(import.meta.glob('~/locales/frameworks.*.yaml'));
 
 const ability = useAppAbility();
-const { t } = useI18n();
 
 const props = defineProps<{
   frameworkId: string;
@@ -52,26 +51,25 @@ const competencyFramework = useResult(result);
       competencyFramework?.__typename === 'QueryCompetencyFrameworkSuccess'
     "
   >
-    <ui-backbutton to="/manage/frameworks">
-      {{ t('frameworks.route.id.index.action.backButton') }}
-    </ui-backbutton>
-    <h2 class="text-xl mb-3 flex items-center gap-1">
+    <ui-backbutton
+      v-t="'frameworks.route.id.index.action.backButton'"
+      to="/manage/frameworks"
+    />
+    <ui-title is="h2" class="text-xl mb-3">
       {{ competencyFramework.data.title }}
-    </h2>
-    <h3 class="text-xl">{{ t('frameworks.route.id.index.heading') }}</h3>
+    </ui-title>
     <router-link
       v-if="ability.can('create', 'Competency')"
+      v-t="'frameworks.route.id.index.action.new'"
       class="btn btn-primary my-5"
       :to="`/manage/frameworks/${competencyFramework.data.id}/create-competency`"
-    >
-      {{ t('frameworks.route.id.index.action.new') }}
-    </router-link>
+    />
     <competency-list
       v-if="competencyFramework.data.competencies.length > 0"
       :framework-id="frameworkId"
       :competencies="competencyFramework.data.competencies"
       :refetch-queries="['getFrameworkRootCompetencies']"
-    ></competency-list>
+    />
   </template>
   <template v-else>
     <div>Not Found</div>

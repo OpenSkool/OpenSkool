@@ -8,8 +8,6 @@ i18nStore.loadGlob(import.meta.glob('~/locales/competencies.*.yaml'));
 
 const authStore = useAuthStore();
 
-const { t } = useI18n();
-
 const props = defineProps<{
   competencyId: string;
   frameworkId: string;
@@ -53,19 +51,20 @@ const competency = useResult(result);
       <ui-backbutton :to="`/manage/frameworks/${frameworkId}/${competencyId}`">
         {{ competency.data.title }}
       </ui-backbutton>
-      <h2 class="text-xl mb-3">
-        {{ t('competencies.route.id.create.heading') }}
-      </h2>
+      <ui-title
+        v-t="'competencies.route.id.create.heading'"
+        class="text-xl mb-3"
+      />
       <create-nested-competency
         :competency-id="competencyId"
         :framework-id="frameworkId"
-      ></create-nested-competency>
+      />
     </template>
     <template v-else>
       <div>Not Found</div>
     </template>
   </template>
   <template v-else>
-    <unauthorized></unauthorized>
+    <unauthorized />
   </template>
 </template>
