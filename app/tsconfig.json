@@ -8,5 +8,5 @@
       "~/*": ["src/*"]
     }
   },
-  "include": ["src", "themes", "*.ts"]
+  "include": ["src", "themes", "windi", "*.ts"]
 }

@@ -157,7 +157,7 @@ async function deleteCompetencyHandler(): Promise<void> {
       </p>
       <div class="mt-4">
         <button
-          class="btn btn-cancel mr-3"
+          class="btn btn-primary-outline mr-3"
           type="button"
           @click="isDeleteModalOpen = false"
         >

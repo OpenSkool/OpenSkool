@@ -24,10 +24,10 @@ const route = useRoute();
             leave-from="opacity-100"
             leave-to="opacity-0"
           >
-            <ri-loader-fill class="text-xl text-secondary-500 spin" />
+            <ri-loader-fill class="text-xl text-tertiary-300 spin" />
           </TransitionRoot>
         </div>
-        <h1 v-t="'global.title'" class="text-3xl my-5 text-primary1-700"></h1>
+        <h1 v-t="'global.title'" class="text-3xl my-5 text-secondary-300"></h1>
         <div class="flex gap-8">
           <language-select />
           <div class="flex gap-3 items-center text-base">
@@ -83,7 +83,7 @@ const route = useRoute();
 }
 
 :global(a) {
-  @apply text-primary2-900;
+  @apply text-primary-600;
 }
 
 .spin {

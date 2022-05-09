@@ -21,7 +21,7 @@ defineEmits<
         :disabled="disabled"
         class="listbox-button relative w-full flex items-center justify-between rounded-lg shadow-md cursor-default bg-white focus:outline-none"
         p="x-3 y-2"
-        focus-visible:ring="2 offset-2 primary1-500"
+        focus-visible:ring="2 offset-2 primary-500"
       >
         <div class="text-base truncate">{{ selectedLabel ?? '–' }}</div>
         <ri-arrow-drop-down-line aria-hidden="true" />
