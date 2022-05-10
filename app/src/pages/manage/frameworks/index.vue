@@ -27,10 +27,10 @@ const frameworks = useResult(result);
     v-t="'frameworks.route.index.heading'"
     class="text-xl mb-3"
   />
-  <router-link
+  <ui-button-router-link
     v-if="ability.can('create', 'CompetencyFramework')"
     v-t="'frameworks.route.index.action.create'"
-    class="btn btn-primary my-5"
+    class="my-5"
     to="/manage/frameworks/create-framework"
   />
   <ol class="list-decimal">

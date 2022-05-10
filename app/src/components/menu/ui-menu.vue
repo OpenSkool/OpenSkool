@@ -11,14 +11,10 @@ defineProps<{
 <template>
   <Menu as="div" class="relative inline-block">
     <MenuButton as="template">
-      <button
-        type="button"
-        class="btn btn-primary"
-        :class="classes?.menuButton"
-      >
+      <ui-button :class="classes?.menuButton">
         {{ label }}
         <ri-arrow-drop-down-line aria-hidden="true" />
-      </button>
+      </ui-button>
     </MenuButton>
     <transition
       enter-active-class="transition duration-100 ease-out"

@@ -134,48 +134,37 @@ async function deleteCompetencyHandler(): Promise<void> {
         <ri-edit-box-fill aria-hidden />
       </router-link>
     </ui-title>
-    <button
+    <ui-button
       v-if="ability.can('delete', 'Competency')"
-      class="btn btn-primary mb-3"
-      type="button"
+      v-t="'competencies.route.id.index.action.openDeleteModal'"
+      class="mb-3"
       @click="isDeleteModalOpen = true"
-    >
-      {{ t('competencies.route.id.index.action.openDeleteModal') }}
-    </button>
+    />
     <ui-dialog :open="isDeleteModalOpen" @close="isDeleteModalOpen = false">
-      <template #title>{{
-        t('competencies.route.id.index.confirmDeleteModal.heading')
-      }}</template>
-      <p>
-        {{ t('competencies.route.id.index.confirmDeleteModal.message') }}
-      </p>
+      <template #title>
+        {{ t('competencies.route.id.index.confirmDeleteModal.heading') }}
+      </template>
+      <p v-t="'competencies.route.id.index.confirmDeleteModal.message'" />
       <p class="text-gray-500">{{ competency.data.title }}</p>
       <p v-if="deleteErrorMessage" class="text-red-600">
         {{ deleteErrorMessage }}
       </p>
-      <div class="mt-4">
-        <button
-          class="btn btn-primary-outline mr-3"
-          type="button"
+      <div class="mt-4 flex gap-3">
+        <ui-button
+          v-t="'competencies.route.id.index.confirmDeleteModal.action.abort'"
+          outline
           @click="isDeleteModalOpen = false"
-        >
-          {{ t('competencies.route.id.index.confirmDeleteModal.action.abort') }}
-        </button>
-        <button
-          class="btn btn-primary"
-          type="button"
+        />
+        <ui-button
+          v-t="'competencies.route.id.index.confirmDeleteModal.action.confirm'"
           @click="deleteCompetencyHandler"
-        >
-          {{
-            t('competencies.route.id.index.confirmDeleteModal.action.confirm')
-          }}
-        </button>
+        />
       </div>
     </ui-dialog>
-    <router-link
+    <ui-button-router-link
       v-if="ability.can('create', 'Competency')"
       v-t="'competencies.route.id.index.action.new'"
-      class="btn btn-primary my-5"
+      class="my-5"
       :to="`/manage/frameworks/${frameworkId}/${competencyId}/create-competency`"
     />
     <competency-list
@@ -183,7 +172,7 @@ async function deleteCompetencyHandler(): Promise<void> {
       :framework-id="frameworkId"
       :competencies="competency.data.subCompetencies"
       :refetch-queries="['getSubCompetencies']"
-    ></competency-list>
+    />
   </template>
   <template v-else>
     <div>Not Found</div>

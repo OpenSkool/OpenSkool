@@ -58,10 +58,10 @@ const competencyFramework = useResult(result);
     <ui-title is="h2" class="text-xl mb-3">
       {{ competencyFramework.data.title }}
     </ui-title>
-    <router-link
+    <ui-button-router-link
       v-if="ability.can('create', 'Competency')"
       v-t="'frameworks.route.id.index.action.new'"
-      class="btn btn-primary my-5"
+      class="my-5"
       :to="`/manage/frameworks/${competencyFramework.data.id}/create-competency`"
     />
     <competency-list

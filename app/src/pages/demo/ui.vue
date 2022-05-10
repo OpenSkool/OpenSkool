@@ -23,22 +23,53 @@ const isProjectAwesome = ref<boolean>(true);
       <ui-title is="h2" class="text-xl mb-3">Title</ui-title>
       <ui-subtitle is="h3" class="mb-3">Subtitle</ui-subtitle>
       <ui-title is="h2" class="text-xl mb-3">Buttons</ui-title>
-      <div class="flex gap-3">
-        <button class="btn btn-primary text-base">Button</button>
-        <ui-icon-button label="Bug">
-          <ri-edit-2-fill />
-        </ui-icon-button>
+      <div class="flex flex-col gap-3">
+        <div class="flex gap-3">
+          <ui-button color="primary">Button</ui-button>
+          <ui-button color="primary" disabled>Button</ui-button>
+          <ui-button color="primary" outline>Button</ui-button>
+          <ui-button color="primary" disabled outline>Button</ui-button>
+        </div>
+        <div class="flex gap-3">
+          <ui-button color="secondary">Button</ui-button>
+          <ui-button color="secondary" disabled>Button</ui-button>
+          <ui-button color="secondary" outline>Button</ui-button>
+          <ui-button color="secondary" disabled outline>Button</ui-button>
+        </div>
+        <div class="flex gap-3">
+          <ui-button color="tertiary">Button</ui-button>
+          <ui-button color="tertiary" disabled>Button</ui-button>
+          <ui-button color="tertiary" outline>Button</ui-button>
+          <ui-button color="tertiary" disabled outline>Button</ui-button>
+        </div>
+        <div class="flex gap-3">
+          <ui-button color="caution">Button</ui-button>
+          <ui-button color="caution" disabled>Button</ui-button>
+          <ui-button color="caution" outline>Button</ui-button>
+          <ui-button color="caution" disabled outline>Button</ui-button>
+        </div>
+        <div class="flex gap-3">
+          <ui-button color="danger">Button</ui-button>
+          <ui-button color="danger" disabled>Button</ui-button>
+          <ui-button color="danger" outline>Button</ui-button>
+          <ui-button color="danger" disabled outline>Button</ui-button>
+        </div>
+        <div class="flex gap-3">
+          <ui-button color="success">Button</ui-button>
+          <ui-button color="success" disabled>Button</ui-button>
+          <ui-button color="success" outline>Button</ui-button>
+          <ui-button color="success" disabled outline>Button</ui-button>
+        </div>
+        <div>
+          <ui-icon-button label="Edit">
+            <ri-edit-2-fill />
+          </ui-icon-button>
+        </div>
       </div>
     </div>
     <div>
       <ui-title is="h2" class="text-xl mb-3">Dialog</ui-title>
-      <button
-        class="btn btn-primary text-base"
-        type="button"
-        @click="isModalOpen = true"
-      >
-        Open dialog
-      </button>
+      <ui-button @click="isModalOpen = true">Open dialog</ui-button>
       <ui-dialog :open="isModalOpen" @close="isModalOpen = false">
         <template #title>
           <div class="mb-3 text-xl">Payment successful</div>
@@ -48,13 +79,7 @@ const isProjectAwesome = ref<boolean>(true);
           with all of the details of your order.
         </p>
         <div class="mt-4">
-          <button
-            class="btn btn-primary text-base"
-            type="button"
-            @click="isModalOpen = false"
-          >
-            Got it, thanks!
-          </button>
+          <ui-button @click="isModalOpen = false">Got it, thanks!</ui-button>
         </div>
       </ui-dialog>
     </div>
