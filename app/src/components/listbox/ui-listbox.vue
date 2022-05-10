@@ -37,7 +37,7 @@ defineEmits<
           ring="1 black opacity-5"
           text="base"
         >
-          <slot v-bind="{ open }"></slot>
+          <slot v-bind="{ open }" />
         </ListboxOptions>
       </transition>
     </div>

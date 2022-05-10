@@ -40,7 +40,7 @@ defineEmits<(event: 'close') => void>();
               <slot name="description" />
             </DialogDescription>
 
-            <slot></slot>
+            <slot />
           </div>
         </TransitionChild>
       </div>

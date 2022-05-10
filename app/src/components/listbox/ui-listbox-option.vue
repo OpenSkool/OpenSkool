@@ -18,7 +18,7 @@ defineProps<{
       p="y-2 l-10 r-4"
     >
       <div class="truncate" :class="selected ? 'font-medium' : 'font-normal'">
-        <slot v-bind="{ active, disabled, selected }"></slot>
+        <slot v-bind="{ active, disabled, selected }" />
       </div>
       <span
         v-if="selected"

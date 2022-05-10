@@ -1,6 +1,6 @@
 <template>
   <ol class="flex breadcrumb">
-    <slot></slot>
+    <slot />
   </ol>
 </template>
 

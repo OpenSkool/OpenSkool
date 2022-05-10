@@ -9,6 +9,6 @@ defineProps<{ active?: boolean }>();
       active ? 'bg-primary-200' : 'text-gray-900',
     ]"
   >
-    <slot></slot>
+    <slot />
   </button>
 </template>
