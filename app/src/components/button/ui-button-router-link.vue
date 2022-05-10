@@ -10,6 +10,7 @@ const props = defineProps<{
     | 'danger'
     | 'success';
   outline?: boolean;
+  size?: 'sm' | 'base';
 }>();
 
 const buttonStyles = computed(() => createButtonStyles(props));
