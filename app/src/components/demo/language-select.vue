@@ -20,18 +20,18 @@ watch(selectedLocale, () => {
 
 <template>
   <div class="flex gap-3 items-center">
-    <ri-global-fill />
-    <ui-listbox
+    <RiGlobalFill />
+    <UiListbox
       v-model="selectedLocale"
       :selected-label="getLanguageName(selectedLocale)"
     >
-      <ui-listbox-option
+      <UiListboxOption
         v-for="locale of AVAILABLE_LOCALES"
         :key="locale"
         :value="locale"
       >
         {{ getLanguageName(locale) }}
-      </ui-listbox-option>
-    </ui-listbox>
+      </UiListboxOption>
+    </UiListbox>
   </div>
 </template>

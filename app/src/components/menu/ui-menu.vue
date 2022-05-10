@@ -11,12 +11,12 @@ defineProps<{
 <template>
   <Menu as="div" class="relative inline-block">
     <MenuButton as="template">
-      <ui-button :class="classes?.menuButton">
+      <UiButton :class="classes?.menuButton">
         {{ label }}
-        <ri-arrow-drop-down-line aria-hidden="true" />
-      </ui-button>
+        <RiArrowDropDownLine aria-hidden="true" />
+      </UiButton>
     </MenuButton>
-    <transition
+    <Transition
       enter-active-class="transition duration-100 ease-out"
       enter-from-class="transform scale-95 opacity-0"
       enter-to-class="transform scale-100 opacity-100"
@@ -32,6 +32,6 @@ defineProps<{
       >
         <slot v-bind="{ active, disabled }" />
       </MenuItems>
-    </transition>
+    </Transition>
   </Menu>
 </template>

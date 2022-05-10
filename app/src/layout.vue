@@ -24,18 +24,18 @@ const loading = useGlobalQueryLoading();
   <div class="bg-white">
     <div class="flex items-center justify-end p-3">
       <div class="flex gap-8">
-        <language-select />
+        <LanguageSelect />
         <div class="flex gap-3 items-center text-base">
           <div class="flex gap-2 items-center">
-            <ri-shield-user-fill />
+            <RiShieldUserFill />
             <template v-if="authStore.isLoggedIn">
               {{ authStore.name }}
             </template>
           </div>
-          <ui-button-link v-if="authStore.isLoggedIn" :href="logoutHref">
+          <UiButtonLink v-if="authStore.isLoggedIn" :href="logoutHref">
             Logout
-          </ui-button-link>
-          <ui-button-link v-else :href="connectHref">Connect</ui-button-link>
+          </UiButtonLink>
+          <UiButtonLink v-else :href="connectHref">Connect</UiButtonLink>
         </div>
       </div>
     </div>
@@ -51,32 +51,30 @@ const loading = useGlobalQueryLoading();
         leave-from="opacity-100"
         leave-to="opacity-0"
       >
-        <ri-loader-fill class="text-xl text-tertiary-300 spin" />
+        <RiLoaderFill class="text-xl text-tertiary-300 spin" />
       </TransitionRoot>
     </div>
     <div class="flex gap-5">
       <nav class="my-5 text-base mr-5">
         <ol class="space-y-2">
           <li>
-            <router-link to="/">Home</router-link>
+            <RouterLink to="/">Home</RouterLink>
           </li>
           <li>
-            <router-link to="/demo/forms">Forms</router-link>
+            <RouterLink to="/demo/forms">Forms</RouterLink>
           </li>
           <li>
-            <router-link to="/demo/ui">UI</router-link>
+            <RouterLink to="/demo/ui">UI</RouterLink>
           </li>
           <li>
-            <router-link to="/manage/frameworks">
-              Manage frameworks
-            </router-link>
+            <RouterLink to="/manage/frameworks"> Manage frameworks </RouterLink>
           </li>
         </ol>
       </nav>
       <div class="mt-5">
-        <suspense>
-          <router-view />
-        </suspense>
+        <Suspense>
+          <RouterView />
+        </Suspense>
       </div>
     </div>
   </div>

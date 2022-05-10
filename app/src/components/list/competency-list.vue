@@ -65,15 +65,15 @@ async function moveCompetency(
 <template>
   <ol class="list-decimal">
     <li v-for="(competency, index) of competencies" :key="competency.id">
-      <router-link :to="`/manage/frameworks/${frameworkId}/${competency.id}`">
+      <RouterLink :to="`/manage/frameworks/${frameworkId}/${competency.id}`">
         {{ competency.title }}
-      </router-link>
+      </RouterLink>
       <button
         v-if="index !== 0"
         @click="moveCompetency((competencies[index - 1] as Competency).id, competency.id)"
       >
         <span class="sr-only">{{ t('competencies.list.action.moveUp') }}</span>
-        <ri-arrow-up-fill aria-hidden />
+        <RiArrowUpFill aria-hidden />
       </button>
       <button
         v-if="competencies.length !== index + 1"
@@ -82,7 +82,7 @@ async function moveCompetency(
         <span class="sr-only">{{
           t('competencies.list.action.moveDown')
         }}</span>
-        <ri-arrow-down-fill aria-hidden />
+        <RiArrowDownFill aria-hidden />
       </button>
     </li>
   </ol>

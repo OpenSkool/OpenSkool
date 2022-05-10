@@ -11,5 +11,5 @@ const connectHref = computed(() => {
 
 <template>
   <p v-t="'global.auth.unauthorized'" />
-  <ui-button-link v-t="'global.auth.action.login'" :href="connectHref" />
+  <UiButtonLink v-t="'global.auth.action.login'" :href="connectHref" />
 </template>

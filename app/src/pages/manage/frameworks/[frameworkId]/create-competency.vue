@@ -46,21 +46,21 @@ const competencyFramework = useResult(result);
         competencyFramework?.__typename == 'QueryCompetencyFrameworkSuccess'
       "
     >
-      <ui-backbutton :to="`/manage/frameworks/${competencyFramework.data.id}`">
+      <UiBackbutton :to="`/manage/frameworks/${competencyFramework.data.id}`">
         {{ competencyFramework.data.title }}
-      </ui-backbutton>
-      <ui-title
+      </UiBackbutton>
+      <UiTitle
         is="h2"
         v-t="'competencies.route.create.heading'"
         class="text-xl mb-3"
       />
-      <create-root-competency :framework-id="props.frameworkId" />
+      <CreateRootCompetency :framework-id="props.frameworkId" />
     </template>
     <template v-else>
       <div>Not Found</div>
     </template>
   </template>
   <template v-else>
-    <auth-access-denied />
+    <AuthAccessDenied />
   </template>
 </template>

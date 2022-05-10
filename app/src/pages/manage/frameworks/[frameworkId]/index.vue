@@ -51,20 +51,20 @@ const competencyFramework = useResult(result);
       competencyFramework?.__typename === 'QueryCompetencyFrameworkSuccess'
     "
   >
-    <ui-backbutton
+    <UiBackbutton
       v-t="'frameworks.route.id.index.action.backButton'"
       to="/manage/frameworks"
     />
-    <ui-title is="h2" class="text-xl mb-3">
+    <UiTitle is="h2" class="text-xl mb-3">
       {{ competencyFramework.data.title }}
-    </ui-title>
-    <ui-button-router-link
+    </UiTitle>
+    <UiButtonRouterLink
       v-if="ability.can('create', 'Competency')"
       v-t="'frameworks.route.id.index.action.new'"
       class="my-5"
       :to="`/manage/frameworks/${competencyFramework.data.id}/create-competency`"
     />
-    <competency-list
+    <CompetencyList
       v-if="competencyFramework.data.competencies.length > 0"
       :framework-id="frameworkId"
       :competencies="competencyFramework.data.competencies"
