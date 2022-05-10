@@ -8,7 +8,7 @@ import { useRouter } from 'vue-router';
 import { apolloClient } from '~/apollo';
 
 import { formkit } from '../../formkit';
-import CreateRootCompetency from './create-root-competency.vue';
+import NestedCompetencyCreate from './nested-competency-create.vue';
 
 const mockUseRouter = useRouter as unknown as MockedFunction<typeof useRouter>;
 
@@ -26,7 +26,7 @@ test('title is required', async () => {
     push,
   }));
   const user = userEvent.setup();
-  render(CreateRootCompetency, {
+  render(NestedCompetencyCreate, {
     global: {
       plugins: [
         createI18n({ legacy: false, fallbackWarn: false, missingWarn: false }),
@@ -34,6 +34,7 @@ test('title is required', async () => {
       ],
     },
     props: {
+      competencyId: 'cuid',
       frameworkId: 'cuid',
     },
   });
@@ -45,13 +46,13 @@ test('title is required', async () => {
   expect(push).not.toHaveBeenCalled();
 });
 
-test('create rootCompetency submit', async () => {
+test('create competency submit', async () => {
   const push = vi.fn();
   mockUseRouter.mockImplementationOnce((): any => ({
     push,
   }));
   const user = userEvent.setup();
-  render(CreateRootCompetency, {
+  render(NestedCompetencyCreate, {
     global: {
       plugins: [
         createI18n({ legacy: false, fallbackWarn: false, missingWarn: false }),
