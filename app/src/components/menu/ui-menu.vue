@@ -30,7 +30,7 @@ defineProps<{
         class="absolute right-0 origin-top-right bg-white rounded-lg shadow-lg p-1 z-5"
         :class="classes?.menuItems"
       >
-        <slot v-bind="{ active, disabled }"></slot>
+        <slot v-bind="{ active, disabled }" />
       </MenuItems>
     </transition>
   </Menu>
