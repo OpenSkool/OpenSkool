@@ -8,7 +8,7 @@ import { useRouter } from 'vue-router';
 import { apolloClient } from '~/apollo';
 
 import { formkit } from '../../formkit';
-import CreateCompetencyFramework from './create-competency-framework.vue';
+import CompetencyFrameworkCreate from './competency-framework-create.vue';
 
 const mockUseRouter = useRouter as unknown as MockedFunction<typeof useRouter>;
 
@@ -26,7 +26,7 @@ test('title is required', async () => {
     push,
   }));
   const user = userEvent.setup();
-  render(CreateCompetencyFramework, {
+  render(CompetencyFrameworkCreate, {
     global: {
       plugins: [
         createI18n({ legacy: false, fallbackWarn: false, missingWarn: false }),
@@ -48,7 +48,7 @@ test('create competencyFramework submit', async () => {
     push,
   }));
   const user = userEvent.setup();
-  render(CreateCompetencyFramework, {
+  render(CompetencyFrameworkCreate, {
     global: {
       plugins: [
         createI18n({ legacy: false, fallbackWarn: false, missingWarn: false }),

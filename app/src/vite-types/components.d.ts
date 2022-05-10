@@ -6,10 +6,8 @@ import '@vue/runtime-core'
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AuthAccessDenied: typeof import('./../components/auth/auth-access-denied.vue')['default']
+    CompetencyFrameworkCreate: typeof import('./../components/forms/competency-framework-create.vue')['default']
     CompetencyList: typeof import('./../components/list/competency-list.vue')['default']
-    CreateCompetencyFramework: typeof import('./../components/forms/create-competency-framework.vue')['default']
-    CreateNestedCompetency: typeof import('./../components/forms/create-nested-competency.vue')['default']
-    CreateRootCompetency: typeof import('./../components/forms/create-root-competency.vue')['default']
     Dialog: typeof import('@headlessui/vue')['Dialog']
     DialogDescription: typeof import('@headlessui/vue')['DialogDescription']
     DialogOverlay: typeof import('@headlessui/vue')['DialogOverlay']
@@ -24,6 +22,7 @@ declare module '@vue/runtime-core' {
     MenuButton: typeof import('@headlessui/vue')['MenuButton']
     MenuItem: typeof import('@headlessui/vue')['MenuItem']
     MenuItems: typeof import('@headlessui/vue')['MenuItems']
+    NestedCompetencyCreate: typeof import('./../components/forms/nested-competency-create.vue')['default']
     RiArrowDownFill: typeof import('~icons/ri/arrow-down-fill')['default']
     RiArrowDropDownLine: typeof import('~icons/ri/arrow-drop-down-line')['default']
     RiArrowLeftSLine: typeof import('~icons/ri/arrow-left-s-line')['default']
@@ -36,6 +35,7 @@ declare module '@vue/runtime-core' {
     RiLoaderFill: typeof import('~icons/ri/loader-fill')['default']
     RiPencilFill: typeof import('~icons/ri/pencil-fill')['default']
     RiShieldUserFill: typeof import('~icons/ri/shield-user-fill')['default']
+    RootCompetencyCreate: typeof import('./../components/forms/root-competency-create.vue')['default']
     Switch: typeof import('@headlessui/vue')['Switch']
     TransitionChild: typeof import('@headlessui/vue')['TransitionChild']
     TransitionRoot: typeof import('@headlessui/vue')['TransitionRoot']
