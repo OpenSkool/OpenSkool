@@ -21,6 +21,6 @@ const { t } = useI18n();
     <create-competency-framework />
   </template>
   <template v-else>
-    <unauthorized />
+    <auth-access-denied />
   </template>
 </template>
