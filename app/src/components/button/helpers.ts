@@ -19,16 +19,28 @@ export interface ButtonStyleOptions {
     | 'success';
   disabled?: boolean;
   outline?: boolean;
+  size?: 'sm' | 'base';
 }
 
 export function createButtonStyles({
   color = 'primary',
   disabled = false,
   outline = false,
+  size = 'base',
 }: ButtonStyleOptions): string {
   const classes: string[] = [
-    'inline-flex items-center gap-1 rounded-md font-semibold text-base select-none px-10 py-2',
+    'inline-flex items-center gap-1 rounded-md font-semibold select-none',
   ];
+  switch (size) {
+    case 'sm': {
+      classes.push('text-sm px-8 py-1');
+      break;
+    }
+    case 'base': {
+      classes.push('text-base px-10 py-2');
+      break;
+    }
+  }
   if (disabled) {
     classes.push(
       'border-2 text-stone-500 cursor-not-allowed',

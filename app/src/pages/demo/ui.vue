@@ -60,6 +60,14 @@ const isProjectAwesome = ref<boolean>(true);
           <ui-button color="success" outline>Button</ui-button>
           <ui-button color="success" disabled outline>Button</ui-button>
         </div>
+        <div class="flex gap-3">
+          <ui-button color="primary" size="sm">Button</ui-button>
+          <ui-button color="secondary" size="sm">Button</ui-button>
+          <ui-button color="tertiary" size="sm">Button</ui-button>
+          <ui-button color="caution" size="sm">Button</ui-button>
+          <ui-button color="danger" size="sm">Button</ui-button>
+          <ui-button color="success" size="sm">Button</ui-button>
+        </div>
         <div>
           <ui-icon-button label="Edit">
             <ri-edit-2-fill />

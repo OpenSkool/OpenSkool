@@ -11,6 +11,7 @@ const props = defineProps<{
     | 'success';
   disabled?: boolean;
   outline?: boolean;
+  size?: 'sm' | 'base';
 }>();
 
 const buttonStyles = computed(() => createButtonStyles(props));
