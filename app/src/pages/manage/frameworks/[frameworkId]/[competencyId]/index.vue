@@ -121,26 +121,26 @@ async function deleteCompetencyHandler(): Promise<void> {
     <div>Loading</div>
   </template>
   <template v-else-if="competency?.__typename == 'QueryCompetencySuccess'">
-    <ui-backbutton :to="`${parent.url}`">
+    <UiBackbutton :to="`${parent.url}`">
       {{ parent.title }}
-    </ui-backbutton>
-    <ui-title is="h2" class="text-xl mb-3">
+    </UiBackbutton>
+    <UiTitle is="h2" class="text-xl mb-3">
       {{ competency.data.title }}
-      <router-link
+      <RouterLink
         v-if="ability.can('update', 'Competency')"
         :to="`/manage/frameworks/${frameworkId}/${competencyId}/edit`"
       >
         <span v-t="'competencies.route.id.index.action.edit'" class="sr-only" />
-        <ri-edit-box-fill aria-hidden />
-      </router-link>
-    </ui-title>
-    <ui-button
+        <RiEditBoxFill aria-hidden />
+      </RouterLink>
+    </UiTitle>
+    <UiButton
       v-if="ability.can('delete', 'Competency')"
       v-t="'competencies.route.id.index.action.openDeleteModal'"
       class="mb-3"
       @click="isDeleteModalOpen = true"
     />
-    <ui-dialog :open="isDeleteModalOpen" @close="isDeleteModalOpen = false">
+    <UiDialog :open="isDeleteModalOpen" @close="isDeleteModalOpen = false">
       <template #title>
         {{ t('competencies.route.id.index.confirmDeleteModal.heading') }}
       </template>
@@ -150,24 +150,24 @@ async function deleteCompetencyHandler(): Promise<void> {
         {{ deleteErrorMessage }}
       </p>
       <div class="mt-4 flex gap-3">
-        <ui-button
+        <UiButton
           v-t="'competencies.route.id.index.confirmDeleteModal.action.abort'"
           outline
           @click="isDeleteModalOpen = false"
         />
-        <ui-button
+        <UiButton
           v-t="'competencies.route.id.index.confirmDeleteModal.action.confirm'"
           @click="deleteCompetencyHandler"
         />
       </div>
-    </ui-dialog>
-    <ui-button-router-link
+    </UiDialog>
+    <UiButtonRouterLink
       v-if="ability.can('create', 'Competency')"
       v-t="'competencies.route.id.index.action.new'"
       class="my-5"
       :to="`/manage/frameworks/${frameworkId}/${competencyId}/create-competency`"
     />
-    <competency-list
+    <CompetencyList
       v-if="competency.data.subCompetencies"
       :framework-id="frameworkId"
       :competencies="competency.data.subCompetencies"

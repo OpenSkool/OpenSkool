@@ -22,12 +22,12 @@ const frameworks = useResult(result);
 </script>
 
 <template>
-  <ui-title
+  <UiTitle
     is="h2"
     v-t="'frameworks.route.index.heading'"
     class="text-xl mb-3"
   />
-  <ui-button-router-link
+  <UiButtonRouterLink
     v-if="ability.can('create', 'CompetencyFramework')"
     v-t="'frameworks.route.index.action.create'"
     class="my-5"
@@ -35,9 +35,9 @@ const frameworks = useResult(result);
   />
   <ol class="list-decimal">
     <li v-for="framework of frameworks" :key="framework.id">
-      <router-link :to="`/manage/frameworks/${framework.id}`">
+      <RouterLink :to="`/manage/frameworks/${framework.id}`">
         {{ framework.title }}
-      </router-link>
+      </RouterLink>
     </li>
   </ol>
 </template>

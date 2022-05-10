@@ -5,7 +5,7 @@ defineProps<{
 </script>
 
 <template>
-  <component :is="is ?? 'div'" class="font-semibold text-gray-600 uppercase">
+  <Component :is="is ?? 'div'" class="font-semibold text-gray-600 uppercase">
     <slot />
-  </component>
+  </Component>
 </template>

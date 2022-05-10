@@ -18,17 +18,17 @@ function handleUpdate(changedValue: unknown): void {
 </script>
 
 <template>
-  <ui-listbox
+  <UiListbox
     :model-value="props.context._value"
     :selected-label="selectedLabel"
     @update:model-value="handleUpdate"
   >
-    <ui-listbox-option
+    <UiListboxOption
       v-for="option in props.context.options"
       :key="option.value"
       :value="option.value"
     >
       {{ option.label }}
-    </ui-listbox-option>
-  </ui-listbox>
+    </UiListboxOption>
+  </UiListbox>
 </template>

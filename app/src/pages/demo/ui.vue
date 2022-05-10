@@ -20,65 +20,65 @@ const isProjectAwesome = ref<boolean>(true);
 <template>
   <div class="flex gap-10 flex-col items-start">
     <div>
-      <ui-title is="h2" class="text-xl mb-3">Title</ui-title>
-      <ui-subtitle is="h3" class="mb-3">Subtitle</ui-subtitle>
-      <ui-title is="h2" class="text-xl mb-3">Buttons</ui-title>
+      <UiTitle is="h2" class="text-xl mb-3">Title</UiTitle>
+      <UiSubtitle is="h3" class="mb-3">Subtitle</UiSubtitle>
+      <UiTitle is="h2" class="text-xl mb-3">Buttons</UiTitle>
       <div class="flex flex-col gap-3">
         <div class="flex gap-3">
-          <ui-button color="primary">Button</ui-button>
-          <ui-button color="primary" disabled>Button</ui-button>
-          <ui-button color="primary" outline>Button</ui-button>
-          <ui-button color="primary" disabled outline>Button</ui-button>
+          <UiButton color="primary">Button</UiButton>
+          <UiButton color="primary" disabled>Button</UiButton>
+          <UiButton color="primary" outline>Button</UiButton>
+          <UiButton color="primary" disabled outline>Button</UiButton>
         </div>
         <div class="flex gap-3">
-          <ui-button color="secondary">Button</ui-button>
-          <ui-button color="secondary" disabled>Button</ui-button>
-          <ui-button color="secondary" outline>Button</ui-button>
-          <ui-button color="secondary" disabled outline>Button</ui-button>
+          <UiButton color="secondary">Button</UiButton>
+          <UiButton color="secondary" disabled>Button</UiButton>
+          <UiButton color="secondary" outline>Button</UiButton>
+          <UiButton color="secondary" disabled outline>Button</UiButton>
         </div>
         <div class="flex gap-3">
-          <ui-button color="tertiary">Button</ui-button>
-          <ui-button color="tertiary" disabled>Button</ui-button>
-          <ui-button color="tertiary" outline>Button</ui-button>
-          <ui-button color="tertiary" disabled outline>Button</ui-button>
+          <UiButton color="tertiary">Button</UiButton>
+          <UiButton color="tertiary" disabled>Button</UiButton>
+          <UiButton color="tertiary" outline>Button</UiButton>
+          <UiButton color="tertiary" disabled outline>Button</UiButton>
         </div>
         <div class="flex gap-3">
-          <ui-button color="caution">Button</ui-button>
-          <ui-button color="caution" disabled>Button</ui-button>
-          <ui-button color="caution" outline>Button</ui-button>
-          <ui-button color="caution" disabled outline>Button</ui-button>
+          <UiButton color="caution">Button</UiButton>
+          <UiButton color="caution" disabled>Button</UiButton>
+          <UiButton color="caution" outline>Button</UiButton>
+          <UiButton color="caution" disabled outline>Button</UiButton>
         </div>
         <div class="flex gap-3">
-          <ui-button color="danger">Button</ui-button>
-          <ui-button color="danger" disabled>Button</ui-button>
-          <ui-button color="danger" outline>Button</ui-button>
-          <ui-button color="danger" disabled outline>Button</ui-button>
+          <UiButton color="danger">Button</UiButton>
+          <UiButton color="danger" disabled>Button</UiButton>
+          <UiButton color="danger" outline>Button</UiButton>
+          <UiButton color="danger" disabled outline>Button</UiButton>
         </div>
         <div class="flex gap-3">
-          <ui-button color="success">Button</ui-button>
-          <ui-button color="success" disabled>Button</ui-button>
-          <ui-button color="success" outline>Button</ui-button>
-          <ui-button color="success" disabled outline>Button</ui-button>
+          <UiButton color="success">Button</UiButton>
+          <UiButton color="success" disabled>Button</UiButton>
+          <UiButton color="success" outline>Button</UiButton>
+          <UiButton color="success" disabled outline>Button</UiButton>
         </div>
         <div class="flex gap-3">
-          <ui-button color="primary" size="sm">Button</ui-button>
-          <ui-button color="secondary" size="sm">Button</ui-button>
-          <ui-button color="tertiary" size="sm">Button</ui-button>
-          <ui-button color="caution" size="sm">Button</ui-button>
-          <ui-button color="danger" size="sm">Button</ui-button>
-          <ui-button color="success" size="sm">Button</ui-button>
+          <UiButton color="primary" size="sm">Button</UiButton>
+          <UiButton color="secondary" size="sm">Button</UiButton>
+          <UiButton color="tertiary" size="sm">Button</UiButton>
+          <UiButton color="caution" size="sm">Button</UiButton>
+          <UiButton color="danger" size="sm">Button</UiButton>
+          <UiButton color="success" size="sm">Button</UiButton>
         </div>
         <div>
-          <ui-icon-button label="Edit">
-            <ri-edit-2-fill />
-          </ui-icon-button>
+          <UiIconButton label="Edit">
+            <RiEdit2Fill />
+          </UiIconButton>
         </div>
       </div>
     </div>
     <div>
-      <ui-title is="h2" class="text-xl mb-3">Dialog</ui-title>
-      <ui-button @click="isModalOpen = true">Open dialog</ui-button>
-      <ui-dialog :open="isModalOpen" @close="isModalOpen = false">
+      <UiTitle is="h2" class="text-xl mb-3">Dialog</UiTitle>
+      <UiButton @click="isModalOpen = true">Open dialog</UiButton>
+      <UiDialog :open="isModalOpen" @close="isModalOpen = false">
         <template #title>
           <div class="mb-3 text-xl">Payment successful</div>
         </template>
@@ -87,45 +87,45 @@ const isProjectAwesome = ref<boolean>(true);
           with all of the details of your order.
         </p>
         <div class="mt-4">
-          <ui-button @click="isModalOpen = false">Got it, thanks!</ui-button>
+          <UiButton @click="isModalOpen = false">Got it, thanks!</UiButton>
         </div>
-      </ui-dialog>
+      </UiDialog>
     </div>
     <div>
-      <ui-title is="h2" class="text-xl mb-3">Listbox (select)</ui-title>
-      <ui-listbox
+      <UiTitle is="h2" class="text-xl mb-3">Listbox (select)</UiTitle>
+      <UiListbox
         v-model="selectedEducation"
         :selected-label="selectedEducation?.name"
       >
-        <ui-listbox-option
+        <UiListboxOption
           v-for="education in educations"
           :key="education.id"
           :value="education"
         >
           {{ education.name }}
-        </ui-listbox-option>
-      </ui-listbox>
+        </UiListboxOption>
+      </UiListbox>
     </div>
     <div>
-      <ui-title is="h2" class="text-xl mb-3">Menu</ui-title>
-      <ui-menu label="Options">
-        <ui-menu-item v-slot="{ active }">
-          <ui-menu-item-button v-bind="{ active }">
-            <ri-pencil-fill aria-hidden="true" class="text-secondary-400" />
+      <UiTitle is="h2" class="text-xl mb-3">Menu</UiTitle>
+      <UiMenu label="Options">
+        <UiMenuItem v-slot="{ active }">
+          <UiMenuItemButton v-bind="{ active }">
+            <RiPencilFill aria-hidden="true" class="text-secondary-400" />
             Edit
-          </ui-menu-item-button>
-        </ui-menu-item>
-        <ui-menu-item v-slot="{ active }">
-          <ui-menu-item-button v-bind="{ active }" class="">
-            <ri-delete-bin-fill aria-hidden="true" class="text-danger-400" />
+          </UiMenuItemButton>
+        </UiMenuItem>
+        <UiMenuItem v-slot="{ active }">
+          <UiMenuItemButton v-bind="{ active }" class="">
+            <RiDeleteBinFill aria-hidden="true" class="text-danger-400" />
             Delete
-          </ui-menu-item-button>
-        </ui-menu-item>
-      </ui-menu>
+          </UiMenuItemButton>
+        </UiMenuItem>
+      </UiMenu>
     </div>
     <div>
-      <ui-title is="h2" class="text-xl mb-3">Switch</ui-title>
-      <ui-switch v-model="isProjectAwesome" label="Is this project awesome?" />
+      <UiTitle is="h2" class="text-xl mb-3">Switch</UiTitle>
+      <UiSwitch v-model="isProjectAwesome" label="Is this project awesome?" />
     </div>
   </div>
 </template>

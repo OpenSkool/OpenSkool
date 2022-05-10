@@ -126,9 +126,9 @@ async function handleFormSubmit(): Promise<void> {
       <div>Loading</div>
     </template>
     <template v-else-if="competency?.__typename == 'QueryCompetencySuccess'">
-      <ui-backbutton :to="`/manage/frameworks/${frameworkId}/${competencyId}`">
+      <UiBackbutton :to="`/manage/frameworks/${frameworkId}/${competencyId}`">
         {{ competency.data.title }}
-      </ui-backbutton>
+      </UiBackbutton>
       <h2 class="text-xl mb-3">
         {{ t('competencies.route.id.edit.heading') }}
       </h2>
@@ -154,6 +154,6 @@ async function handleFormSubmit(): Promise<void> {
     </template>
   </template>
   <template v-else>
-    <auth-access-denied />
+    <AuthAccessDenied />
   </template>
 </template>

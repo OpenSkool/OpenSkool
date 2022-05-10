@@ -17,7 +17,7 @@ const buttonStyles = computed(() => createButtonStyles(props));
 </script>
 
 <template>
-  <router-link :class="buttonStyles">
+  <RouterLink :class="buttonStyles">
     <slot />
-  </router-link>
+  </RouterLink>
 </template>

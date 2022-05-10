@@ -48,14 +48,14 @@ const competency = useResult(result);
       <div>Loading</div>
     </template>
     <template v-else-if="competency?.__typename == 'QueryCompetencySuccess'">
-      <ui-backbutton :to="`/manage/frameworks/${frameworkId}/${competencyId}`">
+      <UiBackbutton :to="`/manage/frameworks/${frameworkId}/${competencyId}`">
         {{ competency.data.title }}
-      </ui-backbutton>
-      <ui-title
+      </UiBackbutton>
+      <UiTitle
         v-t="'competencies.route.id.create.heading'"
         class="text-xl mb-3"
       />
-      <create-nested-competency
+      <CreateNestedCompetency
         :competency-id="competencyId"
         :framework-id="frameworkId"
       />
@@ -65,6 +65,6 @@ const competency = useResult(result);
     </template>
   </template>
   <template v-else>
-    <unauthorized />
+    <Unauthorized />
   </template>
 </template>

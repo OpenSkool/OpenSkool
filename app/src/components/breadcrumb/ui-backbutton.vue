@@ -1,6 +1,6 @@
 <template>
-  <router-link class="flex items-center">
-    <ri-arrow-left-s-line aria-hidden />
+  <RouterLink class="flex items-center">
+    <RiArrowLeftSLine aria-hidden />
     <slot />
-  </router-link>
+  </RouterLink>
 </template>

@@ -24,9 +24,9 @@ defineEmits<
         focus-visible:ring="2 offset-2 primary-500"
       >
         <div class="text-base truncate">{{ selectedLabel ?? '–' }}</div>
-        <ri-arrow-drop-down-line aria-hidden="true" />
+        <RiArrowDropDownLine aria-hidden="true" />
       </ListboxButton>
-      <transition
+      <Transition
         leave-active-class="transition duration-100 ease-in"
         leave-from-class="opacity-100"
         leave-to-class="opacity-0"
@@ -39,7 +39,7 @@ defineEmits<
         >
           <slot v-bind="{ open }" />
         </ListboxOptions>
-      </transition>
+      </Transition>
     </div>
   </Listbox>
 </template>

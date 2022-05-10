@@ -12,15 +12,15 @@ const { t } = useI18n();
 
 <template>
   <template v-if="authStore.isLoggedIn">
-    <ui-backbutton to="/manage/frameworks">
+    <UiBackbutton to="/manage/frameworks">
       {{ t('frameworks.route.create.action.backButton') }}
-    </ui-backbutton>
-    <ui-title class="text-xl mb-3">
+    </UiBackbutton>
+    <UiTitle class="text-xl mb-3">
       {{ t('frameworks.route.create.heading') }}
-    </ui-title>
-    <create-competency-framework />
+    </UiTitle>
+    <CreateCompetencyFramework />
   </template>
   <template v-else>
-    <auth-access-denied />
+    <AuthAccessDenied />
   </template>
 </template>
