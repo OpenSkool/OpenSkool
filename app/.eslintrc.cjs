@@ -24,15 +24,6 @@ module.exports = {
       },
     },
     {
-      files: ['themes/*'],
-      rules: {
-        'import/no-extraneous-dependencies': [
-          'error',
-          { devDependencies: true },
-        ],
-      },
-    },
-    {
       files: ['src/components/**/fk-*.vue'],
       rules: {
         'no-underscore-dangle': 'off',
