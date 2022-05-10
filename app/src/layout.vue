@@ -32,14 +32,10 @@ const loading = useGlobalQueryLoading();
               {{ authStore.name }}
             </template>
           </div>
-          <a
-            v-if="authStore.isLoggedIn"
-            class="btn btn-primary"
-            :href="logoutHref"
-          >
+          <ui-button-link v-if="authStore.isLoggedIn" :href="logoutHref">
             Logout
-          </a>
-          <a v-else class="btn btn-primary" :href="connectHref"> Connect </a>
+          </ui-button-link>
+          <ui-button-link v-else :href="connectHref">Connect</ui-button-link>
         </div>
       </div>
     </div>

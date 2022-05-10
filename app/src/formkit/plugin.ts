@@ -2,6 +2,7 @@ import { nl } from '@formkit/i18n';
 import { plugin, defaultConfig, createInput } from '@formkit/vue';
 import type { App } from 'vue';
 
+import { createButtonStyles } from '~/components/button/helpers';
 import Listbox from '~/components/listbox/fk-listbox.vue';
 
 import { generateClasses } from './helpers';
@@ -22,7 +23,7 @@ const BOX = {
 };
 
 const BUTTON = {
-  input: 'btn btn-primary',
+  input: createButtonStyles({ color: 'primary' }),
   wrapper: 'mb-1',
 };
 
