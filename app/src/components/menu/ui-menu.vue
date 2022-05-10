@@ -10,7 +10,7 @@ defineProps<{
 
 <template>
   <Menu as="div" class="relative inline-block">
-    <MenuButton as="template">
+    <MenuButton>
       <UiButton :class="classes?.menuButton">
         {{ label }}
         <RiArrowDropDownLine aria-hidden="true" />
