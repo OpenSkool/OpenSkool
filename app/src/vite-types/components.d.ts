@@ -5,6 +5,7 @@ import '@vue/runtime-core'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    AuthAccessDenied: typeof import('./../components/auth/auth-access-denied.vue')['default']
     CompetencyList: typeof import('./../components/list/competency-list.vue')['default']
     CreateCompetencyFramework: typeof import('./../components/forms/create-competency-framework.vue')['default']
     CreateNestedCompetency: typeof import('./../components/forms/create-nested-competency.vue')['default']
@@ -53,7 +54,6 @@ declare module '@vue/runtime-core' {
     UiSubtitle: typeof import('./../components/title/ui-subtitle.vue')['default']
     UiSwitch: typeof import('./../components/switch/ui-switch.vue')['default']
     UiTitle: typeof import('./../components/title/ui-title.vue')['default']
-    Unauthorized: typeof import('./../components/auth/unauthorized.vue')['default']
   }
 }
 

@@ -154,6 +154,6 @@ async function handleFormSubmit(): Promise<void> {
     </template>
   </template>
   <template v-else>
-    <unauthorized></unauthorized>
+    <auth-access-denied />
   </template>
 </template>

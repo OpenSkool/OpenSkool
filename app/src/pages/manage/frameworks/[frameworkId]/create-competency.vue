@@ -61,6 +61,6 @@ const competencyFramework = useResult(result);
     </template>
   </template>
   <template v-else>
-    <unauthorized />
+    <auth-access-denied />
   </template>
 </template>
