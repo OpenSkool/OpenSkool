@@ -51,10 +51,12 @@ const competencyFramework = useResult(result);
       competencyFramework?.__typename === 'QueryCompetencyFrameworkSuccess'
     "
   >
-    <UiBackbutton
-      v-t="'frameworks.route.id.index.action.backButton'"
-      to="/manage/frameworks"
-    />
+    <UiBreadcrumb>
+      <UiBreadcrumbLink
+        v-t="'frameworks.route.id.index.action.backButton'"
+        to="/manage/frameworks"
+      />
+    </UiBreadcrumb>
     <UiTitle is="h2" class="text-xl mb-3">
       {{ competencyFramework.data.title }}
     </UiTitle>
