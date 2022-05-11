@@ -19,9 +19,13 @@ defineEmits<
     <div class="relative min-w-50">
       <ListboxButton
         :disabled="disabled"
-        class="listbox-button relative w-full flex items-center justify-between rounded-lg shadow-md cursor-default bg-white focus:outline-none"
-        p="x-3 y-2"
-        focus-visible:ring="2 offset-2 primary-500"
+        :class="[
+          'toggle-button',
+          'w-full flex items-center justify-between px-3 py-2',
+          'bg-white rounded-md shadow-md border-1 border-gray-200',
+          'focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-secondary-400)',
+          'cursor-default select-none',
+        ]"
       >
         <div class="text-base truncate">{{ selectedLabel ?? '–' }}</div>
         <RiArrowDropDownLine aria-hidden="true" />
@@ -43,3 +47,9 @@ defineEmits<
     </div>
   </Listbox>
 </template>
+
+<style scoped>
+.toggle-button:disabled {
+  @apply cursor-not-allowed bg-stone-300 border-stone-400 border-opacity-50 text-stone-400;
+}
+</style>

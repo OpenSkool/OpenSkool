@@ -3,7 +3,7 @@ import { plugin, defaultConfig, createInput } from '@formkit/vue';
 import type { App } from 'vue';
 
 import { createButtonStyles } from '~/components/button/helpers';
-import Listbox from '~/components/listbox/fk-listbox.vue';
+import FkSelect from '~/components/select/fk-select.vue';
 
 import { generateClasses } from './helpers';
 
@@ -69,7 +69,7 @@ export function formkit(app: App): void {
         }),
       },
       inputs: {
-        listbox: createInput(Listbox, {
+        UiSelect: createInput(FkSelect, {
           props: ['options'],
         }),
       },

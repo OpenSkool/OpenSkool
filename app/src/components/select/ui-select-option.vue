@@ -12,10 +12,13 @@ defineProps<{
   >
     <li
       :class="[
-        'cursor-default select-none relative',
-        active ? 'text-primary-600 bg-primary-100' : 'text-gray-900',
+        'cursor-default select-none relative py-2 pl-10 pr-4',
+        disabled
+          ? 'bg-stone-200 text-stone-500 cursor-not-allowed'
+          : active
+          ? 'text-gray-800 bg-secondary-100'
+          : 'text-gray-900',
       ]"
-      p="y-2 l-10 r-4"
     >
       <div class="truncate" :class="selected ? 'font-medium' : 'font-normal'">
         <slot v-bind="{ active, disabled, selected }" />

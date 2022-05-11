@@ -57,7 +57,7 @@ const values = ref<{
     <FormKit
       name="education2"
       :label="t('demo.forms.field.education2')"
-      type="listbox"
+      type="UiSelect"
       :options="
         educations.map((education) => ({
           label: education.name,
