@@ -18,7 +18,7 @@ vi.mock('~/auth', () => {
 test('input field has prefilled value', async () => {
   render(edit);
   const titleInput: HTMLInputElement = await screen.findByRole('textbox', {
-    name: 'competencies.form.nameLabel',
+    name: 'competencies.form.name',
   });
   expect(titleInput.value).toBe('Title defined in handlers.ts');
 });
@@ -29,14 +29,14 @@ test('alert shows when empty field is submitted', async () => {
   const push = vi.spyOn(router, 'push');
   const user = userEvent.setup();
   const titleInput: HTMLInputElement = await screen.findByRole('textbox', {
-    name: 'competencies.form.nameLabel',
+    name: 'competencies.form.name',
   });
   await user.clear(titleInput);
   const submitButton = screen.getByRole('button', {
     name: 'competencies.form.action.edit.label',
   });
   await user.click(submitButton);
-  await screen.findByText('Competencies.form.nameLabel is required.');
+  await screen.findByText('Competencies.form.name is required.');
   expect(push).not.toBeCalled();
 });
 

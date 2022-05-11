@@ -4,6 +4,7 @@ import {
   GetSubCompetenciesDocument,
 } from '~/codegen/graphql';
 import { useI18nStore } from '~/i18n';
+import { assert } from '~/utils';
 
 const i18nStore = useI18nStore();
 i18nStore.loadGlob(import.meta.glob('~/locales/competencies.*.yaml'));
@@ -27,10 +28,8 @@ gql`
       __typename
       ... on QueryCompetencySuccess {
         data {
-          id
           title
           competencyFramework {
-            id
             title
           }
           parent {
@@ -53,7 +52,11 @@ const { error, loading, result } = useQuery(
   () => ({ id: props.competencyId }),
   { fetchPolicy: 'network-only' },
 );
-const competency = useResult(result);
+const competency = computed(() =>
+  result.value?.competency?.__typename === 'QueryCompetencySuccess'
+    ? result.value.competency.data
+    : null,
+);
 
 gql`
   mutation deleteCompetency($id: ID!) {
@@ -71,27 +74,8 @@ gql`
 
 const { mutate: deleteCompetency } = useMutation(DeleteCompetencyDocument);
 
-const parent = computed(() => {
-  if (competency.value?.__typename === 'QueryCompetencySuccess') {
-    if (competency.value.data.parent != null) {
-      const { id, title } = competency.value.data.parent;
-      return {
-        title,
-        url: `/manage/frameworks/${props.frameworkId}/${id}`,
-      };
-    }
-    return {
-      title: competency.value.data.competencyFramework.title,
-      url: `/manage/frameworks/${props.frameworkId}/`,
-    };
-  }
-  return {
-    title: t('competencies.route.index.action.backButton'),
-    url: '/manage/frameworks/',
-  };
-});
-
 async function deleteCompetencyHandler(): Promise<void> {
+  assert(competency.value, 'competency is not defined');
   try {
     deleteErrorMessage.value = null;
     const response = await deleteCompetency({
@@ -99,7 +83,11 @@ async function deleteCompetencyHandler(): Promise<void> {
     });
     if (response?.data) {
       isDeleteModalOpen.value = false;
-      router.replace(parent.value.url);
+      router.replace(
+        competency.value.parent == null
+          ? `/manage/frameworks/${props.frameworkId}`
+          : `/manage/frameworks/${props.frameworkId}/${competency.value.parent.id}`,
+      );
     } else {
       deleteErrorMessage.value = t(
         'competencies.route.id.index.confirmDeleteModal.error',
@@ -120,15 +108,26 @@ async function deleteCompetencyHandler(): Promise<void> {
   <template v-else-if="loading">
     <div>Loading</div>
   </template>
-  <template v-else-if="competency?.__typename == 'QueryCompetencySuccess'">
+  <template v-else-if="competency == null">
+    <NotFound />
+  </template>
+  <template v-else>
     <UiBreadcrumb>
-      <UiBreadcrumbLink to="/manage/frameworks">{{
-        t('frameworks.route.id.index.action.backButton')
-      }}</UiBreadcrumbLink>
-      <UiBreadcrumbLink :to="parent.url">{{ parent.title }}</UiBreadcrumbLink>
+      <UiBreadcrumbLink to="/manage/frameworks">
+        <span v-t="'frameworks.route.index.heading'" />
+      </UiBreadcrumbLink>
+      <UiBreadcrumbLink :to="`/manage/frameworks/${frameworkId}`">
+        {{ competency.competencyFramework.title }}
+      </UiBreadcrumbLink>
+      <UiBreadcrumbLink
+        v-if="competency.parent"
+        :to="`/manage/frameworks/${frameworkId}/${competency.parent.id}`"
+      >
+        {{ competency.parent.title }}
+      </UiBreadcrumbLink>
     </UiBreadcrumb>
     <UiTitle is="h2" class="text-xl mb-3">
-      {{ competency.data.title }}
+      {{ competency.title }}
       <RouterLink
         v-if="ability.can('update', 'Competency')"
         :to="`/manage/frameworks/${frameworkId}/${competencyId}/edit`"
@@ -137,6 +136,12 @@ async function deleteCompetencyHandler(): Promise<void> {
         <RiEditBoxFill aria-hidden />
       </RouterLink>
     </UiTitle>
+    <UiButtonRouterLink
+      v-if="ability.can('create', 'Competency')"
+      v-t="'competencies.route.id.index.action.new'"
+      class="m-5"
+      :to="`/manage/frameworks/${frameworkId}/${competencyId}/create-competency`"
+    />
     <UiButton
       v-if="ability.can('delete', 'Competency')"
       v-t="'competencies.route.id.index.action.openDeleteModal'"
@@ -148,13 +153,13 @@ async function deleteCompetencyHandler(): Promise<void> {
         {{ t('competencies.route.id.index.confirmDeleteModal.heading') }}
       </template>
       <p v-t="'competencies.route.id.index.confirmDeleteModal.message'" />
-      <p class="text-gray-500">{{ competency.data.title }}</p>
+      <p class="text-gray-500">{{ competency.title }}</p>
       <p v-if="deleteErrorMessage" class="text-red-600">
         {{ deleteErrorMessage }}
       </p>
       <div class="mt-4 flex gap-3">
         <UiButton
-          v-t="'competencies.route.id.index.confirmDeleteModal.action.abort'"
+          v-t="'competencies.route.id.index.confirmDeleteModal.action.cancel'"
           outline
           @click="isDeleteModalOpen = false"
         />
@@ -164,20 +169,11 @@ async function deleteCompetencyHandler(): Promise<void> {
         />
       </div>
     </UiDialog>
-    <UiButtonRouterLink
-      v-if="ability.can('create', 'Competency')"
-      v-t="'competencies.route.id.index.action.new'"
-      class="m-5"
-      :to="`/manage/frameworks/${frameworkId}/${competencyId}/create-competency`"
-    />
     <CompetencyList
-      v-if="competency.data.subCompetencies"
+      v-if="competency.subCompetencies"
       :framework-id="frameworkId"
-      :competencies="competency.data.subCompetencies"
+      :competencies="competency.subCompetencies"
       :refetch-queries="['getSubCompetencies']"
     />
-  </template>
-  <template v-else>
-    <div>Not Found</div>
   </template>
 </template>

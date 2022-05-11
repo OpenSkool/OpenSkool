@@ -162,6 +162,10 @@ export default [
             __typename: 'QueryCompetencySuccess',
             data: {
               title: 'Title defined in handlers.ts',
+              competencyFramework: {
+                id: 'cuid',
+                title: 'Competencty Framework',
+              },
             },
           },
         }),
@@ -178,14 +182,12 @@ export default [
           competency: {
             __typename: 'QueryCompetencySuccess',
             data: {
-              id: 'cuid',
               title: 'custom title',
               parent: {
                 title: 'custom title',
                 id: 'cuid',
               },
               competencyFramework: {
-                id: 'cuid',
                 title: 'custom title',
               },
               subCompetencies: [

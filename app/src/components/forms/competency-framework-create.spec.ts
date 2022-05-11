@@ -38,7 +38,7 @@ test('title is required', async () => {
     name: 'frameworks.form.action.create.label',
   });
   user.click(submitButton);
-  await screen.findByText('Frameworks.form.nameLabel is required.');
+  await screen.findByText('Frameworks.form.name is required.');
   expect(push).not.toHaveBeenCalled();
 });
 
@@ -59,7 +59,7 @@ test('create competencyFramework submit', async () => {
   });
 
   const titleInput: HTMLInputElement = screen.getByRole('textbox', {
-    name: 'frameworks.form.nameLabel',
+    name: 'frameworks.form.name',
   });
   await user.type(titleInput, 'Hello World!');
 

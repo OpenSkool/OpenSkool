@@ -1,42 +1,38 @@
-route:
-  index:
-    heading: Manage competencies
-    action:
-      backButton: Manage frameworks
-      create: Create competency
-  create:
-    heading: Create competency
-    action:
-      backButton: Competencies
-  id:
-    create:
-      heading: Create sub-competency
-    edit:
-      heading: Edit competency
-    index:
-      action:
-        backButton: Manage competencies
-        openDeleteModal: Delete competency
-        edit: Edit competency
-        new: New competency
-      confirmDeleteModal:
-        action:
-          abort: keep
-          confirm: delete
-        error: Something went wrong, competency could not be deleted.
-        heading: Delete competency?
-        message: Are you sure you want to delete this competency and all its children?
-      heading: Sub-comptencies
 form:
   action:
     create:
-      error: Something went wrong, competency could not be created.
+      error: Something went wrong. Competency could not be created.
       label: Create competency
     edit:
-      error: Something went wrong, competency could not be renamed.
-      label: Edit competency
-  nameLabel: Competency name
+      error: Something went wrong. Competency could not be renamed.
+      label: Update competency
+  name: Name
+
 list:
   action:
     moveUp: Move competency up
     moveDown: Move competency down
+
+route:
+  index:
+    heading: Competencies
+    action:
+      create: Create competency
+  create:
+    heading: New Competency
+  id:
+    edit:
+      heading: Edit Competency
+    index:
+      action:
+        openDeleteModal: Delete competency
+        edit: Edit competency
+        new: Add competency
+      confirmDeleteModal:
+        action:
+          cancel: Cancel
+          confirm: Delete Competency
+        error: Something went wrong, competency could not be deleted.
+        heading: Delete competency?
+        message: Are you sure you want to delete this competency and all its sub-competencies?
+      heading: Competencies

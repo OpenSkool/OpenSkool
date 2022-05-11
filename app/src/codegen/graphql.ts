@@ -544,7 +544,14 @@ export type GetCreateCompetencyParentQuery = {
       }
     | {
         __typename?: 'QueryCompetencySuccess';
-        data: { __typename?: 'Competency'; title: string };
+        data: {
+          __typename?: 'Competency';
+          title: string;
+          competencyFramework: {
+            __typename?: 'CompetencyFramework';
+            title: string;
+          };
+        };
       }
     | null;
 };
@@ -564,7 +571,15 @@ export type GetEditCompetencyQuery = {
       }
     | {
         __typename: 'QueryCompetencySuccess';
-        data: { __typename?: 'Competency'; title: string };
+        data: {
+          __typename?: 'Competency';
+          title: string;
+          competencyFramework: {
+            __typename?: 'CompetencyFramework';
+            id: string;
+            title: string;
+          };
+        };
       }
     | null;
 };
@@ -618,11 +633,9 @@ export type GetSubCompetenciesQuery = {
         __typename: 'QueryCompetencySuccess';
         data: {
           __typename?: 'Competency';
-          id: string;
           title: string;
           competencyFramework: {
             __typename?: 'CompetencyFramework';
-            id: string;
             title: string;
           };
           parent?: {
@@ -1274,6 +1287,22 @@ export const GetCreateCompetencyParentDocument = {
                               kind: 'Field',
                               name: { kind: 'Name', value: 'title' },
                             },
+                            {
+                              kind: 'Field',
+                              name: {
+                                kind: 'Name',
+                                value: 'competencyFramework',
+                              },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'title' },
+                                  },
+                                ],
+                              },
+                            },
                           ],
                         },
                       },
@@ -1351,6 +1380,26 @@ export const GetEditCompetencyDocument = {
                             {
                               kind: 'Field',
                               name: { kind: 'Name', value: 'title' },
+                            },
+                            {
+                              kind: 'Field',
+                              name: {
+                                kind: 'Name',
+                                value: 'competencyFramework',
+                              },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' },
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'title' },
+                                  },
+                                ],
+                              },
                             },
                           ],
                         },
@@ -1528,10 +1577,6 @@ export const GetSubCompetenciesDocument = {
                           selections: [
                             {
                               kind: 'Field',
-                              name: { kind: 'Name', value: 'id' },
-                            },
-                            {
-                              kind: 'Field',
                               name: { kind: 'Name', value: 'title' },
                             },
                             {
@@ -1543,10 +1588,6 @@ export const GetSubCompetenciesDocument = {
                               selectionSet: {
                                 kind: 'SelectionSet',
                                 selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'id' },
-                                  },
                                   {
                                     kind: 'Field',
                                     name: { kind: 'Name', value: 'title' },
