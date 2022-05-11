@@ -18,7 +18,7 @@ const { t } = useI18n();
     <UiTitle class="text-xl mb-3">
       {{ t('frameworks.route.create.heading') }}
     </UiTitle>
-    <CreateCompetencyFramework />
+    <CompetencyFrameworkCreate />
   </template>
   <template v-else>
     <AuthAccessDenied />
