@@ -75,6 +75,7 @@ export type CurrentUser = Node & {
   abilityRules: Array<CurrentUserAbilityRule>;
   id: Scalars['ID'];
   name: Scalars['String'];
+  tokenSet: TokenSet;
 };
 
 export type CurrentUserAbilityRule = {
@@ -108,6 +109,16 @@ export type InputError = UserError & {
   code: Scalars['String'];
   message: Scalars['String'];
   path?: Maybe<Array<Scalars['String']>>;
+};
+
+export type Jwt = {
+  __typename?: 'JWT';
+  expiresAt?: Maybe<Scalars['DateTime']>;
+  expiresIn?: Maybe<Scalars['String']>;
+  issuedAgo?: Maybe<Scalars['String']>;
+  issuedAt?: Maybe<Scalars['DateTime']>;
+  issuer?: Maybe<Scalars['String']>;
+  subject?: Maybe<Scalars['String']>;
 };
 
 export type Mutation = {
@@ -318,6 +329,13 @@ export type Teacher = Node &
     id: Scalars['ID'];
     name: Scalars['String'];
   };
+
+export type TokenSet = {
+  __typename?: 'TokenSet';
+  accessToken: Jwt;
+  idToken: Jwt;
+  refreshToken: Jwt;
+};
 
 export type UnauthorizedError = UserError & {
   __typename?: 'UnauthorizedError';

@@ -58,6 +58,7 @@ type CurrentUser implements Node {
   abilityRules: [CurrentUserAbilityRule!]!
   id: ID!
   name: String!
+  tokenSet: TokenSet!
 }
 
 type CurrentUserAbilityRule {
@@ -101,6 +102,15 @@ type InputError implements UserError {
 The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
 scalar JSON
+
+type JWT {
+  expiresAt: DateTime
+  expiresIn: String
+  issuedAgo: String
+  issuedAt: DateTime
+  issuer: String
+  subject: String
+}
 
 type Mutation {
   createCompetencyFramework(
@@ -268,6 +278,12 @@ type Teacher implements Node & Person {
   """
   id: ID!
   name: String!
+}
+
+type TokenSet {
+  accessToken: JWT!
+  idToken: JWT!
+  refreshToken: JWT!
 }
 
 type UnauthorizedError implements UserError {

@@ -1,7 +1,10 @@
 import { defineStore } from 'pinia';
 
 import { apolloClient } from '~/apollo';
-import { AuthCurrentUserDocument, CurrentUser } from '~/codegen/graphql';
+import {
+  AuthCurrentUserDocument,
+  AuthCurrentUserQuery,
+} from '~/codegen/graphql';
 import { pinia } from '~/pinia';
 
 gql`
@@ -21,10 +24,12 @@ gql`
   }
 `;
 
-export const useAuthStore = defineStore('auth', () => {
-  const currentUser = ref<CurrentUser | null>(null);
+type AppCurrentUser = AuthCurrentUserQuery['currentUser'];
 
-  async function refresh(): Promise<CurrentUser | null> {
+export const useAuthStore = defineStore('auth', () => {
+  const currentUser = ref<AppCurrentUser>(null);
+
+  async function refresh(): Promise<AppCurrentUser> {
     try {
       const currentUserQuery = await apolloClient.query({
         query: AuthCurrentUserDocument,
@@ -44,7 +49,7 @@ export const useAuthStore = defineStore('auth', () => {
   };
 });
 
-export async function initAuth(): Promise<CurrentUser | null> {
+export async function initAuth(): Promise<AppCurrentUser> {
   const authStore = useAuthStore(pinia);
   return authStore.refresh();
 }
