@@ -122,10 +122,9 @@ async function deleteCompetencyHandler(): Promise<void> {
   </template>
   <template v-else-if="competency?.__typename == 'QueryCompetencySuccess'">
     <UiBreadcrumb>
-      <UiBreadcrumbLink
-        v-t="'frameworks.route.id.index.action.backButton'"
-        to="/manage/frameworks"
-      />
+      <UiBreadcrumbLink to="/manage/frameworks">{{
+        t('frameworks.route.id.index.action.backButton')
+      }}</UiBreadcrumbLink>
       <UiBreadcrumbLink :to="parent.url">{{ parent.title }}</UiBreadcrumbLink>
     </UiBreadcrumb>
     <UiTitle is="h2" class="text-xl mb-3">
@@ -168,7 +167,7 @@ async function deleteCompetencyHandler(): Promise<void> {
     <UiButtonRouterLink
       v-if="ability.can('create', 'Competency')"
       v-t="'competencies.route.id.index.action.new'"
-      class="my-5"
+      class="m-5"
       :to="`/manage/frameworks/${frameworkId}/${competencyId}/create-competency`"
     />
     <CompetencyList
