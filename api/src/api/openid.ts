@@ -72,11 +72,11 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
             error instanceof Error &&
             error.message.startsWith('invalid_grant')
           ) {
-            request.log.debug(error);
+            request.log.warn(error);
           } else if (error instanceof JoseError) {
-            request.log.debug(error, 'JWT token could not be validated');
+            request.log.warn(error, 'could not verify accessToken');
           } else {
-            request.log.error(error, 'refresh failed for unknown reason');
+            request.log.error(error, 'could not refresh tokenSet');
           }
         }
       }
@@ -131,10 +131,10 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
         reply.redirect(redirectUrl.toString());
       } catch (error) {
         if (error instanceof JoseError) {
-          request.log.warn(error, 'JWT could not be validated');
+          request.log.warn(error, 'could not verify accessToken');
           redirectUrl.searchParams.set('error', 'jwt_error');
         } else {
-          request.log.warn(error, 'openid callback could not verify token');
+          request.log.error(error, 'could not initialize tokenSet');
           redirectUrl.searchParams.set('error', 'unknown');
         }
         reply.redirect(redirectUrl.toString());
