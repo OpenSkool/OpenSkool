@@ -187,7 +187,7 @@ const zIdToken = z.object({
   sub: z.string(),
 });
 
-type AppIdToken = JWTPayload & z.infer<typeof zIdToken>;
+export type AppIdToken = JWTPayload & z.infer<typeof zIdToken>;
 
 export function decodeIdToken(token: string): AppIdToken {
   return zIdToken.parse(decodeJwt(token));
@@ -204,7 +204,7 @@ const zCodeFlowTokenSet = z.object({
   scope: z.string(),
 });
 
-type AppTokenSet = TokenSet & z.infer<typeof zCodeFlowTokenSet>;
+export type AppTokenSet = TokenSet & z.infer<typeof zCodeFlowTokenSet>;
 
 function parseTokenSet(tokenSet: TokenSet): AppTokenSet {
   return new TokenSet(zCodeFlowTokenSet.parse(tokenSet)) as AppTokenSet;
