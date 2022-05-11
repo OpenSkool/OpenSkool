@@ -30,6 +30,10 @@ gql`
       ... on QueryCompetencySuccess {
         data {
           title
+          competencyFramework {
+            id
+            title
+          }
         }
       }
       ...BaseErrorFields
@@ -46,7 +50,11 @@ const {
   { id: props.competencyId },
   { fetchPolicy: 'network-only' },
 );
-const competency = useResult(result);
+const competency = computed(() =>
+  result.value?.competency?.__typename === 'QueryCompetencySuccess'
+    ? result.value.competency.data
+    : null,
+);
 
 gql`
   mutation renameCompetency($id: ID!, $data: RenameCompetencyInput!) {
@@ -68,9 +76,9 @@ const formNode = ref<FormKitNode>();
 const formErrors = ref<string[]>([]);
 const formValues = ref<{ title: string }>();
 
-watch(result, () => {
-  if (competency.value?.__typename === 'QueryCompetencySuccess') {
-    formValues.value = { title: competency.value.data.title };
+watch(competency, () => {
+  if (competency.value != null) {
+    formValues.value = { title: competency.value.title };
   }
 });
 
@@ -125,13 +133,28 @@ async function handleFormSubmit(): Promise<void> {
     <template v-else-if="loading">
       <div>Loading</div>
     </template>
-    <template v-else-if="competency?.__typename == 'QueryCompetencySuccess'">
-      <UiBackbutton :to="`/manage/frameworks/${frameworkId}/${competencyId}`">
-        {{ competency.data.title }}
-      </UiBackbutton>
-      <h2 class="text-xl mb-3">
-        {{ t('competencies.route.id.edit.heading') }}
-      </h2>
+    <template v-else>
+      <UiBreadcrumb>
+        <UiBreadcrumbLink to="/manage/frameworks">
+          <span v-t="'frameworks.route.index.heading'" />
+        </UiBreadcrumbLink>
+        <template v-if="competency?.competencyFramework">
+          <UiBreadcrumbLink
+            :to="`/manage/frameworks/${competency.competencyFramework.id}`"
+          >
+            {{ competency.competencyFramework.title }}
+          </UiBreadcrumbLink>
+          <UiBreadcrumbLink
+            :to="`/manage/frameworks/${competency.competencyFramework.id}/${competencyId}`"
+          >
+            {{ competency.title }}
+          </UiBreadcrumbLink>
+        </template>
+      </UiBreadcrumb>
+      <UiTitle
+        v-t="'competencies.route.id.edit.heading'"
+        class="text-xl mb-3"
+      />
       <FormKit
         v-if="formValues != null"
         v-model="formValues"
@@ -143,14 +166,11 @@ async function handleFormSubmit(): Promise<void> {
       >
         <FormKit
           name="title"
-          :label="t('competencies.form.nameLabel')"
+          :label="t('competencies.form.name')"
           type="text"
           validation="required"
         />
       </FormKit>
-    </template>
-    <template v-else>
-      <div>Not Found</div>
     </template>
   </template>
   <template v-else>

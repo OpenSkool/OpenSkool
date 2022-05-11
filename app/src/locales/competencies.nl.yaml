@@ -1,41 +1,38 @@
-route:
-  index:
-    heading: Manage competencies
-    action:
-      create: Create competency
-  create:
-    heading: Create competency
-    action:
-      backButton: Competencies
-  id:
-    create:
-      heading: Create sub-competency
-    edit:
-      heading: Edit competency
-    index:
-      action:
-        backButton: Manage competencies
-        openDeleteModal: Delete competency
-        edit: Edit competency
-        new: New competency
-      confirmDeleteModal:
-        action:
-          abort: keep
-          confirm: delete
-        error: Something went wrong, competency could not be deleted.
-        heading: Delete competency?
-        message: Are you sure you want to delete this competency and all its children?
-      heading: Sub-comptencies
 form:
   action:
     create:
-      error: Something went wrong, competency could not be created.
-      label: Create competency
+      error: Er ging iets mis. Competentie kon niet aangemaakt worden.
+      label: Maak competentie
     edit:
-      error: Something went wrong, competency could not be renamed.
-      label: Edit competency
-  nameLabel: Competency name
+      error: Er ging iets mis. Competentie kon niet bewerkt worden.
+      label: Update competentie
+  name: Naam
+
 list:
   action:
-    moveUp: Move competency up
-    moveDown: Move competency down
+    moveUp: Competentie omhoog bewegen
+    moveDown: Competentie omlaag bewegen
+
+route:
+  index:
+    heading: Competenties
+    action:
+      create: Maak competentie
+  create:
+    heading: Nieuwe Competentie
+  id:
+    edit:
+      heading: Bewerk Competentie
+    index:
+      action:
+        openDeleteModal: Verwijder competentie
+        edit: Bewerk competentie
+        new: Voeg competentie toe
+      confirmDeleteModal:
+        action:
+          cancel: Annuleer
+          confirm: Verwijder Competentie
+        error: Er ging iets mis. Competentie kon niet verwijderd worden.
+        heading: Verwijder competentie?
+        message: Ben je zeker dat je alle competenties en alle geneste competenties.
+      heading: Competenties

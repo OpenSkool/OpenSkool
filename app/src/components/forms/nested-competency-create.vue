@@ -84,7 +84,7 @@ async function handleFormSubmit(): Promise<void> {
   >
     <FormKit
       name="title"
-      :label="t('competencies.form.nameLabel')"
+      :label="t('competencies.form.name')"
       type="text"
       validation="required"
     />

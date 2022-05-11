@@ -12,9 +12,11 @@ const { t } = useI18n();
 
 <template>
   <template v-if="authStore.isLoggedIn">
-    <UiBackbutton to="/manage/frameworks">
-      {{ t('frameworks.route.create.action.backButton') }}
-    </UiBackbutton>
+    <UiBreadcrumb>
+      <UiBreadcrumbLink to="/manage/frameworks">
+        {{ t('frameworks.route.index.heading') }}
+      </UiBreadcrumbLink>
+    </UiBreadcrumb>
     <UiTitle class="text-xl mb-3">
       {{ t('frameworks.route.create.heading') }}
     </UiTitle>

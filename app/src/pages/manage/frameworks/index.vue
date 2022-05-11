@@ -22,6 +22,8 @@ const frameworks = useResult(result);
 </script>
 
 <template>
+  <!-- Breadcrumb placeholder -->
+  <div class="text-sm">&nbsp;</div>
   <UiTitle
     is="h2"
     v-t="'frameworks.route.index.heading'"

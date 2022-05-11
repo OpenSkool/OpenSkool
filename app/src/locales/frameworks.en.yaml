@@ -3,19 +3,17 @@ form:
     create:
       error: Something went wrong, framework could not be created.
       label: Create framework
-  nameLabel: Framework name
+  name: Name
+
 route:
   create:
-    heading: Create framework
-    action:
-      backButton: Frameworks
+    heading: New Framework
   id:
     index:
       action:
-        backButton: Manage frameworks
-        new: New competency
-      heading: Manage competencies
+        new: Add competency
+      heading: Competencies
   index:
-    heading: Manage frameworks
+    heading: Frameworks
     action:
-      create: Create framework
+      create: Add framework

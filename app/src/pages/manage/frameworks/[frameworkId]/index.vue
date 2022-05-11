@@ -8,8 +8,6 @@ i18nStore.loadGlob(import.meta.glob('~/locales/frameworks.*.yaml'));
 
 const ability = useAppAbility();
 
-const { t } = useI18n();
-
 const props = defineProps<{
   frameworkId: string;
 }>();
@@ -54,9 +52,9 @@ const competencyFramework = useResult(result);
     "
   >
     <UiBreadcrumb>
-      <UiBreadcrumbLink to="/manage/frameworks">{{
-        t('frameworks.route.id.index.action.backButton')
-      }}</UiBreadcrumbLink>
+      <UiBreadcrumbLink to="/manage/frameworks">
+        <span v-t="'frameworks.route.index.heading'" />
+      </UiBreadcrumbLink>
     </UiBreadcrumb>
     <UiTitle is="h2" class="text-xl mb-3">
       {{ competencyFramework.data.title }}

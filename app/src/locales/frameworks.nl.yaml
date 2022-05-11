@@ -2,20 +2,18 @@ form:
   action:
     create:
       error: Something went wrong, framework could not be created.
-      label: Create framework
-  nameLabel: Framework name
+      label: Maak framework
+  name: Naam
+
 route:
   create:
-    heading: Create framework
-    action:
-      backButton: Frameworks
+    heading: Nieuw Framework
   id:
     index:
       action:
-        backButton: Manage frameworks
-        new: New competency
-      heading: Manage competencies
+        new: Voeg competency toe
+      heading: Competencies
   index:
-    heading: Manage frameworks
+    heading: Frameworks
     action:
-      create: Create framework
+      create: Voeg framework toe
