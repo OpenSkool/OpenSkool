@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 
-import { DomainContext } from '../domain';
+import { DomainContext } from '~/domain';
 
 export interface Context {
   domain: DomainContext;

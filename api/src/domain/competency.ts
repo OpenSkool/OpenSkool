@@ -8,13 +8,17 @@ import {
   Language,
 } from '@prisma/client';
 
-import { AppInputError, AppNotFoundError } from '../errors';
-import { prisma } from '../prisma';
-import { SchemaInputErrorCode } from '../schema/constants';
-import { first } from '../utils';
+import { AppInputError, AppNotFoundError } from '~/errors';
+import { prisma } from '~/prisma';
+import { SchemaInputErrorCode } from '~/schema/constants';
+import { first } from '~/utils';
+
 import { DomainContext } from './context';
-import { handleServiceError, validateSingleLineString } from './helpers';
-import { mapLocaleToLanguageCode } from './helpers/language';
+import {
+  handleServiceError,
+  mapLocaleToLanguageCode,
+  validateSingleLineString,
+} from './helpers';
 
 export interface CompetencyModel
   extends Competency,

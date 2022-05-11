@@ -2,7 +2,8 @@ import assert from 'assert';
 
 import plugin from 'fastify-plugin';
 
-import { prisma } from '../prisma';
+import { prisma } from '~/prisma';
+
 import { AppAbility, buildAbility } from './ability';
 import { decodeIdToken } from './openid';
 

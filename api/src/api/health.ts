@@ -1,7 +1,7 @@
 import { FastifyPluginAsync } from 'fastify';
 import plugin from 'fastify-plugin';
 
-import { prisma } from '../prisma';
+import { prisma } from '~/prisma';
 
 export const healthPlugin: FastifyPluginAsync = plugin(async (app) => {
   app.get('/health', async (request, reply) => {

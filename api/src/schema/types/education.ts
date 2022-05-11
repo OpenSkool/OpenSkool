@@ -1,4 +1,5 @@
-import { EducationModel, EducationService } from '../../domain';
+import { EducationModel, EducationService } from '~/domain';
+
 import builder from '../builder';
 import { Accountable } from './accountable';
 import { Node } from './node';

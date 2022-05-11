@@ -2,7 +2,8 @@ import assert from 'assert';
 
 import { Education, EducationTranslation, Language } from '@prisma/client';
 
-import { prisma } from '../prisma';
+import { prisma } from '~/prisma';
+
 import { DomainContext } from './context';
 import { handleServiceError } from './helpers';
 import { mapLocaleToLanguageCode } from './helpers/language';

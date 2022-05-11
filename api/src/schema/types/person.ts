@@ -1,4 +1,5 @@
-import { UserModel, UserService } from '../../domain';
+import { UserModel, UserService } from '~/domain';
+
 import builder from '../builder';
 import { Node } from './node';
 

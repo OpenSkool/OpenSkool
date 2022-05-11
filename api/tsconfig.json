@@ -3,7 +3,10 @@
   "extends": "@os/tsconfig/node.json",
   "display": "api",
   "compilerOptions": {
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["src/*"]
+    }
   },
   "include": ["src", "scripts", "test", "*.ts", "prisma"]
 }

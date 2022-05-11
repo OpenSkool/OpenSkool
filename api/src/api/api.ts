@@ -6,7 +6,8 @@ import { Static, Type } from '@sinclair/typebox';
 import type { FastifyPluginAsync } from 'fastify';
 import ms from 'ms';
 
-import { prismaPlugin } from '../plugins/prisma';
+import { prismaPlugin } from '~/plugins/prisma';
+
 import { authPlugin } from './auth';
 import { graphqlRoutes } from './graphql';
 import { healthPlugin } from './health';

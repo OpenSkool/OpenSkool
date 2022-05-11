@@ -1,6 +1,6 @@
 import { exec } from 'child_process';
 
-import app from './app';
+import app from '~/app';
 
 (async (): Promise<void> => {
   await app.ready();

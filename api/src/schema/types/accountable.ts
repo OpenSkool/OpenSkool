@@ -1,6 +1,7 @@
 import * as Db from '@prisma/client';
 
-import { UserService } from '../../domain';
+import { UserService } from '~/domain';
+
 import builder from '../builder';
 import { Person } from './person';
 

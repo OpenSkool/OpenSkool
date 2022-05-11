@@ -1,5 +1,5 @@
-import { AppInputError } from '../../errors';
-import { SchemaInputErrorCode } from '../../schema/constants';
+import { AppInputError } from '~/errors';
+import { SchemaInputErrorCode } from '~/schema/constants';
 
 const CHAR_CONTROL = '\u0000-\u001F\u007F-\u009F';
 const CHAR_ZERO_WIDTH = '\u200B-\u200D\uFEFF';
