@@ -41,6 +41,7 @@ declare module '@vue/runtime-core' {
     TransitionRoot: typeof import('@headlessui/vue')['TransitionRoot']
     UiBackbutton: typeof import('./../components/breadcrumb/ui-backbutton.vue')['default']
     UiBreadcrumb: typeof import('./../components/breadcrumb/ui-breadcrumb.vue')['default']
+    UiBreadcrumbLink: typeof import('./../components/breadcrumb/ui-breadcrumb-link.vue')['default']
     UiButton: typeof import('./../components/button/ui-button.vue')['default']
     UiButtonLink: typeof import('./../components/button/ui-button-link.vue')['default']
     UiButtonRouterLink: typeof import('./../components/button/ui-button-router-link.vue')['default']
