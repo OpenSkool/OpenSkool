@@ -54,7 +54,7 @@ const competencyFramework = useResult(result);
         v-t="'competencies.route.create.heading'"
         class="text-xl mb-3"
       />
-      <CreateRootCompetency :framework-id="props.frameworkId" />
+      <RootCompetencyCreate :framework-id="props.frameworkId" />
     </template>
     <template v-else>
       <div>Not Found</div>

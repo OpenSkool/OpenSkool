@@ -55,7 +55,7 @@ const competency = useResult(result);
         v-t="'competencies.route.id.create.heading'"
         class="text-xl mb-3"
       />
-      <CreateNestedCompetency
+      <NestedCompetencyCreate
         :competency-id="competencyId"
         :framework-id="frameworkId"
       />
@@ -65,6 +65,6 @@ const competency = useResult(result);
     </template>
   </template>
   <template v-else>
-    <Unauthorized />
+    <AuthAccessDenied />
   </template>
 </template>
