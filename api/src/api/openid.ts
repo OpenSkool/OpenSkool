@@ -151,7 +151,12 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
       async handler(request, reply) {
         if (request.session.openId.tokenSet == null) {
           request.log.warn(`logout failed: no token set`);
-          reply.redirect(app.config.APP_BASE_URL);
+          const redirectUrl = new URL(
+            request.query.from ?? '/',
+            app.config.APP_BASE_URL,
+          );
+          redirectUrl.searchParams.set('error', 'no_token_set');
+          reply.redirect(redirectUrl.toString());
           return;
         }
         request.session.openId.state = request.query;
