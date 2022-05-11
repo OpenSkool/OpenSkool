@@ -92,19 +92,20 @@ const isProjectAwesome = ref<boolean>(true);
       </UiDialog>
     </div>
     <div>
-      <UiTitle is="h2" class="text-xl mb-3">Listbox (select)</UiTitle>
-      <UiListbox
+      <UiTitle is="h2" class="text-xl mb-3">Select</UiTitle>
+      <UiSelect
         v-model="selectedEducation"
         :selected-label="selectedEducation?.name"
       >
-        <UiListboxOption
+        <UiSelectOption
           v-for="education in educations"
           :key="education.id"
           :value="education"
+          :disabled="education.id === 3"
         >
           {{ education.name }}
-        </UiListboxOption>
-      </UiListbox>
+        </UiSelectOption>
+      </UiSelect>
     </div>
     <div>
       <UiTitle is="h2" class="text-xl mb-3">Menu</UiTitle>

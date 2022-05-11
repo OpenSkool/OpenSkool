@@ -5,6 +5,6 @@ forms:
   field:
     education1:
       help: Which is your education?
-      label: Education Radio
-    education2: Education Listbox
+      label: Education Radio Options
+    education2: Education Select
     title: Title

@@ -5,6 +5,6 @@ forms:
   field:
     education1:
       help: Wat is je opleiding?
-      label: Opleiding (radio)
-    education2: Opleiding (Listbox)
+      label: Opleiding Radio Opties
+    education2: Opleiding Select
     title: Titel
