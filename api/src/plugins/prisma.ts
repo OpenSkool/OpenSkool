@@ -1,6 +1,6 @@
 import plugin from 'fastify-plugin';
 
-import { prisma } from '../prisma';
+import { prisma } from '~/prisma';
 
 export const prismaPlugin = plugin(async (app) => {
   await prisma.$connect();

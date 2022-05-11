@@ -2,12 +2,13 @@ import {
   CompetencyFrameworkModel,
   CompetencyModel,
   CompetencyService,
-} from '../../domain';
+} from '~/domain';
 import {
   AppInputError,
   AppNotFoundError,
   AppUnauthorizedError,
-} from '../../errors';
+} from '~/errors';
+
 import builder from '../builder';
 import { Accountable } from './accountable';
 import { Node } from './node';

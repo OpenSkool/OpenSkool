@@ -7,8 +7,8 @@ import { create } from 'cross-undici-fetch';
 import { FastifyPluginAsync } from 'fastify';
 import ms from 'ms';
 
-import schema from '../schema';
-import type { Context } from '../schema/context';
+import schema from '~/schema';
+import type { Context } from '~/schema/context';
 
 const HTTP_STATUS_NO_CONTENT = 204;
 

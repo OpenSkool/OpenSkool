@@ -1,8 +1,9 @@
 import type { JsonObject } from 'type-fest';
 
-import { AppRawRule } from '../../api/ability';
-import type { AuthUser } from '../../api/auth';
-import { castArray } from '../../utils';
+import { AppRawRule } from '~/api/ability';
+import type { AuthUser } from '~/api/auth';
+import { castArray } from '~/utils';
+
 import builder from '../builder';
 import { Node } from './node';
 

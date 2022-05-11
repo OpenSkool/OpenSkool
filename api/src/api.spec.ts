@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest';
 
-import app from './app';
+import app from '~/app';
 
 test.skip('echo request body', async () => {
   const response = await app

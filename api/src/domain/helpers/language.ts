@@ -1,6 +1,6 @@
 import { Language } from '@prisma/client';
 
-import { AppError } from '../../errors';
+import { AppError } from '~/errors';
 
 export function mapLocaleToLanguageCode(locale: string): Language {
   switch (locale) {

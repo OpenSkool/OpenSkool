@@ -1,8 +1,8 @@
 import { PrismaClient } from '@prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 
-import { AppError, AppNotFoundError } from './errors';
-import logger from './logger';
+import { AppError, AppNotFoundError } from '~/errors';
+import logger from '~/logger';
 
 export const prisma = new PrismaClient({
   log: [

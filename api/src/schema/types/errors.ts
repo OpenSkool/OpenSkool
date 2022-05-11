@@ -3,7 +3,8 @@ import {
   AppNotFoundError,
   AppUnauthorizedError,
   AppUserError,
-} from '../../errors';
+} from '~/errors';
+
 import builder from '../builder';
 
 const UserError = builder.interfaceType(AppUserError, {
