@@ -1,10 +1,6 @@
 <script lang="ts" setup>
 import { GetFrameworkRootCompetenciesDocument } from '~/codegen/graphql';
 import CompetencyList from '~/components/list/competency-list.vue';
-import { useI18nStore } from '~/i18n';
-
-const i18nStore = useI18nStore();
-i18nStore.loadGlob(import.meta.glob('~/locales/frameworks.*.yaml'));
 
 const ability = useAppAbility();
 

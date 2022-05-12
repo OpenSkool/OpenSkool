@@ -1,10 +1,5 @@
 <script lang="ts" setup>
-import { useI18nStore } from '~/i18n';
-
 const ability = useAppAbility();
-
-const i18nStore = useI18nStore();
-i18nStore.loadGlob(import.meta.glob('~/locales/frameworks.*.yaml'));
 
 const { t } = useI18n();
 </script>
