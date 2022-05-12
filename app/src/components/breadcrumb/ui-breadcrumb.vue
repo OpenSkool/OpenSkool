@@ -1,5 +1,5 @@
 <template>
-  <ol class="flex breadcrumb">
+  <ol class="flex flex-wrap breadcrumb">
     <slot />
   </ol>
 </template>
