@@ -3,6 +3,7 @@ import { plugin, defaultConfig, createInput } from '@formkit/vue';
 import type { App } from 'vue';
 
 import { createButtonStyles } from '~/components/button/helpers';
+import UiInputText from '~/components/input/ui-input-text.vue';
 import FkSelect from '~/components/select/fk-select.vue';
 
 import { generateClasses } from './helpers';
@@ -72,6 +73,7 @@ export function formkit(app: App): void {
         UiSelect: createInput(FkSelect, {
           props: ['options'],
         }),
+        UiInputText: createInput(UiInputText),
       },
       locales: { nl },
     }),

@@ -15,6 +15,7 @@ const educations: Education[] = [
 const selectedEducation = ref<Education>(educations[0] as Education);
 
 const isProjectAwesome = ref<boolean>(true);
+const inputText = '';
 </script>
 
 <template>
@@ -127,6 +128,10 @@ const isProjectAwesome = ref<boolean>(true);
     <div>
       <UiTitle is="h2" class="text-xl mb-3">Switch</UiTitle>
       <UiSwitch v-model="isProjectAwesome" label="Is this project awesome?" />
+    </div>
+    <div class="mb-15">
+      <UiTitle is="h2" class="text-xl mb-3">Input text</UiTitle>
+      <UiInputText v-model="inputText" />
     </div>
   </div>
 </template>
