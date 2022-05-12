@@ -1,15 +1,11 @@
 <script lang="ts" setup>
 import { GetCompetencyFrameworkDocument } from '~/codegen/graphql';
-import { useI18nStore } from '~/i18n';
 
 const ability = useAppAbility();
 
 const props = defineProps<{
   frameworkId: string;
 }>();
-
-const i18nStore = useI18nStore();
-i18nStore.loadGlob(import.meta.glob('~/locales/competencies.*.yaml'));
 
 gql`
   query getCompetencyFramework($id: ID!) {

@@ -1,9 +1,5 @@
 <script lang="ts" setup>
 import { GetAllCompetencyFrameworksDocument } from '~/codegen/graphql';
-import { useI18nStore } from '~/i18n';
-
-const i18nStore = useI18nStore();
-i18nStore.loadGlob(import.meta.glob('~/locales/frameworks.*.yaml'));
 
 const ability = useAppAbility();
 

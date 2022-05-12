@@ -5,13 +5,9 @@ import {
   GetEditCompetencyDocument,
   RenameCompetencyDocument,
 } from '~/codegen/graphql';
-import { useI18nStore } from '~/i18n';
 import { assert } from '~/utils';
 
 const ability = useAppAbility();
-
-const i18nStore = useI18nStore();
-i18nStore.loadGlob(import.meta.glob('~/locales/competencies.*.yaml'));
 
 const { t } = useI18n();
 
