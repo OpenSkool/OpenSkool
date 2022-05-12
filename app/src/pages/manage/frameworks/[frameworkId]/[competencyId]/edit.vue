@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { FormKitNode } from '@formkit/core';
 
-import { useAuthStore } from '~/auth';
 import {
   GetEditCompetencyDocument,
   RenameCompetencyDocument,
@@ -9,7 +8,7 @@ import {
 import { useI18nStore } from '~/i18n';
 import { assert } from '~/utils';
 
-const authStore = useAuthStore();
+const ability = useAppAbility();
 
 const i18nStore = useI18nStore();
 i18nStore.loadGlob(import.meta.glob('~/locales/competencies.*.yaml'));
@@ -126,7 +125,7 @@ async function handleFormSubmit(): Promise<void> {
 </script>
 
 <template>
-  <template v-if="authStore.isLoggedIn">
+  <template v-if="ability.can('update', 'CompetencyFramework')">
     <template v-if="getEditCompetencyError">
       <p>Something went wrong</p>
     </template>

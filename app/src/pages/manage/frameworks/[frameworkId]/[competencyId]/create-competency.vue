@@ -1,12 +1,11 @@
 <script lang="ts" setup>
-import { useAuthStore } from '~/auth';
 import { GetCreateCompetencyParentDocument } from '~/codegen/graphql';
 import { useI18nStore } from '~/i18n';
 
 const i18nStore = useI18nStore();
 i18nStore.loadGlob(import.meta.glob('~/locales/competencies.*.yaml'));
 
-const authStore = useAuthStore();
+const ability = useAppAbility();
 
 const props = defineProps<{
   competencyId: string;
@@ -46,7 +45,7 @@ const parentCompetency = computed(() =>
 </script>
 
 <template>
-  <template v-if="authStore.isLoggedIn">
+  <template v-if="ability.can('create', 'Competency')">
     <template v-if="getCreateCompetencyParentError">
       <p>Something went wrong</p>
     </template>
