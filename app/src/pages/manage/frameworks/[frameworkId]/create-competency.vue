@@ -1,9 +1,8 @@
 <script lang="ts" setup>
-import { useAuthStore } from '~/auth';
 import { GetCompetencyFrameworkDocument } from '~/codegen/graphql';
 import { useI18nStore } from '~/i18n';
 
-const authStore = useAuthStore();
+const ability = useAppAbility();
 
 const props = defineProps<{
   frameworkId: string;
@@ -40,7 +39,7 @@ const competencyFramework = computed(() =>
 </script>
 
 <template>
-  <template v-if="authStore.isLoggedIn">
+  <template v-if="ability.can('create', 'Competency')">
     <template v-if="error">
       <p>Something went wrong</p>
     </template>

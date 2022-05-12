@@ -1,8 +1,7 @@
 <script lang="ts" setup>
-import { useAuthStore } from '~/auth';
 import { useI18nStore } from '~/i18n';
 
-const authStore = useAuthStore();
+const ability = useAppAbility();
 
 const i18nStore = useI18nStore();
 i18nStore.loadGlob(import.meta.glob('~/locales/frameworks.*.yaml'));
@@ -11,7 +10,7 @@ const { t } = useI18n();
 </script>
 
 <template>
-  <template v-if="authStore.isLoggedIn">
+  <template v-if="ability.can('create', 'CompetencyFramework')">
     <UiBreadcrumb>
       <UiBreadcrumbLink to="/manage/frameworks">
         {{ t('frameworks.route.index.heading') }}
