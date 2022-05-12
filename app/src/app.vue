@@ -7,13 +7,13 @@ import { useInitI18n } from '~/i18n';
 import AppLayout from '~/layout.vue';
 
 useInitFormkit();
-useInitI18n();
+const i18nStore = useInitI18n();
 
 provide(DefaultApolloClient, apolloClient);
 </script>
 
 <template>
-  <AppLayout>
+  <AppLayout :key="i18nStore.locale">
     <Suspense>
       <RouterView />
     </Suspense>
