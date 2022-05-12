@@ -1,6 +1,8 @@
+import { camelCase } from '~/utils';
+
 import { Loader } from './types';
 
-interface ParsedGlobEntry {
+export interface ParsedGlobEntry {
   namespace: string;
   locale: string;
   loader: Loader;
@@ -20,6 +22,6 @@ export function parseLocalesGlob(
       locale: string;
       namespace: string;
     };
-    return { namespace, locale, loader };
+    return { namespace: camelCase(namespace), locale, loader };
   });
 }

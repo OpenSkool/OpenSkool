@@ -1,8 +1,7 @@
 <script lang="ts" setup>
-import { useI18nStore } from '~/i18n';
+import { i18nLoaderService } from '~/i18n';
 
-const i18nStore = useI18nStore();
-await i18nStore.loadGlob(import.meta.glob('./locales/demo.*.yaml'));
+await i18nLoaderService.loadGlob(import.meta.glob('./locales/demo.*.yaml'));
 
 const { t } = useI18n();
 

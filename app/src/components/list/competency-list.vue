@@ -1,9 +1,6 @@
 <script lang="ts" setup>
 import { SwapCompetenciesDocument } from '~/codegen/graphql';
-import { useI18nStore } from '~/i18n';
 
-const i18nStore = useI18nStore();
-i18nStore.loadGlob(import.meta.glob('~/locales/competencies.*.yaml'));
 interface Competency {
   id: string;
   title: string;

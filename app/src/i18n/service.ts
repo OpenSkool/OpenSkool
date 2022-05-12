@@ -3,10 +3,8 @@ import { isRef, Ref } from 'vue';
 import {
   AVAILABLE_LOCALES,
   DEFAULT_LOCALE,
-  GLOBAL_LOCALES_GLOB,
   LOCALE_STORAGE_LOCALE_KEY,
 } from './constants';
-import { parseLocalesGlob } from './helpers';
 import { i18n } from './plugin';
 
 export function getLocaleString(): string {
@@ -22,15 +20,6 @@ export async function initI18n(): Promise<void> {
       ? DEFAULT_LOCALE
       : localeStorage;
   setLocale(initialLocale);
-  for (const { locale, loader } of parseLocalesGlob(GLOBAL_LOCALES_GLOB)) {
-    if (locale === initialLocale) {
-      const { default: messages } = await loader();
-      if (messages == null) {
-        throw new TypeError('locale (global) should return a default export');
-      }
-      mergeLocaleMessage(locale, 'global', messages);
-    }
-  }
 }
 
 export function mergeLocaleMessage(
@@ -38,7 +27,6 @@ export function mergeLocaleMessage(
   namespace: string,
   messages: object,
 ): void {
-  console.info(`🌐 "${namespace}" loaded (${locale})`);
   i18n.global.mergeLocaleMessage(locale, { [namespace]: messages });
 }
 
