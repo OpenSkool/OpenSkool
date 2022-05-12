@@ -45,6 +45,7 @@ declare module '@vue/runtime-core' {
     UiButtonRouterLink: typeof import('./../components/button/ui-button-router-link.vue')['default']
     UiDialog: typeof import('./../components/dialog/ui-dialog.vue')['default']
     UiIconButton: typeof import('./../components/button/ui-icon-button.vue')['default']
+    UiInputText: typeof import('./../components/input/ui-input-text.vue')['default']
     UiMenu: typeof import('./../components/menu/ui-menu.vue')['default']
     UiMenuItem: typeof import('./../components/menu/ui-menu-item.vue')['default']
     UiMenuItemButton: typeof import('./../components/menu/ui-menu-item-button.vue')['default']

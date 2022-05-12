@@ -39,7 +39,7 @@ const values = ref<{
     <FormKit
       name="competencyTitle"
       :label="t('demo.forms.field.title')"
-      type="text"
+      type="UiInputText"
       validation="required"
     />
     <FormKit
