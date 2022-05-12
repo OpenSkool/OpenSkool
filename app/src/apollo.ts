@@ -5,13 +5,13 @@ import {
 } from '@apollo/client/core';
 import { setContext } from '@apollo/client/link/context';
 
-import { getLocaleString } from './i18n';
+import { i18nService } from './i18n';
 
 const enrichLink = setContext(
   (operation, previousContext: { headers?: Record<string, string> }) => {
     const headers: Record<string, string> = {
       ...previousContext.headers,
-      'accept-language': getLocaleString(),
+      'accept-language': i18nService.getLocaleString(),
     };
     return { headers };
   },

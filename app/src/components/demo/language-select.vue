@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { AVAILABLE_LOCALES, useI18nStore } from '~/i18n';
+import { AVAILABLE_LOCALES, i18nService } from '~/i18n';
 import { assert } from '~/utils';
 
 function getLanguageName(locale: string): string {
@@ -11,10 +11,10 @@ function getLanguageName(locale: string): string {
   return displayName;
 }
 
-const i18nStore = useI18nStore();
-const selectedLocale = ref(i18nStore.locale);
+const { locale } = useI18n();
+const selectedLocale = ref(locale);
 watch(selectedLocale, () => {
-  i18nStore.setLocale(selectedLocale.value);
+  i18nService.setLocale(selectedLocale.value);
 });
 </script>
 
@@ -26,11 +26,11 @@ watch(selectedLocale, () => {
       :selected-label="getLanguageName(selectedLocale)"
     >
       <UiSelectOption
-        v-for="locale of AVAILABLE_LOCALES"
-        :key="locale"
-        :value="locale"
+        v-for="availableLocale of AVAILABLE_LOCALES"
+        :key="availableLocale"
+        :value="availableLocale"
       >
-        {{ getLanguageName(locale) }}
+        {{ getLanguageName(availableLocale) }}
       </UiSelectOption>
     </UiSelect>
   </div>

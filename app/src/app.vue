@@ -1,21 +1,14 @@
 <script lang="ts" setup>
-import { DefaultApolloClient } from '@vue/apollo-composable';
-
-import { apolloClient } from '~/apollo';
-import { useInitFormkit } from '~/formkit';
-import { useInitI18n } from '~/i18n';
+import { i18nLoaderService } from '~/i18n';
 import AppLayout from '~/layout.vue';
 
-useInitFormkit();
-const i18nStore = useInitI18n();
+const { locale } = useI18n();
 
-provide(DefaultApolloClient, apolloClient);
+await i18nLoaderService.loadGlobalMessages();
 </script>
 
 <template>
-  <AppLayout :key="i18nStore.locale">
-    <Suspense>
-      <RouterView />
-    </Suspense>
+  <AppLayout :key="locale">
+    <RouterView />
   </AppLayout>
 </template>

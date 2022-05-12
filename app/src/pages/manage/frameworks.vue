@@ -1,9 +1,12 @@
 <script lang="ts" setup>
-import { useI18nStore } from '~/i18n';
+import { i18nLoaderService } from '~/i18n';
 
-const i18nStore = useI18nStore();
-await i18nStore.loadGlob(import.meta.glob('~/locales/competencies.*.yaml'));
-await i18nStore.loadGlob(import.meta.glob('~/locales/frameworks.*.yaml'));
+await i18nLoaderService.loadGlob(
+  import.meta.glob('~/locales/competencies.*.yaml'),
+);
+await i18nLoaderService.loadGlob(
+  import.meta.glob('~/locales/frameworks.*.yaml'),
+);
 </script>
 
 <template>

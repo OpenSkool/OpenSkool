@@ -1,5 +1,4 @@
 export * from './constants';
-export * from './hooks';
+export * as i18nLoaderService from './loader-service';
 export * from './plugin';
-export * from './service';
-export * from './store';
+export * as i18nService from './service';
