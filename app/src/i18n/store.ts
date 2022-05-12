@@ -32,3 +32,5 @@ export const useI18nStore = defineStore('i18n', () => {
 if (import.meta.hot) {
   import.meta.hot.accept(acceptHMRUpdate(useI18nStore, import.meta.hot));
 }
+
+export type I18nStore = ReturnType<typeof useI18nStore>;
