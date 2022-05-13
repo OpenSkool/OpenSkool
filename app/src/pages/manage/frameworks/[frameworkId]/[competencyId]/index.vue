@@ -105,7 +105,7 @@ async function deleteCompetencyHandler(): Promise<void> {
     <div>Loading</div>
   </template>
   <template v-else-if="competency == null">
-    <NotFound />
+    <p>Not found.</p>
   </template>
   <template v-else>
     <UiBreadcrumb>
