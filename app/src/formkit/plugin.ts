@@ -15,24 +15,6 @@ const BUTTON = {
   wrapper: 'mb-1',
 };
 
-const TEXT = {
-  inner: `
-    max-w-md
-    border border-gray-400
-    bg-gray-100
-    rounded-lg
-    mb-1
-    overflow-hidden
-    focus-within:(ring-3 ring-offset-2 ring-primary-300)
-    formkit-invalid:border-red-500
-  `,
-  input: `
-    w-full h-10 px-3
-    border-none
-    text-base text-gray-700 placeholder-gray-400
-  `,
-};
-
 export function formkit(app: App): void {
   app.use(
     plugin,
@@ -49,16 +31,13 @@ export function formkit(app: App): void {
           },
           button: BUTTON,
           submit: BUTTON,
-          text: TEXT,
         }),
       },
       inputs: {
         checkbox: createInput(FkCheckbox),
         radio: createInput(FkRadio),
-        UiSelect: createInput(FkSelect, {
-          props: ['options'],
-        }),
-        UiInputText: createInput(FkInputText),
+        select: createInput(FkSelect, { props: ['options'] }),
+        text: createInput(FkInputText),
       },
       locales: { nl },
     }),

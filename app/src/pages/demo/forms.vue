@@ -45,7 +45,7 @@ const values = ref<{
     <FormKit
       name="competencyTitle"
       :label="t('demo.forms.field.title')"
-      type="UiInputText"
+      type="text"
       validation="required"
     />
     <FormKit
@@ -65,7 +65,7 @@ const values = ref<{
     <FormKit
       name="education3"
       :label="t('demo.forms.field.education2')"
-      type="UiSelect"
+      type="select"
       :options="educationOptions"
     />
   </FormKit>
