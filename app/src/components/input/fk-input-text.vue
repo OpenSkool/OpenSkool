@@ -8,6 +8,7 @@ defineProps<{
 
 <template>
   <UiInputText
+    :id="context.id"
     :model-value="context._value"
     @update:model-value="context.node.input"
   />
