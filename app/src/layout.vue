@@ -40,7 +40,7 @@ const loading = useGlobalQueryLoading();
       </div>
     </div>
   </div>
-  <div class="container mx-auto px-5">
+  <div>
     <div class="absolute -ml-12 mt-1 left-1/2 top-1/2">
       <TransitionRoot
         :show="loading"
@@ -61,7 +61,7 @@ const loading = useGlobalQueryLoading();
         <UiMainNavLink to="/demo/ui">UI</UiMainNavLink>
         <UiMainNavLink to="/manage/frameworks">Manage frameworks</UiMainNavLink>
       </UiMainNav>
-      <div class="mt-5">
+      <div class="container mx-auto px-5 mt-5">
         <Suspense>
           <RouterView />
         </Suspense>
