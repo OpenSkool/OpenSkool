@@ -55,22 +55,12 @@ const loading = useGlobalQueryLoading();
       </TransitionRoot>
     </div>
     <div class="flex gap-5">
-      <nav class="my-5 text-base mr-5">
-        <ol class="space-y-2">
-          <li>
-            <RouterLink to="/">Home</RouterLink>
-          </li>
-          <li>
-            <RouterLink to="/demo/forms">Forms</RouterLink>
-          </li>
-          <li>
-            <RouterLink to="/demo/ui">UI</RouterLink>
-          </li>
-          <li>
-            <RouterLink to="/manage/frameworks"> Manage frameworks </RouterLink>
-          </li>
-        </ol>
-      </nav>
+      <UiMainNav>
+        <UiMainNavLink to="/">Home</UiMainNavLink>
+        <UiMainNavLink to="/demo/forms">Forms</UiMainNavLink>
+        <UiMainNavLink to="/demo/ui">UI</UiMainNavLink>
+        <UiMainNavLink to="/manage/frameworks">Manage frameworks</UiMainNavLink>
+      </UiMainNav>
       <div class="mt-5">
         <Suspense>
           <RouterView />
