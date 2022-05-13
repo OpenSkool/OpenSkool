@@ -16,14 +16,21 @@ const educations: Education[] = [
   { id: 3, name: 'Medicine' },
 ];
 
+const educationOptions = educations.map((education) => ({
+  label: education.name,
+  value: education.id,
+}));
+
 const values = ref<{
   competencyTitle: string;
-  education1: string | undefined;
+  education1: number | undefined;
   education2: number | undefined;
+  education3: number | undefined;
 }>({
   competencyTitle: '',
   education1: undefined,
   education2: undefined,
+  education3: undefined,
 });
 </script>
 
@@ -45,24 +52,21 @@ const values = ref<{
       name="education1"
       type="radio"
       :label="t('demo.forms.field.education1.label')"
-      :options="
-        educations.map((education) => ({
-          label: education.name,
-          value: education.id,
-        }))
-      "
+      :options="educationOptions"
       :help="t('demo.forms.field.education1.help')"
     />
     <FormKit
       name="education2"
+      type="checkbox"
+      label="Education Checkbox"
+      :options="educationOptions"
+      :help="t('demo.forms.field.education1.help')"
+    />
+    <FormKit
+      name="education3"
       :label="t('demo.forms.field.education2')"
       type="UiSelect"
-      :options="
-        educations.map((education) => ({
-          label: education.name,
-          value: education.id,
-        }))
-      "
+      :options="educationOptions"
     />
   </FormKit>
 </template>

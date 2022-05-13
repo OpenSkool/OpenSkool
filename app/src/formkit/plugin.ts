@@ -3,25 +3,12 @@ import { plugin, defaultConfig, createInput } from '@formkit/vue';
 import type { App } from 'vue';
 
 import { createButtonStyles } from '~/components/button/helpers';
+import FkCheckbox from '~/components/input/fk-checkbox.vue';
+import FkRadio from '~/components/input/fk-radio.vue';
 import UiInputText from '~/components/input/ui-input-text.vue';
 import FkSelect from '~/components/select/fk-select.vue';
 
 import { generateClasses } from './helpers';
-
-const BOX = {
-  fieldset: 'max-w-md border border-gray-400 rounded-md px-4 pb-2',
-  legend: 'font-bold text-base p-2',
-  wrapper: 'flex items-center mb-1 cursor-pointer',
-  help: 'mb-2',
-  input: `
-    form-check-input appearance-none
-    h-5 w-5 mr-2
-    border border-gray-500 rounded-sm bg-white checked:bg-primary-400
-    focus:outline-none focus-visible:(ring-3 ring-offset-2 ring-primary-300)
-    transition duration-200
-  `,
-  label: 'text-base text-gray-700 mt-1',
-};
 
 const BUTTON = {
   input: createButtonStyles({ color: 'primary' }),
@@ -62,14 +49,12 @@ export function formkit(app: App): void {
           },
           button: BUTTON,
           submit: BUTTON,
-          radio: {
-            ...BOX,
-            input: BOX.input.replace('rounded-sm', 'rounded-full'),
-          },
           text: TEXT,
         }),
       },
       inputs: {
+        checkbox: createInput(FkCheckbox),
+        radio: createInput(FkRadio),
         UiSelect: createInput(FkSelect, {
           props: ['options'],
         }),
