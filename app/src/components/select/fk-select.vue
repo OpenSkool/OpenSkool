@@ -19,6 +19,7 @@ function handleUpdate(changedValue: unknown): void {
 
 <template>
   <UiSelect
+    :id="context.id"
     :model-value="props.context._value"
     :selected-label="selectedLabel"
     @update:model-value="handleUpdate"
