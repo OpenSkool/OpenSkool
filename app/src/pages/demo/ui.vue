@@ -92,8 +92,9 @@ const inputText = '';
         </div>
       </UiDialog>
     </div>
-    <div>
-      <UiTitle is="h2" class="text-xl mb-3">Select</UiTitle>
+    <div class="flex flex-col gap-3">
+      <UiTitle is="h2" class="text-xl">Inputs</UiTitle>
+      <UiInputText v-model="inputText" placeholder="Hello World!" />
       <UiSelect
         v-model="selectedEducation"
         :selected-label="selectedEducation?.name"
@@ -107,6 +108,11 @@ const inputText = '';
           {{ education.name }}
         </UiSelectOption>
       </UiSelect>
+      <UiSwitch v-model="isProjectAwesome" label="Is this project awesome?" />
+      <UiCheckbox id="checkbox">Checkbox</UiCheckbox>
+      <UiCheckbox id="checkbox" checked="">Checkbox</UiCheckbox>
+      <UiRadio id="radio">Radio</UiRadio>
+      <UiRadio id="radio" checked="">Radio</UiRadio>
     </div>
     <div>
       <UiTitle is="h2" class="text-xl mb-3">Menu</UiTitle>
@@ -124,14 +130,6 @@ const inputText = '';
           </UiMenuItemButton>
         </UiMenuItem>
       </UiMenu>
-    </div>
-    <div>
-      <UiTitle is="h2" class="text-xl mb-3">Switch</UiTitle>
-      <UiSwitch v-model="isProjectAwesome" label="Is this project awesome?" />
-    </div>
-    <div class="mb-15">
-      <UiTitle is="h2" class="text-xl mb-3">Input text</UiTitle>
-      <UiInputText v-model="inputText" />
     </div>
   </div>
 </template>
