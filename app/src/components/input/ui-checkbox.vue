@@ -2,11 +2,15 @@
   <label class="flex items-center gap-2">
     <div class="relative w-5 h-5">
       <input
-        class="center appearance-none w-5 h-5 bg-white rounded-sm checked:bg-secondary-300"
+        :class="[
+          'center w-5 h-5 pointer-events-none',
+          'bg-white rounded-sm checked:bg-secondary-300',
+          'focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-secondary-400)',
+        ]"
         type="checkbox"
         v-bind="$attrs"
       />
-      <RiCheckLine class="center check hidden text-white font-bold" />
+      <RiCheckLine class="center check hidden text-white" />
     </div>
     <slot />
   </label>
@@ -17,9 +21,6 @@ input:checked + .check {
   display: block;
 }
 .center {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  @apply absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2;
 }
 </style>
