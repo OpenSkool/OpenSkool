@@ -38,6 +38,8 @@ declare module '@vue/runtime-core' {
     RiGlobalFill: typeof import('~icons/ri/global-fill')['default']
     RiLoaderFill: typeof import('~icons/ri/loader-fill')['default']
     RiLogoutBoxRLine: typeof import('~icons/ri/logout-box-r-line')['default']
+    RiMenuFoldLine: typeof import('~icons/ri/menu-fold-line')['default']
+    RiMenuLine: typeof import('~icons/ri/menu-line')['default']
     RiPencilFill: typeof import('~icons/ri/pencil-fill')['default']
     RiUser3Fill: typeof import('~icons/ri/user3-fill')['default']
     RootCompetencyCreate: typeof import('./../components/forms/root-competency-create.vue')['default']

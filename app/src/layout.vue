@@ -2,12 +2,21 @@
 import { useGlobalQueryLoading } from '@vue/apollo-composable';
 
 const loading = useGlobalQueryLoading();
+const isSideNavClosed = ref<boolean>(false);
 </script>
 
 <template>
   <div class="bg-white">
-    <div class="flex items-center justify-end p-3">
-      <div class="flex gap-8 items-center">
+    <div class="flex items-center justify-between p-3">
+      <div
+        class="flex items-center hover:cursor-pointer"
+        @click="isSideNavClosed = !isSideNavClosed"
+      >
+        <RiMenuLine v-if="isSideNavClosed" class="mx-3" />
+        <RiMenuFoldLine v-if="!isSideNavClosed" class="mx-3" />
+        <span>Menu</span>
+      </div>
+      <div class="flex gap-8">
         <LanguageSelect />
         <UserMenu />
       </div>
@@ -28,7 +37,7 @@ const loading = useGlobalQueryLoading();
       </TransitionRoot>
     </div>
     <div class="flex gap-5">
-      <UiMainNav>
+      <UiMainNav :class="{ hidden: isSideNavClosed }">
         <UiMainNavSection name="Home">
           <UiMainNavLink to="/">Home</UiMainNavLink>
         </UiMainNavSection>
