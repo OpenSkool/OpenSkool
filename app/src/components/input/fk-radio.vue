@@ -8,6 +8,7 @@ defineProps<{
 
 <template>
   <UiRadioGroup
+    :id="context.id"
     :options="context.options"
     :model-value="context._value"
     @update:model-value="context.node.input"

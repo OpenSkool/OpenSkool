@@ -8,6 +8,7 @@ defineProps<{
 
 <template>
   <UiCheckboxGroup
+    :id="context.id"
     :options="context.options"
     :model-value="context._value"
     @update:model-value="context.node.input"
