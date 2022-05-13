@@ -15,7 +15,7 @@ const educations: Education[] = [
 const selectedEducation = ref<Education>(educations[0] as Education);
 
 const isProjectAwesome = ref<boolean>(true);
-const inputText = '';
+const inputText = ref<string>('');
 </script>
 
 <template>

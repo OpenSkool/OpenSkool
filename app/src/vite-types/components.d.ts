@@ -13,6 +13,7 @@ declare module '@vue/runtime-core' {
     DialogOverlay: typeof import('@headlessui/vue')['DialogOverlay']
     DialogTitle: typeof import('@headlessui/vue')['DialogTitle']
     FkCheckbox: typeof import('./../components/input/fk-checkbox.vue')['default']
+    FkInputText: typeof import('./../components/input/fk-input-text.vue')['default']
     FkRadio: typeof import('./../components/input/fk-radio.vue')['default']
     FkSelect: typeof import('./../components/select/fk-select.vue')['default']
     LanguageSelect: typeof import('./../components/demo/language-select.vue')['default']
