@@ -8,6 +8,7 @@ declare module '@vue/runtime-core' {
     AuthAccessDenied: typeof import('./../components/auth/auth-access-denied.vue')['default']
     CompetencyFrameworkCreate: typeof import('./../components/forms/competency-framework-create.vue')['default']
     CompetencyList: typeof import('./../components/list/competency-list.vue')['default']
+    ConnectButton: typeof import('./../components/nav-bar/connect-button.vue')['default']
     Dialog: typeof import('@headlessui/vue')['Dialog']
     DialogDescription: typeof import('@headlessui/vue')['DialogDescription']
     DialogOverlay: typeof import('@headlessui/vue')['DialogOverlay']
@@ -36,8 +37,9 @@ declare module '@vue/runtime-core' {
     RiEditBoxFill: typeof import('~icons/ri/edit-box-fill')['default']
     RiGlobalFill: typeof import('~icons/ri/global-fill')['default']
     RiLoaderFill: typeof import('~icons/ri/loader-fill')['default']
+    RiLogoutBoxRLine: typeof import('~icons/ri/logout-box-r-line')['default']
     RiPencilFill: typeof import('~icons/ri/pencil-fill')['default']
-    RiShieldUserFill: typeof import('~icons/ri/shield-user-fill')['default']
+    RiUser3Fill: typeof import('~icons/ri/user3-fill')['default']
     RootCompetencyCreate: typeof import('./../components/forms/root-competency-create.vue')['default']
     Switch: typeof import('@headlessui/vue')['Switch']
     TransitionChild: typeof import('@headlessui/vue')['TransitionChild']
@@ -67,6 +69,7 @@ declare module '@vue/runtime-core' {
     UiSubtitle: typeof import('./../components/title/ui-subtitle.vue')['default']
     UiSwitch: typeof import('./../components/switch/ui-switch.vue')['default']
     UiTitle: typeof import('./../components/title/ui-title.vue')['default']
+    UserMenu: typeof import('./../components/nav-bar/user-menu.vue')['default']
   }
 }
 

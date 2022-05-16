@@ -1,4 +1,5 @@
 import windiColors from 'windicss/colors';
+import aspectRatio from 'windicss/plugin/aspect-ratio';
 import { DefaultColors } from 'windicss/types/config/colors';
 import { FullConfig } from 'windicss/types/interfaces';
 
@@ -20,7 +21,7 @@ const WINDI_COLORS = ['dark', 'light', 'neutral', 'slate', 'stone', 'zinc'];
 export default function createConfig(theme: OsTheme): FullConfig {
   return {
     attributify: true,
-    plugins: [formkit],
+    plugins: [aspectRatio, formkit],
     theme: {
       ...theme,
       colors: {
