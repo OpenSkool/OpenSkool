@@ -56,10 +56,18 @@ const loading = useGlobalQueryLoading();
     </div>
     <div class="flex gap-5">
       <UiMainNav>
-        <UiMainNavLink to="/">Home</UiMainNavLink>
-        <UiMainNavLink to="/demo/forms">Forms</UiMainNavLink>
-        <UiMainNavLink to="/demo/ui">UI</UiMainNavLink>
-        <UiMainNavLink to="/manage/frameworks">Manage frameworks</UiMainNavLink>
+        <UiMainNavSection name="Home">
+          <UiMainNavLink to="/">Home</UiMainNavLink>
+        </UiMainNavSection>
+        <UiMainNavSection name="Demo">
+          <UiMainNavLink to="/demo/forms">Forms</UiMainNavLink>
+          <UiMainNavLink to="/demo/ui">UI</UiMainNavLink>
+        </UiMainNavSection>
+        <UiMainNavSection name="Frameworks">
+          <UiMainNavLink to="/manage/frameworks"
+            >Manage frameworks</UiMainNavLink
+          >
+        </UiMainNavSection>
       </UiMainNav>
       <div class="container mx-auto px-5 mt-5">
         <Suspense>
