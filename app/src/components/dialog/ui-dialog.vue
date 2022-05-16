@@ -1,6 +1,9 @@
 <script lang="ts" setup>
+import { DialogOverlay } from '@headlessui/vue';
+
 defineProps<{
-  open?: boolean;
+  implicitClose?: boolean;
+  open: boolean;
 }>();
 
 defineEmits<(event: 'close') => void>();
@@ -18,7 +21,11 @@ defineEmits<(event: 'close') => void>();
           leave-from="opacity-100"
           leave-to="opacity-0"
         >
-          <DialogOverlay class="fixed inset-0 bg-black opacity-30" />
+          <Component
+            :is="implicitClose ? DialogOverlay : 'div'"
+            aria-hidden="true"
+            class="fixed inset-0 bg-black opacity-30"
+          />
         </TransitionChild>
         <TransitionChild
           enter="duration-300 ease-out transform"
@@ -32,15 +39,18 @@ defineEmits<(event: 'close') => void>();
             class="relative z-10 max-w-lg mx-auto my-8 shadow-xl rounded-2xl p-6 bg-white"
             v-bind="$attrs"
           >
-            <DialogTitle v-if="$slots.title">
-              <slot name="title" />
-            </DialogTitle>
-
-            <DialogDescription v-if="$slots.description">
-              <slot name="description" />
-            </DialogDescription>
-
-            <slot />
+            <div v-if="implicitClose" class="absolute top-0 right-0 p-3">
+              <button
+                class="flex rounded-lg p-2 text-gray-500 focus:outline-none focus-visible:(ring-2 ring-gray-500)"
+                type="button"
+                @click="$emit('close')"
+              >
+                <RiCloseLine />
+              </button>
+            </div>
+            <div class="flex flex-col gap-5">
+              <slot />
+            </div>
           </div>
         </TransitionChild>
       </div>
