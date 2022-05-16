@@ -144,16 +144,27 @@ async function deleteCompetencyHandler(): Promise<void> {
       class="mb-3"
       @click="isDeleteModalOpen = true"
     />
-    <UiDialog :open="isDeleteModalOpen" @close="isDeleteModalOpen = false">
-      <template #title>
-        {{ t('competencies.route.id.index.confirmDeleteModal.heading') }}
-      </template>
-      <p v-t="'competencies.route.id.index.confirmDeleteModal.message'" />
-      <p class="text-gray-500">{{ competency.title }}</p>
-      <p v-if="deleteErrorMessage" class="text-red-600">
+    <UiDialog
+      implicit-close
+      :open="isDeleteModalOpen"
+      @close="isDeleteModalOpen = false"
+    >
+      <UiDialogTitle class="text-danger-300">
+        <span v-t="'competencies.route.id.index.confirmDeleteModal.heading'" />
+      </UiDialogTitle>
+      <UiDialogDescription>
+        <i18n-t
+          keypath="competencies.route.id.index.confirmDeleteModal.message"
+        >
+          <template #title>
+            <strong class="text-secondary-300">{{ competency.title }}</strong>
+          </template>
+        </i18n-t>
+      </UiDialogDescription>
+      <p v-if="deleteErrorMessage" class="text-danger-400">
         {{ deleteErrorMessage }}
       </p>
-      <div class="mt-4 flex gap-3">
+      <UiDialogButtons>
         <UiButton
           v-t="'competencies.route.id.index.confirmDeleteModal.action.cancel'"
           outline
@@ -161,9 +172,10 @@ async function deleteCompetencyHandler(): Promise<void> {
         />
         <UiButton
           v-t="'competencies.route.id.index.confirmDeleteModal.action.confirm'"
+          color="danger"
           @click="deleteCompetencyHandler"
         />
-      </div>
+      </UiDialogButtons>
     </UiDialog>
     <CompetencyList
       v-if="competency.subCompetencies"
