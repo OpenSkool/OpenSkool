@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import UiDialogDescription from '../../components/dialog/ui-dialog-description.vue';
+
 const isModalOpen = ref(false);
 
 interface Education {
@@ -82,16 +84,14 @@ const inputText = ref<string>('');
       <UiTitle is="h2" class="text-xl mb-3">Dialog</UiTitle>
       <UiButton @click="isModalOpen = true">Open dialog</UiButton>
       <UiDialog :open="isModalOpen" @close="isModalOpen = false">
-        <template #title>
-          <div class="mb-3 text-xl">Payment successful</div>
-        </template>
-        <p class="text-base text-gray-500">
+        <UiDialogTitle>Payment successful</UiDialogTitle>
+        <UiDialogDescription>
           Your payment has been successfully submitted. We’ve sent you an email
           with all of the details of your order.
-        </p>
-        <div class="mt-4">
+        </UiDialogDescription>
+        <UiDialogButtons>
           <UiButton @click="isModalOpen = false">Got it, thanks!</UiButton>
-        </div>
+        </UiDialogButtons>
       </UiDialog>
     </div>
     <div class="flex flex-col gap-3">
