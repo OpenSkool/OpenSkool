@@ -34,5 +34,5 @@ route:
           confirm: Delete Competency
         error: Something went wrong, competency could not be deleted.
         heading: Delete competency?
-        message: Are you sure you want to delete this competency and all its sub-competencies?
+        message: Are you sure you want to delete "{title}" and all its sub-competencies?
       heading: Competencies
