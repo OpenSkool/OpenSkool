@@ -16,7 +16,7 @@ defineEmits<
     :model-value="modelValue"
     @update:model-value="$emit('update:modelValue', $event)"
   >
-    <div class="relative min-w-50">
+    <div v-bind="$attrs" class="relative min-w-50">
       <ListboxButton
         :disabled="disabled"
         :class="[
