@@ -1969,7 +1969,7 @@ __metadata:
   dependencies:
     "@typescript-eslint/eslint-plugin": ~5.21.0
     "@typescript-eslint/parser": ~5.21.0
-    eslint-config-noise: 0.25.0
+    eslint-config-noise: 0.25.2
     eslint-config-prettier: ^8.5.0
     eslint-import-resolver-typescript: ^2.7.1
     eslint-plugin-import: ^2.26.0
@@ -4883,15 +4883,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-noise@npm:0.25.0":
-  version: 0.25.0
-  resolution: "eslint-config-noise@npm:0.25.0"
+"eslint-config-noise@npm:0.25.2":
+  version: 0.25.2
+  resolution: "eslint-config-noise@npm:0.25.2"
   dependencies:
     confusing-browser-globals: ^1.0.0
     lodash: ^4.17.21
   peerDependencies:
     eslint: ^8.1
-  checksum: d26be74b1e34e7f031f59d3ed8b93b5fb80a9f4723822c9067219fc35c89c97858ca69fcf3e2166e3ee17af90500fd8545673abf93e5e992c3ca8123d76425f6
+  checksum: 0f177bd55d055be42b06765d856a9a71777ab6c4818e3ba62a5f409bd4e6d57e37f254797769c9a9b8bfda99f7a4c2cbe3c70764d616ba8ae1dd947622fb8cce
   languageName: node
   linkType: hard
 
