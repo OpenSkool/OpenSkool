@@ -1,42 +1,15 @@
 <script lang="ts" setup>
 import { useGlobalQueryLoading } from '@vue/apollo-composable';
 
-import { useAuthStore, authConnectUrl, authLogoutUrl } from '~/auth';
-
-const authStore = useAuthStore();
-
-const route = useRoute();
-const connectHref = computed(() => {
-  const connectUrl = new URL(authConnectUrl);
-  connectUrl.searchParams.set('from', route.path);
-  return connectUrl.toString();
-});
-const logoutHref = computed(() => {
-  const connectUrl = new URL(authLogoutUrl);
-  connectUrl.searchParams.set('from', route.path);
-  return connectUrl.toString();
-});
-
 const loading = useGlobalQueryLoading();
 </script>
 
 <template>
   <div class="bg-white">
     <div class="flex items-center justify-end p-3">
-      <div class="flex gap-8">
+      <div class="flex gap-8 items-center">
         <LanguageSelect />
-        <div class="flex gap-3 items-center text-base">
-          <div class="flex gap-2 items-center">
-            <RiShieldUserFill />
-            <template v-if="authStore.isLoggedIn">
-              {{ authStore.name }}
-            </template>
-          </div>
-          <UiButtonLink v-if="authStore.isLoggedIn" :href="logoutHref">
-            Logout
-          </UiButtonLink>
-          <UiButtonLink v-else :href="connectHref">Connect</UiButtonLink>
-        </div>
+        <UserMenu />
       </div>
     </div>
   </div>
