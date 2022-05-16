@@ -37,20 +37,31 @@ const isSideNavClosed = ref<boolean>(false);
       </TransitionRoot>
     </div>
     <div class="flex gap-5">
-      <UiMainNav :class="{ hidden: isSideNavClosed }">
-        <UiMainNavSection name="Home">
-          <UiMainNavLink to="/">Home</UiMainNavLink>
-        </UiMainNavSection>
-        <UiMainNavSection name="Demo">
-          <UiMainNavLink to="/demo/forms">Forms</UiMainNavLink>
-          <UiMainNavLink to="/demo/ui">UI</UiMainNavLink>
-        </UiMainNavSection>
-        <UiMainNavSection name="Frameworks">
-          <UiMainNavLink to="/manage/frameworks"
-            >Manage frameworks</UiMainNavLink
-          >
-        </UiMainNavSection>
-      </UiMainNav>
+      <TransitionRoot
+        appear
+        :show="!isSideNavClosed"
+        enter="transition ease-in-out duration-200 transform"
+        enter-from="-translate-x-full"
+        enter-to="translate-x-0"
+        leave="transition ease-in-out duration-200 transform"
+        leave-from="translate-x-0"
+        leave-to="-translate-x-full"
+      >
+        <UiMainNav>
+          <UiMainNavSection name="Home">
+            <UiMainNavLink to="/">Home</UiMainNavLink>
+          </UiMainNavSection>
+          <UiMainNavSection name="Demo">
+            <UiMainNavLink to="/demo/forms">Forms</UiMainNavLink>
+            <UiMainNavLink to="/demo/ui">UI</UiMainNavLink>
+          </UiMainNavSection>
+          <UiMainNavSection name="Frameworks">
+            <UiMainNavLink to="/manage/frameworks"
+              >Manage frameworks</UiMainNavLink
+            >
+          </UiMainNavSection>
+        </UiMainNav>
+      </TransitionRoot>
       <div class="container mx-auto px-5 mt-5">
         <Suspense>
           <RouterView />
