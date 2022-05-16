@@ -11,7 +11,7 @@ import FkSelect from '~/components/select/fk-select.vue';
 import { generateClasses } from './helpers';
 
 const BUTTON = {
-  input: createButtonStyles({ color: 'primary' }),
+  input: createButtonStyles(),
   wrapper: 'mb-1',
 };
 
