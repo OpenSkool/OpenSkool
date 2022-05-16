@@ -27,7 +27,7 @@ export function createButtonStyles({
   disabled = false,
   outline = false,
   size = 'base',
-}: ButtonStyleOptions): string {
+}: ButtonStyleOptions = {}): string {
   const classes: string[] = [
     'inline-flex items-center gap-1 rounded-md font-semibold select-none',
   ];

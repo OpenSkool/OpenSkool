@@ -19,10 +19,12 @@ const inputText = ref<string>('');
 </script>
 
 <template>
-  <div class="flex gap-10 flex-col items-start">
+  <div class="flex gap-10 flex-col items-start mb-50">
     <div>
-      <UiTitle is="h2" class="text-xl mb-3">Title</UiTitle>
-      <UiSubtitle is="h3" class="mb-3">Subtitle</UiSubtitle>
+      <UiTitle is="h2" class="text-xl">Title</UiTitle>
+      <UiSubtitle is="h3">Subtitle</UiSubtitle>
+    </div>
+    <div>
       <UiTitle is="h2" class="text-xl mb-3">Buttons</UiTitle>
       <div class="flex flex-col gap-3">
         <div class="flex gap-3">
@@ -116,19 +118,27 @@ const inputText = ref<string>('');
     </div>
     <div>
       <UiTitle is="h2" class="text-xl mb-3">Menu</UiTitle>
-      <UiMenu label="Options">
-        <UiMenuItem v-slot="{ active }">
-          <UiMenuItemButton v-bind="{ active }">
+      <UiMenu>
+        <UiMenuButton>
+          Options
+          <RiArrowDropDownLine aria-hidden="true" />
+        </UiMenuButton>
+        <UiMenuItems>
+          <div class="px-4 py-3">
+            <div class="font-bold">Dieter Luypaert</div>
+            <small class="text-secondary-400 underline">
+              dieter@foursevens.be
+            </small>
+          </div>
+          <UiMenuItem>
             <RiPencilFill aria-hidden="true" class="text-secondary-400" />
             Edit
-          </UiMenuItemButton>
-        </UiMenuItem>
-        <UiMenuItem v-slot="{ active }">
-          <UiMenuItemButton v-bind="{ active }" class="">
+          </UiMenuItem>
+          <UiMenuItem>
             <RiDeleteBinFill aria-hidden="true" class="text-danger-400" />
             Delete
-          </UiMenuItemButton>
-        </UiMenuItem>
+          </UiMenuItem>
+        </UiMenuItems>
       </UiMenu>
     </div>
   </div>
