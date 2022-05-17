@@ -48,7 +48,7 @@ defineEmits<(event: 'close') => void>();
                 <RiCloseLine />
               </button>
             </div>
-            <div class="flex flex-col gap-5">
+            <div class="space-y-5">
               <slot />
             </div>
           </div>
