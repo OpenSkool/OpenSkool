@@ -9,6 +9,7 @@ defineProps<{
 <template>
   <UiRadioGroup
     :id="context.id"
+    class="my-1"
     :options="context.options"
     :model-value="context._value"
     @update:model-value="context.node.input"

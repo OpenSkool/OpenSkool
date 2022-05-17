@@ -20,7 +20,7 @@ function toggleValue(value: InputValue): void {
 </script>
 
 <template>
-  <ul class="flex flex-col gap-2 my-1">
+  <ul class="space-y-2">
     <li v-for="option in options" :key="option.value">
       <UiCheckbox
         :checked="modelValue.includes(option.value)"

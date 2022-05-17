@@ -19,51 +19,51 @@ const inputText = ref<string>('');
 </script>
 
 <template>
-  <div class="flex gap-10 flex-col items-start mb-50">
+  <div class="space-y-10 mb-50">
     <div>
       <UiTitle is="h2" class="text-xl">Title</UiTitle>
       <UiSubtitle is="h3">Subtitle</UiSubtitle>
     </div>
     <div>
       <UiTitle is="h2" class="text-xl mb-3">Buttons</UiTitle>
-      <div class="flex flex-col gap-3">
-        <div class="flex gap-3">
+      <div class="space-y-3">
+        <div class="space-x-3">
           <UiButton color="primary">Button</UiButton>
           <UiButton color="primary" disabled>Button</UiButton>
           <UiButton color="primary" outline>Button</UiButton>
           <UiButton color="primary" disabled outline>Button</UiButton>
         </div>
-        <div class="flex gap-3">
+        <div class="space-x-3">
           <UiButton color="secondary">Button</UiButton>
           <UiButton color="secondary" disabled>Button</UiButton>
           <UiButton color="secondary" outline>Button</UiButton>
           <UiButton color="secondary" disabled outline>Button</UiButton>
         </div>
-        <div class="flex gap-3">
+        <div class="space-x-3">
           <UiButton color="tertiary">Button</UiButton>
           <UiButton color="tertiary" disabled>Button</UiButton>
           <UiButton color="tertiary" outline>Button</UiButton>
           <UiButton color="tertiary" disabled outline>Button</UiButton>
         </div>
-        <div class="flex gap-3">
+        <div class="space-x-3">
           <UiButton color="caution">Button</UiButton>
           <UiButton color="caution" disabled>Button</UiButton>
           <UiButton color="caution" outline>Button</UiButton>
           <UiButton color="caution" disabled outline>Button</UiButton>
         </div>
-        <div class="flex gap-3">
+        <div class="space-x-3">
           <UiButton color="danger">Button</UiButton>
           <UiButton color="danger" disabled>Button</UiButton>
           <UiButton color="danger" outline>Button</UiButton>
           <UiButton color="danger" disabled outline>Button</UiButton>
         </div>
-        <div class="flex gap-3">
+        <div class="space-x-3">
           <UiButton color="success">Button</UiButton>
           <UiButton color="success" disabled>Button</UiButton>
           <UiButton color="success" outline>Button</UiButton>
           <UiButton color="success" disabled outline>Button</UiButton>
         </div>
-        <div class="flex gap-3">
+        <div class="space-x-3">
           <UiButton color="primary" size="sm">Button</UiButton>
           <UiButton color="secondary" size="sm">Button</UiButton>
           <UiButton color="tertiary" size="sm">Button</UiButton>
@@ -92,7 +92,7 @@ const inputText = ref<string>('');
         </UiDialogButtons>
       </UiDialog>
     </div>
-    <div class="flex flex-col gap-3">
+    <div class="space-y-3">
       <UiTitle is="h2" class="text-xl">Inputs</UiTitle>
       <UiInputText v-model="inputText" placeholder="Hello World!" />
       <UiSelect

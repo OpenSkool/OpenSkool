@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-3 flex gap-3 justify-end">
+  <div class="space-x-3 text-right">
     <slot />
   </div>
 </template>
