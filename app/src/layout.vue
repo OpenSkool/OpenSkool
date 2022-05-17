@@ -1,8 +1,10 @@
 <script lang="ts" setup>
 import { useGlobalQueryLoading } from '@vue/apollo-composable';
 
+const DESKTOP_MIN_WIDTH = 760;
+
 const loading = useGlobalQueryLoading();
-const isSideNavClosed = ref<boolean>(false);
+const isSideNavOpened = ref<boolean>(window.innerWidth > DESKTOP_MIN_WIDTH);
 </script>
 
 <template>
@@ -10,10 +12,10 @@ const isSideNavClosed = ref<boolean>(false);
     <div class="flex items-center justify-between p-3">
       <div
         class="flex items-center hover:cursor-pointer"
-        @click="isSideNavClosed = !isSideNavClosed"
+        @click="isSideNavOpened = !isSideNavOpened"
       >
-        <RiMenuLine v-if="isSideNavClosed" class="mx-3" />
-        <RiMenuFoldLine v-if="!isSideNavClosed" class="mx-3" />
+        <RiMenuLine v-if="!isSideNavOpened" class="mx-3" />
+        <RiMenuFoldLine v-if="isSideNavOpened" class="mx-3" />
         <span>Menu</span>
       </div>
       <div class="flex gap-8">
@@ -37,17 +39,15 @@ const isSideNavClosed = ref<boolean>(false);
       </TransitionRoot>
     </div>
     <div class="flex gap-5">
-      <TransitionRoot
-        appear
-        :show="!isSideNavClosed"
-        enter="transition ease-in-out duration-200 transform"
-        enter-from="-translate-x-full"
-        enter-to="translate-x-0"
-        leave="transition ease-in-out duration-200 transform"
-        leave-from="translate-x-0"
-        leave-to="-translate-x-full"
+      <Transition
+        enter-active-class="transition ease-in-out duration-200 transform"
+        enter-from-class="-translate-x-full"
+        enter-to-class="translate-x-0"
+        leave-active-class="transition ease-in-out duration-200 transform"
+        leave-from-class="translate-x-0"
+        leave-to-class="-translate-x-full"
       >
-        <UiMainNav>
+        <UiMainNav v-if="isSideNavOpened">
           <UiMainNavSection name="Home">
             <UiMainNavLink to="/">Home</UiMainNavLink>
           </UiMainNavSection>
@@ -56,12 +56,12 @@ const isSideNavClosed = ref<boolean>(false);
             <UiMainNavLink to="/demo/ui">UI</UiMainNavLink>
           </UiMainNavSection>
           <UiMainNavSection name="Frameworks">
-            <UiMainNavLink to="/manage/frameworks"
-              >Manage frameworks</UiMainNavLink
-            >
+            <UiMainNavLink to="/manage/frameworks">
+              Manage frameworks
+            </UiMainNavLink>
           </UiMainNavSection>
         </UiMainNav>
-      </TransitionRoot>
+      </Transition>
       <div class="container mx-auto px-5 mt-5">
         <Suspense>
           <RouterView />
