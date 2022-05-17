@@ -1,5 +1,4 @@
 <template>
-  <!-- <h3 v-t="'global.title'" class="text-4xl my-5 text-primary1-700" /> -->
   <nav class="my-5 mr-5 ml-2 min-w-max min-h-full border-3 border-gray-300">
     <UiTitle
       v-t="'global.title'"
