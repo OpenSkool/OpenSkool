@@ -73,7 +73,7 @@ const inputText = ref<string>('');
         </div>
         <div>
           <UiIconButton label="Edit">
-            <RiEdit2Fill />
+            <RiEdit2Line />
           </UiIconButton>
         </div>
       </div>
@@ -129,11 +129,11 @@ const inputText = ref<string>('');
             </small>
           </div>
           <UiMenuItem>
-            <RiPencilFill aria-hidden="true" class="text-secondary-400" />
+            <RiPencilLine aria-hidden="true" class="text-secondary-400" />
             Edit
           </UiMenuItem>
           <UiMenuItem>
-            <RiDeleteBinFill aria-hidden="true" class="text-danger-400" />
+            <RiDeleteBinLine aria-hidden="true" class="text-danger-400" />
             Delete
           </UiMenuItem>
         </UiMenuItems>

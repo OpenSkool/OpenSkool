@@ -14,11 +14,11 @@ defineEmits<(event: 'moveUp' | 'moveDown') => void>();
     <span v-if="showArrows">
       <button class="arrow-up" @click="$emit('moveUp')">
         <span v-if="moveUpText" class="sr-only">{{ moveUpText }}</span>
-        <RiArrowUpFill aria-hidden />
+        <RiArrowUpLine aria-hidden />
       </button>
       <button class="arrow-down" @click="$emit('moveDown')">
         <span v-if="moveDownText" class="sr-only">{{ moveDownText }}</span>
-        <RiArrowDownFill aria-hidden />
+        <RiArrowDownLine aria-hidden />
       </button>
     </span>
   </li>
