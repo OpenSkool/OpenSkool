@@ -431,6 +431,19 @@ export type SwapCompetenciesMutation = {
       };
 };
 
+export type GetAllCompetencyFrameworksQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetAllCompetencyFrameworksQuery = {
+  __typename?: 'Query';
+  allCompetencyFrameworks: Array<{
+    __typename?: 'CompetencyFramework';
+    id: string;
+    title: string;
+  }>;
+};
+
 export type CreateNestedCompetencyMutationVariables = Exact<{
   data: CreateNestedCompetencyInput;
 }>;
@@ -728,19 +741,6 @@ export type GetFrameworkRootCompetenciesQuery = {
     | null;
 };
 
-export type GetAllCompetencyFrameworksQueryVariables = Exact<{
-  [key: string]: never;
-}>;
-
-export type GetAllCompetencyFrameworksQuery = {
-  __typename?: 'Query';
-  allCompetencyFrameworks: Array<{
-    __typename?: 'CompetencyFramework';
-    id: string;
-    title: string;
-  }>;
-};
-
 export const BaseErrorFieldsFragmentDoc = {
   kind: 'Document',
   definitions: [
@@ -1034,6 +1034,35 @@ export const SwapCompetenciesDocument = {
 } as unknown as DocumentNode<
   SwapCompetenciesMutation,
   SwapCompetenciesMutationVariables
+>;
+export const GetAllCompetencyFrameworksDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetAllCompetencyFrameworks' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'allCompetencyFrameworks' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  GetAllCompetencyFrameworksQuery,
+  GetAllCompetencyFrameworksQueryVariables
 >;
 export const CreateNestedCompetencyDocument = {
   kind: 'Document',
@@ -1916,33 +1945,4 @@ export const GetFrameworkRootCompetenciesDocument = {
 } as unknown as DocumentNode<
   GetFrameworkRootCompetenciesQuery,
   GetFrameworkRootCompetenciesQueryVariables
->;
-export const GetAllCompetencyFrameworksDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'GetAllCompetencyFrameworks' },
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'allCompetencyFrameworks' },
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<
-  GetAllCompetencyFrameworksQuery,
-  GetAllCompetencyFrameworksQueryVariables
 >;
