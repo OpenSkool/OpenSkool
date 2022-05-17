@@ -36,7 +36,6 @@ declare module '@vue/runtime-core' {
     RiDeleteBinLine: typeof import('~icons/ri/delete-bin-line')['default']
     RiEdit2Line: typeof import('~icons/ri/edit2-line')['default']
     RiEditBoxLine: typeof import('~icons/ri/edit-box-line')['default']
-    RiGlobalLine: typeof import('~icons/ri/global-line')['default']
     RiLoaderLine: typeof import('~icons/ri/loader-line')['default']
     RiLogoutBoxRLine: typeof import('~icons/ri/logout-box-r-line')['default']
     RiMenuFoldLine: typeof import('~icons/ri/menu-fold-line')['default']
