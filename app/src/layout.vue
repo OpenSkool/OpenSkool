@@ -10,14 +10,14 @@ const isSideNavOpened = ref<boolean>(window.innerWidth > DESKTOP_MIN_WIDTH);
 <template>
   <div class="bg-white">
     <div class="flex items-center justify-between p-3">
-      <div
-        class="flex items-center hover:cursor-pointer"
+      <button
+        class="flex items-center focus:outline-none focus-visible:(ring-2 ring-offset-2 rounded-md pr-5 ring-black)"
         @click="isSideNavOpened = !isSideNavOpened"
       >
         <RiMenuLine v-if="!isSideNavOpened" class="mx-3" />
         <RiMenuFoldLine v-if="isSideNavOpened" class="mx-3" />
         <span>Menu</span>
-      </div>
+      </button>
       <div class="flex gap-8">
         <LanguageSelect />
         <UserMenu />
