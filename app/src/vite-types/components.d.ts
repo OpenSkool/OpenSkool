@@ -21,6 +21,7 @@ declare module '@vue/runtime-core' {
     ListboxButton: typeof import('@headlessui/vue')['ListboxButton']
     ListboxOption: typeof import('@headlessui/vue')['ListboxOption']
     ListboxOptions: typeof import('@headlessui/vue')['ListboxOptions']
+    LoadingSpinner: typeof import('./../domain/global/components/layout/loading-spinner.vue')['default']
     MainLayout: typeof import('./../domain/global/components/layout/main-layout.vue')['default']
     Menu: typeof import('@headlessui/vue')['Menu']
     MenuButton: typeof import('@headlessui/vue')['MenuButton']

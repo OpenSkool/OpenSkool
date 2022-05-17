@@ -1,9 +1,6 @@
 <script lang="ts" setup>
-import { useGlobalQueryLoading } from '@vue/apollo-composable';
-
 const DESKTOP_MIN_WIDTH = 760;
 
-const loading = useGlobalQueryLoading();
 const isSideNavOpened = ref<boolean>(window.innerWidth > DESKTOP_MIN_WIDTH);
 </script>
 
@@ -26,17 +23,7 @@ const isSideNavOpened = ref<boolean>(window.innerWidth > DESKTOP_MIN_WIDTH);
   </div>
   <div>
     <div class="absolute -ml-12 mt-1 left-1/2 top-1/2">
-      <TransitionRoot
-        :show="loading"
-        enter="duration-100 ease-out"
-        enter-from="opacity-0"
-        enter-to="opacity-100"
-        leave="delay-300 duration-100 ease-in"
-        leave-from="opacity-100"
-        leave-to="opacity-0"
-      >
-        <RiLoaderLine class="text-xl text-tertiary-300 spin" />
-      </TransitionRoot>
+      <LoadingSpinner />
     </div>
     <div class="flex gap-5">
       <Transition
