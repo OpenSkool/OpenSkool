@@ -20,7 +20,7 @@ watch(selectedLocale, () => {
 
 <template>
   <div class="flex gap-3 items-center">
-    <RiGlobalFill />
+    <RiGlobalLine />
     <UiSelect
       v-model="selectedLocale"
       :selected-label="getLanguageName(selectedLocale)"

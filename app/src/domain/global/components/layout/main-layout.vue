@@ -35,7 +35,7 @@ const isSideNavOpened = ref<boolean>(window.innerWidth > DESKTOP_MIN_WIDTH);
         leave-from="opacity-100"
         leave-to="opacity-0"
       >
-        <RiLoaderFill class="text-xl text-tertiary-300 spin" />
+        <RiLoaderLine class="text-xl text-tertiary-300 spin" />
       </TransitionRoot>
     </div>
     <div class="flex gap-5">

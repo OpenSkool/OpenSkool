@@ -129,7 +129,7 @@ async function deleteCompetencyHandler(): Promise<void> {
         :to="`/manage/frameworks/${frameworkId}/${competencyId}/edit`"
       >
         <span v-t="'competencies.route.id.index.action.edit'" class="sr-only" />
-        <RiEditBoxFill aria-hidden />
+        <RiEditBoxLine aria-hidden />
       </RouterLink>
     </UiTitle>
     <UiButtonRouterLink

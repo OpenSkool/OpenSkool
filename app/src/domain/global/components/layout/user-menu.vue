@@ -17,7 +17,7 @@ const logoutHref = computed(() => {
       is="button"
       class="p-3 border-2 aspect-square rounded-full focus:outline-none focus-visible:(ring-2 rounded-full p-2)"
     >
-      <RiUser3Fill />
+      <RiUser3Line />
     </UiMenuButton>
     <UiMenuItems>
       <div class="px-4 py-3 text-gray-500">
