@@ -5,15 +5,14 @@ const loading = useGlobalQueryLoading();
 </script>
 
 <template>
-  <TransitionRoot
-    :show="loading"
-    enter="duration-100 ease-out"
-    enter-from="opacity-0"
-    enter-to="opacity-100"
-    leave="delay-300 duration-100 ease-in"
-    leave-from="opacity-100"
-    leave-to="opacity-0"
+  <Transition
+    enter-active-class="transition duration-150 ease-out"
+    enter-from-class="opacity-0"
+    enter-to-class="opacity-100"
+    leave-active-class="transition delay-150 duration-150 ease-in"
+    leave-from-class="opacity-100"
+    leave-to-class="opacity-0"
   >
-    <RiLoaderLine class="text-xl text-tertiary-300 spin" />
-  </TransitionRoot>
+    <RiLoaderLine v-if="loading" class="text-lg text-tertiary-300 spin" />
+  </Transition>
 </template>
