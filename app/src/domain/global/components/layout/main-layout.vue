@@ -21,39 +21,37 @@ const isSideNavOpened = ref<boolean>(window.innerWidth > DESKTOP_MIN_WIDTH);
       </div>
     </div>
   </div>
-  <div>
-    <div class="absolute -ml-12 mt-1 left-1/2 top-1/2">
-      <LoadingSpinner />
-    </div>
-    <div class="flex gap-5">
-      <Transition
-        enter-active-class="transition ease-in-out duration-200 transform"
-        enter-from-class="-translate-x-full"
-        enter-to-class="translate-x-0"
-        leave-active-class="transition ease-in-out duration-200 transform"
-        leave-from-class="translate-x-0"
-        leave-to-class="-translate-x-full"
-      >
-        <UiMainNav v-if="isSideNavOpened">
-          <UiMainNavSection name="Home">
-            <UiMainNavLink to="/">Home</UiMainNavLink>
-          </UiMainNavSection>
-          <UiMainNavSection name="Demo">
-            <UiMainNavLink to="/demo/forms">Forms</UiMainNavLink>
-            <UiMainNavLink to="/demo/ui">UI</UiMainNavLink>
-          </UiMainNavSection>
-          <UiMainNavSection name="Frameworks">
-            <UiMainNavLink to="/manage/frameworks">
-              Manage frameworks
-            </UiMainNavLink>
-          </UiMainNavSection>
-        </UiMainNav>
-      </Transition>
-      <div class="container mx-auto px-5 mt-5">
-        <Suspense>
-          <RouterView />
-        </Suspense>
-      </div>
+  <div class="absolute -ml-12 mt-1 left-1/2 top-1/2">
+    <LoadingSpinner />
+  </div>
+  <div class="flex gap-5">
+    <Transition
+      enter-active-class="transition ease-in-out duration-200 transform"
+      enter-from-class="-translate-x-full"
+      enter-to-class="translate-x-0"
+      leave-active-class="transition ease-in-out duration-200 transform"
+      leave-from-class="translate-x-0"
+      leave-to-class="-translate-x-full"
+    >
+      <UiMainNav v-if="isSideNavOpened">
+        <UiMainNavSection name="Home">
+          <UiMainNavLink to="/">Home</UiMainNavLink>
+        </UiMainNavSection>
+        <UiMainNavSection name="Demo">
+          <UiMainNavLink to="/demo/forms">Forms</UiMainNavLink>
+          <UiMainNavLink to="/demo/ui">UI</UiMainNavLink>
+        </UiMainNavSection>
+        <UiMainNavSection name="Frameworks">
+          <UiMainNavLink to="/manage/frameworks">
+            Manage frameworks
+          </UiMainNavLink>
+        </UiMainNavSection>
+      </UiMainNav>
+    </Transition>
+    <div class="container mx-auto px-5 mt-5">
+      <Suspense>
+        <RouterView />
+      </Suspense>
     </div>
   </div>
 </template>
