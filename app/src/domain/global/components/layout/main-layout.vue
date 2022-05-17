@@ -15,14 +15,12 @@ const isSideNavOpened = ref<boolean>(window.innerWidth > DESKTOP_MIN_WIDTH);
         <RiMenuFoldLine v-if="isSideNavOpened" class="mx-3" />
         <span>Menu</span>
       </button>
+      <LoadingSpinner />
       <div class="flex gap-8">
         <LanguageSelect />
         <UserMenu />
       </div>
     </div>
-  </div>
-  <div class="absolute -ml-12 mt-1 left-1/2 top-1/2">
-    <LoadingSpinner />
   </div>
   <div class="flex gap-5">
     <Transition
