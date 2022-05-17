@@ -30,5 +30,5 @@ const logoutHref = computed(() => {
       </UiMenuItem>
     </UiMenuItems>
   </UiMenu>
-  <ConnectButton v-else />
+  <AuthConnectButton v-else />
 </template>
