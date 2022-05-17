@@ -1,4 +1,4 @@
 <template>
   <p v-t="'global.auth.unauthorized'" />
-  <ConnectButton />
+  <AuthConnectButton />
 </template>

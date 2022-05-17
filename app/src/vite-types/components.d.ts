@@ -6,9 +6,9 @@ import '@vue/runtime-core'
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AuthAccessDenied: typeof import('./../domain/global/components/auth/auth-access-denied.vue')['default']
+    AuthConnectButton: typeof import('./../domain/global/components/auth/auth-connect-button.vue')['default']
     CompetencyFrameworkCreate: typeof import('./../domain/competency-management/components/competency-framework-create.vue')['default']
     CompetencyList: typeof import('./../domain/competency-management/components/competency-list.vue')['default']
-    ConnectButton: typeof import('./../domain/global/components/nav-bar/connect-button.vue')['default']
     Dialog: typeof import('@headlessui/vue')['Dialog']
     DialogDescription: typeof import('@headlessui/vue')['DialogDescription']
     DialogTitle: typeof import('@headlessui/vue')['DialogTitle']
@@ -16,11 +16,12 @@ declare module '@vue/runtime-core' {
     FkInputText: typeof import('./../ui/input/fk-input-text.vue')['default']
     FkRadio: typeof import('./../ui/input/fk-radio.vue')['default']
     FkSelect: typeof import('./../ui/select/fk-select.vue')['default']
-    LanguageSelect: typeof import('./../domain/global/components/demo/language-select.vue')['default']
+    LanguageSelect: typeof import('./../domain/global/components/layout/language-select.vue')['default']
     Listbox: typeof import('@headlessui/vue')['Listbox']
     ListboxButton: typeof import('@headlessui/vue')['ListboxButton']
     ListboxOption: typeof import('@headlessui/vue')['ListboxOption']
     ListboxOptions: typeof import('@headlessui/vue')['ListboxOptions']
+    MainLayout: typeof import('./../domain/global/components/layout/main-layout.vue')['default']
     Menu: typeof import('@headlessui/vue')['Menu']
     MenuButton: typeof import('@headlessui/vue')['MenuButton']
     MenuItem: typeof import('@headlessui/vue')['MenuItem']
@@ -76,7 +77,7 @@ declare module '@vue/runtime-core' {
     UiSubtitle: typeof import('./../ui/title/ui-subtitle.vue')['default']
     UiSwitch: typeof import('./../ui/switch/ui-switch.vue')['default']
     UiTitle: typeof import('./../ui/title/ui-title.vue')['default']
-    UserMenu: typeof import('./../domain/global/components/nav-bar/user-menu.vue')['default']
+    UserMenu: typeof import('./../domain/global/components/layout/user-menu.vue')['default']
   }
 }
 
