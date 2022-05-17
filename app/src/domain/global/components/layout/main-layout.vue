@@ -16,37 +16,37 @@ const isSideNavOpened = ref<boolean>(window.innerWidth > DESKTOP_MIN_WIDTH);
         <span>Menu</span>
       </button>
       <LoadingSpinner />
-      <div class="flex gap-8">
-        <LanguageSelect />
-        <UserMenu />
-      </div>
+      <UserMenu />
     </div>
   </div>
   <div class="flex gap-5">
-    <Transition
-      enter-active-class="transition ease-in-out duration-200 transform"
-      enter-from-class="-translate-x-full"
-      enter-to-class="translate-x-0"
-      leave-active-class="transition ease-in-out duration-200 transform"
-      leave-from-class="translate-x-0"
-      leave-to-class="-translate-x-full"
-    >
-      <UiMainNav v-if="isSideNavOpened">
-        <UiMainNavSection name="Home">
-          <UiMainNavLink to="/">Home</UiMainNavLink>
-        </UiMainNavSection>
-        <UiMainNavSection name="Demo">
-          <UiMainNavLink to="/demo/forms">Forms</UiMainNavLink>
-          <UiMainNavLink to="/demo/ui">UI</UiMainNavLink>
-        </UiMainNavSection>
-        <UiMainNavSection name="Frameworks">
-          <UiMainNavLink to="/manage/frameworks">
-            Manage frameworks
-          </UiMainNavLink>
-        </UiMainNavSection>
-      </UiMainNav>
-    </Transition>
-    <div class="container mx-auto px-5 mt-5">
+    <div class="space-y-4 p-5">
+      <Transition
+        enter-active-class="transition ease-in-out duration-200 transform"
+        enter-from-class="-translate-x-full"
+        enter-to-class="translate-x-0"
+        leave-active-class="transition ease-in-out duration-200 transform"
+        leave-from-class="translate-x-0"
+        leave-to-class="-translate-x-full"
+      >
+        <UiMainNav v-if="isSideNavOpened">
+          <UiMainNavSection name="Home">
+            <UiMainNavLink to="/">Home</UiMainNavLink>
+          </UiMainNavSection>
+          <UiMainNavSection name="Demo">
+            <UiMainNavLink to="/demo/forms">Forms</UiMainNavLink>
+            <UiMainNavLink to="/demo/ui">UI</UiMainNavLink>
+          </UiMainNavSection>
+          <UiMainNavSection name="Frameworks">
+            <UiMainNavLink to="/manage/frameworks">
+              Manage frameworks
+            </UiMainNavLink>
+          </UiMainNavSection>
+        </UiMainNav>
+      </Transition>
+      <LanguageSelect />
+    </div>
+    <div class="container mx-auto p-5">
       <Suspense>
         <RouterView />
       </Suspense>

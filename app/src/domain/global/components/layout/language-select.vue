@@ -19,19 +19,16 @@ watch(selectedLocale, () => {
 </script>
 
 <template>
-  <div class="flex gap-3 items-center">
-    <RiGlobalLine />
-    <UiSelect
-      v-model="selectedLocale"
-      :selected-label="getLanguageName(selectedLocale)"
+  <UiSelect
+    v-model="selectedLocale"
+    :selected-label="getLanguageName(selectedLocale)"
+  >
+    <UiSelectOption
+      v-for="availableLocale of AVAILABLE_LOCALES"
+      :key="availableLocale"
+      :value="availableLocale"
     >
-      <UiSelectOption
-        v-for="availableLocale of AVAILABLE_LOCALES"
-        :key="availableLocale"
-        :value="availableLocale"
-      >
-        {{ getLanguageName(availableLocale) }}
-      </UiSelectOption>
-    </UiSelect>
-  </div>
+      {{ getLanguageName(availableLocale) }}
+    </UiSelectOption>
+  </UiSelect>
 </template>
