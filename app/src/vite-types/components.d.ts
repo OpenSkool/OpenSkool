@@ -67,6 +67,8 @@ declare module '@vue/runtime-core' {
     UiMenuButton: typeof import('./../ui/menu/ui-menu-button.vue')['default']
     UiMenuItem: typeof import('./../ui/menu/ui-menu-item.vue')['default']
     UiMenuItems: typeof import('./../ui/menu/ui-menu-items.vue')['default']
+    UiOrderedList: typeof import('./../ui/list/ui-ordered-list.vue')['default']
+    UiOrderedListItem: typeof import('./../ui/list/ui-ordered-list-item.vue')['default']
     UiRadio: typeof import('./../ui/input/ui-radio.vue')['default']
     UiRadioGroup: typeof import('./../ui/input/ui-radio-group.vue')['default']
     UiSelect: typeof import('./../ui/select/ui-select.vue')['default']
