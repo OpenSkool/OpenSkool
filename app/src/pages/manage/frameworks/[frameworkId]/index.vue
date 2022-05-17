@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { GetFrameworkRootCompetenciesDocument } from '~/codegen/graphql';
-import CompetencyList from '~/components/list/competency-list.vue';
 
 const ability = useAppAbility();
 

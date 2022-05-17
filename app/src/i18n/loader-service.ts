@@ -20,7 +20,7 @@ export async function loadGlob(
 }
 
 export async function loadGlobalMessages(): Promise<void> {
-  await loadGlob(import.meta.glob('~/locales/global.*.yaml'));
+  await loadGlob(import.meta.glob('~/domain/global/locales/*.yaml'));
 }
 
 async function loadNecessaryLocales(): Promise<void> {

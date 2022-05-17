@@ -2,11 +2,11 @@ import { nl } from '@formkit/i18n';
 import { plugin, defaultConfig, createInput } from '@formkit/vue';
 import type { App } from 'vue';
 
-import { createButtonStyles } from '~/components/button/helpers';
-import FkCheckbox from '~/components/input/fk-checkbox.vue';
-import FkInputText from '~/components/input/fk-input-text.vue';
-import FkRadio from '~/components/input/fk-radio.vue';
-import FkSelect from '~/components/select/fk-select.vue';
+import { createButtonStyles } from '~/ui/button/helpers';
+import FkCheckbox from '~/ui/input/fk-checkbox.vue';
+import FkInputText from '~/ui/input/fk-input-text.vue';
+import FkRadio from '~/ui/input/fk-radio.vue';
+import FkSelect from '~/ui/select/fk-select.vue';
 
 import { generateClasses } from './helpers';
 

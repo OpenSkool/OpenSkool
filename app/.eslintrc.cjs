@@ -18,13 +18,13 @@ module.exports = {
       },
     },
     {
-      files: ['src/pages/**/*.vue', '!src/pages/**/components/**/*.vue'],
+      files: ['src/pages/**/*.vue'],
       rules: {
         'vue/multi-word-component-names': 'off',
       },
     },
     {
-      files: ['src/components/**/fk-*.vue'],
+      files: ['src/ui/**/fk-*.vue'],
       rules: {
         'no-underscore-dangle': 'off',
       },

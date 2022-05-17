@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import UiDialogDescription from '../../components/dialog/ui-dialog-description.vue';
-
 const isModalOpen = ref(false);
 
 interface Education {

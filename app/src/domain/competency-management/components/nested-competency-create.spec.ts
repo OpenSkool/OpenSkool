@@ -6,8 +6,8 @@ import { createI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
 import { apolloClient } from '~/apollo';
+import { formkit } from '~/formkit';
 
-import { formkit } from '../../formkit';
 import NestedCompetencyCreate from './nested-competency-create.vue';
 
 const mockUseRouter = useRouter as unknown as MockedFunction<typeof useRouter>;

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import UiButton from '~/components/button/ui-button.vue';
 import type { AnyComponent } from '~/types';
+import UiButton from '~/ui/button/ui-button.vue';
 
 withDefaults(
   defineProps<{
