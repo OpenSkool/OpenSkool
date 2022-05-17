@@ -1,20 +1,15 @@
 <script lang="ts" setup>
 import type { AnyComponent } from '~/types';
 
-withDefaults(
-  defineProps<{
-    is?: string | AnyComponent;
-  }>(),
-  {
-    is: 'button',
-  },
-);
+defineProps<{
+  is?: string | AnyComponent;
+}>();
 </script>
 
 <template>
   <MenuItem v-slot="{ active, disabled }">
     <Component
-      :is="is"
+      :is="is ?? 'button'"
       :class="[
         'w-full flex gap-3 items-center px-4 py-3 rounded-md',
         { 'bg-primary-200': active },

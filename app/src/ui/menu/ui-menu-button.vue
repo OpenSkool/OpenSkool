@@ -2,19 +2,14 @@
 import type { AnyComponent } from '~/types';
 import UiButton from '~/ui/button/ui-button.vue';
 
-withDefaults(
-  defineProps<{
-    is?: string | AnyComponent;
-  }>(),
-  {
-    is: UiButton,
-  },
-);
+defineProps<{
+  is?: string | AnyComponent;
+}>();
 </script>
 
 <template>
   <MenuButton>
-    <Component :is="is">
+    <Component :is="is ?? UiButton">
       <slot />
     </Component>
   </MenuButton>
