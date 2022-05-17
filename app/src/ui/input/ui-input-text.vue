@@ -9,7 +9,7 @@ defineEmits<(event: 'update:modelValue', value: string) => void>();
 
 <template>
   <input
-    class="input-text text-base py-2 px-3 bg-white rounded-md shadow-md border-1 border-gray-200 focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-secondary-400)"
+    class="inline-block text-base py-2 px-3 bg-white rounded-md shadow-md border-1 border-gray-200 focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-secondary-400)"
     type="text"
     :disabled="disabled"
     :value="modelValue"
@@ -18,7 +18,7 @@ defineEmits<(event: 'update:modelValue', value: string) => void>();
 </template>
 
 <style scoped>
-.input-text:disabled {
+input:disabled {
   @apply cursor-not-allowed bg-stone-300 border-stone-400 border-opacity-50 text-stone-400;
 }
 </style>

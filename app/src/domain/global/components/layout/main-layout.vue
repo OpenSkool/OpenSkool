@@ -44,7 +44,7 @@ const isSideNavOpened = ref<boolean>(window.innerWidth > DESKTOP_MIN_WIDTH);
           </UiMainNavSection>
         </UiMainNav>
       </Transition>
-      <LanguageSelect />
+      <LanguageSelect class="w-full" />
     </div>
     <div class="container mx-auto p-5">
       <Suspense>

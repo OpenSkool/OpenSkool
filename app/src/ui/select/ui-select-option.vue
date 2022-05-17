@@ -12,7 +12,7 @@ defineProps<{
   >
     <li
       :class="[
-        'cursor-default select-none relative py-2 pl-10 pr-4',
+        'cursor-default select-none relative py-2 px-10',
         disabled
           ? 'bg-stone-200 text-stone-500 cursor-not-allowed'
           : active
