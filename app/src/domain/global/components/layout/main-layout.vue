@@ -19,17 +19,17 @@ const isSideNavOpened = ref<boolean>(window.innerWidth > DESKTOP_MIN_WIDTH);
       <UserMenu />
     </div>
   </div>
-  <div class="flex gap-5">
-    <div class="space-y-4 p-5">
-      <Transition
-        enter-active-class="transition ease-in-out duration-200 transform"
-        enter-from-class="-translate-x-full"
-        enter-to-class="translate-x-0"
-        leave-active-class="transition ease-in-out duration-200 transform"
-        leave-from-class="translate-x-0"
-        leave-to-class="-translate-x-full"
-      >
-        <UiMainNav v-if="isSideNavOpened">
+  <div class="flex gap-5 h-screen">
+    <Transition
+      enter-active-class="transition ease-in-out duration-200 transform"
+      enter-from-class="-translate-x-full"
+      enter-to-class="translate-x-0"
+      leave-active-class="transition ease-in-out duration-200 transform"
+      leave-from-class="translate-x-0"
+      leave-to-class="-translate-x-full"
+    >
+      <div v-if="isSideNavOpened" class="space-y-4 bg-white p-5">
+        <UiMainNav>
           <UiMainNavSection name="Home">
             <UiMainNavLink to="/">Home</UiMainNavLink>
           </UiMainNavSection>
@@ -43,9 +43,9 @@ const isSideNavOpened = ref<boolean>(window.innerWidth > DESKTOP_MIN_WIDTH);
             </UiMainNavLink>
           </UiMainNavSection>
         </UiMainNav>
-      </Transition>
-      <LanguageSelect class="w-full" />
-    </div>
+        <LanguageSelect />
+      </div>
+    </Transition>
     <div class="container mx-auto p-5">
       <Suspense>
         <RouterView />
