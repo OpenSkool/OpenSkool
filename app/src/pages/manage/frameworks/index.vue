@@ -31,11 +31,11 @@ const frameworks = useResult(result);
     class="my-5"
     to="/manage/frameworks/create-framework"
   />
-  <ol class="list-decimal">
-    <li v-for="framework of frameworks" :key="framework.id">
+  <UiOrderedList>
+    <UiOrderedListItem v-for="framework of frameworks" :key="framework.id">
       <RouterLink :to="`/manage/frameworks/${framework.id}`">
         {{ framework.title }}
       </RouterLink>
-    </li>
-  </ol>
+    </UiOrderedListItem>
+  </UiOrderedList>
 </template>

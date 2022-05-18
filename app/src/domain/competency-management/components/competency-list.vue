@@ -60,27 +60,19 @@ async function moveCompetency(
 }
 </script>
 <template>
-  <ol class="list-decimal">
-    <li v-for="(competency, index) of competencies" :key="competency.id">
+  <UiOrderedList>
+    <UiOrderedListItem
+      v-for="(competency, index) of competencies"
+      :key="competency.id"
+      :move-up-text="t('competencies.list.action.moveUp')"
+      :move-down-text="t('competencies.list.action.moveDown')"
+      :show-arrows="true"
+      @move-up="moveCompetency((competencies[index - 1] as Competency).id, competency.id)"
+      @move-down="moveCompetency(competency.id, (competencies[index + 1] as Competency).id)"
+    >
       <RouterLink :to="`/manage/frameworks/${frameworkId}/${competency.id}`">
         {{ competency.title }}
       </RouterLink>
-      <button
-        v-if="index !== 0"
-        @click="moveCompetency((competencies[index - 1] as Competency).id, competency.id)"
-      >
-        <span class="sr-only">{{ t('competencies.list.action.moveUp') }}</span>
-        <RiArrowUpFill aria-hidden />
-      </button>
-      <button
-        v-if="competencies.length !== index + 1"
-        @click="moveCompetency(competency.id, (competencies[index + 1] as Competency).id)"
-      >
-        <span class="sr-only">{{
-          t('competencies.list.action.moveDown')
-        }}</span>
-        <RiArrowDownFill aria-hidden />
-      </button>
-    </li>
-  </ol>
+    </UiOrderedListItem>
+  </UiOrderedList>
 </template>
