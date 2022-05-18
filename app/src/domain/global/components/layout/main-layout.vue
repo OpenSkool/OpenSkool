@@ -3,6 +3,8 @@ const DESKTOP_MIN_WIDTH = 768;
 
 const isSideNavOpened = ref<boolean>(windowSizeIsMediumOrBigger());
 
+const transitionClasses = 'transition duration-300 ease-in-out transform';
+
 function windowSizeIsMediumOrBigger(): boolean {
   return window.innerWidth > DESKTOP_MIN_WIDTH;
 }
@@ -30,33 +32,37 @@ function closeSideNavOnMobile(): void {
     </div>
   </div>
   <div class="flex gap-5 h-screen">
-    <Transition
-      enter-active-class="transition ease-in-out duration-200 transform"
-      enter-from-class="-translate-x-full"
-      enter-to-class="translate-x-0"
-      leave-active-class="transition ease-in-out duration-200 transform"
-      leave-from-class="translate-x-0"
-      leave-to-class="-translate-x-full"
+    <div
+      :class="[
+        isSideNavOpened ? 'translate-x-0' : '-translate-x-full',
+        transitionClasses,
+      ]"
+      class="space-y-4 bg-white p-5"
     >
-      <div v-if="isSideNavOpened" class="space-y-4 bg-white p-5">
-        <UiMainNav @click="closeSideNavOnMobile">
-          <UiMainNavSection name="Home">
-            <UiMainNavLink to="/">Home</UiMainNavLink>
-          </UiMainNavSection>
-          <UiMainNavSection name="Demo">
-            <UiMainNavLink to="/demo/forms">Forms</UiMainNavLink>
-            <UiMainNavLink to="/demo/ui">UI</UiMainNavLink>
-          </UiMainNavSection>
-          <UiMainNavSection name="Frameworks">
-            <UiMainNavLink to="/manage/frameworks">
-              Manage frameworks
-            </UiMainNavLink>
-          </UiMainNavSection>
-        </UiMainNav>
-        <LanguageSelect />
-      </div>
-    </Transition>
-    <div class="container mx-auto p-5">
+      <UiMainNav @click="closeSideNavOnMobile">
+        <UiMainNavSection name="Home">
+          <UiMainNavLink to="/">Home</UiMainNavLink>
+        </UiMainNavSection>
+        <UiMainNavSection name="Demo">
+          <UiMainNavLink to="/demo/forms">Forms</UiMainNavLink>
+          <UiMainNavLink to="/demo/ui">UI</UiMainNavLink>
+        </UiMainNavSection>
+        <UiMainNavSection name="Frameworks">
+          <UiMainNavLink to="/manage/frameworks">
+            Manage frameworks
+          </UiMainNavLink>
+        </UiMainNavSection>
+      </UiMainNav>
+      <LanguageSelect />
+    </div>
+
+    <div
+      :class="[
+        isSideNavOpened ? ' translate-x-0' : '-translate-x-64',
+        transitionClasses,
+      ]"
+      class="container mx-auto p-5"
+    >
       <Suspense>
         <RouterView />
       </Suspense>

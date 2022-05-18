@@ -3,7 +3,7 @@
     <header>
       <UiTitle
         v-t="'global.title'"
-        class="flex ui-title justify-center font-normal mb-5 text-xl border-b-1 border-gray-300"
+        class="flex ui-title justify-center font-normal mb-5 pb-2 text-xl border-b-1 border-gray-300"
       />
     </header>
     <ul class="space-y-1">
