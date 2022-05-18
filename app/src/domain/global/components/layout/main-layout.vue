@@ -1,7 +1,17 @@
 <script lang="ts" setup>
-const DESKTOP_MIN_WIDTH = 760;
+const DESKTOP_MIN_WIDTH = 768;
 
-const isSideNavOpened = ref<boolean>(window.innerWidth > DESKTOP_MIN_WIDTH);
+const isSideNavOpened = ref<boolean>(windowSizeIsMediumOrBigger());
+
+function windowSizeIsMediumOrBigger(): boolean {
+  return window.innerWidth > DESKTOP_MIN_WIDTH;
+}
+
+function closeSideNavOnMobile(): void {
+  if (!windowSizeIsMediumOrBigger()) {
+    isSideNavOpened.value = false;
+  }
+}
 </script>
 
 <template>
@@ -29,7 +39,7 @@ const isSideNavOpened = ref<boolean>(window.innerWidth > DESKTOP_MIN_WIDTH);
       leave-to-class="-translate-x-full"
     >
       <div v-if="isSideNavOpened" class="space-y-4 bg-white p-5">
-        <UiMainNav>
+        <UiMainNav @click="closeSideNavOnMobile">
           <UiMainNavSection name="Home">
             <UiMainNavLink to="/">Home</UiMainNavLink>
           </UiMainNavSection>
