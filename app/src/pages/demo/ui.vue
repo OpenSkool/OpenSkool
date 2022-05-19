@@ -109,10 +109,14 @@ const inputText = ref<string>('');
         </UiSelectOption>
       </UiSelect>
       <UiSwitch v-model="isProjectAwesome" label="Is this project awesome?" />
-      <UiCheckbox id="checkbox">Checkbox</UiCheckbox>
-      <UiCheckbox id="checkbox" checked="">Checkbox</UiCheckbox>
-      <UiRadio id="radio">Radio</UiRadio>
-      <UiRadio id="radio" checked="">Radio</UiRadio>
+      <UiCheckbox id="checkbox1">Unchecked</UiCheckbox>
+      <UiCheckbox id="checkbox2" checked>Checked</UiCheckbox>
+      <UiCheckbox id="checkbox3" disabled>Unchecked disabled</UiCheckbox>
+      <UiCheckbox id="checkbox4" checked disabled>Checked disabled</UiCheckbox>
+      <UiRadio id="radio1">Unchecked</UiRadio>
+      <UiRadio id="radio2" checked>Checked</UiRadio>
+      <UiRadio id="radio3" disabled>Unchecked disabled</UiRadio>
+      <UiRadio id="radio4" checked disabled>Checked disabled</UiRadio>
     </div>
     <div>
       <UiTitle is="h2" class="text-xl mb-3">Menu</UiTitle>
