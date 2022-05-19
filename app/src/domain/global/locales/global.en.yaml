@@ -2,5 +2,11 @@ auth:
   action:
     login: Connect
   unauthorized: You are not authorized to view this content. Please login with the correct authorization.
+
 message: Global message is global
+
 title: OpenSkool
+
+widget:
+  userMenu:
+    toggleButton: User Menu
