@@ -13,7 +13,7 @@
 </template>
 
 <style scoped>
-:global(.ui-title::before) {
+.ui-title::before {
   display: inline-block;
   float: left;
   content: ' ';
