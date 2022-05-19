@@ -8,7 +8,7 @@ defineProps<{
 </script>
 
 <template>
-  <MenuButton>
+  <MenuButton as="template">
     <Component :is="is ?? UiButton">
       <slot />
     </Component>
