@@ -3,6 +3,7 @@ import type { InputOption, InputValue } from './types';
 
 defineProps<{
   modelValue: InputValue;
+  name?: string;
   options?: InputOption[];
 }>();
 
@@ -14,8 +15,8 @@ defineEmits<(event: 'update:modelValue', value: InputValue) => void>();
     <li v-for="option in options" :key="option.value">
       <UiRadio
         :checked="option.value === modelValue"
-        name="test"
         :value="option.value"
+        :name="name"
         @click="$emit('update:modelValue', option.value)"
       >
         {{ option.label }}
