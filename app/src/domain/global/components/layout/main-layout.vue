@@ -31,6 +31,7 @@ function closeSideNavOnMobile(): void {
       <UserMenu />
     </div>
   </div>
+
   <div class="flex gap-5 h-screen">
     <div
       :class="[

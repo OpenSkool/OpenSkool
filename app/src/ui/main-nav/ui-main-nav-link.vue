@@ -3,7 +3,7 @@ defineProps<{ to: string }>();
 </script>
 
 <template>
-  <li class="flex mb-1">
+  <li class="flex pb-1">
     <RouterLink
       :to="to"
       :class="[
