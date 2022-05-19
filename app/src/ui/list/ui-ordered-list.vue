@@ -1,5 +1,5 @@
 <template>
-  <ol class="list-decimal">
+  <ol class="list-none space-y-1">
     <slot />
   </ol>
 </template>
