@@ -25,13 +25,18 @@ const logoutHref = computed(() => {
       <span v-t="'global.widget.userMenu.toggleButton'" class="sr-only" />
     </UiMenuButton>
     <UiMenuItems>
-      <div class="px-4 py-3 text-gray-500">
-        You are logged in as
-        <strong class="text-gray-800">{{ authStore.name }}</strong>
-      </div>
+      <i18n-t
+        class="px-4 py-3 text-gray-500"
+        keypath="global.widget.userMenu.description"
+        tag="div"
+      >
+        <template #name>
+          <strong class="text-gray-800">{{ authStore.name }}</strong>
+        </template>
+      </i18n-t>
       <UiMenuItem is="a" :href="logoutHref">
-        <RiLogoutBoxRLine />
-        Logout
+        <RiLogoutBoxRLine aria-hidden />
+        <span v-t="'global.widget.userMenu.logoutButton'" />
       </UiMenuItem>
     </UiMenuItems>
   </UiMenu>

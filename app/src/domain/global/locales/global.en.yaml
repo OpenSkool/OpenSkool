@@ -9,4 +9,6 @@ title: OpenSkool
 
 widget:
   userMenu:
+    description: You are logged in as {name}.
     toggleButton: User Menu
+    logoutButton: Log out
