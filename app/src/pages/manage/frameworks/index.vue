@@ -3,10 +3,6 @@ const ability = useAppAbility();
 </script>
 
 <template>
-  <template v-if="ability.can('read', 'CompetencyFramework')">
-    <FrameworkListPage />
-  </template>
-  <template v-else>
-    <AuthAccessDenied />
-  </template>
+  <FrameworkListPage v-if="ability.can('read', 'CompetencyFramework')" />
+  <AuthAccessDenied v-else />
 </template>

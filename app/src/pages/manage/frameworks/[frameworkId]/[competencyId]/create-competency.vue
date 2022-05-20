@@ -8,13 +8,10 @@ defineProps<{
 </script>
 
 <template>
-  <template v-if="ability.can('create', 'Competency')">
-    <CompetencyCreatePage
-      :competency-id="competencyId"
-      :framework-id="frameworkId"
-    />
-  </template>
-  <template v-else>
-    <AuthAccessDenied />
-  </template>
+  <CompetencyCreatePage
+    v-if="ability.can('create', 'Competency')"
+    :competency-id="competencyId"
+    :framework-id="frameworkId"
+  />
+  <AuthAccessDenied v-else />
 </template>
