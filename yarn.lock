@@ -753,16 +753,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@envelop/disable-introspection@npm:^3.0.0":
-  version: 3.3.0
-  resolution: "@envelop/disable-introspection@npm:3.3.0"
-  peerDependencies:
-    "@envelop/core": ^2.3.0
-    graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
-  checksum: b02123a96048f83b759b8fb547e547bce7da1b53c76203b4442a9289e193dbd2b8664b161213484e5ed69cf05865282bad7228dd49b905411d4eb284d299c3b6
-  languageName: node
-  linkType: hard
-
 "@envelop/parser-cache@npm:^4.0.0":
   version: 4.3.0
   resolution: "@envelop/parser-cache@npm:4.3.0"
@@ -775,17 +765,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@envelop/response-cache@npm:^2.3.1":
-  version: 2.3.1
-  resolution: "@envelop/response-cache@npm:2.3.1"
+"@envelop/response-cache@npm:^2.3.2":
+  version: 2.3.2
+  resolution: "@envelop/response-cache@npm:2.3.2"
   dependencies:
     "@graphql-tools/utils": ^8.6.1
     fast-json-stable-stringify: ^2.1.0
     lru-cache: ^6.0.0
   peerDependencies:
-    "@envelop/core": ^2.3.1
+    "@envelop/core": ^2.3.2
     graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
-  checksum: c5f5f8bec5f23db162d406e3d2fdc57002d27322b319ea52bb467974cedbbb25a954856acde5b0ef72c373d9143639fb2a9e61f0491bef3b72c49251d899a614
+  checksum: 13d532677a6d677ed81df19f306980499f0d9dd10344b6abb4d46924a44bc7447bc64801a0ef07c444fbd52b7106ccc074d4781daec0c3b3ae976c3edbffc4f1
   languageName: node
   linkType: hard
 
@@ -880,15 +870,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fastify/session@npm:^8.1.0":
-  version: 8.1.0
-  resolution: "@fastify/session@npm:8.1.0"
+"@fastify/session@npm:^8.2.0":
+  version: 8.2.0
+  resolution: "@fastify/session@npm:8.2.0"
   dependencies:
     cookie-signature: ^1.1.0
     fastify-plugin: ^3.0.0
     safe-stable-stringify: ^2.3.1
     uid-safe: ^2.1.5
-  checksum: 345dd4e3694dac48b03aba5ff493865c5d5e1b390494b21936ff77a8066398860bf24329585f93f23dd7bbec95c2707337e85cba5594dd1c38e4090b057a30aa
+  checksum: 48d23cf06a238865be9d5e7f0c8303e8c4d5d2fc7d1a21d8e12fe15e7bd2da0fc85a5b516607ebf1674340e37fd764b45d083769bbbae1bc3380a9b9c24f0ce6
   languageName: node
   linkType: hard
 
@@ -1487,40 +1477,39 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graphql-yoga/common@npm:2.3.0, @graphql-yoga/common@npm:^2.3.0":
-  version: 2.3.0
-  resolution: "@graphql-yoga/common@npm:2.3.0"
+"@graphql-yoga/common@npm:2.6.0, @graphql-yoga/common@npm:^2.6.0":
+  version: 2.6.0
+  resolution: "@graphql-yoga/common@npm:2.6.0"
   dependencies:
     "@envelop/core": ^2.0.0
-    "@envelop/disable-introspection": ^3.0.0
     "@envelop/parser-cache": ^4.0.0
     "@envelop/validation-cache": ^4.0.0
     "@graphql-tools/schema": ^8.3.1
     "@graphql-tools/utils": ^8.6.0
     "@graphql-typed-document-node/core": ^3.1.1
     "@graphql-yoga/subscription": 2.0.0
-    cross-undici-fetch: ^0.2.5
+    cross-undici-fetch: ^0.4.2
     dset: ^3.1.1
     tslib: ^2.3.1
   peerDependencies:
     graphql: ^15.2.0 || ^16.0.0
-  checksum: 7216c8e15e5595bf8f229b1f3f9515be18a5ba648aa474afff6ce75e3cc0db2bc220b0914e12cfbd56769028b5483db8efec1577db41a9aa09cfdad2e44a8242
+  checksum: 8a61adf1a3ba87aa28e54005d5826578cc0247d9a369683e33a318ffc7b292022704a064d59a7d3ce4d939f58db134c3ab687e0583354e7ad928327c4c1144c9
   languageName: node
   linkType: hard
 
-"@graphql-yoga/node@npm:^2.3.0":
-  version: 2.3.0
-  resolution: "@graphql-yoga/node@npm:2.3.0"
+"@graphql-yoga/node@npm:^2.6.0":
+  version: 2.6.0
+  resolution: "@graphql-yoga/node@npm:2.6.0"
   dependencies:
     "@envelop/core": ^2.0.0
     "@graphql-tools/utils": ^8.6.0
-    "@graphql-yoga/common": 2.3.0
+    "@graphql-yoga/common": 2.6.0
     "@graphql-yoga/subscription": 2.0.0
-    cross-undici-fetch: ^0.2.5
+    cross-undici-fetch: ^0.4.2
     tslib: ^2.3.1
   peerDependencies:
     graphql: ^15.2.0 || ^16.0.0
-  checksum: 494820a6699e9f54dea12303f172a8dbfc8408e9a8c554e534c7d564cd96876098b99603bbb89331f46df6b16d884cda03e8d26f82996b08a15f1fa0cb2a3c54
+  checksum: bf59497fac6c5cbdd47859896c25f1f685452fe8f0b951a4fc65f7ca06ecf77966eab8eecbbf45f96005dff569fcb840d84c0ad0f4f2dab455dc2b9bb322b036
   languageName: node
   linkType: hard
 
@@ -1865,22 +1854,22 @@ __metadata:
   resolution: "@os/api@workspace:api"
   dependencies:
     "@casl/ability": ^5.4.3
-    "@envelop/response-cache": ^2.3.1
+    "@envelop/response-cache": ^2.3.2
     "@faker-js/faker": ^6.3.1
     "@fastify/cookie": ^6.0.0
     "@fastify/cors": ^7.0.0
     "@fastify/env": ^3.0.0
-    "@fastify/session": ^8.1.0
-    "@graphql-yoga/common": ^2.3.0
-    "@graphql-yoga/node": ^2.3.0
+    "@fastify/session": ^8.2.0
+    "@graphql-yoga/common": ^2.6.0
+    "@graphql-yoga/node": ^2.6.0
     "@hapi/boom": ^9.1.4
     "@os/ability": "workspace:*"
     "@os/eslint-config": "workspace:*"
     "@os/tsconfig": "workspace:*"
-    "@pothos/core": ^3.8.0
-    "@pothos/plugin-errors": ^3.3.0
-    "@prisma/client": ^3.13.0
-    "@sinclair/typebox": ^0.23.5
+    "@pothos/core": ^3.11.0
+    "@pothos/plugin-errors": ^3.4.1
+    "@prisma/client": ^3.14.0
+    "@sinclair/typebox": 0.23.5
     "@types/accept-language-parser": ^1.5.3
     "@types/cuid": ^2.0.1
     "@types/dotenv-flow": ^3.2.0
@@ -1889,7 +1878,7 @@ __metadata:
     "@types/prettier": ^2.6.1
     accept-language-parser: ^1.5.0
     c8: ^7.11.3
-    cross-undici-fetch: ^0.3.1
+    cross-undici-fetch: 0.3.1
     cuid: ^2.1.8
     dotenv-flow: ^3.2.0
     eslint: ^8.15.0
@@ -1900,15 +1889,15 @@ __metadata:
     graphql-scalars: ^1.17.0
     graphql-tag: ^2.12.6
     is-ci: ^3.0.1
-    jose: ^4.8.0
+    jose: ^4.8.1
     ms: 3.0.0-canary.1
     node-fetch: ^3.2.4
     nodemon: ^2.0.16
-    openid-client: ^5.1.5
+    openid-client: ^5.1.6
     pino: ^6.14.0
     pino-pretty: ^7.6.1
     prettier: ^2.6.2
-    prisma: ^3.13.0
+    prisma: ^3.14.0
     read-pkg-up: ^9.1.0
     rollup: ^2.74.1
     rollup-plugin-esbuild: ^4.9.1
@@ -1917,7 +1906,7 @@ __metadata:
     typescript: ~4.6.4
     vite-tsconfig-paths: ^3.4.1
     vitest: 0.12.6
-    zod: ^3.14.4
+    zod: ^3.16.0
   languageName: unknown
   linkType: soft
 
@@ -1999,50 +1988,50 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@pothos/core@npm:^3.8.0":
-  version: 3.8.0
-  resolution: "@pothos/core@npm:3.8.0"
+"@pothos/core@npm:^3.11.0":
+  version: 3.11.0
+  resolution: "@pothos/core@npm:3.11.0"
   peerDependencies:
     graphql: ">=15.1.0"
-  checksum: 0379277e621b2456321ab9508a623e2c0903ca978e690414b6706708671613f69d61f0e9108db29bd4a454ca444fa4eebcd7cb0b0b51b3d95e6568892cf86736
+  checksum: a53254422a913b99fb2fa4425069c5ffc92e11a5816db51bf9c0920758e260a3f6c11a5429af76d995cec5fd2b287a61331e452623ae711599677679cb35031d
   languageName: node
   linkType: hard
 
-"@pothos/plugin-errors@npm:^3.3.0":
-  version: 3.3.0
-  resolution: "@pothos/plugin-errors@npm:3.3.0"
+"@pothos/plugin-errors@npm:^3.4.1":
+  version: 3.4.1
+  resolution: "@pothos/plugin-errors@npm:3.4.1"
   peerDependencies:
     "@pothos/core": "*"
     graphql: ">=15.1.0"
-  checksum: 2482b2426e2fb3d152ff431de52f972e9d55f2d49fe74e7ca500fbab68d6d299b76d61379a71cf99679b6629da5e3d3257463a9ad9af8c1b48c6b1dc1a0c84a7
+  checksum: 9fa812a8caebbe8eea1c2e50efe0a0a7f8ead197c42e7897e09efc2c4f8282cd59a473aa70bccafbf8b433dcd7846450b244a687aac83af542af4c615a010526
   languageName: node
   linkType: hard
 
-"@prisma/client@npm:^3.13.0":
-  version: 3.13.0
-  resolution: "@prisma/client@npm:3.13.0"
+"@prisma/client@npm:^3.14.0":
+  version: 3.14.0
+  resolution: "@prisma/client@npm:3.14.0"
   dependencies:
-    "@prisma/engines-version": 3.13.0-17.efdf9b1183dddfd4258cd181a72125755215ab7b
+    "@prisma/engines-version": 3.14.0-36.2b0c12756921c891fec4f68d9444e18c7d5d4a6a
   peerDependencies:
     prisma: "*"
   peerDependenciesMeta:
     prisma:
       optional: true
-  checksum: 8c1e6c91208158b71684a9b03a27d8240315002340ca3ad5c298beaedf4ca29fda949e934a55e1f238ff215388c77348acf05f0cea7636f3236d66d6510d0c56
+  checksum: 65ecb4e3c66cce717238b145791c8659c01d170ea6dda63230e5c5491d32a04b950d9fde427042e2e3a358724542052b8a1d16afefc14720451b4eb447789ba7
   languageName: node
   linkType: hard
 
-"@prisma/engines-version@npm:3.13.0-17.efdf9b1183dddfd4258cd181a72125755215ab7b":
-  version: 3.13.0-17.efdf9b1183dddfd4258cd181a72125755215ab7b
-  resolution: "@prisma/engines-version@npm:3.13.0-17.efdf9b1183dddfd4258cd181a72125755215ab7b"
-  checksum: 80238c778333eb0d9bc993e933cb83ed82488d53980d2cdc68ff25ef719de1a63ec05a32bb2af505115e4c179ea43389c8650c297c2f8dbda0c122e9c00197ee
+"@prisma/engines-version@npm:3.14.0-36.2b0c12756921c891fec4f68d9444e18c7d5d4a6a":
+  version: 3.14.0-36.2b0c12756921c891fec4f68d9444e18c7d5d4a6a
+  resolution: "@prisma/engines-version@npm:3.14.0-36.2b0c12756921c891fec4f68d9444e18c7d5d4a6a"
+  checksum: 89721b5a865514a70ddee40f2e0c6996a6157b7603602f5bcc7e37771824d8b69a85b9040e6ce85e9619cf77d7c2e1d603349319a2620e0b2e34273f063277e8
   languageName: node
   linkType: hard
 
-"@prisma/engines@npm:3.13.0-17.efdf9b1183dddfd4258cd181a72125755215ab7b":
-  version: 3.13.0-17.efdf9b1183dddfd4258cd181a72125755215ab7b
-  resolution: "@prisma/engines@npm:3.13.0-17.efdf9b1183dddfd4258cd181a72125755215ab7b"
-  checksum: 045e08c6c72891a6e0028357d261ca5995ca5bdc2c6466b294141e37605ec1f1eb72f4d49301adc76680bedcf82d9671221befe40d4746f3e679a4406767adb5
+"@prisma/engines@npm:3.14.0-36.2b0c12756921c891fec4f68d9444e18c7d5d4a6a":
+  version: 3.14.0-36.2b0c12756921c891fec4f68d9444e18c7d5d4a6a
+  resolution: "@prisma/engines@npm:3.14.0-36.2b0c12756921c891fec4f68d9444e18c7d5d4a6a"
+  checksum: f5b1e09fc1e4fcc5a5f15f9e97b87b328067174310cf92d6d9779969510e8d9176e2aed69a3344d2a635f1c2c6b3484d174ce01cfbef4dae8fd49531a9bf9c0e
   languageName: node
   linkType: hard
 
@@ -2077,7 +2066,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sinclair/typebox@npm:^0.23.5":
+"@sinclair/typebox@npm:0.23.5":
   version: 0.23.5
   resolution: "@sinclair/typebox@npm:0.23.5"
   checksum: c96056d35d9cb862aeb635ff8873e2e7633e668dd544e162aee2690a82c970d0b3f90aa2b3501fe374dfa8e792388559a3e3a86712b23ebaef10061add534f47
@@ -3462,6 +3451,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"busboy@npm:^1.6.0":
+  version: 1.6.0
+  resolution: "busboy@npm:1.6.0"
+  dependencies:
+    streamsearch: ^1.1.0
+  checksum: 32801e2c0164e12106bf236291a00795c3c4e4b709ae02132883fe8478ba2ae23743b11c5735a0aae8afe65ac4b6ca4568b91f0d9fed1fdbc32ede824a73746e
+  languageName: node
+  linkType: hard
+
 "c8@npm:^7.11.3":
   version: 7.11.3
   resolution: "c8@npm:7.11.3"
@@ -4034,6 +4032,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cross-undici-fetch@npm:0.3.1":
+  version: 0.3.1
+  resolution: "cross-undici-fetch@npm:0.3.1"
+  dependencies:
+    abort-controller: ^3.0.0
+    form-data-encoder: ^1.7.1
+    formdata-node: ^4.3.1
+    node-fetch: ^2.6.7
+    undici: ^5.0.0
+    web-streams-polyfill: ^3.2.0
+  checksum: 6f72eb8dbd11996eb64a23ac6249d16ba5f70a63c61b0bda077e3c0c1d2a02c5ebc80f7d16b8daca238e8ff36efbac2b7b4ec543962655bae5dbb8c9fc6663dd
+  languageName: node
+  linkType: hard
+
 "cross-undici-fetch@npm:^0.1.19":
   version: 0.1.28
   resolution: "cross-undici-fetch@npm:0.1.28"
@@ -4048,31 +4060,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cross-undici-fetch@npm:^0.2.5":
-  version: 0.2.5
-  resolution: "cross-undici-fetch@npm:0.2.5"
+"cross-undici-fetch@npm:^0.4.2":
+  version: 0.4.3
+  resolution: "cross-undici-fetch@npm:0.4.3"
   dependencies:
     abort-controller: ^3.0.0
+    busboy: ^1.6.0
     form-data-encoder: ^1.7.1
     formdata-node: ^4.3.1
     node-fetch: ^2.6.7
-    undici: ^5.0.0
+    undici: ^5.1.0
     web-streams-polyfill: ^3.2.0
-  checksum: e7e30f8d82357047a98c316d7835f3e51c8a4033e40aef821351abd57693d8e8fb2f6c4c053b59b34b162d5ab20681693ac39ab4719930355104d4dd94ea162f
-  languageName: node
-  linkType: hard
-
-"cross-undici-fetch@npm:^0.3.1":
-  version: 0.3.1
-  resolution: "cross-undici-fetch@npm:0.3.1"
-  dependencies:
-    abort-controller: ^3.0.0
-    form-data-encoder: ^1.7.1
-    formdata-node: ^4.3.1
-    node-fetch: ^2.6.7
-    undici: ^5.0.0
-    web-streams-polyfill: ^3.2.0
-  checksum: 6f72eb8dbd11996eb64a23ac6249d16ba5f70a63c61b0bda077e3c0c1d2a02c5ebc80f7d16b8daca238e8ff36efbac2b7b4ec543962655bae5dbb8c9fc6663dd
+  checksum: 10cdc06566517a8446eaa4d0c7f90a67f689040e2910a7daf4eeb1b2cc6df2ecc65752fdbfe1e3f6c89ac300062156688b508c2f482ca4ab59e1e5667264a082
   languageName: node
   linkType: hard
 
@@ -6889,10 +6888,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jose@npm:^4.1.4, jose@npm:^4.8.0":
-  version: 4.8.0
-  resolution: "jose@npm:4.8.0"
-  checksum: b41e5019768b85bf46be3373eca6b199bcd4ec4ad839cbf07fd316bd9c73cc25bf7f039e6f3af082db5d66af86b11e59b13660c8040325124f8fe0bb600b56d2
+"jose@npm:^4.1.4, jose@npm:^4.8.1":
+  version: 4.8.1
+  resolution: "jose@npm:4.8.1"
+  checksum: c3e239ccbb07863c28250aedea3e734e4a3b26abc1cbf6acf333381db5ef31e5d1eeced791299076f13b24f41b4b463a7a1e4eaa0079ae0febf9bfd60acb555a
   languageName: node
   linkType: hard
 
@@ -8158,15 +8157,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"openid-client@npm:^5.1.5":
-  version: 5.1.5
-  resolution: "openid-client@npm:5.1.5"
+"openid-client@npm:^5.1.6":
+  version: 5.1.6
+  resolution: "openid-client@npm:5.1.6"
   dependencies:
     jose: ^4.1.4
     lru-cache: ^6.0.0
     object-hash: ^2.0.1
     oidc-token-hash: ^5.0.1
-  checksum: 3cf4cf07f4a9e692a2498c77523d09312dab4b2d2f3d6172849daac8f2530ce670afafc5a1541871e83f41353dcd2dceef080cbc179a415478bb9c9946499ec6
+  checksum: 652a44a829305a60bbb581aefa3bcb1aa24af7e9dd34148a20cece52b2fdd3113eabdd3e0415bc0e488d09b53a39960c257b19acecb86adb654e17f9ab5135c0
   languageName: node
   linkType: hard
 
@@ -8705,16 +8704,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prisma@npm:^3.13.0":
-  version: 3.13.0
-  resolution: "prisma@npm:3.13.0"
+"prisma@npm:^3.14.0":
+  version: 3.14.0
+  resolution: "prisma@npm:3.14.0"
   dependencies:
-    "@prisma/engines": 3.13.0-17.efdf9b1183dddfd4258cd181a72125755215ab7b
-    ts-pattern: ^4.0.1
+    "@prisma/engines": 3.14.0-36.2b0c12756921c891fec4f68d9444e18c7d5d4a6a
   bin:
     prisma: build/index.js
     prisma2: build/index.js
-  checksum: cbd59f53eea125cdb14722d16bf21e38a5eb82ed4e5f42f3732c33884158fe014eb576aa8580f670ece403706dfb64e2d6e741f50f3320b7bf08c7e8ec44a4b4
+  checksum: 4923371fda3bb430fd3c842615a7010de335a482273c890eb755038b54ab21184bf2a8d7720b63fd4037e5148dfa46c3ab550f205f5ce62884941539a95d62e9
   languageName: node
   linkType: hard
 
@@ -9668,6 +9666,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"streamsearch@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "streamsearch@npm:1.1.0"
+  checksum: 1cce16cea8405d7a233d32ca5e00a00169cc0e19fbc02aa839959985f267335d435c07f96e5e0edd0eadc6d39c98d5435fb5bbbdefc62c41834eadc5622ad942
+  languageName: node
+  linkType: hard
+
 "strict-event-emitter@npm:^0.2.0":
   version: 0.2.0
   resolution: "strict-event-emitter@npm:0.2.0"
@@ -10109,13 +10114,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-pattern@npm:^4.0.1":
-  version: 4.0.2
-  resolution: "ts-pattern@npm:4.0.2"
-  checksum: 1156c3dea42b9b9373d1c7c96bcd24d82a37701ab7fdd399178d58c350153c2322455d27459c8cb0d8fa445958632ffa776ed612fd656ffd35a94c79d5d3d5b8
-  languageName: node
-  linkType: hard
-
 "tsconfig-paths@npm:^3.14.1, tsconfig-paths@npm:^3.9.0":
   version: 3.14.1
   resolution: "tsconfig-paths@npm:3.14.1"
@@ -10443,6 +10441,13 @@ __metadata:
   version: 5.0.0
   resolution: "undici@npm:5.0.0"
   checksum: 98bb9914aa0647840ce6fd518ac828b7760df8d9b747680d11260fcb4f50af0029b0513e5600bf0d3a812d9e3f8d9d787bbcbcee7b9e75aa5f7de6f9b0212898
+  languageName: node
+  linkType: hard
+
+"undici@npm:^5.1.0":
+  version: 5.2.0
+  resolution: "undici@npm:5.2.0"
+  checksum: b7d6fe077c3ab13b7f7a0e5f4b70354b8489c5d37ca06c471754f9543c34501e3b29394b130afc8f066f11e465d6474ec665b2eb5a61052dc84baa97eeb9c7c3
   languageName: node
   linkType: hard
 
@@ -11416,9 +11421,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zod@npm:^3.14.4":
-  version: 3.14.4
-  resolution: "zod@npm:3.14.4"
-  checksum: 30e75dc1e4e1d6ce5695750d1906b6b918779b8aa446f5db77eb2b8344d08f29344b5d0115034a9e695fd5a627d23c5c03d67efe58fe16fbb91dee9dc08761bc
+"zod@npm:^3.16.0":
+  version: 3.16.0
+  resolution: "zod@npm:3.16.0"
+  checksum: 2879a18e090ee67206375408eb0e506d32f3d6658634aa7f253250c4c223ebaef64dd0d76634a0b0bbd0ea64d26d512d8817a584a0490030b3b308fc62f83d1c
   languageName: node
   linkType: hard
