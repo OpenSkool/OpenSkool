@@ -38,7 +38,7 @@ function closeSideNavOnMobile(): void {
         isSideNavOpened ? 'translate-x-0' : '-translate-x-full',
         transitionClasses,
       ]"
-      class="space-y-4 bg-white p-5"
+      class="space-y-4 bg-white p-5 min-w-max"
     >
       <UiMainNav @click="closeSideNavOnMobile">
         <UiMainNavSection name="Home">
