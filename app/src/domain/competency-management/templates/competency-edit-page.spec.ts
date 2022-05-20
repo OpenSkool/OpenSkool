@@ -5,18 +5,10 @@ import { expect, test, vi } from 'vitest';
 import { router } from '~/router';
 import { render } from '~/spec/render';
 
-import edit from './edit.vue';
-
-vi.mock('~/auth', () => {
-  return {
-    useAuthStore: vi.fn().mockImplementation(() => {
-      return { isLoggedIn: true };
-    }),
-  };
-});
+import competencyEditPage from './competency-edit-page.vue';
 
 test('input field has prefilled value', async () => {
-  render(edit);
+  render(competencyEditPage);
   const titleInput: HTMLInputElement = await screen.findByRole('textbox', {
     name: 'competencies.form.name',
   });
@@ -24,7 +16,7 @@ test('input field has prefilled value', async () => {
 });
 
 test('alert shows when empty field is submitted', async () => {
-  render(edit);
+  render(competencyEditPage);
   await router.isReady();
   const push = vi.spyOn(router, 'push');
   const user = userEvent.setup();
@@ -41,7 +33,7 @@ test('alert shows when empty field is submitted', async () => {
 });
 
 test('form submission works', async () => {
-  render(edit);
+  render(competencyEditPage);
   await router.isReady();
   const push = vi.spyOn(router, 'push');
   const user = userEvent.setup();
