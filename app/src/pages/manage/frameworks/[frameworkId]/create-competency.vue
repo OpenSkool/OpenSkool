@@ -6,10 +6,9 @@ defineProps<{
 </script>
 
 <template>
-  <template v-if="ability.can('create', 'Competency')">
-    <RootCompetenciesCreatePage :framework-id="frameworkId" />
-  </template>
-  <template v-else>
-    <AuthAccessDenied />
-  </template>
+  <RootCompetenciesCreatePage
+    v-if="ability.can('create', 'Competency')"
+    :framework-id="frameworkId"
+  />
+  <AuthAccessDenied v-else />
 </template>

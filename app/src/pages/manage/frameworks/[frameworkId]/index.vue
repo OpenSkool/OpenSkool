@@ -6,10 +6,9 @@ const ability = useAppAbility();
 </script>
 
 <template>
-  <template v-if="ability.can('read', 'Competency')">
-    <RootCompetenciesPage :framework-id="frameworkId" />
-  </template>
-  <template v-else>
-    <AuthAccessDenied />
-  </template>
+  <RootCompetenciesPage
+    v-if="ability.can('read', 'Competency')"
+    :framework-id="frameworkId"
+  />
+  <AuthAccessDenied v-else />
 </template>

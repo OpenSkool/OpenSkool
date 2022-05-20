@@ -7,13 +7,10 @@ const ability = useAppAbility();
 </script>
 
 <template>
-  <template v-if="ability.can('update', 'Competency')">
-    <CompetencyEditPage
-      :competency-id="competencyId"
-      :framework-id="frameworkId"
-    />
-  </template>
-  <template v-else>
-    <AuthAccessDenied />
-  </template>
+  <CompetencyEditPage
+    v-if="ability.can('update', 'Competency')"
+    :competency-id="competencyId"
+    :framework-id="frameworkId"
+  />
+  <AuthAccessDenied v-else />
 </template>
