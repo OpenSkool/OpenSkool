@@ -1,0 +1,41 @@
+<script lang="ts" setup>
+import { GetAllCompetencyFrameworksDocument } from '~/codegen/graphql';
+
+const ability = useAppAbility();
+
+gql`
+  query GetAllCompetencyFrameworks {
+    allCompetencyFrameworks {
+      id
+      title
+    }
+  }
+`;
+
+const { result } = useQuery(GetAllCompetencyFrameworksDocument);
+
+const frameworks = useResult(result);
+</script>
+
+<template>
+  <!-- Breadcrumb placeholder -->
+  <div class="text-sm">&nbsp;</div>
+  <UiTitle
+    is="h2"
+    v-t="'frameworks.route.index.heading'"
+    class="text-xl mb-3"
+  />
+  <UiButtonRouterLink
+    v-if="ability.can('create', 'CompetencyFramework')"
+    v-t="'frameworks.route.index.action.create'"
+    class="my-5"
+    to="/manage/frameworks/create-framework"
+  />
+  <UiOrderedList>
+    <UiOrderedListItem v-for="framework of frameworks" :key="framework.id">
+      <RouterLink :to="`/manage/frameworks/${framework.id}`">
+        {{ framework.title }}
+      </RouterLink>
+    </UiOrderedListItem>
+  </UiOrderedList>
+</template>

@@ -55,7 +55,7 @@ export default defineConfig({
       apply: 'serve',
     },
     Components({
-      dirs: ['src/domain/*/components', 'src/ui'],
+      dirs: ['src/domain/*/components', 'src/domain/*/templates', 'src/ui'],
       dts: 'src/vite-types/components.d.ts',
       resolvers: [
         HeadlessUiResolver(),
