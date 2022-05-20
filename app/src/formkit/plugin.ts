@@ -1,4 +1,5 @@
 import { nl } from '@formkit/i18n';
+import { generateClasses } from '@formkit/themes';
 import { plugin, defaultConfig, createInput } from '@formkit/vue';
 import type { App } from 'vue';
 
@@ -7,8 +8,6 @@ import FkCheckbox from '~/ui/input/fk-checkbox.vue';
 import FkInputText from '~/ui/input/fk-input-text.vue';
 import FkRadio from '~/ui/input/fk-radio.vue';
 import FkSelect from '~/ui/select/fk-select.vue';
-
-import { generateClasses } from './helpers';
 
 const BUTTON = {
   input: createButtonStyles(),
