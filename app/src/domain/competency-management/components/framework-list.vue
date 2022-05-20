@@ -14,6 +14,7 @@ const { result } = useQuery(GetAllCompetencyFrameworksDocument);
 
 const frameworks = useResult(result);
 </script>
+
 <template>
   <UiOrderedList>
     <UiOrderedListItem v-for="framework of frameworks" :key="framework.id">

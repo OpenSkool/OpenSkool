@@ -4,6 +4,7 @@ defineProps<{
 }>();
 const ability = useAppAbility();
 </script>
+
 <template>
   <template v-if="ability.can('read', 'Competency')">
     <RootCompetenciesPage :framework-id="frameworkId" />
