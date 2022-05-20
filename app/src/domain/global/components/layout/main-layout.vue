@@ -3,17 +3,20 @@ const DESKTOP_MIN_WIDTH = 768;
 
 const isSideNavOpened = ref<boolean>(windowSizeIsMediumOrBigger());
 
-const transitionClasses = 'transition duration-300 ease-in-out transform';
+const navigationTransitionClasses =
+  'transition duration-300 ease-in-out transform';
+
+const router = useRouter();
 
 function windowSizeIsMediumOrBigger(): boolean {
   return window.innerWidth > DESKTOP_MIN_WIDTH;
 }
 
-function closeSideNavOnMobile(): void {
+router.beforeResolve(() => {
   if (!windowSizeIsMediumOrBigger()) {
     isSideNavOpened.value = false;
   }
-}
+});
 </script>
 
 <template>
@@ -36,11 +39,11 @@ function closeSideNavOnMobile(): void {
     <div
       :class="[
         isSideNavOpened ? 'translate-x-0' : '-translate-x-full',
-        transitionClasses,
+        navigationTransitionClasses,
+        'space-y-4 bg-white p-5 min-w-max',
       ]"
-      class="space-y-4 bg-white p-5 min-w-max"
     >
-      <UiMainNav @click="closeSideNavOnMobile">
+      <UiMainNav>
         <UiMainNavSection name="Home">
           <UiMainNavLink to="/">Home</UiMainNavLink>
         </UiMainNavSection>
@@ -60,9 +63,9 @@ function closeSideNavOnMobile(): void {
     <div
       :class="[
         isSideNavOpened ? ' translate-x-0' : '-translate-x-64',
-        transitionClasses,
+        navigationTransitionClasses,
+        'container mx-auto p-5',
       ]"
-      class="container mx-auto p-5"
     >
       <Suspense>
         <RouterView />
