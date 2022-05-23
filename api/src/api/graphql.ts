@@ -1,4 +1,4 @@
-import { Readable } from 'stream';
+import { Readable } from 'node:stream';
 
 import { useResponseCache } from '@envelop/response-cache';
 import { createServer } from '@graphql-yoga/node';

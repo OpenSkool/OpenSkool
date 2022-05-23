@@ -1,4 +1,4 @@
-import assert from 'assert';
+import assert from 'node:assert';
 
 import { Education, EducationTranslation, Language } from '@prisma/client';
 
