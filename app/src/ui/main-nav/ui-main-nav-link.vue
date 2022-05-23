@@ -7,7 +7,7 @@ defineProps<{ to: string }>();
     <RouterLink
       :to="to"
       :class="[
-        'flex-1 py-3 px-5 rounded-2xl bg-gray-300/0',
+        'flex-1 px-5 py-2 rounded-md bg-gray-300/0',
         'hover:bg-opacity-75 active:bg-opacity-100',
         'focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-secondary-400)',
       ]"

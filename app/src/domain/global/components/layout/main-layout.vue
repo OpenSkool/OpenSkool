@@ -23,18 +23,17 @@ router.beforeResolve(() => {
   <div class="bg-white">
     <div class="flex items-center justify-between p-3">
       <button
-        class="flex items-center focus:outline-none focus-visible:(ring-2 ring-offset-2 rounded-md pr-5 ring-black)"
+        class="flex gap-3 items-center focus:outline-none focus-visible:(ring-2 ring-offset-2 rounded-md pr-5 ring-black) text-base p-2"
         @click="isSideNavOpened = !isSideNavOpened"
       >
-        <RiMenuLine v-if="!isSideNavOpened" class="mx-3" />
-        <RiMenuFoldLine v-if="isSideNavOpened" class="mx-3" />
+        <RiMenuLine v-if="!isSideNavOpened" />
+        <RiMenuFoldLine v-if="isSideNavOpened" />
         <span>Menu</span>
       </button>
       <LoadingSpinner />
       <UserMenu />
     </div>
   </div>
-
   <div class="flex gap-5 h-screen">
     <div
       :class="[
@@ -59,7 +58,6 @@ router.beforeResolve(() => {
       </UiMainNav>
       <LanguageSelect />
     </div>
-
     <div
       :class="[
         isSideNavOpened ? ' translate-x-0' : '-translate-x-64',

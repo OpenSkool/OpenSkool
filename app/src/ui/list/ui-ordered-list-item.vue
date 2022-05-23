@@ -11,7 +11,7 @@ defineEmits<(event: 'moveUp' | 'moveDown') => void>();
 <template>
   <li
     :class="[
-      'bg-white p-5 pl-12 list-inside relative text-sm',
+      'relative flex px-10 py-5 list-inside bg-white text-base',
       'first-of-type:rounded-t-lg last-of-type:rounded-b-lg',
     ]"
   >
@@ -40,11 +40,9 @@ button {
 li {
   counter-increment: item;
 }
-
 li:before {
   content: counter(item);
-  margin-right: 10px;
-  font-weight: bold;
+  @apply font-bold mr-5;
 }
 
 li:first-of-type button.arrow-up {
