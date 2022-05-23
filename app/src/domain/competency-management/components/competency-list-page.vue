@@ -122,7 +122,7 @@ async function deleteCompetencyHandler(): Promise<void> {
         {{ competency.parent.title }}
       </UiBreadcrumbLink>
     </UiBreadcrumb>
-    <UiTitle is="h2" class="text-xl mb-3">
+    <UiTitle is="h1" class="text-xl mb-3">
       {{ competency.title }}
       <RouterLink
         v-if="ability.can('update', 'Competency')"

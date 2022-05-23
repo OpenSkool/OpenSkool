@@ -51,7 +51,7 @@ const competencyFramework = useResult(result);
         <span v-t="'frameworks.route.index.heading'" />
       </UiBreadcrumbLink>
     </UiBreadcrumb>
-    <UiTitle is="h2" class="text-xl mb-3">
+    <UiTitle is="h1" class="text-xl mb-3">
       {{ competencyFramework.data.title }}
     </UiTitle>
     <UiButtonRouterLink

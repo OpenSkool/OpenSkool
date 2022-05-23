@@ -6,7 +6,7 @@ const ability = useAppAbility();
   <!-- Breadcrumb placeholder -->
   <div class="text-sm">&nbsp;</div>
   <UiTitle
-    is="h2"
+    is="h1"
     v-t="'frameworks.route.index.heading'"
     class="text-xl mb-3"
   />
