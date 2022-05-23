@@ -122,8 +122,10 @@ async function deleteCompetencyHandler(): Promise<void> {
         {{ competency.parent.title }}
       </UiBreadcrumbLink>
     </UiBreadcrumb>
-    <UiTitle is="h1" class="text-xl mb-3">
-      {{ competency.title }}
+    <div class="flex gap-3 items-baseline">
+      <UiTitle is="h1" class="text-xl mb-3">
+        {{ competency.title }}
+      </UiTitle>
       <RouterLink
         v-if="ability.can('update', 'Competency')"
         :to="`/manage/frameworks/${frameworkId}/${competencyId}/edit`"
@@ -131,7 +133,7 @@ async function deleteCompetencyHandler(): Promise<void> {
         <span v-t="'competencies.route.id.index.action.edit'" class="sr-only" />
         <RiEditBoxLine aria-hidden />
       </RouterLink>
-    </UiTitle>
+    </div>
     <UiButtonRouterLink
       v-if="ability.can('create', 'Competency')"
       v-t="'competencies.route.id.index.action.new'"
