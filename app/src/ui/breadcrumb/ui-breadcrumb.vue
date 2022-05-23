@@ -1,5 +1,7 @@
 <template>
-  <ol>
-    <slot />
-  </ol>
+  <nav aria-label="Breadcrumb">
+    <ol>
+      <slot />
+    </ol>
+  </nav>
 </template>
