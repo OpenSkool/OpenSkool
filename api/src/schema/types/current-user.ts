@@ -1,4 +1,4 @@
-import assert from 'assert';
+import assert from 'node:assert';
 
 import { decodeJwt, JWTPayload } from 'jose';
 import ms from 'ms';
