@@ -61,7 +61,11 @@ const parentCompetency = computed(() =>
         </UiBreadcrumbLink>
       </template>
     </UiBreadcrumb>
-    <UiTitle v-t="'competencies.route.create.heading'" class="text-xl mb-3" />
+    <UiTitle
+      is="h1"
+      v-t="'competencies.route.create.heading'"
+      class="text-xl mb-3"
+    />
     <NestedCompetencyCreate
       :competency-id="competencyId"
       :framework-id="frameworkId"

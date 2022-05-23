@@ -45,6 +45,7 @@ const competencyFramework = computed(() =>
         <span v-t="'frameworks.route.index.heading'" />
       </UiBreadcrumbLink>
       <UiBreadcrumbLink
+        is="h1"
         v-if="competencyFramework"
         :to="`/manage/frameworks/${competencyFramework.id}`"
       >
@@ -52,7 +53,7 @@ const competencyFramework = computed(() =>
       </UiBreadcrumbLink>
     </UiBreadcrumb>
     <UiTitle
-      is="h2"
+      is="h1"
       v-t="'competencies.route.create.heading'"
       class="text-xl mb-3"
     />
