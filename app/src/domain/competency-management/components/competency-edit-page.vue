@@ -143,7 +143,11 @@ async function handleFormSubmit(): Promise<void> {
         </UiBreadcrumbLink>
       </template>
     </UiBreadcrumb>
-    <UiTitle v-t="'competencies.route.id.edit.heading'" class="text-xl mb-3" />
+    <UiTitle
+      is="h1"
+      v-t="'competencies.route.id.edit.heading'"
+      class="text-xl mb-3"
+    />
     <FormKit
       v-if="formValues != null"
       v-model="formValues"

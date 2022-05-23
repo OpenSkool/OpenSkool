@@ -11,7 +11,7 @@ const { t } = useI18n();
         {{ t('frameworks.route.index.heading') }}
       </UiBreadcrumbLink>
     </UiBreadcrumb>
-    <UiTitle class="text-xl mb-3">
+    <UiTitle is="h1" class="text-xl mb-3">
       {{ t('frameworks.route.create.heading') }}
     </UiTitle>
     <CompetencyFrameworkCreate />
