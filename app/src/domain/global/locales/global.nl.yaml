@@ -3,6 +3,9 @@ auth:
     login: Connect
   unauthorized: You are not authorized to view this content. Please login with the correct authorization.
 
+breadcrumb:
+  label: Breadcrumb
+
 message: Global message is global
 
 title: OpenSkool
