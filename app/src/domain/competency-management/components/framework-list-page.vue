@@ -1,20 +1,5 @@
 <script lang="ts" setup>
-import { GetAllCompetencyFrameworksDocument } from '~/codegen/graphql';
-
 const ability = useAppAbility();
-
-gql`
-  query GetAllCompetencyFrameworks {
-    allCompetencyFrameworks {
-      id
-      title
-    }
-  }
-`;
-
-const { result } = useQuery(GetAllCompetencyFrameworksDocument);
-
-const frameworks = useResult(result);
 </script>
 
 <template>
@@ -31,11 +16,5 @@ const frameworks = useResult(result);
     class="my-5"
     to="/manage/frameworks/create-framework"
   />
-  <UiOrderedList>
-    <UiOrderedListItem v-for="framework of frameworks" :key="framework.id">
-      <RouterLink :to="`/manage/frameworks/${framework.id}`">
-        {{ framework.title }}
-      </RouterLink>
-    </UiOrderedListItem>
-  </UiOrderedList>
+  <FrameworkList />
 </template>
