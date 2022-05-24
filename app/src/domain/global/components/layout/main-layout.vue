@@ -1,95 +1,41 @@
 <script lang="ts" setup>
-const DESKTOP_MIN_WIDTH = 768;
+import { i18nLoaderService } from '~/i18n';
 
-const isSideNavOpened = ref<boolean>(windowSizeIsMediumOrBigger());
+import { useMenuState } from './use-menu-state';
 
-const navigationTransitionClasses =
-  'transition duration-300 ease-in-out transform';
+await i18nLoaderService.loadGlobalMessages();
 
-const router = useRouter();
-
-function windowSizeIsMediumOrBigger(): boolean {
-  return window.innerWidth > DESKTOP_MIN_WIDTH;
-}
-
-router.beforeResolve(() => {
-  if (!windowSizeIsMediumOrBigger()) {
-    isSideNavOpened.value = false;
-  }
-});
+const { menuState, toggleMenu } = useMenuState();
 </script>
 
 <template>
-  <div class="bg-white">
-    <div class="flex items-center justify-between p-3">
-      <button
-        class="flex gap-3 items-center focus:outline-none focus-visible:(ring-2 ring-offset-2 rounded-md pr-5 ring-black) text-base p-2"
-        @click="isSideNavOpened = !isSideNavOpened"
-      >
-        <RiMenuLine v-if="!isSideNavOpened" />
-        <RiMenuFoldLine v-if="isSideNavOpened" />
-        <span>Menu</span>
-      </button>
+  <div class="root grid">
+    <div class="col-span-2 flex items-center justify-between p-3">
+      <MainMenuToggleButton
+        aria-controls="mainMenu"
+        :aria-expanded="menuState.opened"
+        @click="toggleMenu()"
+      />
       <LoadingSpinner />
       <UserMenu />
     </div>
-  </div>
-  <div class="flex gap-5 h-screen">
+    <MainMenu id="mainMenu" :state="menuState" />
     <div
-      :class="[
-        isSideNavOpened ? 'translate-x-0' : '-translate-x-full',
-        navigationTransitionClasses,
-        'space-y-4 bg-white p-5 min-w-max',
-      ]"
+      class="mb-10 bg-gray-100"
+      :class="menuState.overlay || !menuState.opened ? 'col-span-2' : ''"
     >
-      <UiMainNav>
-        <UiMainNavSection name="Home">
-          <UiMainNavLink to="/">Home</UiMainNavLink>
-        </UiMainNavSection>
-        <UiMainNavSection name="Demo">
-          <UiMainNavLink to="/demo/forms">Forms</UiMainNavLink>
-          <UiMainNavLink to="/demo/ui">UI</UiMainNavLink>
-        </UiMainNavSection>
-        <UiMainNavSection name="Frameworks">
-          <UiMainNavLink to="/manage/frameworks">
-            Manage frameworks
-          </UiMainNavLink>
-        </UiMainNavSection>
-      </UiMainNav>
-      <LanguageSelect />
+      <main class="container mx-auto p-10">
+        <Suspense>
+          <RouterView />
+        </Suspense>
+      </main>
     </div>
-    <div
-      :class="[
-        isSideNavOpened ? ' translate-x-0' : '-translate-x-64',
-        navigationTransitionClasses,
-        'container mx-auto p-5',
-      ]"
-    >
-      <Suspense>
-        <RouterView />
-      </Suspense>
-    </div>
+    <!-- <DebugLayout /> -->
   </div>
 </template>
 
 <style scoped>
-:global(html, body) {
-  @apply antialiased font-sans bg-gray-100;
-}
-
-:global(a) {
-  @apply text-primary-600;
-}
-
-.spin {
-  animation: spin 1.25s linear infinite;
-}
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(359deg);
-  }
+.root {
+  grid-template-columns: 30ch 1fr;
 }
 </style>

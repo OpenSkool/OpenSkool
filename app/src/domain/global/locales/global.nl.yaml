@@ -1,3 +1,6 @@
+message: Global message is global
+title: OpenSkool
+
 auth:
   action:
     login: Connect
@@ -6,12 +9,13 @@ auth:
 breadcrumb:
   label: Breadcrumb
 
-message: Global message is global
+mainMenu:
+  managementHeader: Beheer
+  managementLink:
+    competencyFrameworks: Competenties
+  toggleButton: Menu
 
-title: OpenSkool
-
-widget:
-  userMenu:
-    description: You are logged in as {name}.
-    toggleButton: Gebruikers menu
-    logoutButton: Meld je af
+userMenu:
+  description: You are logged in as {name}.
+  toggleButton: Gebruikers menu
+  logoutButton: Meld je af
