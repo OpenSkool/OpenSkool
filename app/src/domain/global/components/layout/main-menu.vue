@@ -16,12 +16,14 @@ defineProps<{
         'fixed z-10 w-screen h-screen': state.opened && state.overlay,
       }"
     >
-      <header class="flex gap-3 items-center justify-center -mb-5">
-        <img class="inline-block" :src="imgUrl" />
-        <div
-          v-t="'global.title'"
-          class="font-normal text-secondary-300 text-xl"
-        />
+      <header class="-mb-5">
+        <RouterLink class="flex gap-3 items-center justify-center" to="/">
+          <img class="inline-block" :src="imgUrl" />
+          <div
+            v-t="'global.title'"
+            class="font-normal text-secondary-300 text-xl"
+          />
+        </RouterLink>
       </header>
       <UiMainNavSection>
         <UiMainNavHeader>
