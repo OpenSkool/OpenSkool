@@ -11,9 +11,9 @@
       v-slot="{ active, disabled }"
       as="div"
       :class="[
-        'absolute right-0 origin-top-right z-5 min-w-15rem',
+        'absolute right-0 origin-top-right z-5 min-w-xs mt-1',
         'bg-white rounded-md shadow-lg p-1 divide-y divide-gray-100',
-        'focus:outline-none ring-:(1 black opacity-5)',
+        'focus:outline-none ring-1 ring-black ring-opacity-5',
       ]"
     >
       <slot v-bind="{ active, disabled }" />
