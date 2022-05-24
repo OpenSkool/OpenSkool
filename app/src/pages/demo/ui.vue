@@ -122,8 +122,10 @@ const inputText = ref<string>('');
       <UiTitle is="h2" class="text-xl mb-3">Menu</UiTitle>
       <UiMenu>
         <UiMenuButton>
-          Options
-          <RiArrowDropDownLine aria-hidden="true" />
+          <UiButton>
+            Options
+            <RiArrowDropDownLine aria-hidden="true" />
+          </UiButton>
         </UiMenuButton>
         <UiMenuItems>
           <div class="px-4 py-3">
