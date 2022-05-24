@@ -13,16 +13,17 @@ const logoutHref = computed(() => {
 
 <template>
   <UiMenu v-if="authStore.isLoggedIn">
-    <UiMenuButton
-      is="button"
-      :class="[
-        'p-3 border-2 aspect-square rounded-full',
-        'focus:outline-none focus-visible:(ring-2 ring-secondary-300 ring-offset-2)',
-        'flex items-center justify-center',
-      ]"
-    >
-      <RiUser3Line aria-hidden />
-      <span v-t="'global.widget.userMenu.toggleButton'" class="sr-only" />
+    <UiMenuButton>
+      <button
+        :class="[
+          'p-3 border-2 aspect-square rounded-full',
+          'focus:outline-none focus-visible:(ring-2 ring-secondary-300 ring-offset-2)',
+          'flex items-center justify-center',
+        ]"
+      >
+        <RiUser3Line aria-hidden />
+        <span v-t="'global.widget.userMenu.toggleButton'" class="sr-only" />
+      </button>
     </UiMenuButton>
     <UiMenuItems>
       <i18n-t
