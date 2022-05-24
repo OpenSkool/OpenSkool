@@ -13,6 +13,10 @@ const loading = useGlobalQueryLoading();
     leave-from-class="opacity-100"
     leave-to-class="opacity-0"
   >
-    <RiLoaderLine v-if="loading" class="text-lg text-tertiary-300 spin" />
+    <RiLoaderLine
+      v-if="loading"
+      aria-hidden
+      class="text-lg text-tertiary-300 animate-spin"
+    />
   </Transition>
 </template>

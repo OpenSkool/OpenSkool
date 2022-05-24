@@ -3,8 +3,9 @@ const ability = useAppAbility();
 </script>
 
 <template>
-  <!-- Breadcrumb placeholder -->
-  <div class="text-sm">&nbsp;</div>
+  <UiBreadcrumb>
+    <li class="inline text-gray-600 text-sm uppercase">Management</li>
+  </UiBreadcrumb>
   <UiTitle
     is="h1"
     v-t="'frameworks.route.index.heading'"

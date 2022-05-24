@@ -19,7 +19,7 @@ const inputText = ref<string>('');
 </script>
 
 <template>
-  <div class="space-y-10 mb-50">
+  <div class="space-y-10">
     <div>
       <UiTitle is="h2" class="text-xl">Title</UiTitle>
       <UiSubtitle is="h3">Subtitle</UiSubtitle>

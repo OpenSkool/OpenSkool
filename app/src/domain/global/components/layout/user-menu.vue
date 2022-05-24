@@ -22,13 +22,13 @@ const logoutHref = computed(() => {
         ]"
       >
         <RiUser3Line aria-hidden />
-        <span v-t="'global.widget.userMenu.toggleButton'" class="sr-only" />
+        <span v-t="'global.userMenu.toggleButton'" class="sr-only" />
       </button>
     </UiMenuButton>
     <UiMenuItems>
       <i18n-t
         class="px-4 py-3 text-base text-gray-500"
-        keypath="global.widget.userMenu.description"
+        keypath="global.userMenu.description"
         tag="div"
       >
         <template #name>
@@ -37,7 +37,7 @@ const logoutHref = computed(() => {
       </i18n-t>
       <UiMenuItem is="a" class="text-base" :href="logoutHref">
         <RiLogoutBoxRLine aria-hidden />
-        <span v-t="'global.widget.userMenu.logoutButton'" />
+        <span v-t="'global.userMenu.logoutButton'" />
       </UiMenuItem>
     </UiMenuItems>
   </UiMenu>
