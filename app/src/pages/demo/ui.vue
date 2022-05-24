@@ -79,6 +79,14 @@ const inputText = ref<string>('');
       </div>
     </div>
     <div>
+      <UiTitle is="h2" class="text-xl mb-3">Tabs</UiTitle>
+      <UiTabs>
+        <UiTab id="1" title="Button 1">Panel 1</UiTab>
+        <UiTab id="2" title="Button 2">Panel 2</UiTab>
+        <UiTab id="3" title="Button 3">Panel 3</UiTab>
+      </UiTabs>
+    </div>
+    <div>
       <UiTitle is="h2" class="text-xl mb-3">Dialog</UiTitle>
       <UiButton @click="isModalOpen = true">Open dialog</UiButton>
       <UiDialog :open="isModalOpen" @close="isModalOpen = false">
