@@ -6,7 +6,11 @@ defineProps<{
 
 <template>
   <li class="inline text-gray-600 text-sm uppercase">
-    <RouterLink v-if="linkTo" class="hover:underline" :to="linkTo">
+    <RouterLink
+      v-if="linkTo"
+      class="hover:underline rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+      :to="linkTo"
+    >
       <slot />
     </RouterLink>
     <template v-else>
