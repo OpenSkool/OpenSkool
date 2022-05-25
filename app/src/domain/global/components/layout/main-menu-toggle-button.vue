@@ -7,7 +7,7 @@ defineProps<{
 <template>
   <button
     :aria-expanded="ariaExpanded"
-    aria-haspopup
+    aria-haspopup="menu"
     :class="`
       flex gap-3 items-center px-3 py-2 rounded-md text-base
       focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-black)
