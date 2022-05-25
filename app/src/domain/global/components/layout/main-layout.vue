@@ -17,7 +17,10 @@ const { menuState, toggleMenu } = useMenuState();
         @click="toggleMenu()"
       />
       <LoadingSpinner />
-      <UserMenu />
+      <div class="flex gap-3">
+        <LanguageSelect />
+        <UserMenu />
+      </div>
     </div>
     <MainMenu id="mainMenu" :state="menuState" />
     <div
