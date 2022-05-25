@@ -4,7 +4,7 @@ const ability = useAppAbility();
 
 <template>
   <UiBreadcrumb>
-    <li class="inline text-gray-600 text-sm uppercase">Management</li>
+    <UiBreadcrumbItem>Management</UiBreadcrumbItem>
   </UiBreadcrumb>
   <UiTitle
     is="h1"

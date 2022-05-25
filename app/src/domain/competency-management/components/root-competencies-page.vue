@@ -47,9 +47,9 @@ const competencyFramework = useResult(result);
     "
   >
     <UiBreadcrumb>
-      <UiBreadcrumbLink to="/manage/frameworks">
+      <UiBreadcrumbItem link-to="/manage/frameworks">
         <span v-t="'frameworks.route.index.heading'" />
-      </UiBreadcrumbLink>
+      </UiBreadcrumbItem>
     </UiBreadcrumb>
     <UiTitle is="h1" class="text-xl mb-3">
       {{ competencyFramework.data.title }}

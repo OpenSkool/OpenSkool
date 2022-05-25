@@ -1,14 +1,17 @@
 <script lang="ts" setup>
 defineProps<{
-  to: string;
+  linkTo?: string;
 }>();
 </script>
 
 <template>
   <li class="inline text-gray-600 text-sm uppercase">
-    <RouterLink class="hover:underline" :to="to">
+    <RouterLink v-if="linkTo" class="hover:underline" :to="linkTo">
       <slot />
     </RouterLink>
+    <template v-else>
+      <slot />
+    </template>
   </li>
 </template>
 

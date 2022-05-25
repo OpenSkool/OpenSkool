@@ -41,15 +41,15 @@ const competencyFramework = computed(() =>
   </template>
   <template v-else>
     <UiBreadcrumb>
-      <UiBreadcrumbLink to="/manage/frameworks">
+      <UiBreadcrumbItem link-to="/manage/frameworks">
         <span v-t="'frameworks.route.index.heading'" />
-      </UiBreadcrumbLink>
-      <UiBreadcrumbLink
+      </UiBreadcrumbItem>
+      <UiBreadcrumbItem
         v-if="competencyFramework"
         :to="`/manage/frameworks/${competencyFramework.id}`"
       >
         {{ competencyFramework.title }}
-      </UiBreadcrumbLink>
+      </UiBreadcrumbItem>
     </UiBreadcrumb>
     <UiTitle
       is="h1"

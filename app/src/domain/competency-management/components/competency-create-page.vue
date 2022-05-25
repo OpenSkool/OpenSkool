@@ -47,18 +47,18 @@ const parentCompetency = computed(() =>
   </template>
   <template v-else>
     <UiBreadcrumb>
-      <UiBreadcrumbLink to="/manage/frameworks">
+      <UiBreadcrumbItem link-to="/manage/frameworks">
         <span v-t="'frameworks.route.index.heading'" />
-      </UiBreadcrumbLink>
+      </UiBreadcrumbItem>
       <template v-if="parentCompetency">
-        <UiBreadcrumbLink :to="`/manage/frameworks/${frameworkId}`">
+        <UiBreadcrumbItem :to="`/manage/frameworks/${frameworkId}`">
           {{ parentCompetency.competencyFramework.title }}
-        </UiBreadcrumbLink>
-        <UiBreadcrumbLink
+        </UiBreadcrumbItem>
+        <UiBreadcrumbItem
           :to="`/manage/frameworks/${frameworkId}/${competencyId}`"
         >
           {{ parentCompetency.title }}
-        </UiBreadcrumbLink>
+        </UiBreadcrumbItem>
       </template>
     </UiBreadcrumb>
     <UiTitle
