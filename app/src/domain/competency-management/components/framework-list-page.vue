@@ -4,7 +4,7 @@ const ability = useAppAbility();
 
 <template>
   <UiBreadcrumb>
-    <UiBreadcrumbItem>Management</UiBreadcrumbItem>
+    <UiBreadcrumbItem v-t="'global.mainMenu.managementHeader'" />
   </UiBreadcrumb>
   <UiTitle
     is="h1"
