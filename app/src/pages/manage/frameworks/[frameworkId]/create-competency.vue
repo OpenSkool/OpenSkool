@@ -1,8 +1,9 @@
 <script lang="ts" setup>
-const ability = useAppAbility();
 defineProps<{
   frameworkId: string;
 }>();
+
+const ability = useAppAbility();
 </script>
 
 <template>

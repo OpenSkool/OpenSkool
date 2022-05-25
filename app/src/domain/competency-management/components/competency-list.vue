@@ -6,13 +6,13 @@ interface Competency {
   title: string;
 }
 
-const { t } = useI18n();
-
 const props = defineProps<{
   competencies: Competency[];
   frameworkId: string;
   refetchQueries: string[];
 }>();
+
+const { t } = useI18n();
 
 gql`
   mutation swapCompetencies($leftCompetencyId: ID!, $rightCompetencyId: ID!) {
