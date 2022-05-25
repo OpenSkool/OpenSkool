@@ -337,9 +337,12 @@ export async function updateCompetencyTranslations(
       data: {
         updatedById: context.userId,
         translations: {
-          updateMany: {
-            data: { title },
-            where: { languageCode },
+          upsert: {
+            create: { title, languageCode },
+            update: { title },
+            where: {
+              competencyId_languageCode: { competencyId: id, languageCode },
+            },
           },
         },
       },

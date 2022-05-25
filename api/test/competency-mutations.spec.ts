@@ -880,7 +880,7 @@ describe('renameCompetency', () => {
     expect(response).toHaveProperty('data.renameCompetency.data');
   });
 
-  test('should rename competency', async () => {
+  test('should rename competency in existing locale', async () => {
     const user = await createUserFixture();
     const competency = await createCompetencyFixture();
     const response = await execute<{ renameCompetency: unknown }>(
@@ -906,6 +906,38 @@ describe('renameCompetency', () => {
     expect(response).toHaveProperty(
       'data.renameCompetency.data.title',
       'Hello Universe!',
+    );
+  });
+
+  test('should rename competency in new locale', async () => {
+    const user = await createUserFixture();
+    const competency = await createCompetencyFixture({
+      language: Language.EN,
+      title: 'Hello World!',
+    });
+    const response = await execute<{ renameCompetency: unknown }>(
+      gql`
+        mutation ($id: ID!, $title: String!) {
+          renameCompetency(id: $id, data: { title: $title }) {
+            ... on MutationRenameCompetencySuccess {
+              data {
+                title
+              }
+            }
+          }
+        }
+      `,
+      {
+        spec: { locale: 'nl', userId: user.id },
+        variables: {
+          id: competency.id,
+          title: 'Hallo Wereld!',
+        },
+      },
+    );
+    expect(response).toHaveProperty(
+      'data.renameCompetency.data.title',
+      'Hallo Wereld!',
     );
   });
 });
