@@ -3,14 +3,13 @@ import { FormKitNode } from '@formkit/core';
 
 import { CreateNestedCompetencyDocument } from '~/codegen/graphql';
 
-const { t } = useI18n();
-
-const router = useRouter();
-
 const props = defineProps<{
   competencyId: string;
   frameworkId: string;
 }>();
+
+const { t } = useI18n();
+const router = useRouter();
 
 gql`
   mutation CreateNestedCompetency($data: CreateNestedCompetencyInput!) {

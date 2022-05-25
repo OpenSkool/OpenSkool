@@ -5,15 +5,15 @@ import {
 } from '~/codegen/graphql';
 import { assert } from '~/utils';
 
-const { t } = useI18n();
-const ability = useAppAbility();
-
-const router = useRouter();
-
 const props = defineProps<{
   competencyId: string;
   frameworkId: string;
 }>();
+
+const { t } = useI18n();
+const router = useRouter();
+
+const ability = useAppAbility();
 
 const isDeleteModalOpen = ref(false);
 const deleteErrorMessage = ref();

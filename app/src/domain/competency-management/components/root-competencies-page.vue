@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import { GetFrameworkRootCompetenciesDocument } from '~/codegen/graphql';
 
-const ability = useAppAbility();
-
 const props = defineProps<{
   frameworkId: string;
 }>();
+
+const ability = useAppAbility();
 
 gql`
   query getFrameworkRootCompetencies($id: ID!) {

@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-const ability = useAppAbility();
-
 defineProps<{
   competencyId: string;
   frameworkId: string;
 }>();
+
+const ability = useAppAbility();
 </script>
 
 <template>

@@ -3,13 +3,12 @@ import { FormKitNode } from '@formkit/core';
 
 import { CreateRootCompetencyDocument } from '~/codegen/graphql';
 
-const { t } = useI18n();
-
-const router = useRouter();
-
 const props = defineProps<{
   frameworkId: string;
 }>();
+
+const { t } = useI18n();
+const router = useRouter();
 
 gql`
   mutation CreateRootCompetency($data: CreateRootCompetencyInput!) {

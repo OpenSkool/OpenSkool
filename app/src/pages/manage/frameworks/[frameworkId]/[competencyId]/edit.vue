@@ -3,6 +3,7 @@ defineProps<{
   competencyId: string;
   frameworkId: string;
 }>();
+
 const ability = useAppAbility();
 </script>
 

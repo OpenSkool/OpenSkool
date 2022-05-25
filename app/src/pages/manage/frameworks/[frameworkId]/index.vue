@@ -2,6 +2,7 @@
 defineProps<{
   frameworkId: string;
 }>();
+
 const ability = useAppAbility();
 </script>
 
