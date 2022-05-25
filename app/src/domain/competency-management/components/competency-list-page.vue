@@ -109,18 +109,18 @@ async function deleteCompetencyHandler(): Promise<void> {
   </template>
   <template v-else>
     <UiBreadcrumb>
-      <UiBreadcrumbLink to="/manage/frameworks">
+      <UiBreadcrumbItem link-to="/manage/frameworks">
         <span v-t="'frameworks.route.index.heading'" />
-      </UiBreadcrumbLink>
-      <UiBreadcrumbLink :to="`/manage/frameworks/${frameworkId}`">
+      </UiBreadcrumbItem>
+      <UiBreadcrumbItem :to="`/manage/frameworks/${frameworkId}`">
         {{ competency.competencyFramework.title }}
-      </UiBreadcrumbLink>
-      <UiBreadcrumbLink
+      </UiBreadcrumbItem>
+      <UiBreadcrumbItem
         v-if="competency.parent"
         :to="`/manage/frameworks/${frameworkId}/${competency.parent.id}`"
       >
         {{ competency.parent.title }}
-      </UiBreadcrumbLink>
+      </UiBreadcrumbItem>
     </UiBreadcrumb>
     <div class="flex gap-3 items-baseline">
       <UiTitle is="h1" class="text-xl mb-3">
