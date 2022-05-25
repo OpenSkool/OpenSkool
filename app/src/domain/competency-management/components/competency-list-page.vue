@@ -16,7 +16,7 @@ const router = useRouter();
 const ability = useAppAbility();
 
 const isDeleteModalOpen = ref(false);
-const deleteErrorMessage = ref();
+const deleteErrorMessage = ref<string | null>(null);
 
 gql`
   query getSubCompetencies($id: ID!) {
