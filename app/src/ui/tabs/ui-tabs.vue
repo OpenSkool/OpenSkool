@@ -6,9 +6,9 @@
       class="flex gap-6 p-2 overflow-x-auto"
     >
       <Tab
-        v-for="slot in $slots.default()"
+        v-for="(slot, index) in $slots.default()"
         v-slot="{ selected }"
-        :key="slot.props?.id"
+        :key="`slot-${index}`"
         as="template"
       >
         <button
