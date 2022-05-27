@@ -185,5 +185,14 @@ async function deleteCompetencyHandler(): Promise<void> {
       :competencies="competency.subCompetencies"
       :refetch-queries="['getSubCompetencies']"
     />
+    <EmptyCard v-else>
+      <p v-t="'competencies.route.id.index.notFound'" />
+      <UiButtonRouterLink
+        v-if="ability.can('create', 'Competency')"
+        v-t="'competencies.route.id.index.action.new'"
+        class="m-5"
+        :to="`/manage/frameworks/${frameworkId}/${competencyId}/create-competency`"
+      />
+    </EmptyCard>
   </template>
 </template>
