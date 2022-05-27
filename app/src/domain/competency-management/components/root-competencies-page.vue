@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { GetFrameworkRootCompetenciesDocument } from '~/codegen/graphql';
+import CompetencyList from '~/domain/competency-management/components/competency-list.vue';
 
 const props = defineProps<{
   frameworkId: string;

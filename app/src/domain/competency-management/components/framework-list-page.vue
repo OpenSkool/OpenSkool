@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import FrameworkList from '~/domain/competency-management/components/framework-list.vue';
+
 const ability = useAppAbility();
 </script>
 
