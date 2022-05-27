@@ -12,7 +12,7 @@ route:
     index:
       action:
         new: Voeg competency toe
-      notFound: Er zijn geen competencies
+      notFound: Dit framework heeft geen competencies
   index:
     action:
       create: Voeg framework toe

@@ -32,3 +32,4 @@ route:
         heading: Delete competency?
         message: Are you sure you want to delete "{title}" and all its sub-competencies?
       heading: Competencies
+      notFound: This competency has no sub-competencies

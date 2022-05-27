@@ -66,6 +66,15 @@ const competencyFramework = useResult(result);
       :competencies="competencyFramework.data.competencies"
       :refetch-queries="['getFrameworkRootCompetencies']"
     />
+    <EmptyCard v-else>
+      <p v-t="'frameworks.route.id.index.notFound'" />
+      <UiButtonRouterLink
+        v-if="ability.can('create', 'Competency')"
+        v-t="'frameworks.route.id.index.action.new'"
+        class="my-5"
+        :to="`/manage/frameworks/${competencyFramework.data.id}/create-competency`"
+      />
+    </EmptyCard>
   </template>
   <template v-else>
     <div>Not Found</div>

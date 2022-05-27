@@ -32,3 +32,4 @@ route:
         heading: Verwijder competentie?
         message: Ben je zeker dat je alle competenties en alle geneste competenties.
       heading: Competenties
+      notFound: Deze competency heeft geen sub-competencies
