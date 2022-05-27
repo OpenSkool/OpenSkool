@@ -3,12 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "license": "AGPL-3.0",
-  "exports": {
-    ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
-    }
-  },
+  "main": "dist/index.js",
+  "type": "module",
   "engines": {
     "node": "16.15.0"
   },
@@ -16,7 +12,7 @@
     "build": "rollup -c",
     "clean": "rm -rf .eslintcache .turbo/ dist/",
     "dev": "rollup -c -w",
-    "lint": "eslint --cache --ext .js,.ts ."
+    "lint": "eslint --cache --ext .cjs,.mjs,.ts ."
   },
   "files": [
     "dist/"

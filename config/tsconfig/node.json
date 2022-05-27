@@ -6,6 +6,6 @@
     "module": "ESNext",
     "noEmit": true,
     "sourceMap": true,
-    "target": "ES2021"
+    "target": "ESNext"
   }
 }

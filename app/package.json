@@ -11,7 +11,7 @@
     "clean": "rm -rf .eslintcache .turbo/ dist/",
     "codegen": "graphql-codegen",
     "dev": "FORCE_COLOR=1 vite",
-    "lint": "eslint --cache --ext .cjs,.js,.ts,.vue .",
+    "lint": "eslint --cache --ext .cjs,.ts,.vue .",
     "preview": "vite preview --port 4173",
     "test": "vue-tsc --noEmit && vitest run --coverage",
     "test:ci": "vue-tsc --noEmit && vitest run --coverage --reporter=junit --outputFile=test.xml"
