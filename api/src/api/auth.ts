@@ -7,7 +7,7 @@ import { prisma } from '~/prisma';
 import { AppAbility, buildAbility } from './ability';
 import { decodeIdToken } from './openid';
 
-interface Auth {
+export interface Auth {
   ability: AppAbility;
   user: AuthUser | null;
 }

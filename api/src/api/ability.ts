@@ -7,7 +7,10 @@ export { AppAbility } from '@os/ability';
 export function buildAbility(userId: string | null): AppAbility {
   const { build, can } = new AbilityBuilder(AppAbility);
 
-  if (userId != null) {
+  if (userId == null) {
+    can('read', 'Competency');
+    can('read', 'CompetencyFramework');
+  } else {
     can('manage', 'all');
   }
 
