@@ -81,9 +81,9 @@ const inputText = ref<string>('');
     <div>
       <UiTitle is="h2" class="text-xl mb-3">Tabs</UiTitle>
       <UiTabs>
-        <UiTab id="1" title="Button 1">Panel 1</UiTab>
-        <UiTab id="2" title="Button 2">Panel 2</UiTab>
-        <UiTab id="3" title="Button 3">Panel 3</UiTab>
+        <UiTab title="Button 1">Panel 1</UiTab>
+        <UiTab title="Button 2">Panel 2</UiTab>
+        <UiTab title="Button 3">Panel 3</UiTab>
       </UiTabs>
     </div>
     <div>
