@@ -4,6 +4,6 @@
   "compilerOptions": {
     "lib": ["ESNext"],
     "module": "ESNext",
-    "target": "ES2021"
+    "target": "ESNext"
   }
 }

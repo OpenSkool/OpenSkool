@@ -1,5 +1,7 @@
 import { PrismaClient } from '@prisma/client';
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
+/* https://github.com/prisma/prisma/issues/10775 */
+/* eslint-disable-next-line unicorn/import-index */
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/index.js';
 
 import { AppError, AppNotFoundError } from '~/errors';
 import logger from '~/logger';

@@ -3,19 +3,20 @@
   "version": "0.0.1",
   "private": true,
   "license": "AGPL-3.0",
+  "type": "module",
   "engines": {
     "node": "16.15.0"
   },
   "scripts": {
     "build": "rollup -c",
     "clean": "rm -rf .eslintcache .turbo/ dist/",
-    "codegen": "esno -r dotenv-flow/config scripts/codegen.ts",
+    "codegen": "esmo -r dotenv-flow/config scripts/codegen.ts",
     "dev": "FORCE_COLOR=1 NODE_ENV=development nodemon src/server.ts",
-    "lint": "eslint --cache --ext .cjs,.ts .",
+    "lint": "eslint --cache --ext .cjs,.mjs,.ts .",
     "postinstall": "yarn run prisma generate",
-    "preview": "FORCE_COLOR=1 NODE_ENV=production node -r dotenv-flow/config dist/",
+    "preview": "FORCE_COLOR=1 NODE_ENV=production node -r dotenv-flow/config dist/index.js",
     "prisma:test": "DATABASE_URL='postgresql://openskool:openskool@localhost:5433/openskool-test' prisma",
-    "start": "node dist/",
+    "start": "node dist/index.js",
     "test": "tsc --noEmit && vitest run --coverage",
     "test:ci": "tsc --noEmit && vitest run --coverage --reporter=junit --outputFile=test.xml"
   },
@@ -79,7 +80,7 @@
   },
   "nodemonConfig": {
     "execMap": {
-      "ts": "esno --inspect -r dotenv-flow/config"
+      "ts": "esmo --inspect -r dotenv-flow/config"
     },
     "ext": "lock,ts",
     "watch": [
@@ -88,6 +89,6 @@
     ]
   },
   "prisma": {
-    "seed": "esno -r dotenv-flow/config prisma/seed.ts"
+    "seed": "esmo -r dotenv-flow/config prisma/seed.ts"
   }
 }

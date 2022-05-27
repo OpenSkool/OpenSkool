@@ -1,5 +1,4 @@
 import fs from 'node:fs';
-import path from 'node:path';
 
 import { printSchema } from 'graphql';
 import prettier from 'prettier';
@@ -7,6 +6,6 @@ import prettier from 'prettier';
 import schema from '../src/schema';
 
 fs.writeFileSync(
-  path.join(__dirname, '../src/codegen/schema.graphql'),
+  new URL('../src/codegen/schema.graphql', import.meta.url),
   prettier.format(printSchema(schema), { parser: 'graphql' }),
 );
