@@ -5,48 +5,23 @@ import ms from 'ms';
 import type { JsonObject } from 'type-fest';
 
 import { AppRawRule } from '~/api/ability';
-import type { AuthUser } from '~/api/auth';
+import type { Auth, AuthUser } from '~/api/auth';
 import { AppTokenSet } from '~/api/openid';
 import { castArray } from '~/utils';
 
 import builder from '../builder';
 import { Node } from './node';
 
-export const CurrentUser = builder.objectRef<AuthUser>('CurrentUser');
+const AbilityRule = builder.objectRef<AppRawRule>('AbilityRule');
 
-const CurrentUserAbilityRule = builder.objectRef<AppRawRule>(
-  'CurrentUserAbilityRule',
-);
+export const CurrentUser = builder.objectRef<AuthUser>('CurrentUser');
 
 const JWT = builder.objectRef<JWTPayload>('JWT');
 
 const TokenSet = builder.objectRef<AppTokenSet>('TokenSet');
 
-builder.objectType(CurrentUser, {
-  name: 'CurrentUser',
-  description: 'The currently authenticated user',
-  interfaces: [Node],
-  fields: (t) => ({
-    id: t.exposeID('id'),
-    name: t.exposeString('name'),
-    abilityRules: t.field({
-      type: [CurrentUserAbilityRule],
-      resolve(user, argumentz, { request }) {
-        return request.auth.ability.rules;
-      },
-    }),
-    tokenSet: t.field({
-      type: TokenSet,
-      resolve(parent, argumentz, { request }) {
-        assert(request.session.openId.tokenSet, 'missing token set');
-        return request.session.openId.tokenSet;
-      },
-    }),
-  }),
-});
-
-builder.objectType(CurrentUserAbilityRule, {
-  name: 'CurrentUserAbilityRule',
+builder.objectType(AbilityRule, {
+  name: 'AbilityRule',
   fields: (t) => ({
     action: t.stringList({
       resolve(abilityRule) {
@@ -75,6 +50,23 @@ builder.objectType(CurrentUserAbilityRule, {
     subject: t.stringList({
       resolve(abilityRule) {
         return castArray(abilityRule.subject);
+      },
+    }),
+  }),
+});
+
+builder.objectType(CurrentUser, {
+  name: 'CurrentUser',
+  description: 'The currently authenticated user',
+  interfaces: [Node],
+  fields: (t) => ({
+    id: t.exposeID('id'),
+    name: t.exposeString('name'),
+    tokenSet: t.field({
+      type: TokenSet,
+      resolve(parent, argumentz, { request }) {
+        assert(request.session.openId.tokenSet, 'missing token set');
+        return request.session.openId.tokenSet;
       },
     }),
   }),
@@ -130,12 +122,26 @@ builder.objectType(TokenSet, {
   }),
 });
 
-builder.queryField('currentUser', (t) =>
+const AuthRef = builder.objectRef<Auth>('Auth');
+
+builder.objectType(AuthRef, {
+  name: 'Auth',
+  fields: (t) => ({
+    abilityRules: t.field({
+      type: [AbilityRule],
+      resolve(auth, argumentz, { request }) {
+        return auth.ability.rules;
+      },
+    }),
+    currentUser: t.expose('user', { nullable: true, type: CurrentUser }),
+  }),
+});
+
+builder.queryField('auth', (t) =>
   t.field({
-    type: CurrentUser,
-    nullable: true,
+    type: AuthRef,
     async resolve(root, argumentz, ctx) {
-      return ctx.request.auth.user;
+      return ctx.request.auth;
     },
   }),
 );

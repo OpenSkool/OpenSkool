@@ -9,8 +9,7 @@ import { pinia } from '~/pinia';
 
 gql`
   query authCurrentUser {
-    currentUser {
-      id
+    auth {
       abilityRules {
         action
         conditions
@@ -19,37 +18,46 @@ gql`
         reason
         subject
       }
-      name
+      currentUser {
+        id
+        name
+      }
     }
   }
 `;
 
-type AppCurrentUser = AuthCurrentUserQuery['currentUser'];
+type Auth = AuthCurrentUserQuery['auth'];
 
 export const useAuthStore = defineStore('auth', () => {
-  const currentUser = ref<AppCurrentUser>(null);
+  const auth = ref<Auth>({
+    abilityRules: [],
+    currentUser: null,
+  });
 
-  async function refresh(): Promise<AppCurrentUser> {
+  async function refresh(): Promise<Auth> {
     try {
-      const currentUserQuery = await apolloClient.query({
+      const authQuery = await apolloClient.query({
         query: AuthCurrentUserDocument,
       });
-      currentUser.value = currentUserQuery.data.currentUser ?? null;
-      return currentUser.value;
+      auth.value = authQuery.data.auth;
+      return auth.value;
     } catch (error) {
       console.error(error);
-      return null;
+      return {
+        abilityRules: [],
+        currentUser: null,
+      };
     }
   }
 
   return {
-    name: computed(() => currentUser.value?.name),
-    isLoggedIn: computed(() => currentUser.value != null),
+    name: computed(() => auth.value.currentUser?.name),
+    isLoggedIn: computed(() => auth.value.currentUser != null),
     refresh,
   };
 });
 
-export async function initAuth(): Promise<AppCurrentUser> {
+export async function initAuth(): Promise<Auth> {
   const authStore = useAuthStore(pinia);
   return authStore.refresh();
 }

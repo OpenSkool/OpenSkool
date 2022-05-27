@@ -1,10 +1,9 @@
 /* eslint-disable import/no-unassigned-import */
 
-import './errors';
-
 import './accountable';
+import './auth';
+import './errors';
 import './node';
-import './current-user';
 
 import './competency';
 import './education';

@@ -23,12 +23,28 @@ export type Scalars = {
   JSON: any;
 };
 
+export type AbilityRule = {
+  __typename?: 'AbilityRule';
+  action: Array<Scalars['String']>;
+  conditions?: Maybe<Scalars['JSON']>;
+  fields?: Maybe<Array<Scalars['String']>>;
+  inverted: Scalars['Boolean'];
+  reason?: Maybe<Scalars['String']>;
+  subject: Array<Scalars['String']>;
+};
+
 /** An accountable resource tracks when and by whom it was created and last updated. */
 export type Accountable = {
   createdAt: Scalars['DateTime'];
   createdBy: Person;
   updatedAt: Scalars['DateTime'];
   updatedBy: Person;
+};
+
+export type Auth = {
+  __typename?: 'Auth';
+  abilityRules: Array<AbilityRule>;
+  currentUser?: Maybe<CurrentUser>;
 };
 
 /** A competency can be an individual competence or a grouping of competences. */
@@ -72,20 +88,9 @@ export type CreateRootCompetencyInput = {
 /** The currently authenticated user */
 export type CurrentUser = Node & {
   __typename?: 'CurrentUser';
-  abilityRules: Array<CurrentUserAbilityRule>;
   id: Scalars['ID'];
   name: Scalars['String'];
   tokenSet: TokenSet;
-};
-
-export type CurrentUserAbilityRule = {
-  __typename?: 'CurrentUserAbilityRule';
-  action: Array<Scalars['String']>;
-  conditions?: Maybe<Scalars['JSON']>;
-  fields?: Maybe<Array<Scalars['String']>>;
-  inverted: Scalars['Boolean'];
-  reason?: Maybe<Scalars['String']>;
-  subject: Array<Scalars['String']>;
 };
 
 export type Education = Accountable &
@@ -289,9 +294,9 @@ export type Query = {
   allEducations: Array<Education>;
   allPeople: Array<Person>;
   allRootCompetencies: Array<Competency>;
+  auth: Auth;
   competency?: Maybe<QueryCompetencyResult>;
   competencyFramework?: Maybe<QueryCompetencyFrameworkResult>;
-  currentUser?: Maybe<CurrentUser>;
 };
 
 export type QueryCompetencyArgs = {
@@ -354,12 +359,10 @@ export type AuthCurrentUserQueryVariables = Exact<{ [key: string]: never }>;
 
 export type AuthCurrentUserQuery = {
   __typename?: 'Query';
-  currentUser?: {
-    __typename?: 'CurrentUser';
-    id: string;
-    name: string;
+  auth: {
+    __typename?: 'Auth';
     abilityRules: Array<{
-      __typename?: 'CurrentUserAbilityRule';
+      __typename?: 'AbilityRule';
       action: Array<string>;
       conditions?: any | null;
       fields?: Array<string> | null;
@@ -367,7 +370,12 @@ export type AuthCurrentUserQuery = {
       reason?: string | null;
       subject: Array<string>;
     }>;
-  } | null;
+    currentUser?: {
+      __typename?: 'CurrentUser';
+      id: string;
+      name: string;
+    } | null;
+  };
 };
 
 export type GetCreateCompetencyParentQueryVariables = Exact<{
@@ -774,11 +782,10 @@ export const AuthCurrentUserDocument = {
         selections: [
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'currentUser' },
+            name: { kind: 'Name', value: 'auth' },
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'abilityRules' },
@@ -812,7 +819,17 @@ export const AuthCurrentUserDocument = {
                     ],
                   },
                 },
-                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'currentUser' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                    ],
+                  },
+                },
               ],
             },
           },
