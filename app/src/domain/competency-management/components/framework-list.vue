@@ -12,7 +12,9 @@ gql`
 
 const { error, loading, result } = useQuery(GetAllCompetencyFrameworksDocument);
 
-const frameworks = useResult(result);
+const frameworks = computed(() =>
+  result.value ? result.value.allCompetencyFrameworks : null,
+);
 
 const ability = useAppAbility();
 </script>
