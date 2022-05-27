@@ -2,6 +2,7 @@
 import { DefaultApolloClient } from '@vue/apollo-composable';
 
 import { apolloClient } from '~/apollo';
+import MainLayout from '~/domain/global/components/layout/main-layout.vue';
 import { useInitFormkit } from '~/formkit';
 
 useInitFormkit();

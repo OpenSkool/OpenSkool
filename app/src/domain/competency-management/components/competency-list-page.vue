@@ -3,6 +3,7 @@ import {
   DeleteCompetencyDocument,
   GetSubCompetenciesDocument,
 } from '~/codegen/graphql';
+import CompetencyList from '~/domain/competency-management/components/competency-list.vue';
 import { assert } from '~/utils';
 
 const props = defineProps<{

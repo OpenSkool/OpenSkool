@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { GetCreateCompetencyParentDocument } from '~/codegen/graphql';
+import NestedCompetencyCreate from '~/domain/competency-management/components/nested-competency-create.vue';
 
 const props = defineProps<{
   competencyId: string;

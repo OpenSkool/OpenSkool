@@ -1,4 +1,9 @@
 <script lang="ts" setup>
+import LanguageSelect from '~/domain/global/components/layout/language-select.vue';
+import LoadingSpinner from '~/domain/global/components/layout/loading-spinner.vue';
+import MainMenuToggleButton from '~/domain/global/components/layout/main-menu-toggle-button.vue';
+import MainMenu from '~/domain/global/components/layout/main-menu.vue';
+import UserMenu from '~/domain/global/components/layout/user-menu.vue';
 import { i18nLoaderService } from '~/i18n';
 
 import { useMenuState } from './use-menu-state';

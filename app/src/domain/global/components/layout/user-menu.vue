@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { useAuthStore, authLogoutUrl } from '~/auth';
+import AuthConnectButton from '~/domain/global/components/auth/auth-connect-button.vue';
 
 const authStore = useAuthStore();
 

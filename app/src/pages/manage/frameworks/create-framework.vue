@@ -1,4 +1,7 @@
 <script lang="ts" setup>
+import CompetencyFrameworkCreate from '~/domain/competency-management/components/competency-framework-create.vue';
+import AuthAccessDenied from '~/domain/global/components/auth/auth-access-denied.vue';
+
 const ability = useAppAbility();
 
 const { t } = useI18n();

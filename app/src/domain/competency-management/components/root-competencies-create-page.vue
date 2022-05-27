@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { GetCompetencyFrameworkDocument } from '~/codegen/graphql';
+import RootCompetencyCreate from '~/domain/competency-management/components/root-competency-create.vue';
 
 const props = defineProps<{
   frameworkId: string;
