@@ -131,12 +131,12 @@ async function handleFormSubmit(): Promise<void> {
       </UiBreadcrumbItem>
       <template v-if="competency?.competencyFramework">
         <UiBreadcrumbItem
-          :to="`/manage/frameworks/${competency.competencyFramework.id}`"
+          :link-to="`/manage/frameworks/${competency.competencyFramework.id}`"
         >
           {{ competency.competencyFramework.title }}
         </UiBreadcrumbItem>
         <UiBreadcrumbItem
-          :to="`/manage/frameworks/${competency.competencyFramework.id}/${competencyId}`"
+          :link-to="`/manage/frameworks/${competency.competencyFramework.id}/${competencyId}`"
         >
           {{ competency.title }}
         </UiBreadcrumbItem>

@@ -46,7 +46,7 @@ const competencyFramework = computed(() =>
       </UiBreadcrumbItem>
       <UiBreadcrumbItem
         v-if="competencyFramework"
-        :to="`/manage/frameworks/${competencyFramework.id}`"
+        :link-to="`/manage/frameworks/${competencyFramework.id}`"
       >
         {{ competencyFramework.title }}
       </UiBreadcrumbItem>
