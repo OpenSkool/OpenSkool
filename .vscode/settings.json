@@ -11,5 +11,6 @@
   "i18n-ally.namespace": true,
   "i18n-ally.pathMatcher": "{namespace}.{locale}.{ext}",
   "i18n-ally.sortKeys": true,
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.preferences.importModuleSpecifier": "non-relative"
 }
