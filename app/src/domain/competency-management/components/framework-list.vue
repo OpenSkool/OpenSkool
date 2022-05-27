@@ -17,10 +17,12 @@ const frameworks = useResult(result);
 
 <template>
   <UiOrderedList>
-    <UiOrderedListItem v-for="framework of frameworks" :key="framework.id">
-      <RouterLink :to="`/manage/frameworks/${framework.id}`">
-        {{ framework.title }}
-      </RouterLink>
+    <UiOrderedListItem
+      v-for="framework of frameworks"
+      :key="framework.id"
+      :link-to="`/manage/frameworks/${framework.id}`"
+    >
+      {{ framework.title }}
     </UiOrderedListItem>
   </UiOrderedList>
 </template>

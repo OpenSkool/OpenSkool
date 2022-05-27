@@ -65,15 +65,14 @@ async function moveCompetency(
     <UiOrderedListItem
       v-for="(competency, index) of competencies"
       :key="competency.id"
+      :link-to="`/manage/frameworks/${frameworkId}/${competency.id}`"
       :move-up-text="t('competencies.list.action.moveUp')"
       :move-down-text="t('competencies.list.action.moveDown')"
       :show-arrows="true"
       @move-up="moveCompetency((competencies[index - 1] as Competency).id, competency.id)"
       @move-down="moveCompetency(competency.id, (competencies[index + 1] as Competency).id)"
     >
-      <RouterLink :to="`/manage/frameworks/${frameworkId}/${competency.id}`">
-        {{ competency.title }}
-      </RouterLink>
+      {{ competency.title }}
     </UiOrderedListItem>
   </UiOrderedList>
 </template>
