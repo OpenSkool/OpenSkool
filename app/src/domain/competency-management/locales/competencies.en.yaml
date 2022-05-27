@@ -14,10 +14,6 @@ list:
     moveDown: Move competency down
 
 route:
-  index:
-    heading: Competencies
-    action:
-      create: Create competency
   create:
     heading: New Competency
   id:
