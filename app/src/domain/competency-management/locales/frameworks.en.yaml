@@ -12,6 +12,9 @@ route:
     index:
       action:
         new: Add competency
+      notFound: There are no competencies
   index:
     action:
       create: Add framework
+    heading: Frameworks
+    notFound: There are no frameworks
