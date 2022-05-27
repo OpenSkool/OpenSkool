@@ -14,6 +14,8 @@ const props = defineProps<{
 
 const { t } = useI18n();
 
+const ability = useAppAbility();
+
 gql`
   mutation swapCompetencies($leftCompetencyId: ID!, $rightCompetencyId: ID!) {
     swapCompetencies(
@@ -68,7 +70,7 @@ async function moveCompetency(
       :link-to="`/manage/frameworks/${frameworkId}/${competency.id}`"
       :move-up-text="t('competencies.list.action.moveUp')"
       :move-down-text="t('competencies.list.action.moveDown')"
-      :show-arrows="true"
+      :show-arrows="ability.can('update', 'Competency')"
       @move-up="moveCompetency((competencies[index - 1] as Competency).id, competency.id)"
       @move-down="moveCompetency(competency.id, (competencies[index + 1] as Competency).id)"
     >
