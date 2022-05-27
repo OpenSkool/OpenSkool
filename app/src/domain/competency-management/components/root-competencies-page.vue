@@ -31,7 +31,12 @@ const { result, error, loading } = useQuery(
   { fetchPolicy: 'network-only' },
 );
 
-const competencyFramework = useResult(result);
+const competencyFramework = computed(() =>
+  result.value?.competencyFramework?.__typename ===
+  'QueryCompetencyFrameworkSuccess'
+    ? result.value.competencyFramework.data
+    : null,
+);
 </script>
 
 <template>
@@ -41,29 +46,28 @@ const competencyFramework = useResult(result);
   <template v-else-if="loading">
     <div>Loading</div>
   </template>
-  <template
-    v-else-if="
-      competencyFramework?.__typename === 'QueryCompetencyFrameworkSuccess'
-    "
-  >
+  <template v-else-if="competencyFramework == null">
+    <p>Not found</p>
+  </template>
+  <template v-else>
     <UiBreadcrumb>
       <UiBreadcrumbItem link-to="/manage/frameworks">
         <span v-t="'frameworks.route.index.heading'" />
       </UiBreadcrumbItem>
     </UiBreadcrumb>
     <UiTitle is="h1" class="text-xl mb-3">
-      {{ competencyFramework.data.title }}
+      {{ competencyFramework.title }}
     </UiTitle>
     <UiButtonRouterLink
       v-if="ability.can('create', 'Competency')"
       v-t="'frameworks.route.id.index.action.new'"
       class="my-5"
-      :to="`/manage/frameworks/${competencyFramework.data.id}/create-competency`"
+      :to="`/manage/frameworks/${competencyFramework.id}/create-competency`"
     />
     <CompetencyList
-      v-if="competencyFramework.data.competencies.length > 0"
+      v-if="competencyFramework.competencies.length > 0"
       :framework-id="frameworkId"
-      :competencies="competencyFramework.data.competencies"
+      :competencies="competencyFramework.competencies"
       :refetch-queries="['getFrameworkRootCompetencies']"
     />
     <EmptyCard v-else>
@@ -72,11 +76,8 @@ const competencyFramework = useResult(result);
         v-if="ability.can('create', 'Competency')"
         v-t="'frameworks.route.id.index.action.new'"
         class="my-5"
-        :to="`/manage/frameworks/${competencyFramework.data.id}/create-competency`"
+        :to="`/manage/frameworks/${competencyFramework.id}/create-competency`"
       />
     </EmptyCard>
-  </template>
-  <template v-else>
-    <div>Not Found</div>
   </template>
 </template>
