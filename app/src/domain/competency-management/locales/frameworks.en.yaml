@@ -12,8 +12,6 @@ route:
     index:
       action:
         new: Add competency
-      heading: Competencies
   index:
-    heading: Frameworks
     action:
       create: Add framework

@@ -14,10 +14,6 @@ list:
     moveDown: Competentie omlaag bewegen
 
 route:
-  index:
-    heading: Competenties
-    action:
-      create: Maak competentie
   create:
     heading: Nieuwe Competentie
   id:
