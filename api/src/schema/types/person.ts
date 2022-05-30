@@ -1,24 +1,26 @@
+import { faker } from '@faker-js/faker';
+import cuid from 'cuid';
+
 import { UserModel, UserService } from '~/domain';
 
 import builder from '../builder';
 import { Node } from './node';
 
-export const Person = builder.interfaceRef<UserModel>('Person');
+export function createFakePerson(): UserModel {
+  return {
+    id: cuid(),
+    name: faker.name.findName(),
+  };
+}
 
-builder.interfaceType(Person, {
+export const Person = builder.objectRef<UserModel>('Person');
+
+builder.objectType(Person, {
   name: 'Person',
   interfaces: [Node],
   fields: (t) => ({
     name: t.exposeString('name'),
   }),
-});
-
-export const Teacher = builder.objectRef<UserModel>('Teacher');
-
-builder.objectType(Teacher, {
-  name: 'Teacher',
-  interfaces: [Node, Person],
-  isTypeOf: () => true,
 });
 
 builder.queryField('allPeople', (t) =>

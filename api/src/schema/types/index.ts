@@ -7,4 +7,5 @@ import './node';
 
 import './competency';
 import './education';
+import './internship';
 import './person';

@@ -71,6 +71,12 @@ export type CompetencyFramework = Node & {
   title: Scalars['String'];
 };
 
+export type Course = Node & {
+  __typename?: 'Course';
+  id: Scalars['ID'];
+  name: Scalars['String'];
+};
+
 export type CreateCompetencyFrameworkInput = {
   title: Scalars['String'];
 };
@@ -116,6 +122,37 @@ export type InputError = UserError & {
   path?: Maybe<Array<Scalars['String']>>;
 };
 
+export type Internship = Node & {
+  __typename?: 'Internship';
+  applications: Array<InternshipApplication>;
+  coordinator: Person;
+  dateFrom: Scalars['DateTime'];
+  dateTo: Scalars['DateTime'];
+  defaultSupervisor: Person;
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  positions: Array<InternshipPosition>;
+  students: Array<Person>;
+};
+
+export type InternshipApplication = Node & {
+  __typename?: 'InternshipApplication';
+  id: Scalars['ID'];
+  position: InternshipPosition;
+  priority: Scalars['Int'];
+  student: Person;
+  supervisor: Person;
+};
+
+export type InternshipPosition = Node & {
+  __typename?: 'InternshipPosition';
+  description: Scalars['String'];
+  id: Scalars['ID'];
+  mentor: Person;
+  organisation: Organisation;
+  workplace: Workplace;
+};
+
 export type Jwt = {
   __typename?: 'JWT';
   expiresAt?: Maybe<Scalars['DateTime']>;
@@ -128,6 +165,7 @@ export type Jwt = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  applyForInternPosition: InternshipPosition;
   createCompetencyFramework: MutationCreateCompetencyFrameworkResult;
   createEducation: MutationCreateEducationResult;
   createNestedCompetency: MutationCreateNestedCompetencyResult;
@@ -137,6 +175,11 @@ export type Mutation = {
   renameCompetency: MutationRenameCompetencyResult;
   swapCompetencies: MutationSwapCompetenciesResult;
   updateEducation: MutationUpdateEducationResult;
+};
+
+export type MutationApplyForInternPositionArgs = {
+  id: Scalars['ID'];
+  priority: Scalars['Int'];
 };
 
 export type MutationCreateCompetencyFrameworkArgs = {
@@ -282,7 +325,16 @@ export type NotFoundError = UserError & {
   path?: Maybe<Array<Scalars['String']>>;
 };
 
-export type Person = {
+export type Organisation = Node & {
+  __typename?: 'Organisation';
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  plainAdress: Scalars['String'];
+  workplaces: Array<Workplace>;
+};
+
+export type Person = Node & {
+  __typename?: 'Person';
   /** A CUID for a resource */
   id: Scalars['ID'];
   name: Scalars['String'];
@@ -297,6 +349,7 @@ export type Query = {
   auth: Auth;
   competency?: Maybe<QueryCompetencyResult>;
   competencyFramework?: Maybe<QueryCompetencyFrameworkResult>;
+  myInternships: Array<Internship>;
 };
 
 export type QueryCompetencyArgs = {
@@ -327,14 +380,6 @@ export type RenameCompetencyInput = {
   title: Scalars['String'];
 };
 
-export type Teacher = Node &
-  Person & {
-    __typename?: 'Teacher';
-    /** A CUID for a resource */
-    id: Scalars['ID'];
-    name: Scalars['String'];
-  };
-
 export type TokenSet = {
   __typename?: 'TokenSet';
   accessToken: Jwt;
@@ -353,6 +398,12 @@ export type UserError = {
   code: Scalars['String'];
   message: Scalars['String'];
   path?: Maybe<Array<Scalars['String']>>;
+};
+
+export type Workplace = Node & {
+  __typename?: 'Workplace';
+  id: Scalars['ID'];
+  plainAdress: Scalars['String'];
 };
 
 export type AuthCurrentUserQueryVariables = Exact<{ [key: string]: never }>;
