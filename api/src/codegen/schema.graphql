@@ -51,6 +51,11 @@ type CompetencyFramework implements Node {
   title: String!
 }
 
+type Course implements Node {
+  id: ID!
+  name: String!
+}
+
 input CreateCompetencyFrameworkInput {
   title: String!
 }
@@ -102,6 +107,34 @@ type InputError implements UserError {
   path: [String!]
 }
 
+type Internship implements Node {
+  applications: [InternshipApplication!]!
+  coordinator: Person!
+  dateFrom: DateTime!
+  dateTo: DateTime!
+  defaultSupervisor: Person!
+  id: ID!
+  name: String!
+  positions: [InternshipPosition!]!
+  students: [Person!]!
+}
+
+type InternshipApplication implements Node {
+  id: ID!
+  position: InternshipPosition!
+  priority: Int!
+  student: Person!
+  supervisor: Person!
+}
+
+type InternshipPosition implements Node {
+  description: String!
+  id: ID!
+  mentor: Person!
+  organisation: Organisation!
+  workplace: Workplace!
+}
+
 """
 The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -117,6 +150,7 @@ type JWT {
 }
 
 type Mutation {
+  applyForInternPosition(id: ID!, priority: Int!): InternshipPosition!
   createCompetencyFramework(
     data: CreateCompetencyFrameworkInput!
   ): MutationCreateCompetencyFrameworkResult!
@@ -240,7 +274,14 @@ type NotFoundError implements UserError {
   path: [String!]
 }
 
-interface Person implements Node {
+type Organisation implements Node {
+  id: ID!
+  name: String!
+  plainAdress: String!
+  workplaces: [Workplace!]!
+}
+
+type Person implements Node {
   """
   A CUID for a resource
   """
@@ -256,6 +297,7 @@ type Query {
   auth: Auth!
   competency(id: ID!): QueryCompetencyResult
   competencyFramework(id: ID!): QueryCompetencyFrameworkResult
+  myInternships: [Internship!]!
 }
 
 union QueryCompetencyFrameworkResult =
@@ -276,14 +318,6 @@ input RenameCompetencyInput {
   title: String!
 }
 
-type Teacher implements Node & Person {
-  """
-  A CUID for a resource
-  """
-  id: ID!
-  name: String!
-}
-
 type TokenSet {
   accessToken: JWT!
   idToken: JWT!
@@ -300,4 +334,9 @@ interface UserError {
   code: String!
   message: String!
   path: [String!]
+}
+
+type Workplace implements Node {
+  id: ID!
+  plainAdress: String!
 }
