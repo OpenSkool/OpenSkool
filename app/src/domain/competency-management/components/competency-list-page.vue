@@ -157,6 +157,7 @@ async function deleteCompetencyHandler(): Promise<void> {
       </UiDialogTitle>
       <UiDialogDescription>
         <i18n-t
+          scope="global"
           keypath="competencies.route.id.index.confirmDeleteModal.message"
         >
           <template #title>
