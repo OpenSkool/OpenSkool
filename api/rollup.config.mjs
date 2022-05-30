@@ -9,7 +9,10 @@ const bundle = (config) => ({
 
 export default [
   bundle({
-    plugins: [esbuild(), typescriptPaths({ preserveExtensions: true })],
+    plugins: [
+      esbuild({ target: 'node16.15' }),
+      typescriptPaths({ preserveExtensions: true }),
+    ],
     output: [
       {
         file: `dist/index.js`,
