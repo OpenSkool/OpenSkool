@@ -39,7 +39,7 @@ const ability = useAppAbility();
         {{ framework.title }}
       </UiOrderedListItem>
     </UiOrderedList>
-    <EmptyCard v-else>
+    <UiEmptyCard v-else>
       <p v-t="'frameworks.route.index.notFound'" />
       <UiButtonRouterLink
         v-if="ability.can('create', 'CompetencyFramework')"
@@ -47,6 +47,6 @@ const ability = useAppAbility();
         class="my-5"
         to="/manage/frameworks/create-framework"
       />
-    </EmptyCard>
+    </UiEmptyCard>
   </template>
 </template>

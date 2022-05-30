@@ -71,7 +71,7 @@ const competencyFramework = computed(() =>
       :competencies="competencyFramework.competencies"
       :refetch-queries="['getFrameworkRootCompetencies']"
     />
-    <EmptyCard v-else>
+    <UiEmptyCard v-else>
       <p v-t="'frameworks.route.id.index.notFound'" />
       <UiButtonRouterLink
         v-if="ability.can('create', 'Competency')"
@@ -79,6 +79,6 @@ const competencyFramework = computed(() =>
         class="my-5"
         :to="`/manage/frameworks/${competencyFramework.id}/create-competency`"
       />
-    </EmptyCard>
+    </UiEmptyCard>
   </template>
 </template>
