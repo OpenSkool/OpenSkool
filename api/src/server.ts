@@ -2,7 +2,7 @@ import { exec } from 'node:child_process';
 
 import app from '~/app';
 
-(async (): Promise<void> => {
+try {
   await app.ready();
   await app.listen(app.config.PORT, app.config.HOST);
 
@@ -17,4 +17,7 @@ import app from '~/app';
   const shutdown = () => void app.close();
   process.on('SIGINT', shutdown);
   process.on('SIGTERM', shutdown);
-})().catch(app.log.error.bind(app.log));
+} catch (error) {
+  app.log.error(error as Error);
+  process.exitCode = 1;
+}

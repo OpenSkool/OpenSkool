@@ -74,12 +74,10 @@ async function main(): Promise<void> {
   }
 }
 
-(async (): Promise<void> => {
-  try {
-    await main();
-  } catch (error) {
-    console.error(error);
-  } finally {
-    prisma.$disconnect();
-  }
-})();
+try {
+  await main();
+} catch (error) {
+  console.error(error);
+} finally {
+  prisma.$disconnect();
+}
