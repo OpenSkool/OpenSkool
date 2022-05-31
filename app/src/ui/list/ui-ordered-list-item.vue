@@ -14,13 +14,13 @@ defineEmits<(event: 'moveUp' | 'moveDown') => void>();
     <RouterLink
       :to="linkTo"
       :class="[
-        'relative flex px-10 py-5 list-inside bg-white text-base',
+        'relative flex px-10 py-5 bg-white text-base',
         'first-of-type:rounded-t-lg last-of-type:rounded-b-lg',
         'select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
         'hover:bg-gray-300/50',
       ]"
     >
-      <div v-if="showArrows" class="absolute left-0 top-0 h-full">
+      <div v-if="showArrows" class="absolute inset-0">
         <button
           class="arrow-up top-0 rounded-lg select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 hover:bg-white"
           @click.prevent="$emit('moveUp')"
@@ -52,6 +52,9 @@ li {
 li a:before {
   content: counter(item);
   @apply font-bold mr-5;
+  width: 2ch;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
 }
 li:first-of-type button.arrow-up {
   display: none;
