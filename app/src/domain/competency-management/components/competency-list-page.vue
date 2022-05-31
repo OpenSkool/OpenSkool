@@ -118,7 +118,7 @@ async function deleteCompetencyHandler(): Promise<void> {
       </UiBreadcrumbItem>
       <UiBreadcrumbItem
         v-if="competency.parent"
-        :to="`/manage/frameworks/${frameworkId}/${competency.parent.id}`"
+        :link-to="`/manage/frameworks/${frameworkId}/${competency.parent.id}`"
       >
         {{ competency.parent.title }}
       </UiBreadcrumbItem>
