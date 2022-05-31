@@ -1,13 +1,11 @@
 <template>
-  <div class="card">
-    <div class="card-body">
-      <div
-        class="bg-white flex justify-center gap-9 rounded-md text-center text-lg py-11"
-      >
-        <RiAlarmWarningLine />
-        <div><slot /></div>
-        <RiAlarmWarningLine />
-      </div>
+  <div
+    class="flex justify-center gap-10 rounded-md bg-white text-center text-lg px-5 py-15"
+  >
+    <RiAlarmWarningLine aria-hidden class="hidden md:block" />
+    <div class="space-y-5">
+      <slot />
     </div>
+    <RiAlarmWarningLine aria-hidden class="hidden md:block" />
   </div>
 </template>
