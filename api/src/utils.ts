@@ -7,6 +7,16 @@ export function first<T>(array: T[]): T | undefined {
   return itemZero == null ? undefined : itemZero;
 }
 
+export function once<P extends unknown[], R>(
+  wrappedFunction: (...parameters: P) => R,
+): (...parameters: P) => R {
+  let result: R | undefined;
+  return (...parameters: P): R => {
+    result ??= wrappedFunction(...parameters);
+    return result as R;
+  };
+}
+
 export function random(max = 1): number {
   return Math.floor(Math.random() * max);
 }

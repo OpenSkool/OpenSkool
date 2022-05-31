@@ -3,7 +3,7 @@ import cuid from 'cuid';
 
 import { UserModel } from '~/domain';
 import { prisma } from '~/prisma';
-import { random, sample, sampleMany, times } from '~/utils';
+import { once, random, sample, sampleMany, times } from '~/utils';
 
 import builder from '../builder';
 import { createFakeCourse, CourseModel } from './course';
@@ -154,19 +154,23 @@ builder.objectType(InternshipPosition, {
   }),
 });
 
-const users = await prisma.user.findMany();
-while (users.length < 50) {
-  users.push(createFakePerson());
-}
-const POSITIONS = times(50, () => createFakeInternshipPosition({ users }));
-const INTERNSHIPS = times(3, () =>
-  createFakeInternship({ positions: POSITIONS, users }),
-);
+const getFakeData = once(async () => {
+  const users = await prisma.user.findMany();
+  while (users.length < 50) {
+    users.push();
+  }
+  const POSITIONS = times(50, () => createFakeInternshipPosition({ users }));
+  const INTERNSHIPS = times(3, () =>
+    createFakeInternship({ positions: POSITIONS, users }),
+  );
+  return { INTERNSHIPS, POSITIONS, USERS: users };
+});
 
 builder.queryField('myInternships', (t) =>
   t.field({
     type: [Internship],
-    resolve() {
+    async resolve() {
+      const { INTERNSHIPS } = await getFakeData();
       return INTERNSHIPS;
     },
   }),
