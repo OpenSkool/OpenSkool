@@ -192,7 +192,6 @@ async function deleteCompetencyHandler(): Promise<void> {
       <UiButtonRouterLink
         v-if="ability.can('create', 'Competency')"
         v-t="'competencies.route.id.index.action.new'"
-        class="m-5"
         :to="`/manage/frameworks/${frameworkId}/${competencyId}/create-competency`"
       />
     </UiEmptyCard>
