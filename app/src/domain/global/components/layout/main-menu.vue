@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import imgUrl from './backpack.png';
+import backpackImageUrl from './backpack.png';
 import type { MenuState } from './use-menu-state';
 
 defineProps<{
@@ -18,7 +18,11 @@ defineProps<{
     >
       <header class="-mb-5">
         <RouterLink class="flex gap-3 items-center justify-center" to="/">
-          <img class="inline-block" :src="imgUrl" />
+          <img
+            alt="OpenSkool logo backpack line art"
+            class="inline-block"
+            :src="backpackImageUrl"
+          />
           <div
             v-t="'global.title'"
             class="font-normal text-secondary-300 text-xl"
