@@ -10,11 +10,11 @@ defineEmits<(event: 'moveUp' | 'moveDown') => void>();
 </script>
 
 <template>
-  <li>
+  <li class="relative flex">
     <RouterLink
       :to="linkTo"
       :class="[
-        'relative flex px-10 py-5 bg-white text-base',
+        'flex-1 flex px-10 py-5 bg-white text-base',
         'first-of-type:rounded-t-lg last-of-type:rounded-b-lg',
         'select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
         'hover:bg-gray-300/50',
@@ -45,16 +45,15 @@ defineEmits<(event: 'moveUp' | 'moveDown') => void>();
 button {
   @apply absolute p-1 pb-0 bg-gray-100/40;
 }
-
 li {
   counter-increment: item;
-}
-li a:before {
-  content: counter(item);
-  @apply font-bold mr-5;
-  width: 2ch;
-  font-variant-numeric: tabular-nums;
-  text-align: right;
+
+  & > a::before {
+    content: counter(item);
+    @apply mr-5 font-bold text-right;
+    flex: 0 0 2ch;
+    font-variant-numeric: tabular-nums;
+  }
 }
 li:first-of-type button.arrow-up {
   display: none;
