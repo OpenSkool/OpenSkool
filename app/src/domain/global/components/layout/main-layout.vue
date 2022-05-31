@@ -14,7 +14,7 @@ const { menuState, toggleMenu } = useMenuState();
 </script>
 
 <template>
-  <div class="root grid">
+  <div class="grid">
     <div class="col-span-2 flex items-center justify-between p-3">
       <MainMenuToggleButton
         aria-controls="mainMenu"
@@ -43,7 +43,7 @@ const { menuState, toggleMenu } = useMenuState();
 </template>
 
 <style scoped>
-.root {
+.grid {
   grid-template-columns: 30ch 1fr;
 }
 </style>
