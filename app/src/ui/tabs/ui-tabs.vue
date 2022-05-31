@@ -1,10 +1,6 @@
 <template>
-  <TabGroup>
-    <TabList
-      v-if="$slots.default"
-      id="tablist"
-      class="flex gap-6 p-2 overflow-x-auto"
-    >
+  <TabGroup as="div" class="space-y-3">
+    <TabList v-if="$slots.default" class="test p-1 pb-2">
       <Tab
         v-for="(slot, index) in $slots.default()"
         v-slot="{ selected }"
@@ -12,16 +8,18 @@
         as="template"
       >
         <button
-          class="border-b-3 inline-flex items-center font-semibold select-none text-base py-2 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 text-primary-600 uppercase whitespace-nowrap"
           :class="[
-            selected ? ' border-b-secondary-300' : 'border-b-transparent',
+            'px-5 py-2 select-none whitespace-nowrap',
+            'font-semibold text-sm text-primary-600 uppercase border-b-2',
+            selected ? 'border-b-secondary-300' : 'border-b-transparent-300',
+            'rounded-t-sm focus:outline-none focus-visible:ring-2',
           ]"
         >
           {{ slot.props?.title }}
         </button>
       </Tab>
     </TabList>
-    <TabPanels>
+    <TabPanels class="focus:outline-none focus-visible:(ring-2 ring-offset-2)">
       <slot />
     </TabPanels>
   </TabGroup>
