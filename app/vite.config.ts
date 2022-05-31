@@ -41,7 +41,6 @@ export default defineConfig({
           '@vue/apollo-composable': [
             'useMutation',
             'useQuery',
-            'useResult',
             'useSubscription',
           ],
           'vue-i18n': ['useI18n'],

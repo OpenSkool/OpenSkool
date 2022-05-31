@@ -50,7 +50,6 @@ declare global {
   const useI18n: typeof import('vue-i18n')['useI18n']
   const useMutation: typeof import('@vue/apollo-composable')['useMutation']
   const useQuery: typeof import('@vue/apollo-composable')['useQuery']
-  const useResult: typeof import('@vue/apollo-composable')['useResult']
   const useRoute: typeof import('vue-router')['useRoute']
   const useRouter: typeof import('vue-router')['useRouter']
   const useSlots: typeof import('vue')['useSlots']
