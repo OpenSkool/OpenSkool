@@ -15,17 +15,17 @@ export const prisma = new PrismaClient({
   ],
 });
 
-prisma.$on('error', (event) => {
-  logger.error(event);
+prisma.$on('error', ({ message, timestamp }) => {
+  logger.error({ msg: message, time: timestamp });
 });
-prisma.$on('info', (event) => {
-  logger.info(event);
+prisma.$on('info', ({ message, timestamp }) => {
+  logger.info({ msg: message, time: timestamp });
 });
-prisma.$on('warn', (event) => {
-  logger.warn(event);
+prisma.$on('warn', ({ message, timestamp }) => {
+  logger.warn({ msg: message, time: timestamp });
 });
-prisma.$on('query', (event) => {
-  logger.debug(event);
+prisma.$on('query', ({ timestamp: time, ...metadata }) => {
+  logger.debug({ ...metadata, time });
 });
 
 export function handlePrismaError(error: unknown): never | void {
