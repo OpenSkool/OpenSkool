@@ -4,9 +4,9 @@
     "apollographql.vscode-apollo",
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
-    "johnsoncodehk.volar",
     "lokalise.i18n-ally",
     "Prisma.prisma",
-    "voorjaar.windicss-intellisense"
+    "voorjaar.windicss-intellisense",
+    "Vue.volar"
   ]
 }
