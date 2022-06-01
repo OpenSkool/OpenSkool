@@ -1,4 +1,5 @@
-import { Static, Type } from '@sinclair/typebox';
+import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
+import { Type } from '@sinclair/typebox';
 import { FastifyPluginAsync } from 'fastify';
 import plugin from 'fastify-plugin';
 import {
@@ -82,13 +83,7 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
       }
     });
 
-    const connectQuerystringSchema = Type.Object({
-      from: Type.Optional(Type.String()),
-    });
-
-    app.get<{
-      Querystring: Static<typeof connectQuerystringSchema>;
-    }>(localPath('/connect'), {
+    app.withTypeProvider<TypeBoxTypeProvider>().get(localPath('/connect'), {
       async handler(request, reply) {
         const codeVerifier = generators.codeVerifier();
         request.session.openId.codeVerifier = codeVerifier;
@@ -101,7 +96,9 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
         });
         return reply.redirect(authUrl);
       },
-      schema: { querystring: connectQuerystringSchema },
+      schema: {
+        querystring: Type.Object({ from: Type.Optional(Type.String()) }),
+      },
     });
 
     app.get(localPath('/connect/callback'), async (request, reply) => {
@@ -140,13 +137,7 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
       }
     });
 
-    const logoutQuerystringSchema = Type.Object({
-      from: Type.Optional(Type.String()),
-    });
-
-    app.get<{
-      Querystring: Static<typeof logoutQuerystringSchema>;
-    }>(localPath('/logout'), {
+    app.withTypeProvider<TypeBoxTypeProvider>().get(localPath('/logout'), {
       async handler(request, reply) {
         if (request.session.openId.tokenSet == null) {
           request.log.warn(`logout failed: no token set`);
@@ -167,7 +158,9 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
           }),
         );
       },
-      schema: { querystring: logoutQuerystringSchema },
+      schema: {
+        querystring: Type.Object({ from: Type.Optional(Type.String()) }),
+      },
     });
 
     app.get(localPath('/logout/callback'), async (request, reply) => {
