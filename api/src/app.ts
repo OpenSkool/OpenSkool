@@ -6,6 +6,12 @@ import boomPlugin from '~/plugins/boom';
 import configPlugin from '~/plugins/config';
 
 const app = createApp({
+  ajv: {
+    customOptions: {
+      keywords: ['kind', 'modifier'],
+      strict: 'log',
+    },
+  },
   disableRequestLogging: process.env.DISABLE_REQUEST_LOGGING === 'true',
   logger,
 });

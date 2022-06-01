@@ -1,8 +1,9 @@
 import cookiePlugin from '@fastify/cookie';
 import corsPlugin from '@fastify/cors';
 import sessionPlugin from '@fastify/session';
+import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
 import * as Boom from '@hapi/boom';
-import { Static, Type } from '@sinclair/typebox';
+import { Type } from '@sinclair/typebox';
 import type { FastifyPluginAsync } from 'fastify';
 import ms from 'ms';
 
@@ -40,16 +41,14 @@ const apiPlugin: FastifyPluginAsync = async (app) => {
     reply.status(HTTP_NO_CONTENT);
   });
 
-  const echoSchema = Type.Object({
-    message: Type.String(),
-  });
-  app.post<{ Body: Static<typeof echoSchema> }>(
-    '/echo',
-    { schema: { body: echoSchema } },
-    async (request, reply) => {
-      reply.send({ message: request.body.message });
+  app.withTypeProvider<TypeBoxTypeProvider>().post('/echo', {
+    async handler(request, reply) {
+      return reply.send({ message: request.body.message });
     },
-  );
+    schema: {
+      body: Type.Object({ message: Type.String() }),
+    },
+  });
 
   app.get('/bad-request', () => {
     throw Boom.badRequest('this is a bad request');

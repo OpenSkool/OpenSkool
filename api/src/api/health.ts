@@ -7,9 +7,9 @@ export const healthPlugin: FastifyPluginAsync = plugin(async (app) => {
   app.get('/health', async (request, reply) => {
     try {
       await prisma.user.count();
-      reply.send({ database: 'ok' });
+      return reply.send({ database: 'ok' });
     } catch {
-      reply.send({ database: 'nok' });
+      return reply.send({ database: 'nok' });
     }
   });
 });
