@@ -59,12 +59,10 @@ export const graphqlRoutes: FastifyPluginAsync = async (app) => {
       });
 
       if (response.body == null) {
-        reply.status(HTTP_STATUS_NO_CONTENT);
-        reply.send();
-      } else {
-        reply.status(response.status);
-        reply.send(Readable.from(response.body));
+        return reply.send().status(HTTP_STATUS_NO_CONTENT);
       }
+
+      return reply.send(Readable.from(response.body)).status(response.status);
     },
   });
 };

@@ -50,10 +50,10 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
       new URL('./protocol/openid-connect/certs', app.config.AUTH_ISSUER),
     );
 
-    app.addHook('onRequest', async (request) => {
+    app.addHook('onRequest', async (request, reply) => {
       request.session.openId ??= {};
       if (request.session.openId.tokenSet == null) {
-        return;
+        return reply;
       }
       const tokenSet = parseTokenSet(request.session.openId.tokenSet);
       if (tokenSet.expired()) {
@@ -80,6 +80,7 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
           }
         }
       }
+      return reply;
     });
 
     const connectQuerystringSchema = Type.Object({
@@ -99,7 +100,7 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
           redirect_uri: absoluteUrl('/connect/callback'),
           scope: 'openid email profile',
         });
-        reply.redirect(authUrl);
+        return reply.redirect(authUrl);
       },
       schema: { querystring: connectQuerystringSchema },
     });
@@ -110,8 +111,7 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
         request.log.warn(
           `oauth callback error: ${parameters.error} ${parameters.error_description}`,
         );
-        reply.redirect(app.config.APP_BASE_URL);
-        return;
+        return reply.redirect(app.config.APP_BASE_URL);
       }
       const { codeVerifier, state } = request.session.openId;
       request.session.openId.codeVerifier = undefined;
@@ -128,7 +128,7 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
         await jwtVerify(newTokenSet.access_token, JWKS);
         request.log.debug('tokenSet validated');
         request.session.openId.tokenSet = newTokenSet;
-        reply.redirect(redirectUrl.toString());
+        return reply.redirect(redirectUrl.toString());
       } catch (error) {
         if (error instanceof JoseError) {
           request.log.warn(error, 'could not verify accessToken');
@@ -137,7 +137,7 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
           request.log.error(error, 'could not initialize tokenSet');
           redirectUrl.searchParams.set('error', 'unknown');
         }
-        reply.redirect(redirectUrl.toString());
+        return reply.redirect(redirectUrl.toString());
       }
     });
 
@@ -156,13 +156,12 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
             app.config.APP_BASE_URL,
           );
           redirectUrl.searchParams.set('error', 'no_token_set');
-          reply.redirect(redirectUrl.toString());
-          return;
+          return reply.redirect(redirectUrl.toString());
         }
         request.session.openId.state = request.query;
         const { id_token: idToken } = request.session.openId.tokenSet;
         request.session.openId.tokenSet = undefined;
-        reply.redirect(
+        return reply.redirect(
           openIdClient.endSessionUrl({
             id_token_hint: idToken,
             post_logout_redirect_uri: absoluteUrl('/logout/callback'),
@@ -175,7 +174,7 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
     app.get(localPath('/logout/callback'), async (request, reply) => {
       const { state } = request.session.openId;
       request.session.openId.state = undefined;
-      reply.redirect(
+      return reply.redirect(
         new URL(state?.from ?? '/', app.config.APP_BASE_URL).toString(),
       );
     });
