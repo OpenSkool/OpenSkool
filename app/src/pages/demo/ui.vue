@@ -25,6 +25,64 @@ const inputText = ref<string>('');
       <UiSubtitle is="h3">Subtitle</UiSubtitle>
     </div>
     <div>
+      <UiTitle is="h2" class="text-xl">Palette</UiTitle>
+      <UiSubtitle is="h3">Primary</UiSubtitle>
+      <div class="space-x-3">
+        <div class="bg-primary-100 palette" />
+        <div class="bg-primary-200 palette" />
+        <div class="bg-primary-300 palette" />
+        <div class="bg-primary-400 palette" />
+        <div class="bg-primary-500 palette" />
+        <div class="bg-primary-600 palette" />
+      </div>
+      <UiSubtitle is="h3">Secondary</UiSubtitle>
+      <div class="space-x-3">
+        <div class="bg-secondary-100 palette" />
+        <div class="bg-secondary-200 palette" />
+        <div class="bg-secondary-300 palette" />
+        <div class="bg-secondary-400 palette" />
+        <div class="bg-secondary-500 palette" />
+        <div class="bg-secondary-600 palette" />
+      </div>
+      <UiSubtitle is="h3">Tertiary</UiSubtitle>
+      <div class="space-x-3">
+        <div class="bg-tertiary-100 palette" />
+        <div class="bg-tertiary-200 palette" />
+        <div class="bg-tertiary-300 palette" />
+        <div class="bg-tertiary-400 palette" />
+        <div class="bg-tertiary-500 palette" />
+        <div class="bg-tertiary-600 palette" />
+      </div>
+      <UiSubtitle is="h3">Caution</UiSubtitle>
+      <div class="space-x-3">
+        <div class="bg-caution-100 palette" />
+        <div class="bg-caution-200 palette" />
+        <div class="bg-caution-300 palette" />
+        <div class="bg-caution-400 palette" />
+        <div class="bg-caution-500 palette" />
+        <div class="bg-caution-600 palette" />
+      </div>
+      <UiSubtitle is="h3">Danger</UiSubtitle>
+      <div class="space-x-3">
+        <div class="bg-danger-100 palette" />
+        <div class="bg-danger-200 palette" />
+        <div class="bg-danger-300 palette" />
+        <div class="bg-danger-400 palette" />
+        <div class="bg-danger-500 palette" />
+        <div class="bg-danger-600 palette" />
+      </div>
+      <UiSubtitle is="h3">Success</UiSubtitle>
+      <div class="space-x-3">
+        <div class="bg-success-100 palette" />
+        <div class="bg-success-200 palette" />
+        <div class="bg-success-300 palette" />
+        <div class="bg-success-400 palette" />
+        <div class="bg-success-500 palette" />
+        <div class="bg-success-600 palette" />
+      </div>
+    </div>
+
+    <div>
       <UiTitle is="h2" class="text-xl mb-3">Buttons</UiTitle>
       <div class="space-y-3">
         <div class="space-x-3">
@@ -155,3 +213,9 @@ const inputText = ref<string>('');
     </div>
   </div>
 </template>
+
+<style scoped>
+.palette {
+  @apply inline-block w-16 h-16;
+}
+</style>
