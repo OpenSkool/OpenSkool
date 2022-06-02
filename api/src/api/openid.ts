@@ -53,7 +53,7 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
     app.addHook('onRequest', async (request, reply) => {
       request.session.openId ??= {};
       if (request.session.openId.tokenSet == null) {
-        return reply;
+        return;
       }
       const tokenSet = parseTokenSet(request.session.openId.tokenSet);
       if (tokenSet.expired()) {
@@ -80,7 +80,6 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
           }
         }
       }
-      return reply;
     });
 
     const connectQuerystringSchema = Type.Object({
