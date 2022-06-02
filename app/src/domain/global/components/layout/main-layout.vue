@@ -23,7 +23,7 @@ const { menuState, toggleMenu } = useMenuState();
       />
       <LoadingSpinner />
       <div class="flex gap-3">
-        <LanguageSelect class="hidden md:flex" />
+        <LanguageSelect class="hidden md:block" />
         <UserMenu />
       </div>
     </div>

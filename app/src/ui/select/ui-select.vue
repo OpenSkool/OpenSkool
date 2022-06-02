@@ -16,7 +16,7 @@ defineEmits<
     :model-value="modelValue"
     @update:model-value="$emit('update:modelValue', $event)"
   >
-    <div class="relative">
+    <div class="relative" v-bind="$attrs">
       <ListboxButton
         :disabled="disabled"
         :class="[
@@ -26,7 +26,6 @@ defineEmits<
           'focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-secondary-400)',
           'cursor-default select-none',
         ]"
-        v-bind="$attrs"
       >
         <div class="text-base truncate">{{ selectedLabel ?? '–' }}</div>
         <RiArrowDropDownLine aria-hidden class="ml-2" />
