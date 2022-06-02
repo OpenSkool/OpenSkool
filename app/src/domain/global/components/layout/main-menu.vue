@@ -9,41 +9,50 @@ defineProps<{
 
 <template>
   <div class="relative">
-    <UiMainNav
-      v-show="state.opened"
-      class="bg-white"
-      :class="{
-        'fixed z-10 w-screen h-screen': state.opened && state.overlay,
-      }"
+    <Transition
+      enter-active-class="absolute transition transform"
+      enter-from-class="-translate-x-full"
+      enter-to-class="translate-x-0"
+      leave-active-class="absolute transition transform"
+      leave-from-class="translate-x-0"
+      leave-to-class="-translate-x-full"
     >
-      <header class="-mb-5">
-        <RouterLink class="flex gap-3 items-center justify-center" to="/">
-          <img
-            alt="OpenSkool logo backpack line art"
-            class="inline-block"
-            :src="backpackImageUrl"
+      <UiMainNav
+        v-if="state.opened"
+        class="bg-white"
+        :class="{
+          'fixed z-10 w-screen h-screen': state.opened && state.overlay,
+        }"
+      >
+        <header class="-mb-5">
+          <RouterLink class="flex gap-3 items-center justify-center" to="/">
+            <img
+              alt="OpenSkool logo backpack line art"
+              class="inline-block"
+              :src="backpackImageUrl"
+            />
+            <div
+              v-t="'global.title'"
+              class="font-normal text-secondary-300 text-xl"
+            />
+          </RouterLink>
+        </header>
+        <UiMainNavSection>
+          <UiMainNavHeader>
+            <span v-t="'global.mainMenu.managementHeader'" />
+          </UiMainNavHeader>
+          <UiMainNavLink
+            v-t="'global.mainMenu.managementLink.competencyFrameworks'"
+            to="/manage/frameworks"
           />
-          <div
-            v-t="'global.title'"
-            class="font-normal text-secondary-300 text-xl"
-          />
-        </RouterLink>
-      </header>
-      <UiMainNavSection>
-        <UiMainNavHeader>
-          <span v-t="'global.mainMenu.managementHeader'" />
-        </UiMainNavHeader>
-        <UiMainNavLink
-          v-t="'global.mainMenu.managementLink.competencyFrameworks'"
-          to="/manage/frameworks"
-        />
-      </UiMainNavSection>
-      <UiMainNavSection>
-        <UiMainNavHeader>Demo</UiMainNavHeader>
-        <UiMainNavLink to="/demo/forms">Forms</UiMainNavLink>
-        <UiMainNavLink to="/demo/ui">UI</UiMainNavLink>
-      </UiMainNavSection>
-    </UiMainNav>
+        </UiMainNavSection>
+        <UiMainNavSection>
+          <UiMainNavHeader>Demo</UiMainNavHeader>
+          <UiMainNavLink to="/demo/forms">Forms</UiMainNavLink>
+          <UiMainNavLink to="/demo/ui">UI</UiMainNavLink>
+        </UiMainNavSection>
+      </UiMainNav>
+    </Transition>
   </div>
 </template>
 
