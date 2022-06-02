@@ -7,7 +7,7 @@ jobs:
     name: Test
     runs-on: ubuntu-18.04
 
-    concurrency: 1
+    concurrency: ${{ github.workflow }}
 
     steps:
       - uses: actions/checkout@v3
