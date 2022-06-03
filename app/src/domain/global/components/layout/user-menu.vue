@@ -7,7 +7,7 @@ const authStore = useAuthStore();
 const route = useRoute();
 const logoutHref = computed(() => {
   const logoutUrl = new URL(authLogoutUrl);
-  logoutUrl.searchParams.set('from', route.path);
+  logoutUrl.searchParams.set('from', window.location.href + route.path);
   return logoutUrl.toString();
 });
 </script>
