@@ -36,7 +36,7 @@ defineEmits<(event: 'close') => void>();
           leave-to="opacity-0 scale-50"
         >
           <div
-            class="relative z-10 max-w-lg mx-auto my-8 shadow-xl rounded-2xl p-6 bg-white"
+            class="relative z-10 max-w-lg p-6 mx-auto my-8 bg-white shadow-xl rounded-2xl"
             v-bind="$attrs"
           >
             <div v-if="implicitClose" class="absolute top-0 right-0 p-3">

@@ -37,7 +37,7 @@ defineEmits<
       >
         <ListboxOptions
           v-slot="{ open }"
-          class="absolute py-1 mt-1 overflow-auto bg-white rounded-md shadow-lg max-h-60 focus:outline-none z-10"
+          class="absolute z-10 py-1 mt-1 overflow-auto bg-white rounded-md shadow-lg max-h-60 focus:outline-none"
           ring="1 black opacity-5"
           text="base"
         >

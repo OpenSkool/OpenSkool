@@ -145,7 +145,7 @@ async function handleFormSubmit(): Promise<void> {
     <UiTitle
       is="h1"
       v-t="'competencies.route.id.edit.heading'"
-      class="text-xl mb-3"
+      class="mb-3 text-xl"
     />
     <FormKit
       v-if="formValues != null"

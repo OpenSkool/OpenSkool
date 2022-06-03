@@ -1,5 +1,5 @@
 <template>
-  <nav class="divide-y-1 space-y-8 px-3">
+  <nav class="px-3 space-y-8 divide-y-1">
     <slot />
   </nav>
 </template>

@@ -55,7 +55,7 @@ const competencyFramework = computed(() =>
     <UiTitle
       is="h1"
       v-t="'competencies.route.create.heading'"
-      class="text-xl mb-3"
+      class="mb-3 text-xl"
     />
     <RootCompetencyCreate :framework-id="props.frameworkId" />
   </template>

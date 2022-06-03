@@ -5,7 +5,7 @@ defineProps<{
 </script>
 
 <template>
-  <li class="inline text-gray-600 text-sm uppercase">
+  <li class="inline text-sm text-gray-600 uppercase">
     <RouterLink
       v-if="linkTo"
       class="-m-1 p-1 hover:underline rounded-sm focus:outline-none focus-visible:(ring-2 ring-dark-700)"

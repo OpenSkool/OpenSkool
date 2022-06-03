@@ -18,7 +18,7 @@ defineEmits<(event: 'update:modelValue', value: boolean) => void>();
     <span
       aria-hidden="true"
       :class="modelValue ? 'translate-x-9' : 'translate-x-0'"
-      class="pointer-events-none inline-block h-34px w-34px rounded-full bg-white shadow-lg transform transition ease-in-out duration-200"
+      class="inline-block transition duration-200 ease-in-out transform bg-white rounded-full shadow-lg pointer-events-none h-34px w-34px"
     />
   </Switch>
 </template>

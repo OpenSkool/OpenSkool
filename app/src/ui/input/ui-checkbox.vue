@@ -21,7 +21,7 @@ defineProps<{
         type="checkbox"
         v-bind="$attrs"
       />
-      <RiCheckLine class="center check hidden text-white" />
+      <RiCheckLine class="hidden text-white center check" />
     </div>
     <slot />
   </label>

@@ -35,8 +35,8 @@ const values = ref<{
 </script>
 
 <template>
-  <UiTitle is="h1" v-t="'demo.forms.title'" class="text-xl mb-3" />
-  <UiTitle is="h2" v-t="'demo.forms.subTitle'" class="text-lg mb-3" />
+  <UiTitle is="h1" v-t="'demo.forms.title'" class="mb-3 text-xl" />
+  <UiTitle is="h2" v-t="'demo.forms.subTitle'" class="mb-3 text-lg" />
   <FormKit
     v-model="values"
     type="form"

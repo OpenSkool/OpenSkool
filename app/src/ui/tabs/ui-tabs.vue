@@ -1,6 +1,6 @@
 <template>
   <TabGroup as="div" class="space-y-3">
-    <TabList v-if="$slots.default" class="test p-1 pb-2">
+    <TabList v-if="$slots.default" class="p-1 pb-2 test">
       <Tab
         v-for="(slot, index) in $slots.default()"
         v-slot="{ selected }"

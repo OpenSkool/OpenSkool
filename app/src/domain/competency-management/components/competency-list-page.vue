@@ -123,8 +123,8 @@ async function deleteCompetencyHandler(): Promise<void> {
         {{ competency.parent.title }}
       </UiBreadcrumbItem>
     </UiBreadcrumb>
-    <div class="flex gap-3 items-baseline">
-      <UiTitle is="h1" class="text-xl mb-3">
+    <div class="flex items-baseline gap-3">
+      <UiTitle is="h1" class="mb-3 text-xl">
         {{ competency.title }}
       </UiTitle>
       <RouterLink

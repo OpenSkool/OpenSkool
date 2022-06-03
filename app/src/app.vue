@@ -22,6 +22,6 @@ const { locale } = useI18n();
 
 <style>
 body {
-  @apply antialiased font-sans;
+  @apply font-sans antialiased;
 }
 </style>

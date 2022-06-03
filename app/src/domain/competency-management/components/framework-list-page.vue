@@ -11,7 +11,7 @@ const ability = useAppAbility();
   <UiTitle
     is="h1"
     v-t="'frameworks.route.index.heading'"
-    class="text-xl mb-3"
+    class="mb-3 text-xl"
   />
   <UiButtonRouterLink
     v-if="ability.can('create', 'CompetencyFramework')"

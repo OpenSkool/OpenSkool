@@ -100,8 +100,8 @@ const inputText = ref<string>('');
       </div>
     </div>
     <div>
-      <UiTitle is="h2" class="text-xl mb-3">Buttons</UiTitle>
-      <div class="space-y-3 bg-white -m-3 p-3 rounded-md">
+      <UiTitle is="h2" class="mb-3 text-xl">Buttons</UiTitle>
+      <div class="p-3 -m-3 space-y-3 bg-white rounded-md">
         <div class="space-x-3">
           <UiButton color="primary">Button</UiButton>
           <UiButton color="primary" disabled>Button</UiButton>
@@ -126,7 +126,7 @@ const inputText = ref<string>('');
       </div>
     </div>
     <div>
-      <UiTitle is="h2" class="text-xl mb-3">Tabs</UiTitle>
+      <UiTitle is="h2" class="mb-3 text-xl">Tabs</UiTitle>
       <UiTabs>
         <UiTab title="Button 1">Panel 1</UiTab>
         <UiTab title="Button 2">Panel 2</UiTab>
@@ -134,7 +134,7 @@ const inputText = ref<string>('');
       </UiTabs>
     </div>
     <div>
-      <UiTitle is="h2" class="text-xl mb-3">Dialog</UiTitle>
+      <UiTitle is="h2" class="mb-3 text-xl">Dialog</UiTitle>
       <UiButton @click="isModalOpen = true">Open dialog</UiButton>
       <UiDialog :open="isModalOpen" @close="isModalOpen = false">
         <UiDialogTitle>Payment successful</UiDialogTitle>
@@ -174,7 +174,7 @@ const inputText = ref<string>('');
       <UiRadio id="radio4" checked disabled>Checked disabled</UiRadio>
     </div>
     <div>
-      <UiTitle is="h2" class="text-xl mb-3">Menu</UiTitle>
+      <UiTitle is="h2" class="mb-3 text-xl">Menu</UiTitle>
       <UiMenu>
         <UiMenuButton>
           <UiButton>
@@ -185,7 +185,7 @@ const inputText = ref<string>('');
         <UiMenuItems>
           <div class="px-4 py-3">
             <div class="font-bold">Dieter Luypaert</div>
-            <small class="text-primary-400 underline">
+            <small class="underline text-primary-400">
               dieter@foursevens.be
             </small>
           </div>

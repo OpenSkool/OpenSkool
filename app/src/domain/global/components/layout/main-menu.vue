@@ -31,12 +31,12 @@ defineProps<{
           >
             <img
               alt="OpenSkool logo backpack line art"
-              class="my-2 inline-block"
+              class="inline-block my-2"
               :src="backpackImageUrl"
             />
             <div
               v-t="'global.title'"
-              class="font-normal text-primary-400 text-xl"
+              class="text-xl font-normal text-primary-400"
             />
           </RouterLink>
         </header>
