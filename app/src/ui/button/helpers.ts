@@ -10,13 +10,7 @@ type ClassValue =
   | undefined;
 
 export interface ButtonStyleOptions {
-  color?:
-    | 'primary'
-    | 'secondary'
-    | 'tertiary'
-    | 'caution'
-    | 'danger'
-    | 'success';
+  color?: 'primary' | 'danger';
   disabled?: boolean;
   outline?: boolean;
   size?: 'sm' | 'base';
@@ -54,55 +48,19 @@ export function createButtonStyles({
     switch (color) {
       case 'primary': {
         classes.push(
-          'border-2 border-primary-300 ring-primary-500',
+          'border-2 ring-primary-700',
           outline
-            ? 'text-primary-600 active:border-primary-400'
-            : 'text-primary-600 bg-primary-300 active:(bg-primary-400 border-primary-400)',
-        );
-        break;
-      }
-      case 'secondary': {
-        classes.push(
-          'border-2 border-secondary-300 ring-secondary-500',
-          outline
-            ? 'text-secondary-600 active:border-secondary-500'
-            : 'text-white bg-secondary-300 active:(bg-secondary-400 border-secondary-400)',
-        );
-        break;
-      }
-      case 'tertiary': {
-        classes.push(
-          'border-2 border-tertiary-300 ring-tertiary-500',
-          outline
-            ? 'text-tertiary-600 active:border-tertiary-500'
-            : 'text-white bg-tertiary-300 active:(bg-tertiary-400 border-tertiary-400)',
-        );
-        break;
-      }
-      case 'caution': {
-        classes.push(
-          'border-2 border-caution-300 ring-caution-500',
-          outline
-            ? 'text-caution-600 active:border-caution-400'
-            : 'text-caution-600 bg-caution-300 active:(bg-caution-400 border-caution-400)',
+            ? 'text-primary-700 border-primary-400 active:border-primary-600'
+            : 'text-white bg-primary-400 border-primary-400 active:(bg-primary-500 border-primary-500)',
         );
         break;
       }
       case 'danger': {
         classes.push(
-          'border-2 border-danger-300 ring-danger-500',
+          'border-2 ring-danger-700',
           outline
-            ? 'text-danger-600 active:border-danger-500'
-            : 'text-white bg-danger-300 active:(bg-danger-400 border-danger-400)',
-        );
-        break;
-      }
-      case 'success': {
-        classes.push(
-          'border-2 border-success-300 ring-success-500',
-          outline
-            ? 'text-success-600 active:border-success-500'
-            : 'text-success-600 bg-success-300 active:(bg-success-400 border-success-400)',
+            ? 'text-danger-700 border-danger-400 active:border-danger-600'
+            : 'text-white bg-danger-400 border-danger-400 active:(bg-danger-500 border-danger-500)',
         );
         break;
       }

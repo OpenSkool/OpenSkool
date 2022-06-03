@@ -18,7 +18,7 @@ const logoutHref = computed(() => {
       <button
         :class="[
           'p-3 border-2 aspect-square rounded-full',
-          'focus:outline-none focus-visible:(ring-2 ring-secondary-300 ring-offset-2)',
+          'focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-primary-700)',
           'flex items-center justify-center',
         ]"
       >
@@ -28,12 +28,12 @@ const logoutHref = computed(() => {
     </UiMenuButton>
     <UiMenuItems>
       <i18n-t
-        class="px-4 py-3 text-base text-gray-500"
+        class="px-4 py-3 text-base text-dark-500"
         keypath="global.userMenu.description"
         tag="div"
       >
         <template #name>
-          <strong class="text-gray-800">{{ authStore.name }}</strong>
+          <strong class="text-primary-800">{{ authStore.name }}</strong>
         </template>
       </i18n-t>
       <UiMenuItem is="a" class="text-base" :href="logoutHref">

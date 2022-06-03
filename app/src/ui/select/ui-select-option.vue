@@ -16,8 +16,8 @@ defineProps<{
         disabled
           ? 'bg-stone-200 text-stone-500 cursor-not-allowed'
           : active
-          ? 'text-gray-800 bg-secondary-100'
-          : 'text-gray-900',
+          ? 'text-dark-800 bg-primary-100'
+          : 'text-dark-900',
       ]"
     >
       <div class="truncate" :class="selected ? 'font-medium' : 'font-normal'">
@@ -25,7 +25,7 @@ defineProps<{
       </div>
       <span
         v-if="selected"
-        class="absolute inset-y-0 left-0 flex items-center pl-3 text-primary-600"
+        class="absolute inset-y-0 left-0 flex items-center pl-3 text-primary-700"
       >
         <RiCheckLine aria-hidden="true" class="w-5 h-5" />
       </span>

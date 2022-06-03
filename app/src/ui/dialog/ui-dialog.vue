@@ -41,14 +41,14 @@ defineEmits<(event: 'close') => void>();
           >
             <div v-if="implicitClose" class="absolute top-0 right-0 p-3">
               <button
-                class="flex rounded-lg p-2 text-gray-500 focus:outline-none focus-visible:(ring-2 ring-gray-500)"
+                class="flex rounded-lg p-2 text-dark-700 focus:outline-none focus-visible:(ring-2 ring-dark-700)"
                 type="button"
                 @click="$emit('close')"
               >
                 <RiCloseLine />
               </button>
             </div>
-            <div class="space-y-5">
+            <div class="space-y-8">
               <slot />
             </div>
           </div>

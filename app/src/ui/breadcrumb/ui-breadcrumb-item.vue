@@ -8,7 +8,7 @@ defineProps<{
   <li class="inline text-gray-600 text-sm uppercase">
     <RouterLink
       v-if="linkTo"
-      class="hover:underline rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+      class="-m-1 p-1 hover:underline rounded-sm focus:outline-none focus-visible:(ring-2 ring-dark-700)"
       :to="linkTo"
     >
       <slot />

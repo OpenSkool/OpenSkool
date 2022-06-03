@@ -23,9 +23,9 @@ export function formkit(app: App): void {
           global: {
             help: 'text-sm text-gray-600',
             label:
-              'block mb-1 font-bold text-sm formkit-invalid:text-danger-400',
+              'block mb-1 font-bold text-sm formkit-invalid:text-danger-500',
             messages: 'list-none p-0 mt-1 mb-0',
-            message: 'text-danger-300 mb-1 text-sm',
+            message: 'text-danger-500 mb-1 text-sm',
             outer: 'mb-5 opacity-100 formkit-disabled:opacity-40',
           },
           button: BUTTON,

@@ -152,7 +152,7 @@ async function deleteCompetencyHandler(): Promise<void> {
       :open="isDeleteModalOpen"
       @close="isDeleteModalOpen = false"
     >
-      <UiDialogTitle class="text-danger-300">
+      <UiDialogTitle class="text-danger-600">
         <span v-t="'competencies.route.id.index.confirmDeleteModal.heading'" />
       </UiDialogTitle>
       <UiDialogDescription>
@@ -161,11 +161,11 @@ async function deleteCompetencyHandler(): Promise<void> {
           keypath="competencies.route.id.index.confirmDeleteModal.message"
         >
           <template #title>
-            <strong class="text-secondary-300">{{ competency.title }}</strong>
+            <strong class="text-danger-500">{{ competency.title }}</strong>
           </template>
         </i18n-t>
       </UiDialogDescription>
-      <p v-if="deleteErrorMessage" class="text-danger-400">
+      <p v-if="deleteErrorMessage" class="text-danger-600">
         {{ deleteErrorMessage }}
       </p>
       <UiDialogButtons>

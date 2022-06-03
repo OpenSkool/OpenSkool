@@ -25,15 +25,18 @@ defineProps<{
         }"
       >
         <header class="-mb-5">
-          <RouterLink class="flex gap-3 items-center justify-center" to="/">
+          <RouterLink
+            class="flex gap-3 items-center justify-center rounded-md focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-primary-700)"
+            to="/"
+          >
             <img
               alt="OpenSkool logo backpack line art"
-              class="inline-block"
+              class="my-2 inline-block"
               :src="backpackImageUrl"
             />
             <div
               v-t="'global.title'"
-              class="font-normal text-secondary-300 text-xl"
+              class="font-normal text-primary-400 text-xl"
             />
           </RouterLink>
         </header>

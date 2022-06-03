@@ -16,7 +16,7 @@ const loading = useGlobalQueryLoading();
     <RiLoaderLine
       v-if="loading"
       aria-hidden
-      class="text-lg text-tertiary-300 animate-spin"
+      class="text-lg text-primary-500 animate-spin"
     />
   </Transition>
 </template>

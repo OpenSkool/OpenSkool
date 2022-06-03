@@ -26,6 +26,18 @@ const inputText = ref<string>('');
     </div>
     <div>
       <UiTitle is="h2" class="text-xl">Palette</UiTitle>
+      <UiSubtitle is="h3">Gray</UiSubtitle>
+      <div class="space-x-3">
+        <div class="bg-gray-100 palette" />
+        <div class="bg-gray-200 palette" />
+        <div class="bg-gray-300 palette" />
+        <div class="bg-gray-400 palette" />
+        <div class="bg-gray-500 palette" />
+        <div class="bg-gray-600 palette" />
+        <div class="bg-gray-700 palette" />
+        <div class="bg-gray-800 palette" />
+        <div class="bg-gray-900 palette" />
+      </div>
       <UiSubtitle is="h3">Primary</UiSubtitle>
       <div class="space-x-3">
         <div class="bg-primary-100 palette" />
@@ -34,24 +46,9 @@ const inputText = ref<string>('');
         <div class="bg-primary-400 palette" />
         <div class="bg-primary-500 palette" />
         <div class="bg-primary-600 palette" />
-      </div>
-      <UiSubtitle is="h3">Secondary</UiSubtitle>
-      <div class="space-x-3">
-        <div class="bg-secondary-100 palette" />
-        <div class="bg-secondary-200 palette" />
-        <div class="bg-secondary-300 palette" />
-        <div class="bg-secondary-400 palette" />
-        <div class="bg-secondary-500 palette" />
-        <div class="bg-secondary-600 palette" />
-      </div>
-      <UiSubtitle is="h3">Tertiary</UiSubtitle>
-      <div class="space-x-3">
-        <div class="bg-tertiary-100 palette" />
-        <div class="bg-tertiary-200 palette" />
-        <div class="bg-tertiary-300 palette" />
-        <div class="bg-tertiary-400 palette" />
-        <div class="bg-tertiary-500 palette" />
-        <div class="bg-tertiary-600 palette" />
+        <div class="bg-primary-700 palette" />
+        <div class="bg-primary-800 palette" />
+        <div class="bg-primary-900 palette" />
       </div>
       <UiSubtitle is="h3">Caution</UiSubtitle>
       <div class="space-x-3">
@@ -61,6 +58,9 @@ const inputText = ref<string>('');
         <div class="bg-caution-400 palette" />
         <div class="bg-caution-500 palette" />
         <div class="bg-caution-600 palette" />
+        <div class="bg-caution-700 palette" />
+        <div class="bg-caution-800 palette" />
+        <div class="bg-caution-900 palette" />
       </div>
       <UiSubtitle is="h3">Danger</UiSubtitle>
       <div class="space-x-3">
@@ -70,6 +70,21 @@ const inputText = ref<string>('');
         <div class="bg-danger-400 palette" />
         <div class="bg-danger-500 palette" />
         <div class="bg-danger-600 palette" />
+        <div class="bg-danger-700 palette" />
+        <div class="bg-danger-800 palette" />
+        <div class="bg-danger-900 palette" />
+      </div>
+      <UiSubtitle is="h3">Info</UiSubtitle>
+      <div class="space-x-3">
+        <div class="bg-info-100 palette" />
+        <div class="bg-info-200 palette" />
+        <div class="bg-info-300 palette" />
+        <div class="bg-info-400 palette" />
+        <div class="bg-info-500 palette" />
+        <div class="bg-info-600 palette" />
+        <div class="bg-info-700 palette" />
+        <div class="bg-info-800 palette" />
+        <div class="bg-info-900 palette" />
       </div>
       <UiSubtitle is="h3">Success</UiSubtitle>
       <div class="space-x-3">
@@ -79,35 +94,19 @@ const inputText = ref<string>('');
         <div class="bg-success-400 palette" />
         <div class="bg-success-500 palette" />
         <div class="bg-success-600 palette" />
+        <div class="bg-success-700 palette" />
+        <div class="bg-success-800 palette" />
+        <div class="bg-success-900 palette" />
       </div>
     </div>
-
     <div>
       <UiTitle is="h2" class="text-xl mb-3">Buttons</UiTitle>
-      <div class="space-y-3">
+      <div class="space-y-3 bg-white -m-3 p-3 rounded-md">
         <div class="space-x-3">
           <UiButton color="primary">Button</UiButton>
           <UiButton color="primary" disabled>Button</UiButton>
           <UiButton color="primary" outline>Button</UiButton>
           <UiButton color="primary" disabled outline>Button</UiButton>
-        </div>
-        <div class="space-x-3">
-          <UiButton color="secondary">Button</UiButton>
-          <UiButton color="secondary" disabled>Button</UiButton>
-          <UiButton color="secondary" outline>Button</UiButton>
-          <UiButton color="secondary" disabled outline>Button</UiButton>
-        </div>
-        <div class="space-x-3">
-          <UiButton color="tertiary">Button</UiButton>
-          <UiButton color="tertiary" disabled>Button</UiButton>
-          <UiButton color="tertiary" outline>Button</UiButton>
-          <UiButton color="tertiary" disabled outline>Button</UiButton>
-        </div>
-        <div class="space-x-3">
-          <UiButton color="caution">Button</UiButton>
-          <UiButton color="caution" disabled>Button</UiButton>
-          <UiButton color="caution" outline>Button</UiButton>
-          <UiButton color="caution" disabled outline>Button</UiButton>
         </div>
         <div class="space-x-3">
           <UiButton color="danger">Button</UiButton>
@@ -116,18 +115,8 @@ const inputText = ref<string>('');
           <UiButton color="danger" disabled outline>Button</UiButton>
         </div>
         <div class="space-x-3">
-          <UiButton color="success">Button</UiButton>
-          <UiButton color="success" disabled>Button</UiButton>
-          <UiButton color="success" outline>Button</UiButton>
-          <UiButton color="success" disabled outline>Button</UiButton>
-        </div>
-        <div class="space-x-3">
           <UiButton color="primary" size="sm">Button</UiButton>
-          <UiButton color="secondary" size="sm">Button</UiButton>
-          <UiButton color="tertiary" size="sm">Button</UiButton>
-          <UiButton color="caution" size="sm">Button</UiButton>
           <UiButton color="danger" size="sm">Button</UiButton>
-          <UiButton color="success" size="sm">Button</UiButton>
         </div>
         <div>
           <UiIconButton label="Edit">
@@ -196,12 +185,12 @@ const inputText = ref<string>('');
         <UiMenuItems>
           <div class="px-4 py-3">
             <div class="font-bold">Dieter Luypaert</div>
-            <small class="text-secondary-400 underline">
+            <small class="text-primary-400 underline">
               dieter@foursevens.be
             </small>
           </div>
           <UiMenuItem>
-            <RiPencilLine aria-hidden="true" class="text-secondary-400" />
+            <RiPencilLine aria-hidden="true" class="text-primary-400" />
             Edit
           </UiMenuItem>
           <UiMenuItem>
