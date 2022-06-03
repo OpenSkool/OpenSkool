@@ -2,13 +2,7 @@
 import { createButtonStyles } from './helpers';
 
 const props = defineProps<{
-  color?:
-    | 'primary'
-    | 'secondary'
-    | 'tertiary'
-    | 'caution'
-    | 'danger'
-    | 'success';
+  color?: 'primary' | 'danger';
   disabled?: boolean;
   outline?: boolean;
   size?: 'sm' | 'base';

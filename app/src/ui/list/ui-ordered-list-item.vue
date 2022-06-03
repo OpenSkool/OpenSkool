@@ -16,20 +16,20 @@ defineEmits<(event: 'moveUp' | 'moveDown') => void>();
       :class="[
         'flex-1 flex px-10 py-5 bg-white text-base',
         'first-of-type:rounded-t-lg last-of-type:rounded-b-lg',
-        'select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
-        'hover:bg-gray-300/50',
+        'select-none focus:outline-none focus-visible:(ring-2 ring-primary-700)',
+        'hover:bg-gray-200',
       ]"
     >
       <div v-if="showArrows" class="absolute inset-0">
         <button
-          class="arrow-up top-0 rounded-lg select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 hover:bg-white"
+          class="arrow-up top-0 rounded-lg select-none focus:outline-none focus-visible:(ring-2 ring-dark-700) hover:bg-white"
           @click.prevent="$emit('moveUp')"
         >
           <span v-if="moveUpText" class="sr-only">{{ moveUpText }}</span>
           <RiArrowUpLine aria-hidden />
         </button>
         <button
-          class="arrow-down bottom-0 rounded-lg select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 hover:bg-white"
+          class="arrow-down bottom-0 rounded-lg select-none focus:outline-none focus-visible:(ring-2 ring-dark-700) hover:bg-white"
           @click.prevent="$emit('moveDown')"
         >
           <span v-if="moveDownText" class="sr-only">{{ moveDownText }}</span>

@@ -13,8 +13,8 @@ defineProps<{
       <input
         :class="[
           'center w-5 h-5 pointer-events-none',
-          'bg-white rounded-sm checked:bg-secondary-300',
-          'focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-secondary-400)',
+          'bg-white rounded-sm checked:bg-primary-400',
+          'focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-primary-700)',
           'disabled:bg-stone-300',
         ]"
         :disabled="disabled"

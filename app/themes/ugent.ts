@@ -1,11 +1,23 @@
-import { baseColors, baseTheme, createConfig } from '../windicss';
+import {
+  baseColors,
+  baseTheme,
+  createConfig,
+  generateRange,
+} from '../windicss';
+
+//  UGent Blue:
+//    #1D64C8
+//    https://oklch.evilmartians.io/#51.87,0.17,258.32,100
+//    { chroma: 0.17, hue: 258.32 }
 
 export default createConfig({
   ...baseTheme,
   colors: {
     ...baseTheme.colors,
-    primary: baseColors.secondary,
-    secondary: baseColors.primary,
+    primary: generateRange({
+      chroma: 0.17,
+      hue: 258.32,
+    }) as typeof baseColors.primary,
   },
   extend: {
     borderRadius: {

@@ -11,7 +11,7 @@ const breakpoints = useBreakpoints();
       :key="name"
       class=""
     >
-      <div class="px-1 py-1" :class="{ 'bg-secondary-100': active.value }">
+      <div class="px-1 py-1" :class="{ 'bg-primary-100': active.value }">
         {{ name }}
       </div>
     </div>

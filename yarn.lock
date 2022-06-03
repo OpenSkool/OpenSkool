@@ -1947,6 +1947,7 @@ __metadata:
     "@iconify-json/ri": ^1.1.1
     "@intlify/vite-plugin-vue-i18n": ^3.4.0
     "@os/ability": "workspace:*"
+    "@os/css-color-4": "workspace:*"
     "@os/eslint-config": "workspace:*"
     "@testing-library/user-event": 14.1.1
     "@testing-library/vue": ^6.5.1
@@ -1979,6 +1980,17 @@ __metadata:
     vue-tsc: 0.34.15
     whatwg-fetch: ^3.6.2
     windicss: ^3.5.4
+  languageName: unknown
+  linkType: soft
+
+"@os/css-color-4@workspace:*, @os/css-color-4@workspace:libs/css-color-4":
+  version: 0.0.0-use.local
+  resolution: "@os/css-color-4@workspace:libs/css-color-4"
+  dependencies:
+    rollup: ^2.74.1
+    rollup-plugin-dts: ^4.2.1
+    rollup-plugin-esbuild: ^4.9.1
+    typescript: ~4.7.2
   languageName: unknown
   linkType: soft
 

@@ -12,7 +12,7 @@ defineProps<{
       :is="is ?? 'button'"
       :class="[
         'w-full flex gap-3 items-center px-4 py-3 rounded-md',
-        { 'bg-primary-200': active },
+        { 'bg-primary-100': active },
       ]"
     >
       <slot v-bind="{ active, disabled }" />

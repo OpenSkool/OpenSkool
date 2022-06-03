@@ -1,26 +1,20 @@
 import windiColors from 'windicss/colors';
 import { Theme } from 'windicss/types/interfaces';
 
-type ReasonableRange = 1 | 2 | 3 | 4 | 5 | 6;
-export type ReasonableColors = {
-  [Range in ReasonableRange as `${Range}00`]: string;
-};
+import { generateRange } from './color-helpers';
 
-type WindiRange = ReasonableRange | 7 | 8 | 9;
+type WindiRange = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 export type WindiColors = {
   [Range in WindiRange as `${Range}00`]: string;
 };
 
 export interface OsColors {
-  primary: ReasonableColors;
-  secondary: ReasonableColors;
-  tertiary: ReasonableColors;
-
-  caution: ReasonableColors;
-  danger: ReasonableColors;
-  success: ReasonableColors;
-
   gray: WindiColors;
+  primary: WindiColors;
+  caution: WindiColors;
+  danger: WindiColors;
+  info: WindiColors;
+  success: WindiColors;
 }
 
 export interface OsTheme {
@@ -28,57 +22,51 @@ export interface OsTheme {
   extend?: Theme;
 }
 
+//  OS Blue:
+//    #2A6DF7
+//    https://oklch.evilmartians.io/#57.65,0.218,262.38,100
+//    { chroma: 0.218, hue: 262.38 }
+//
+//  OS Orange
+//    #F6BF45
+//    https://oklch.evilmartians.io/#83.35,0.147,83.57,100
+//    { chroma: 0.147, hue: 83.57 }
+//
+//  OS Red:
+//    #D32E64
+//    https://oklch.evilmartians.io/#57.7,0.201,7.34,100
+//    { chroma: 0.201, hue: 7.34 }
+
+// Windi gray options:
+//   'warmGray' | 'trueGray' | 'gray' | 'coolGray' | 'blueGray' | 'slate' | 'zinc' | 'neutral' | 'stone'
+
 export const baseColors: OsColors = {
-  primary: {
-    100: '#fff6e7',
-    200: '#fff5bf',
-    300: '#f6bf44',
-    400: '#c3931b',
-    500: '#7d5500',
-    600: '#402200',
-  },
-  secondary: {
-    100: '#dcf9ff',
-    200: '#c0e0ff',
-    300: '#2a6ef6',
-    400: '#005ade',
-    500: '#00107c',
-    600: '#000039',
-  },
-  tertiary: {
-    100: '#ffe2e8',
-    200: '#ffb9dd',
-    300: '#d32e64',
-    400: '#c31457',
-    500: '#830028',
-    600: '#440004',
-  },
-  caution: {
-    100: '#fff6e7',
-    200: '#fff5bf',
-    300: '#f6bf44',
-    400: '#c3931b',
-    500: '#7d5500',
-    600: '#402200',
-  },
-  danger: {
-    100: '#ffefe9',
-    200: '#ffd3c3',
-    300: '#f54242',
-    400: '#d00c2a',
-    500: '#7b0000',
-    600: '#3f0000',
-  },
-  success: {
-    100: '#e0ffe2',
-    200: '#b0ffb5',
-    300: '#79de81',
-    400: '#44a952',
-    500: '#00691a',
-    600: '#004200',
-  },
-  // Gray options: 'warmGray' | 'trueGray' | 'gray' | 'coolGray' | 'blueGray' | 'slate' | 'zinc' | 'neutral' | 'stone'
-  gray: windiColors.gray as WindiColors,
+  gray: windiColors.slate as WindiColors,
+  primary: generateRange({
+    lightness: { from: 94 },
+    chroma: 0.218,
+    hue: 262.38,
+  }) as WindiColors,
+  caution: generateRange({
+    lightness: { from: 99, to: 25 },
+    chroma: 0.147,
+    hue: 83.57,
+  }) as WindiColors,
+  danger: generateRange({
+    lightness: { from: 93 },
+    chroma: 0.201,
+    hue: 7.34,
+  }) as WindiColors,
+  info: generateRange({
+    lightness: { from: 90 },
+    chroma: 0.204,
+    hue: 293.91,
+  }) as WindiColors,
+  success: generateRange({
+    lightness: { from: 90 },
+    chroma: 0.082,
+    hue: 126.93,
+  }) as WindiColors,
 };
 
 export const baseTheme: OsTheme = {

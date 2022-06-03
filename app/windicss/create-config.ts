@@ -16,7 +16,7 @@ const BASE_COLORS = [
   'white',
 ];
 
-const WINDI_COLORS = ['dark', 'light', 'neutral', 'slate', 'stone', 'zinc'];
+const WINDI_COLORS = ['dark', 'light', 'stone'];
 
 export default function createConfig(theme: OsTheme): FullConfig {
   return {

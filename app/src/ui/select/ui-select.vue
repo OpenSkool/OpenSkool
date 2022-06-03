@@ -23,7 +23,7 @@ defineEmits<
           'toggle-button',
           'flex items-center justify-between px-3 py-2',
           'bg-white rounded-md shadow-md border-1 border-gray-200',
-          'focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-secondary-400)',
+          'focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-primary-700)',
           'cursor-default select-none',
         ]"
       >
