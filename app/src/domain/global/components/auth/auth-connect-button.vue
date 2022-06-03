@@ -4,7 +4,7 @@ import { authConnectUrl } from '~/auth';
 const route = useRoute();
 const connectHref = computed(() => {
   const connectUrl = new URL(authConnectUrl);
-  connectUrl.searchParams.set('from', route.path);
+  connectUrl.searchParams.set('from', window.location.href + route.path);
   return connectUrl.toString();
 });
 </script>
