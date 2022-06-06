@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import backpackImageUrl from './backpack.png';
 import type { MenuState } from './use-menu-state';
 
 defineProps<{
@@ -32,7 +31,7 @@ defineProps<{
             <img
               alt="OpenSkool logo backpack line art"
               class="my-2 inline-block"
-              :src="backpackImageUrl"
+              src="/logo.svg"
             />
             <div
               v-t="'global.title'"

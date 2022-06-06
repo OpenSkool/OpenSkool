@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg
+  width="100%"
+  height="100%"
+  viewBox="0 0 401 401"
+  version="1.1"
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  xml:space="preserve"
+  xmlns:serif="http://www.serif.com/"
+  style="
+    fill-rule: evenodd;
+    clip-rule: evenodd;
+    stroke-linejoin: round;
+    stroke-miterlimit: 1.5;
+  "
+>
+  <g transform="matrix(1,0,0,1,-529,-269)">
+    <g
+      id="Artboard2"
+      transform="matrix(1.19373,0,0,1.20229,544.556,-57.4951)"
+    >
+      <rect
+        x="-12.411"
+        y="271.761"
+        width="335.084"
+        height="332.699"
+        style="fill: none"
+      />
+      <g
+        id="rugzak"
+        transform="matrix(0.905426,0,0,0.876177,-1198.26,-598.618)"
+      >
+        <g transform="matrix(1.07658,0,0,0.889523,1078.94,900.672)">
+          <path
+            d="M422.011,216.01L422.011,183.194L350.738,183.194L350.738,216.01"
+            style="fill: none; stroke: rgb(230, 0, 99); stroke-width: 18.42px"
+          />
+        </g>
+        <path
+          d="M1387.69,1092.82L1602.12,1092.82C1602.12,1092.82 1585.61,1197.26 1557.17,1220.88C1528.72,1244.5 1458.68,1244.5 1430.24,1220.88C1401.79,1197.26 1387.69,1092.82 1387.69,1092.82L1387.69,1342.99L1602.12,1342.99L1602.12,1092.82L1387.69,1092.82Z"
+          style="fill: none; stroke: rgb(15, 107, 255); stroke-width: 20.97px"
+        />
+        <g transform="matrix(0.679497,0,0,0.833041,476.494,209.758)">
+          <rect
+            x="1476.66"
+            y="1213.36"
+            width="43.379"
+            height="42.985"
+            style="
+              fill: rgb(255, 190, 11);
+              stroke: rgb(255, 190, 11);
+              stroke-width: 16.17px;
+            "
+          />
+        </g>
+        <g transform="matrix(1,0,0,1.05527,-287.333,-20.5261)">
+          <path
+            d="M1717.98,1055.03L1702.15,989.335L1656.01,1000.12C1656.01,1000.12 1622.11,1181.28 1675.02,1292.09M1659.95,999.2L1656.01,1000.12L1672.35,1058.24"
+            style="
+              fill: none;
+              stroke: rgb(15, 107, 255);
+              stroke-width: 17.69px;
+            "
+          />
+        </g>
+        <g transform="matrix(-1,0,0,1.05527,3276.43,-19.1864)">
+          <path
+            d="M1717.98,1055.03L1702.15,989.335L1656.01,1000.12C1656.01,1000.12 1621.39,1180.01 1674.31,1290.82M1659.95,999.2L1656.01,1000.12L1672.35,1058.24"
+            style="
+              fill: none;
+              stroke: rgb(15, 107, 255);
+              stroke-width: 17.69px;
+            "
+          />
+        </g>
+        <g transform="matrix(0.969416,0,0,1.33975,1227.65,784.422)">
+          <path
+            d="M227.607,382.075L322.729,382.075"
+            style="
+              fill: none;
+              stroke: rgb(230, 0, 99);
+              stroke-width: 9px;
+              stroke-linecap: round;
+            "
+          />
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
