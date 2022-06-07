@@ -26,7 +26,7 @@ const apiPlugin: FastifyPluginAsync = async (app) => {
         domain: app.config.SESSION_DOMAIN,
         maxAge: ms('1h'),
         path: '/',
-        sameSite: 'lax',
+        sameSite: app.config.SESSION_SAME_SITE,
         secure: !app.config.SESSION_ALLOW_INSECURE,
       },
       secret: app.config.SESSION_SECRET,

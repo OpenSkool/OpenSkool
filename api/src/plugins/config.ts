@@ -23,6 +23,7 @@ const schema = Type.Object({
 
   SESSION_ALLOW_INSECURE: Type.Boolean({ default: false }),
   SESSION_DOMAIN: Type.String(),
+  SESSION_SAME_SITE: Type.String(),
   SESSION_SECRET: Type.String({ minLength: 32 }),
 });
 
