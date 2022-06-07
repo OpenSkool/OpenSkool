@@ -16,6 +16,16 @@ import { openIdPlugin } from './openid';
 const HTTP_NO_CONTENT = 204;
 
 const apiPlugin: FastifyPluginAsync = async (app) => {
+  const isDevCookie = app.config.API_BASE_URL.includes('localhost');
+
+  app.log.info({
+    domain: app.config.SESSION_DOMAIN,
+    maxAge: ms('1h'),
+    path: '/',
+    sameSite: isDevCookie ? 'lax' : 'none',
+    secure: !isDevCookie,
+  });
+
   app
     .register(corsPlugin, { credentials: true, origin: true })
     .register(prismaPlugin)
@@ -26,8 +36,8 @@ const apiPlugin: FastifyPluginAsync = async (app) => {
         domain: app.config.SESSION_DOMAIN,
         maxAge: ms('1h'),
         path: '/',
-        sameSite: 'lax',
-        secure: !app.config.SESSION_ALLOW_INSECURE,
+        sameSite: isDevCookie ? 'lax' : 'none',
+        secure: !isDevCookie,
       },
       secret: app.config.SESSION_SECRET,
     })

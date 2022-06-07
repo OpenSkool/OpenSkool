@@ -21,8 +21,11 @@ const schema = Type.Object({
   ),
   PORT: Type.Number(),
 
-  SESSION_ALLOW_INSECURE: Type.Boolean({ default: false }),
   SESSION_DOMAIN: Type.String(),
+  // SESSION_SAME_SITE: Type.Union(
+  //   [Type.Literal('lax'), Type.Literal('none'), Type.Literal('strict')],
+  //   { default: 'lax' },
+  // ),
   SESSION_SECRET: Type.String({ minLength: 32 }),
 });
 
