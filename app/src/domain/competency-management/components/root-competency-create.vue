@@ -15,7 +15,7 @@ gql`
     createRootCompetency(data: $data) {
       ... on MutationCreateRootCompetencySuccess {
         data {
-          competencyFramework {
+          framework {
             competencies {
               id
               title

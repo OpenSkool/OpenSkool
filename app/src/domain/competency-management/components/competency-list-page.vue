@@ -26,7 +26,7 @@ gql`
       ... on QueryCompetencySuccess {
         data {
           title
-          competencyFramework {
+          framework {
             title
           }
           parent {
@@ -114,7 +114,7 @@ async function deleteCompetencyHandler(): Promise<void> {
         <span v-t="'frameworks.route.index.heading'" />
       </UiBreadcrumbItem>
       <UiBreadcrumbItem :link-to="`/manage/frameworks/${frameworkId}`">
-        {{ competency.competencyFramework.title }}
+        {{ competency.framework.title }}
       </UiBreadcrumbItem>
       <UiBreadcrumbItem
         v-if="competency.parent"

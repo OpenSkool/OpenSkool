@@ -24,8 +24,8 @@ model Competency {
   updatedBy   User?    @relation("CompetencyToUserUpdated", fields: [updatedById], references: [id])
   updatedById String?
 
-  competencyFramework   CompetencyFramework @relation(fields: [competencyFrameworkId], references: [id])
-  competencyFrameworkId String
+  framework   CompetencyFramework @relation(fields: [frameworkId], references: [id])
+  frameworkId String
 
   subCompetencies    Competency[] @relation("CompetencyToCompetency")
   parentCompetency   Competency?  @relation("CompetencyToCompetency", fields: [parentCompetencyId], onDelete: Cascade, references: [id])
@@ -61,13 +61,13 @@ model CompetencyFramework {
 }
 
 model CompetencyFrameworkTranslation {
-  id                    String              @id @default(cuid())
-  competencyFramework   CompetencyFramework @relation(fields: [competencyFrameworkId], onDelete: Cascade, references: [id])
-  competencyFrameworkId String
-  languageCode          Language
-  title                 String
+  id           String              @id @default(cuid())
+  framework    CompetencyFramework @relation(fields: [frameworkId], onDelete: Cascade, references: [id])
+  frameworkId  String
+  languageCode Language
+  title        String
 
-  @@unique([competencyFrameworkId, languageCode])
+  @@unique([frameworkId, languageCode])
 }
 
 model Education {

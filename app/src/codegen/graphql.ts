@@ -51,9 +51,9 @@ export type Auth = {
 export type Competency = Accountable &
   Node & {
     __typename?: 'Competency';
-    competencyFramework: CompetencyFramework;
     createdAt: Scalars['DateTime'];
     createdBy: Person;
+    framework: CompetencyFramework;
     /** A CUID for a resource */
     id: Scalars['ID'];
     parent?: Maybe<Competency>;
@@ -464,10 +464,7 @@ export type GetCreateCompetencyParentQuery = {
         data: {
           __typename?: 'Competency';
           title: string;
-          competencyFramework: {
-            __typename?: 'CompetencyFramework';
-            title: string;
-          };
+          framework: { __typename?: 'CompetencyFramework'; title: string };
         };
       }
     | null;
@@ -491,7 +488,7 @@ export type GetEditCompetencyQuery = {
         data: {
           __typename?: 'Competency';
           title: string;
-          competencyFramework: {
+          framework: {
             __typename?: 'CompetencyFramework';
             id: string;
             title: string;
@@ -576,10 +573,7 @@ export type GetSubCompetenciesQuery = {
         data: {
           __typename?: 'Competency';
           title: string;
-          competencyFramework: {
-            __typename?: 'CompetencyFramework';
-            title: string;
-          };
+          framework: { __typename?: 'CompetencyFramework'; title: string };
           parent?: {
             __typename?: 'Competency';
             id: string;
@@ -767,7 +761,7 @@ export type CreateRootCompetencyMutation = {
         __typename?: 'MutationCreateRootCompetencySuccess';
         data: {
           __typename?: 'Competency';
-          competencyFramework: {
+          framework: {
             __typename?: 'CompetencyFramework';
             competencies: Array<{
               __typename?: 'Competency';
@@ -966,10 +960,7 @@ export const GetCreateCompetencyParentDocument = {
                             },
                             {
                               kind: 'Field',
-                              name: {
-                                kind: 'Name',
-                                value: 'competencyFramework',
-                              },
+                              name: { kind: 'Name', value: 'framework' },
                               selectionSet: {
                                 kind: 'SelectionSet',
                                 selections: [
@@ -1060,10 +1051,7 @@ export const GetEditCompetencyDocument = {
                             },
                             {
                               kind: 'Field',
-                              name: {
-                                kind: 'Name',
-                                value: 'competencyFramework',
-                              },
+                              name: { kind: 'Name', value: 'framework' },
                               selectionSet: {
                                 kind: 'SelectionSet',
                                 selections: [
@@ -1341,10 +1329,7 @@ export const GetSubCompetenciesDocument = {
                             },
                             {
                               kind: 'Field',
-                              name: {
-                                kind: 'Name',
-                                value: 'competencyFramework',
-                              },
+                              name: { kind: 'Name', value: 'framework' },
                               selectionSet: {
                                 kind: 'SelectionSet',
                                 selections: [
@@ -1976,10 +1961,7 @@ export const CreateRootCompetencyDocument = {
                           selections: [
                             {
                               kind: 'Field',
-                              name: {
-                                kind: 'Name',
-                                value: 'competencyFramework',
-                              },
+                              name: { kind: 'Name', value: 'framework' },
                               selectionSet: {
                                 kind: 'SelectionSet',
                                 selections: [

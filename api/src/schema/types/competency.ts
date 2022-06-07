@@ -25,11 +25,11 @@ builder.objectType(Competency, {
     'A competency can be an individual competence or a grouping of competences.',
   interfaces: [Accountable, Node],
   fields: (t) => ({
-    competencyFramework: t.field({
+    framework: t.field({
       type: CompetencyFramework,
       async resolve(parent, argumentz, ctx) {
         const framework = await CompetencyService.findFrameworkById(
-          parent.competencyFrameworkId,
+          parent.frameworkId,
           ctx.domain,
         );
         return framework;
