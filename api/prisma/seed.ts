@@ -12,8 +12,8 @@ async function createCompetency(
 ): Promise<void> {
   const competency = await prisma.competency.create({
     data: {
-      competencyFrameworkId: framework.id,
       createdById: user.id,
+      frameworkId: framework.id,
       updatedById: user.id,
       parentCompetencyId: nesting?.parent,
       translations: { create: { languageCode: 'EN', title: fixture.title } },

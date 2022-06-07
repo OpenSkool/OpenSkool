@@ -30,13 +30,13 @@ export default [
           __typename: 'MutationCreateNestedCompetencySuccess',
           data: {
             id: 'cuid',
-            competencyFramework: {
+            createdAt: '2022-04-01T00:00:00.000Z',
+            createdBy: {} as any,
+            framework: {
               id: '1',
               competencies: [],
               title: 'CanMEDS 2015',
             },
-            createdAt: '2022-04-01T00:00:00.000Z',
-            createdBy: {} as any,
             title: variables.data.title,
             updatedAt: '2022-04-01T00:00:00.000Z',
             updatedBy: {} as any,
@@ -58,13 +58,13 @@ export default [
           __typename: 'MutationCreateRootCompetencySuccess',
           data: {
             id: 'cuid',
-            competencyFramework: {
+            createdAt: '2022-04-01T00:00:00.000Z',
+            createdBy: {} as any,
+            framework: {
               id: '1',
               competencies: [],
               title: 'CanMEDS 2015',
             },
-            createdAt: '2022-04-01T00:00:00.000Z',
-            createdBy: {} as any,
             title: variables.data.title,
             updatedAt: '2022-04-01T00:00:00.000Z',
             updatedBy: {} as any,
@@ -122,13 +122,13 @@ export default [
           __typename: 'MutationRenameCompetencySuccess',
           data: {
             id: 'cuid',
-            competencyFramework: {
+            createdAt: '2022-04-01T00:00:00.000Z',
+            createdBy: {} as any,
+            framework: {
               id: '1',
               competencies: [],
               title: 'CanMEDS 2015',
             },
-            createdAt: '2022-04-01T00:00:00.000Z',
-            createdBy: {} as any,
             title: variables.data.title,
             updatedAt: '2022-04-01T00:00:00.000Z',
             updatedBy: {} as any,
@@ -161,11 +161,11 @@ export default [
           competency: {
             __typename: 'QueryCompetencySuccess',
             data: {
-              title: 'Title defined in handlers.ts',
-              competencyFramework: {
+              framework: {
                 id: 'cuid',
                 title: 'Competencty Framework',
               },
+              title: 'Title defined in handlers.ts',
             },
           },
         }),
@@ -182,13 +182,12 @@ export default [
           competency: {
             __typename: 'QueryCompetencySuccess',
             data: {
-              title: 'custom title',
+              framework: {
+                title: 'custom title',
+              },
               parent: {
                 title: 'custom title',
                 id: 'cuid',
-              },
-              competencyFramework: {
-                title: 'custom title',
               },
               subCompetencies: [
                 {
@@ -196,6 +195,7 @@ export default [
                   title: 'custom title',
                 },
               ],
+              title: 'custom title',
             },
           },
         }),

@@ -13,7 +13,7 @@ gql`
       ... on QueryCompetencySuccess {
         data {
           title
-          competencyFramework {
+          framework {
             title
           }
         }
@@ -53,7 +53,7 @@ const parentCompetency = computed(() =>
       </UiBreadcrumbItem>
       <template v-if="parentCompetency">
         <UiBreadcrumbItem :link-to="`/manage/frameworks/${frameworkId}`">
-          {{ parentCompetency.competencyFramework.title }}
+          {{ parentCompetency.framework.title }}
         </UiBreadcrumbItem>
         <UiBreadcrumbItem
           :link-to="`/manage/frameworks/${frameworkId}/${competencyId}`"

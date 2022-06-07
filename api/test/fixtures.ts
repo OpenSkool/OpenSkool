@@ -43,13 +43,10 @@ export async function createCompetencyFixture({
       translations: { create: { languageCode: language, title: 'Framework' } },
     },
   });
-  const competencyFrameworkId =
-    frameworkId == null ? framework.id : frameworkId;
-
   return prisma.competency.create({
     data: {
       createdById: user.id,
-      competencyFrameworkId,
+      frameworkId: frameworkId == null ? framework.id : frameworkId,
       parentCompetencyId: parentId,
       translations: { create: { languageCode: language, title } },
       updatedById: user.id,

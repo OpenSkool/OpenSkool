@@ -22,7 +22,7 @@ gql`
       ... on QueryCompetencySuccess {
         data {
           title
-          competencyFramework {
+          framework {
             id
             title
           }
@@ -129,14 +129,14 @@ async function handleFormSubmit(): Promise<void> {
       <UiBreadcrumbItem link-to="/manage/frameworks">
         <span v-t="'frameworks.route.index.heading'" />
       </UiBreadcrumbItem>
-      <template v-if="competency?.competencyFramework">
+      <template v-if="competency?.framework">
         <UiBreadcrumbItem
-          :link-to="`/manage/frameworks/${competency.competencyFramework.id}`"
+          :link-to="`/manage/frameworks/${competency.framework.id}`"
         >
-          {{ competency.competencyFramework.title }}
+          {{ competency.framework.title }}
         </UiBreadcrumbItem>
         <UiBreadcrumbItem
-          :link-to="`/manage/frameworks/${competency.competencyFramework.id}/${competencyId}`"
+          :link-to="`/manage/frameworks/${competency.framework.id}/${competencyId}`"
         >
           {{ competency.title }}
         </UiBreadcrumbItem>

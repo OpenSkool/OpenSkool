@@ -82,7 +82,7 @@ export async function createNestedCompetency(
 
   const parentCompetency = await prisma.competency.findUnique({
     where: { id: data.parentId },
-    select: { id: true, competencyFrameworkId: true },
+    select: { id: true, frameworkId: true },
   });
 
   if (parentCompetency == null) {
@@ -99,7 +99,7 @@ export async function createNestedCompetency(
       data: {
         createdById: context.userId,
         updatedById: context.userId,
-        competencyFrameworkId: parentCompetency.competencyFrameworkId,
+        frameworkId: parentCompetency.frameworkId,
         parentCompetencyId: parentCompetency.id,
         translations: { create: { languageCode, title } },
       },
@@ -141,7 +141,7 @@ export async function createRootCompetency(
       data: {
         createdById: context.userId,
         updatedById: context.userId,
-        competencyFrameworkId: framework.id,
+        frameworkId: framework.id,
         translations: { create: { languageCode, title } },
       },
       include: {
@@ -480,7 +480,7 @@ async function assertUniqueTitle(
       where: {
         id: { not: id },
         parentCompetencyId: null,
-        competencyFrameworkId: frameworkId,
+        frameworkId,
         translations: { some: { languageCode } },
       },
     });
