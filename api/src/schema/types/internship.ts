@@ -1,9 +1,9 @@
 import { faker } from '@faker-js/faker';
 import cuid from 'cuid';
+import pMemoize from 'p-memoize';
 
 import { UserModel } from '~/domain';
-import { prisma } from '~/prisma';
-import { once, random, sample, sampleMany, times } from '~/utils';
+import { random, sample, sampleMany, times } from '~/utils';
 
 import builder from '../builder';
 import { createFakeCourse, CourseModel } from './course';
@@ -16,23 +16,31 @@ import {
   Workplace,
   WorkplaceModel,
 } from './organisation';
-import { createFakePerson, Person } from './person';
+import { createFakePerson, getFakeUsers, Person } from './person';
 
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 
+interface GraphConnection<T> {
+  edges: T[];
+}
+
+interface GraphEdge<T> {
+  node: T;
+}
+
 interface InternshipModel {
   id: string;
-  applications: InternshipApplicationModel[];
+  availablePositions: InternshipPositionModel[];
   course: CourseModel;
   coordinator: UserModel;
   dateFrom: Date;
   dateTo: Date;
   defaultSupervisor: UserModel;
-  positions: InternshipPositionModel[];
-  students: UserModel[];
 }
 
-export function createFakeInternship({
+export const Internship = builder.objectRef<InternshipModel>('Internship');
+
+function createFakeInternship({
   positions,
   users,
 }: {
@@ -43,39 +51,108 @@ export function createFakeInternship({
   const dateTo = faker.date.future(1, dateFrom);
   return {
     id: cuid(),
-    applications: times(3, () =>
-      createFakeInternshipApplication({ positions, users }),
-    ),
+    availablePositions: sampleMany(random(20), positions),
+    coordinator: createFakePerson(),
     course: createFakeCourse(),
     defaultSupervisor: createFakePerson(),
-    coordinator: createFakePerson(),
     dateFrom,
     dateTo,
-    positions: sampleMany(10, positions),
-    students: sampleMany(12, users),
   };
 }
 
-export const Internship = builder.objectRef<InternshipModel>('Internship');
+interface InternshipInstanceModel {
+  id: string;
+  chosenPositions: InternshipChosenPositionConnectionModel;
+  finalPosition?: InternshipPositionModel;
+  internship: InternshipModel;
+  student: UserModel;
+  supervisor: UserModel;
+}
+
+export const InternshipInstance = builder.objectRef<InternshipInstanceModel>(
+  'InternshipInstanceModel',
+);
+
+function createFakeInternshipInstance({
+  internship,
+  users,
+}: {
+  internship: InternshipModel;
+  users: UserModel[];
+}): InternshipInstanceModel {
+  const chosenPositions = sampleMany(3, internship.availablePositions);
+  const priorities = Array.from({ length: chosenPositions.length }).map(
+    (_, index) => index + 1,
+  );
+  return {
+    id: cuid(),
+    chosenPositions: {
+      edges: chosenPositions.map(
+        (position): InternshipChosenPositionPriorityEdgeModel => {
+          const [priority] =
+            priorities.length === 1
+              ? priorities
+              : priorities.splice(random(priorities.length), 1);
+          return {
+            node: position,
+            priority: priority as number,
+          };
+        },
+      ),
+    },
+    finalPosition: random(2) === 0 ? sample(chosenPositions) : undefined,
+    internship,
+    student: sample(users),
+    supervisor: createFakePerson(),
+  };
+}
+
+interface InternshipChosenPositionConnectionModel
+  extends GraphConnection<InternshipChosenPositionPriorityEdgeModel> {}
+
+export const InternshipChosenPositionConnection =
+  builder.objectRef<InternshipChosenPositionConnectionModel>(
+    'InternshipChosenPositionConnection',
+  );
+
+export const InternshipChosenPositionEdge = builder.interfaceRef<
+  GraphEdge<InternshipPositionModel>
+>('InternshipChosenPositionEdge');
+
+interface InternshipChosenPositionPriorityEdgeModel
+  extends GraphEdge<InternshipPositionModel> {
+  priority: number;
+}
+
+export const InternshipChosenPositionPriorityEdge =
+  builder.objectRef<InternshipChosenPositionPriorityEdgeModel>(
+    'InternshipChosenPositionPriorityEdge',
+  );
 
 interface InternshipPositionModel {
   id: string;
+  dateFrom: Date;
+  dateTo: Date;
   description: string;
   mentor: UserModel;
   organisation: OrganisationModel;
   workplace: WorkplaceModel;
 }
 
-export function createFakeInternshipPosition({
+export async function createFakeInternshipPosition({
   users,
 }: {
   users: UserModel[];
-}): InternshipPositionModel {
+}): Promise<InternshipPositionModel> {
+  const dateFrom = faker.date.future();
+  const dateTo = faker.date.future(1, dateFrom);
   return {
     id: cuid(),
+    dateFrom,
+    dateTo,
     description: faker.lorem.paragraph(),
     mentor: sample(users),
-    organisation: createFakeOrganisation(),
+    organisation: await createFakeOrganisation(),
     workplace: createFakeWorkplace(),
   };
 }
@@ -83,39 +160,14 @@ export function createFakeInternshipPosition({
 export const InternshipPosition =
   builder.objectRef<InternshipPositionModel>('InternshipPosition');
 
-interface InternshipApplicationModel {
-  id: string;
-  position: InternshipPositionModel;
-  priority: number;
-  student: UserModel;
-  supervisor: UserModel;
-}
-
-export function createFakeInternshipApplication({
-  positions,
-  users,
-}: {
-  positions: InternshipPositionModel[];
-  users: UserModel[];
-}): InternshipApplicationModel {
-  return {
-    id: cuid(),
-    position: sample(positions),
-    priority: 1 + random(3),
-    student: sample(users),
-    supervisor: sample(users),
-  };
-}
-
-export const InternshipApplication =
-  builder.objectRef<InternshipApplicationModel>('InternshipApplication');
-
 builder.objectType(Internship, {
   name: 'Internship',
   interfaces: [Node],
   fields: (t) => ({
     id: t.exposeID('id'),
-    applications: t.expose('applications', { type: [InternshipApplication] }),
+    availablePositions: t.expose('availablePositions', {
+      type: [InternshipPosition],
+    }),
     coordinator: t.expose('coordinator', { type: Person }),
     dateFrom: t.expose('dateFrom', { type: 'DateTime' }),
     dateTo: t.expose('dateTo', { type: 'DateTime' }),
@@ -125,20 +177,55 @@ builder.objectType(Internship, {
         return `Internship ${internship.course.name}`;
       },
     }),
-    positions: t.expose('positions', { type: [InternshipPosition] }),
-    students: t.expose('students', { type: [Person] }),
   }),
 });
 
-builder.objectType(InternshipApplication, {
-  name: 'InternshipApplication',
+builder.objectType(InternshipInstance, {
+  name: 'InternshipInstance',
   interfaces: [Node],
   fields: (t) => ({
     id: t.exposeID('id'),
-    position: t.expose('position', { type: InternshipPosition }),
-    priority: t.exposeInt('priority'),
+    finalPosition: t.expose('finalPosition', {
+      nullable: true,
+      type: InternshipPosition,
+    }),
+    internship: t.expose('internship', { type: Internship }),
+    chosenPositions: t.expose('chosenPositions', {
+      type: InternshipChosenPositionConnection,
+    }),
     student: t.expose('student', { type: Person }),
     supervisor: t.expose('supervisor', { type: Person }),
+  }),
+});
+
+builder.objectType(InternshipChosenPositionConnection, {
+  name: 'InternshipChosenPositionConnection',
+  fields: (t) => ({
+    edges: t.expose('edges', {
+      type: [InternshipChosenPositionEdge],
+    }),
+  }),
+});
+
+builder.interfaceType(InternshipChosenPositionEdge, {
+  name: 'InternshipChosenPositionEdge',
+  fields: (t) => ({
+    node: t.expose('node', { type: InternshipPosition }),
+  }),
+});
+
+builder.objectType(InternshipChosenPositionPriorityEdge, {
+  name: 'InternshipChosenPositionPriorityEdge',
+  interfaces: [InternshipChosenPositionEdge],
+  isTypeOf(internshipChosenPositionEdge) {
+    return (
+      internshipChosenPositionEdge != null &&
+      typeof internshipChosenPositionEdge === 'object' &&
+      'priority' in internshipChosenPositionEdge
+    );
+  },
+  fields: (t) => ({
+    priority: t.exposeInt('priority'),
   }),
 });
 
@@ -154,33 +241,36 @@ builder.objectType(InternshipPosition, {
   }),
 });
 
-const getFakeData = once(async () => {
-  const users = await prisma.user.findMany();
-  while (users.length < 50) {
-    users.push();
-  }
-  const POSITIONS = times(50, () => createFakeInternshipPosition({ users }));
-  const INTERNSHIPS = times(3, () =>
-    createFakeInternship({ positions: POSITIONS, users }),
-  );
-  return { INTERNSHIPS, POSITIONS, USERS: users };
-});
+const getFakeInternshipInstances = pMemoize(
+  async (): Promise<InternshipInstanceModel[]> => {
+    const users = await getFakeUsers();
+    const positions = await Promise.all(
+      times(100, () => createFakeInternshipPosition({ users })),
+    );
+    const internships = times(3, () =>
+      createFakeInternship({ positions, users }),
+    );
+    return times(3, () =>
+      createFakeInternshipInstance({ internship: sample(internships), users }),
+    );
+  },
+);
 
-builder.queryField('myInternships', (t) =>
+builder.queryField('myInternshipInstances', (t) =>
   t.field({
-    type: [Internship],
+    type: [InternshipInstance],
     async resolve() {
-      const { INTERNSHIPS } = await getFakeData();
-      return INTERNSHIPS;
+      return getFakeInternshipInstances();
     },
   }),
 );
 
-builder.mutationField('applyForInternPosition', (t) =>
+builder.mutationField('applyForPriorityInternshipPosition', (t) =>
   t.field({
-    type: InternshipPosition,
+    type: InternshipChosenPositionPriorityEdge,
     args: {
-      id: t.arg.id(),
+      instanceId: t.arg.id(),
+      positionId: t.arg.id(),
       priority: t.arg.int(),
     },
     resolve() {

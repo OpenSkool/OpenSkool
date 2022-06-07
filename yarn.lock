@@ -1913,6 +1913,7 @@ __metadata:
     node-fetch: ^3.2.4
     nodemon: ^2.0.16
     openid-client: ^5.1.6
+    p-memoize: ^6.0.1
     pino: ^6.14.0
     pino-pretty: ^7.6.1
     prettier: ^2.6.2
@@ -7590,6 +7591,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mimic-fn@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "mimic-fn@npm:4.0.0"
+  checksum: 995dcece15ee29aa16e188de6633d43a3db4611bcf93620e7e62109ec41c79c0f34277165b8ce5e361205049766e371851264c21ac64ca35499acb5421c2ba56
+  languageName: node
+  linkType: hard
+
 "mimic-response@npm:^1.0.0, mimic-response@npm:^1.0.1":
   version: 1.0.1
   resolution: "mimic-response@npm:1.0.1"
@@ -8344,6 +8352,15 @@ __metadata:
   dependencies:
     aggregate-error: ^3.0.0
   checksum: cb0ab21ec0f32ddffd31dfc250e3afa61e103ef43d957cc45497afe37513634589316de4eb88abdfd969fe6410c22c0b93ab24328833b8eb1ccc087fc0442a1c
+  languageName: node
+  linkType: hard
+
+"p-memoize@npm:^6.0.1":
+  version: 6.0.1
+  resolution: "p-memoize@npm:6.0.1"
+  dependencies:
+    mimic-fn: ^4.0.0
+  checksum: 5572425524d05b62a11a085b509bbc215c57aceb051ecd9c0fd1910037db39c0a2063c0f22e5a2b971304415000f6500643746feb62b595091b41c8121a24aea
   languageName: node
   linkType: hard
 

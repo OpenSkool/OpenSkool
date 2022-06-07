@@ -1,7 +1,9 @@
 import { faker } from '@faker-js/faker';
 import cuid from 'cuid';
+import pMemoize from 'p-memoize';
 
 import { UserModel, UserService } from '~/domain';
+import { prisma } from '~/prisma';
 
 import builder from '../builder';
 import { Node } from './node';
@@ -29,3 +31,12 @@ builder.queryField('allPeople', (t) =>
     resolve: () => UserService.getAllUsers(),
   }),
 );
+
+export const getFakeUsers = pMemoize(async (): Promise<UserModel[]> => {
+  const USERS_COUNT = 50;
+  const users = await prisma.user.findMany();
+  while (users.length < USERS_COUNT) {
+    users.push(createFakePerson());
+  }
+  return users;
+});

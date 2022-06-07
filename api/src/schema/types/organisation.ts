@@ -1,7 +1,9 @@
 import { faker } from '@faker-js/faker';
 import cuid from 'cuid';
 
-import { times } from '~/utils';
+import { UserModel } from '~/domain';
+import { getFakeUsers, Person } from '~/schema/types/person';
+import { sampleMany, times } from '~/utils';
 
 import builder from '../builder';
 import { Node } from './node';
@@ -10,47 +12,51 @@ import { Node } from './node';
 
 export interface OrganisationModel {
   id: string;
+  employees: UserModel[];
   name: string;
-  plainAdress: string;
+  plainAddress: string;
   workplaces: WorkplaceModel[];
-}
-
-export function createFakeOrganisation(): OrganisationModel {
-  const workplaces = times(2, () => createFakeWorkplace());
-  return {
-    id: cuid(),
-    name: faker.company.companyName(),
-    plainAdress: (workplaces[0] as WorkplaceModel).plainAdress,
-    workplaces,
-  };
 }
 
 export const Organisation =
   builder.objectRef<OrganisationModel>('Organisation');
 
+export async function createFakeOrganisation(): Promise<OrganisationModel> {
+  const workplaces = times(2, () => createFakeWorkplace());
+  const users = await getFakeUsers();
+  return {
+    id: cuid(),
+    employees: sampleMany(3, users),
+    name: faker.company.companyName(),
+    plainAddress: (workplaces[0] as WorkplaceModel).plainAddress,
+    workplaces,
+  };
+}
+
 export interface WorkplaceModel {
   id: string;
-  plainAdress: string;
+  plainAddress: string;
 }
+
+export const Workplace = builder.objectRef<WorkplaceModel>('Workplace');
 
 export function createFakeWorkplace(): WorkplaceModel {
   return {
     id: cuid(),
-    plainAdress: `${faker.address.streetAddress(
+    plainAddress: `${faker.address.streetAddress(
       true,
     )}, ${faker.address.city()}`,
   };
 }
-
-export const Workplace = builder.objectRef<WorkplaceModel>('Workplace');
 
 builder.objectType(Organisation, {
   name: 'Organisation',
   interfaces: [Node],
   fields: (t) => ({
     id: t.exposeID('id'),
+    employees: t.expose('employees', { type: [Person] }),
     name: t.exposeString('name'),
-    plainAdress: t.exposeString('plainAdress'),
+    plainAddress: t.exposeString('plainAddress'),
     workplaces: t.expose('workplaces', { type: [Workplace] }),
   }),
 });
@@ -60,6 +66,6 @@ builder.objectType(Workplace, {
   interfaces: [Node],
   fields: (t) => ({
     id: t.exposeID('id'),
-    plainAdress: t.exposeString('plainAdress'),
+    plainAddress: t.exposeString('plainAddress'),
   }),
 });
