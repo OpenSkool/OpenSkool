@@ -108,21 +108,33 @@ type InputError implements UserError {
 }
 
 type Internship implements Node {
-  applications: [InternshipApplication!]!
+  availablePositions: [InternshipPosition!]!
   coordinator: Person!
   dateFrom: DateTime!
   dateTo: DateTime!
   defaultSupervisor: Person!
   id: ID!
   name: String!
-  positions: [InternshipPosition!]!
-  students: [Person!]!
 }
 
-type InternshipApplication implements Node {
-  id: ID!
-  position: InternshipPosition!
+type InternshipChosenPositionConnection {
+  edges: [InternshipChosenPositionEdge!]!
+}
+
+interface InternshipChosenPositionEdge {
+  node: InternshipPosition!
+}
+
+type InternshipChosenPositionPriorityEdge implements InternshipChosenPositionEdge {
+  node: InternshipPosition!
   priority: Int!
+}
+
+type InternshipInstance implements Node {
+  chosenPositions: InternshipChosenPositionConnection!
+  finalPosition: InternshipPosition
+  id: ID!
+  internship: Internship!
   student: Person!
   supervisor: Person!
 }
@@ -150,7 +162,11 @@ type JWT {
 }
 
 type Mutation {
-  applyForInternPosition(id: ID!, priority: Int!): InternshipPosition!
+  applyForPriorityInternshipPosition(
+    instanceId: ID!
+    positionId: ID!
+    priority: Int!
+  ): InternshipChosenPositionPriorityEdge!
   createCompetencyFramework(
     data: CreateCompetencyFrameworkInput!
   ): MutationCreateCompetencyFrameworkResult!
@@ -275,9 +291,10 @@ type NotFoundError implements UserError {
 }
 
 type Organisation implements Node {
+  employees: [Person!]!
   id: ID!
   name: String!
-  plainAdress: String!
+  plainAddress: String!
   workplaces: [Workplace!]!
 }
 
@@ -297,7 +314,7 @@ type Query {
   auth: Auth!
   competency(id: ID!): QueryCompetencyResult
   competencyFramework(id: ID!): QueryCompetencyFrameworkResult
-  myInternships: [Internship!]!
+  myInternshipInstances: [InternshipInstance!]!
 }
 
 union QueryCompetencyFrameworkResult =
@@ -338,5 +355,5 @@ interface UserError {
 
 type Workplace implements Node {
   id: ID!
-  plainAdress: String!
+  plainAddress: String!
 }

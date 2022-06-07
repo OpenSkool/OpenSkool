@@ -124,22 +124,37 @@ export type InputError = UserError & {
 
 export type Internship = Node & {
   __typename?: 'Internship';
-  applications: Array<InternshipApplication>;
+  availablePositions: Array<InternshipPosition>;
   coordinator: Person;
   dateFrom: Scalars['DateTime'];
   dateTo: Scalars['DateTime'];
   defaultSupervisor: Person;
   id: Scalars['ID'];
   name: Scalars['String'];
-  positions: Array<InternshipPosition>;
-  students: Array<Person>;
 };
 
-export type InternshipApplication = Node & {
-  __typename?: 'InternshipApplication';
+export type InternshipChosenPositionConnection = {
+  __typename?: 'InternshipChosenPositionConnection';
+  edges: Array<InternshipChosenPositionEdge>;
+};
+
+export type InternshipChosenPositionEdge = {
+  node: InternshipPosition;
+};
+
+export type InternshipChosenPositionPriorityEdge =
+  InternshipChosenPositionEdge & {
+    __typename?: 'InternshipChosenPositionPriorityEdge';
+    node: InternshipPosition;
+    priority: Scalars['Int'];
+  };
+
+export type InternshipInstance = Node & {
+  __typename?: 'InternshipInstance';
+  chosenPositions: InternshipChosenPositionConnection;
+  finalPosition?: Maybe<InternshipPosition>;
   id: Scalars['ID'];
-  position: InternshipPosition;
-  priority: Scalars['Int'];
+  internship: Internship;
   student: Person;
   supervisor: Person;
 };
@@ -165,7 +180,7 @@ export type Jwt = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  applyForInternPosition: InternshipPosition;
+  applyForPriorityInternshipPosition: InternshipChosenPositionPriorityEdge;
   createCompetencyFramework: MutationCreateCompetencyFrameworkResult;
   createEducation: MutationCreateEducationResult;
   createNestedCompetency: MutationCreateNestedCompetencyResult;
@@ -177,8 +192,9 @@ export type Mutation = {
   updateEducation: MutationUpdateEducationResult;
 };
 
-export type MutationApplyForInternPositionArgs = {
-  id: Scalars['ID'];
+export type MutationApplyForPriorityInternshipPositionArgs = {
+  instanceId: Scalars['ID'];
+  positionId: Scalars['ID'];
   priority: Scalars['Int'];
 };
 
@@ -327,9 +343,10 @@ export type NotFoundError = UserError & {
 
 export type Organisation = Node & {
   __typename?: 'Organisation';
+  employees: Array<Person>;
   id: Scalars['ID'];
   name: Scalars['String'];
-  plainAdress: Scalars['String'];
+  plainAddress: Scalars['String'];
   workplaces: Array<Workplace>;
 };
 
@@ -349,7 +366,7 @@ export type Query = {
   auth: Auth;
   competency?: Maybe<QueryCompetencyResult>;
   competencyFramework?: Maybe<QueryCompetencyFrameworkResult>;
-  myInternships: Array<Internship>;
+  myInternshipInstances: Array<InternshipInstance>;
 };
 
 export type QueryCompetencyArgs = {
@@ -403,7 +420,7 @@ export type UserError = {
 export type Workplace = Node & {
   __typename?: 'Workplace';
   id: Scalars['ID'];
-  plainAdress: Scalars['String'];
+  plainAddress: Scalars['String'];
 };
 
 export type AuthCurrentUserQueryVariables = Exact<{ [key: string]: never }>;
