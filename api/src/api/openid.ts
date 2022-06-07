@@ -106,16 +106,17 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
 
     app.get(localPath('/connect/callback'), async (request, reply) => {
       const parameters = openIdClient.callbackParams(request.raw);
-      if (parameters.error != null) {
-        request.log.warn(
-          `oauth callback error: ${parameters.error} ${parameters.error_description}`,
-        );
-        return reply.redirect(app.config.APP_BASE_URL);
-      }
       const { codeVerifier, state } = request.session.openId;
       request.session.openId.codeVerifier = undefined;
       request.session.openId.state = undefined;
       const redirectUrl = new URL(state?.from ?? '/', app.config.APP_BASE_URL);
+      if (parameters.error != null) {
+        request.log.warn(
+          `oauth callback error: ${parameters.error} ${parameters.error_description}`,
+        );
+        redirectUrl.searchParams.set('error', 'unknown');
+        return reply.redirect(redirectUrl.toString());
+      }
       try {
         const newTokenSet = parseTokenSet(
           await openIdClient.callback(
