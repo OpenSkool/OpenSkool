@@ -1,11 +1,11 @@
-import fs from 'node:fs';
+import fs from 'node:fs/promises';
 
 import { printSchema } from 'graphql';
 import prettier from 'prettier';
 
-import schema from '../src/schema';
+import schema from '~/schema';
 
-fs.writeFileSync(
+await fs.writeFile(
   new URL('../src/codegen/schema.graphql', import.meta.url),
   prettier.format(printSchema(schema), { parser: 'graphql' }),
 );
