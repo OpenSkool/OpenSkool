@@ -29,7 +29,7 @@ const ANONYMOUS: Auth = {
 };
 
 export const authPlugin = plugin(async (app) => {
-  app.decorateRequest('auth', ANONYMOUS);
+  app.decorateRequest('auth', null);
 
   app.addHook('onRequest', async (request) => {
     const { tokenSet } = request.session.openId;
