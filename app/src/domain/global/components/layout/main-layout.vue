@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+// import DebugLayout from '~/domain/global/components/layout/debug-layout.vue';
 import LanguageSelect from '~/domain/global/components/layout/language-select.vue';
 import LoadingSpinner from '~/domain/global/components/layout/loading-spinner.vue';
 import MainMenuToggleButton from '~/domain/global/components/layout/main-menu-toggle-button.vue';
@@ -14,6 +15,7 @@ const { menuState, toggleMenu } = useMenuState();
 </script>
 
 <template>
+  <!-- <DebugLayout /> -->
   <div class="grid">
     <div class="flex items-center justify-between col-span-2 p-3">
       <MainMenuToggleButton
@@ -38,7 +40,6 @@ const { menuState, toggleMenu } = useMenuState();
         </Suspense>
       </main>
     </div>
-    <!-- <DebugLayout /> -->
   </div>
 </template>
 
