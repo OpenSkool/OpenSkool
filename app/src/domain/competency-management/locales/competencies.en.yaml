@@ -24,6 +24,8 @@ route:
         openDeleteModal: Delete competency
         edit: Edit competency
         new: Add competency
+        sort: Reorder competencies
+      actionsLabel: Competency actions
       confirmDeleteModal:
         action:
           cancel: Cancel
