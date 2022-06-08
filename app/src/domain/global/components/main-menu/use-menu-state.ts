@@ -21,7 +21,7 @@ export function useMenuState(): {
 
   const router = useRouter();
   router.beforeResolve(() => {
-    if (!breakpoints.md.value) {
+    if (!breakpoints.lg.value) {
       menuState.opened = false;
     }
   });
