@@ -4,7 +4,8 @@ import {
   DeleteCompetencyMutation,
   DeleteCompetencyMutationVariables,
   GetEditCompetencyQuery,
-  GetSubCompetenciesQuery,
+  ManageCompetencyDetailRouteQuery,
+  ManageNestedCompetenciesQuery,
   MutationCreateCompetencyFrameworkArgs,
   MutationCreateCompetencyFrameworkSuccess,
   MutationCreateNestedCompetencyArgs,
@@ -173,8 +174,30 @@ export default [
     },
   ),
 
-  graphql.query<GetSubCompetenciesQuery>(
-    'getSubCompetencies',
+  graphql.query<ManageNestedCompetenciesQuery>(
+    'manageNestedCompetencies',
+    (req, res, ctx) => {
+      return res(
+        ctx.data({
+          __typename: 'Query',
+          competency: {
+            __typename: 'QueryCompetencySuccess',
+            data: {
+              subCompetencies: [
+                {
+                  id: 'cuid',
+                  title: 'custom title',
+                },
+              ],
+            },
+          },
+        }),
+      );
+    },
+  ),
+
+  graphql.query<ManageCompetencyDetailRouteQuery>(
+    'manageCompetencyDetailRoute',
     (req, res, ctx) => {
       return res(
         ctx.data({
@@ -189,12 +212,6 @@ export default [
                 title: 'custom title',
                 id: 'cuid',
               },
-              subCompetencies: [
-                {
-                  id: 'cuid',
-                  title: 'custom title',
-                },
-              ],
               title: 'custom title',
             },
           },

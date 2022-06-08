@@ -17,5 +17,5 @@ route:
   index:
     action:
       create: Add framework
-    heading: Frameworks
+    heading: Competency frameworks
     notFound: There are no frameworks

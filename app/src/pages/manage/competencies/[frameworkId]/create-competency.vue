@@ -1,18 +1,61 @@
 <script lang="ts" setup>
-import { RootCompetenciesCreatePage } from '~/domain/competency-management';
-import { AuthAccessDenied } from '~/domain/global';
+import { ManageCompetencyCreateRootCompetencyRouteDocument } from '~/codegen/graphql';
+import { RootCompetencyCreate } from '~/domain/competency-management';
+import { AuthAccessDeniedLayout, NotFoundLayout } from '~/domain/global';
 
-defineProps<{
-  frameworkId: string;
+const props = defineProps<{
+  frameworkId: string; // route param
 }>();
 
 const ability = useAppAbility();
+
+gql`
+  query manageCompetencyCreateRootCompetencyRoute($id: ID!) {
+    competencyFramework(id: $id) {
+      ... on QueryCompetencyFrameworkSuccess {
+        data {
+          title
+        }
+      }
+      ...BaseErrorFields
+    }
+  }
+`;
+
+const { loading, result } = useQuery(
+  ManageCompetencyCreateRootCompetencyRouteDocument,
+  () => ({ id: props.frameworkId }),
+  { fetchPolicy: 'cache-first' },
+);
+
+const framework = computed(() =>
+  result.value?.competencyFramework?.__typename ===
+  'QueryCompetencyFrameworkSuccess'
+    ? result.value.competencyFramework.data
+    : null,
+);
 </script>
 
 <template>
-  <RootCompetenciesCreatePage
-    v-if="ability.can('create', 'Competency')"
-    :framework-id="frameworkId"
-  />
-  <AuthAccessDenied v-else />
+  <UiBreadcrumb>
+    <UiBreadcrumbItem link-to="/manage/competencies">
+      {{ $t('frameworks.route.index.heading') }}
+    </UiBreadcrumbItem>
+    <UiBreadcrumbItem
+      v-if="framework"
+      :link-to="`/manage/competencies/${frameworkId}`"
+    >
+      {{ framework.title }}
+    </UiBreadcrumbItem>
+  </UiBreadcrumb>
+  <AuthAccessDeniedLayout v-if="ability.cannot('create', 'Competency')" />
+  <NotFoundLayout v-else-if="framework == null">
+    <p>Competency framework not found.</p>
+  </NotFoundLayout>
+  <template v-else-if="!loading">
+    <UiTitle is="h1" class="text-xl mb-3">
+      {{ $t('competencies.route.create.heading') }}
+    </UiTitle>
+    <RootCompetencyCreate :framework-id="frameworkId" />
+  </template>
 </template>

@@ -25,7 +25,7 @@ defineProps<{
       >
         <header class="-mb-5">
           <RouterLink
-            class="rounded-md flex gap-3 items-center justify-center focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-primary-700) "
+            class="rounded-md flex gap-3 items-center justify-center focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-primary-700)"
             to="/"
           >
             <img

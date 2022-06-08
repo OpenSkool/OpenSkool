@@ -1,18 +1,93 @@
 <script lang="ts" setup>
-import { RootCompetenciesPage } from '~/domain/competency-management';
-import { AuthAccessDenied } from '~/domain/global';
+import { ManageCompetencyFrameworkDetailRouteDocument } from '~/codegen/graphql';
+import { RootCompetencyList } from '~/domain/competency-management';
+import {
+  AuthAccessDeniedLayout,
+  ManagementLayout,
+  NotFoundLayout,
+} from '~/domain/global';
+import { ActionItem } from '~/types';
 
-defineProps<{
-  frameworkId: string;
+const props = defineProps<{
+  frameworkId: string; // route param
 }>();
 
+const { t } = useI18n();
 const ability = useAppAbility();
+
+gql`
+  query manageCompetencyFrameworkDetailRoute($id: ID!) {
+    competencyFramework(id: $id) {
+      ... on QueryCompetencyFrameworkSuccess {
+        data {
+          id
+          title
+        }
+      }
+      ...BaseErrorFields
+    }
+  }
+`;
+
+const { loading, result } = useQuery(
+  ManageCompetencyFrameworkDetailRouteDocument,
+  () => ({ id: props.frameworkId }),
+  { fetchPolicy: 'network-only' },
+);
+const competencyFramework = computed(() =>
+  result.value?.competencyFramework?.__typename ===
+  'QueryCompetencyFrameworkSuccess'
+    ? result.value.competencyFramework.data
+    : null,
+);
+
+const showReorderCompetenciesControls = ref(false);
+
+const actions: ActionItem[] = [
+  {
+    action: `/manage/competencies/${props.frameworkId}/create-competency`,
+    icon: 'ri-add-line',
+    hasPermission: ability.can('create', 'Competency'),
+    title: t('competencies.route.id.index.action.new'),
+  },
+  {
+    action(): void {
+      showReorderCompetenciesControls.value =
+        !showReorderCompetenciesControls.value;
+    },
+    icon: 'ri-arrow-up-down-line',
+    hasPermission: ability.can('update', 'Competency'),
+    title: t('competencies.route.id.index.action.sort'),
+  },
+];
 </script>
 
 <template>
-  <RootCompetenciesPage
-    v-if="ability.can('read', 'Competency')"
-    :framework-id="frameworkId"
+  <UiBreadcrumb>
+    <UiBreadcrumbItem link-to="/manage/competencies">
+      {{ $t('frameworks.route.index.heading') }}
+    </UiBreadcrumbItem>
+  </UiBreadcrumb>
+  <AuthAccessDeniedLayout
+    v-if="ability.cannot('read', 'CompetencyFramework')"
   />
-  <AuthAccessDenied v-else />
+  <template v-else-if="!loading">
+    <NotFoundLayout v-if="competencyFramework == null">
+      <p>Competency framework not found.</p>
+    </NotFoundLayout>
+    <template v-else>
+      <UiTitle is="h1" class="text-xl mb-3">
+        {{ competencyFramework.title }}
+      </UiTitle>
+      <ManagementLayout
+        :actions="actions"
+        :actions-label="$t('frameworks.route.id.index.actionLabel')"
+      >
+        <RootCompetencyList
+          :framework-id="frameworkId"
+          :show-reorder-controls="showReorderCompetenciesControls"
+        />
+      </ManagementLayout>
+    </template>
+  </template>
 </template>

@@ -1,11 +1,11 @@
 <template>
-  <div
-    class="flex justify-center px-5 text-lg text-center bg-white gap-10 rounded-md py-15"
-  >
-    <RiAlarmWarningLine aria-hidden class="hidden md:block" />
-    <div class="space-y-5">
-      <slot />
+  <UiCard>
+    <div class="flex text-center gap-10 justify-center">
+      <RiAlarmWarningLine aria-hidden class="hidden md:inline" />
+      <div class="space-y-5">
+        <slot />
+      </div>
+      <RiAlarmWarningLine aria-hidden class="hidden md:inline" />
     </div>
-    <RiAlarmWarningLine aria-hidden class="hidden md:block" />
-  </div>
+  </UiCard>
 </template>
