@@ -10,7 +10,7 @@ const { t } = useI18n();
 <template>
   <template v-if="ability.can('create', 'CompetencyFramework')">
     <UiBreadcrumb>
-      <UiBreadcrumbItem link-to="/manage/frameworks">
+      <UiBreadcrumbItem link-to="/manage/competencies">
         {{ t('frameworks.route.index.heading') }}
       </UiBreadcrumbItem>
     </UiBreadcrumb>

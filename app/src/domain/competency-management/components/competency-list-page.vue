@@ -86,8 +86,8 @@ async function deleteCompetencyHandler(): Promise<void> {
       isDeleteModalOpen.value = false;
       router.replace(
         competency.value.parent == null
-          ? `/manage/frameworks/${props.frameworkId}`
-          : `/manage/frameworks/${props.frameworkId}/${competency.value.parent.id}`,
+          ? `/manage/competencies/${props.frameworkId}`
+          : `/manage/competencies/${props.frameworkId}/${competency.value.parent.id}`,
       );
     } else {
       deleteErrorMessage.value = t(
@@ -111,7 +111,7 @@ function showReorderArrows(): void {
 
 const actions: ActionItem[] = [
   {
-    action: `/manage/frameworks/${props.frameworkId}/${props.competencyId}/create-competency`,
+    action: `/manage/competencies/${props.frameworkId}/${props.competencyId}/create-competency`,
     icon: 'ri-add-line',
     hasPermission: ability.can('create', 'CompetencyFramework'),
     title: t('competencies.route.id.index.action.new'),
@@ -143,15 +143,15 @@ const actions: ActionItem[] = [
   </template>
   <template v-else>
     <UiBreadcrumb>
-      <UiBreadcrumbItem link-to="/manage/frameworks">
+      <UiBreadcrumbItem link-to="/manage/competencies">
         <span v-t="'frameworks.route.index.heading'" />
       </UiBreadcrumbItem>
-      <UiBreadcrumbItem :link-to="`/manage/frameworks/${frameworkId}`">
+      <UiBreadcrumbItem :link-to="`/manage/competencies/${frameworkId}`">
         {{ competency.framework.title }}
       </UiBreadcrumbItem>
       <UiBreadcrumbItem
         v-if="competency.parent"
-        :link-to="`/manage/frameworks/${frameworkId}/${competency.parent.id}`"
+        :link-to="`/manage/competencies/${frameworkId}/${competency.parent.id}`"
       >
         {{ competency.parent.title }}
       </UiBreadcrumbItem>
@@ -162,7 +162,7 @@ const actions: ActionItem[] = [
       </UiTitle>
       <RouterLink
         v-if="ability.can('update', 'Competency')"
-        :to="`/manage/frameworks/${frameworkId}/${competencyId}/edit`"
+        :to="`/manage/competencies/${frameworkId}/${competencyId}/edit`"
       >
         <span v-t="'competencies.route.id.index.action.edit'" class="sr-only" />
         <RiEditBoxLine aria-hidden />
@@ -223,7 +223,7 @@ const actions: ActionItem[] = [
         <UiButtonRouterLink
           v-if="ability.can('create', 'Competency')"
           v-t="'competencies.route.id.index.action.new'"
-          :to="`/manage/frameworks/${frameworkId}/${competencyId}/create-competency`"
+          :to="`/manage/competencies/${frameworkId}/${competencyId}/create-competency`"
         />
       </UiEmptyCard>
     </ManagementLayout>

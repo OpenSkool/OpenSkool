@@ -48,7 +48,7 @@ function toggleReorderArrows(): void {
 }
 const actions: ActionItem[] = [
   {
-    action: `/manage/frameworks/${props.frameworkId}/create-competency`,
+    action: `/manage/competencies/${props.frameworkId}/create-competency`,
     icon: 'ri-add-line',
     hasPermission: ability.can('create', 'Competency'),
     title: t('competencies.route.id.index.action.new'),
@@ -74,7 +74,7 @@ const actions: ActionItem[] = [
   </template>
   <template v-else>
     <UiBreadcrumb>
-      <UiBreadcrumbItem link-to="/manage/frameworks">
+      <UiBreadcrumbItem link-to="/manage/competencies">
         <span v-t="'frameworks.route.index.heading'" />
       </UiBreadcrumbItem>
     </UiBreadcrumb>
@@ -98,7 +98,7 @@ const actions: ActionItem[] = [
           v-if="ability.can('create', 'Competency')"
           v-t="'frameworks.route.id.index.action.new'"
           class="my-5"
-          :to="`/manage/frameworks/${competencyFramework.id}/create-competency`"
+          :to="`/manage/competencies/${competencyFramework.id}/create-competency`"
         />
       </UiEmptyCard>
     </ManagementLayout>

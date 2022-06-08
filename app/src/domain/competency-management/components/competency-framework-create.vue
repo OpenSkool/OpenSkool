@@ -56,7 +56,7 @@ async function handleFormSubmit(): Promise<void> {
         break;
       }
       case 'MutationCreateCompetencyFrameworkSuccess':
-        router.push('/manage/frameworks');
+        router.push('/manage/competencies');
         break;
     }
   } catch (error) {

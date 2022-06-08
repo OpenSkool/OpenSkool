@@ -45,7 +45,7 @@ defineProps<{
           </UiMainNavHeader>
           <UiMainNavLink
             v-t="'global.mainMenu.managementLink.competencyFrameworks'"
-            to="/manage/frameworks"
+            to="/manage/competencies"
           />
         </UiMainNavSection>
         <UiMainNavSection>

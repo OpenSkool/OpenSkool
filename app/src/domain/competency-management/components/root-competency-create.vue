@@ -64,7 +64,7 @@ async function handleFormSubmit(): Promise<void> {
         break;
       }
       case 'MutationCreateRootCompetencySuccess':
-        router.push(`/manage/frameworks/${props.frameworkId}`);
+        router.push(`/manage/competencies/${props.frameworkId}`);
         break;
     }
   } catch (error) {

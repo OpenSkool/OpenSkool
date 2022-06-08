@@ -8,7 +8,7 @@ const ability = useAppAbility();
 const { t } = useI18n();
 const actions: ActionItem[] = [
   {
-    action: '/manage/frameworks/create-framework',
+    action: '/manage/competencies/create-framework',
     icon: 'ri-add-line',
     hasPermission: ability.can('create', 'CompetencyFramework'),
     title: t('frameworks.route.index.action.create'),

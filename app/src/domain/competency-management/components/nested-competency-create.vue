@@ -61,7 +61,7 @@ async function handleFormSubmit(): Promise<void> {
       }
       case 'MutationCreateNestedCompetencySuccess':
         router.push(
-          `/manage/frameworks/${props.frameworkId}/${props.competencyId}`,
+          `/manage/competencies/${props.frameworkId}/${props.competencyId}`,
         );
         break;
     }

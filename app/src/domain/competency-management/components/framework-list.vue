@@ -34,7 +34,7 @@ const ability = useAppAbility();
       <UiOrderedListItem
         v-for="framework of frameworks"
         :key="framework.id"
-        :link-to="`/manage/frameworks/${framework.id}`"
+        :link-to="`/manage/competencies/${framework.id}`"
       >
         {{ framework.title }}
       </UiOrderedListItem>
@@ -45,7 +45,7 @@ const ability = useAppAbility();
         v-if="ability.can('create', 'CompetencyFramework')"
         v-t="'frameworks.route.index.action.create'"
         class="my-5"
-        to="/manage/frameworks/create-framework"
+        to="/manage/competencies/create-framework"
       />
     </UiEmptyCard>
   </template>

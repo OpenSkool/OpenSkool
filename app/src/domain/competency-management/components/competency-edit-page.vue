@@ -106,7 +106,7 @@ async function handleFormSubmit(): Promise<void> {
       }
       case 'MutationRenameCompetencySuccess':
         router.push(
-          `/manage/frameworks/${props.frameworkId}/${props.competencyId}`,
+          `/manage/competencies/${props.frameworkId}/${props.competencyId}`,
         );
         break;
     }
@@ -126,17 +126,17 @@ async function handleFormSubmit(): Promise<void> {
   </template>
   <template v-else>
     <UiBreadcrumb>
-      <UiBreadcrumbItem link-to="/manage/frameworks">
+      <UiBreadcrumbItem link-to="/manage/competencies">
         <span v-t="'frameworks.route.index.heading'" />
       </UiBreadcrumbItem>
       <template v-if="competency?.framework">
         <UiBreadcrumbItem
-          :link-to="`/manage/frameworks/${competency.framework.id}`"
+          :link-to="`/manage/competencies/${competency.framework.id}`"
         >
           {{ competency.framework.title }}
         </UiBreadcrumbItem>
         <UiBreadcrumbItem
-          :link-to="`/manage/frameworks/${competency.framework.id}/${competencyId}`"
+          :link-to="`/manage/competencies/${competency.framework.id}/${competencyId}`"
         >
           {{ competency.title }}
         </UiBreadcrumbItem>
