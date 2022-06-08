@@ -6,9 +6,8 @@ import { createI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
 import { apolloClient } from '~/apollo';
+import { CompetencyFrameworkCreate } from '~/domain/competency-management';
 import { formkit } from '~/formkit';
-
-import CompetencyFrameworkCreate from './competency-framework-create.vue';
 
 const mockUseRouter = useRouter as unknown as MockedFunction<typeof useRouter>;
 

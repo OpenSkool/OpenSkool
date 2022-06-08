@@ -5,10 +5,10 @@ import { expect, test, vi } from 'vitest';
 import { router } from '~/router';
 import { render } from '~/spec/render';
 
-import CompetencyListPage from './competency-list-page.vue';
+import CompetencyDetailRoute from './index.vue';
 
 test('delete competency works', async () => {
-  render(CompetencyListPage);
+  render(CompetencyDetailRoute);
   await router.isReady();
   const replace = vi.spyOn(router, 'replace');
   const user = userEvent.setup();

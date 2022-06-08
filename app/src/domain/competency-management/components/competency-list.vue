@@ -1,16 +1,11 @@
 <script lang="ts" setup>
-import { SwapCompetenciesDocument } from '~/codegen/graphql';
-
-interface Competency {
-  id: string;
-  title: string;
-}
+import { Competency, SwapCompetenciesDocument } from '~/codegen/graphql';
 
 const props = defineProps<{
-  showArrows: boolean;
-  competencies: Competency[];
+  competencies: Array<Pick<Competency, 'id' | 'title'>>;
   frameworkId: string;
   refetchQueries: string[];
+  showReorderControls?: boolean;
 }>();
 
 const { t } = useI18n();
@@ -22,7 +17,6 @@ gql`
       rightCompetencyId: $rightCompetencyId
     ) {
       ... on MutationSwapCompetenciesSuccess {
-        __typename
         data {
           left {
             id
@@ -37,15 +31,16 @@ gql`
   }
 `;
 
-const { mutate: swapCompetencies } = useMutation(SwapCompetenciesDocument, {
-  refetchQueries: props.refetchQueries,
-});
+const { mutate: mutateSwapCompetencies } = useMutation(
+  SwapCompetenciesDocument,
+  { refetchQueries: props.refetchQueries },
+);
 
-async function moveCompetency(
+async function swapCompetencies(
   leftCompetencyId: string,
   rightCompetencyId: string,
 ): Promise<void> {
-  const response = await swapCompetencies({
+  const response = await mutateSwapCompetencies({
     leftCompetencyId,
     rightCompetencyId,
   });
@@ -69,9 +64,9 @@ async function moveCompetency(
       :link-to="`/manage/competencies/${frameworkId}/${competency.id}`"
       :move-up-text="t('competencies.list.action.moveUp')"
       :move-down-text="t('competencies.list.action.moveDown')"
-      :show-arrows="showArrows"
-      @move-up="moveCompetency((competencies[index - 1] as Competency).id, competency.id)"
-      @move-down="moveCompetency(competency.id, (competencies[index + 1] as Competency).id)"
+      :show-reorder-controls="showReorderControls"
+      @move-up="swapCompetencies((competencies[index - 1] as Competency).id, competency.id)"
+      @move-down="swapCompetencies(competency.id, (competencies[index + 1] as Competency).id)"
     >
       {{ competency.title }}
     </UiOrderedListItem>

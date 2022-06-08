@@ -41,7 +41,7 @@ defineEmits<(event: 'close') => void>();
           >
             <div v-if="implicitClose" class="p-3 top-0 right-0 absolute">
               <button
-                class="rounded-lg flex p-2 text-dark-700 focus:outline-none focus-visible:(ring-2 ring-dark-700) "
+                class="rounded-lg flex p-2 text-dark-700 focus:outline-none focus-visible:(ring-2 ring-dark-700)"
                 type="button"
                 @click="$emit('close')"
               >

@@ -17,5 +17,5 @@ route:
   index:
     action:
       create: Voeg framework toe
-    heading: Frameworks
+    heading: Competentie frameworks
     notFound: Er zijn geen frameworks

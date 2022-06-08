@@ -11,7 +11,7 @@ defineEmits<(event: 'update:modelValue', value: boolean) => void>();
   <Switch
     :model-value="modelValue"
     :class="modelValue ? 'bg-primary-400' : 'bg-primary-600'"
-    class="border-transparent rounded-full cursor-pointer border-2 flex-shrink-0 h-38px transition-colors ease-in-out w-74px duration-200 relative inline-flex focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-primary-700) "
+    class="border-transparent rounded-full cursor-pointer border-2 flex-shrink-0 h-38px transition-colors ease-in-out w-74px duration-200 relative inline-flex focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-primary-700)"
     @update:model-value="$emit('update:modelValue', $event)"
   >
     <span class="sr-only">{{ label }}</span>

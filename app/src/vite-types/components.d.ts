@@ -53,6 +53,7 @@ declare module '@vue/runtime-core' {
     UiButton: typeof import('./../ui/button/ui-button.vue')['default']
     UiButtonLink: typeof import('./../ui/button/ui-button-link.vue')['default']
     UiButtonRouterLink: typeof import('./../ui/button/ui-button-router-link.vue')['default']
+    UiCard: typeof import('./../ui/card/ui-card.vue')['default']
     UiCheckbox: typeof import('./../ui/input/ui-checkbox.vue')['default']
     UiCheckboxGroup: typeof import('./../ui/input/ui-checkbox-group.vue')['default']
     UiDialog: typeof import('./../ui/dialog/ui-dialog.vue')['default']

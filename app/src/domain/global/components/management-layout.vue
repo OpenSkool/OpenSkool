@@ -54,13 +54,15 @@ const ableActions = computed(() => {
         </li>
       </ol>
     </div>
-    <slot />
+    <div class="flex-1">
+      <slot />
+    </div>
     <div v-if="!showAside">
       <UiFab
         v-if="ableActions.length > 0"
         :actions="ableActions"
         :actions-label="actionsLabel"
-        class="absolute bottom-10 right-10"
+        class="right-10 bottom-10 absolute"
       />
     </div>
   </div>

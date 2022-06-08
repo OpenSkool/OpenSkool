@@ -18,7 +18,6 @@ const router = useRouter();
 gql`
   query getEditCompetency($id: ID!) {
     competency(id: $id) {
-      __typename
       ... on QueryCompetencySuccess {
         data {
           title
@@ -51,7 +50,6 @@ const competency = computed(() =>
 gql`
   mutation renameCompetency($id: ID!, $data: RenameCompetencyInput!) {
     renameCompetency(id: $id, data: $data) {
-      __typename
       ... on MutationRenameCompetencySuccess {
         data {
           id
@@ -125,27 +123,10 @@ async function handleFormSubmit(): Promise<void> {
     <div>Loading</div>
   </template>
   <template v-else>
-    <UiBreadcrumb>
-      <UiBreadcrumbItem link-to="/manage/competencies">
-        <span v-t="'frameworks.route.index.heading'" />
-      </UiBreadcrumbItem>
-      <template v-if="competency?.framework">
-        <UiBreadcrumbItem
-          :link-to="`/manage/competencies/${competency.framework.id}`"
-        >
-          {{ competency.framework.title }}
-        </UiBreadcrumbItem>
-        <UiBreadcrumbItem
-          :link-to="`/manage/competencies/${competency.framework.id}/${competencyId}`"
-        >
-          {{ competency.title }}
-        </UiBreadcrumbItem>
-      </template>
-    </UiBreadcrumb>
     <UiTitle
       is="h1"
       v-t="'competencies.route.id.edit.heading'"
-      class="mb-3 text-xl"
+      class="text-xl mb-3"
     />
     <FormKit
       v-if="formValues != null"
