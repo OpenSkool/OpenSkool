@@ -8,6 +8,7 @@ const route = useRoute();
 const logoutHref = computed(() => {
   const logoutUrl = new URL(authLogoutUrl);
   logoutUrl.searchParams.set('from', route.path);
+  logoutUrl.searchParams.set('baseUrl', window.location.origin);
   return logoutUrl.toString();
 });
 </script>
@@ -28,7 +29,7 @@ const logoutHref = computed(() => {
     </UiMenuButton>
     <UiMenuItems>
       <i18n-t
-        class="px-4 py-3 text-base text-dark-500"
+        class="text-base py-3 px-4 text-dark-500"
         keypath="global.userMenu.description"
         tag="div"
       >

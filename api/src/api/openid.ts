@@ -17,7 +17,7 @@ declare module 'fastify' {
   interface Session {
     openId: {
       codeVerifier?: string;
-      state?: { from?: string };
+      state?: { from?: string; baseUrl?: string };
       tokenSet?: AppTokenSet;
     };
   }
@@ -84,6 +84,7 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
 
     const connectQuerystringSchema = Type.Object({
       from: Type.Optional(Type.String()),
+      baseUrl: Type.Optional(Type.String()),
     });
 
     app.get<{
@@ -115,7 +116,10 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
       const { codeVerifier, state } = request.session.openId;
       request.session.openId.codeVerifier = undefined;
       request.session.openId.state = undefined;
-      const redirectUrl = new URL(state?.from ?? '/', app.config.APP_BASE_URL);
+      const redirectUrl = new URL(
+        state?.from ?? '/',
+        state?.baseUrl ?? app.config.APP_BASE_URL,
+      );
       try {
         const newTokenSet = parseTokenSet(
           await openIdClient.callback(
@@ -142,6 +146,7 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
 
     const logoutQuerystringSchema = Type.Object({
       from: Type.Optional(Type.String()),
+      baseUrl: Type.Optional(Type.String()),
     });
 
     app.get<{
@@ -152,7 +157,7 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
           request.log.warn(`logout failed: no token set`);
           const redirectUrl = new URL(
             request.query.from ?? '/',
-            app.config.APP_BASE_URL,
+            request.query.baseUrl ?? app.config.APP_BASE_URL,
           );
           redirectUrl.searchParams.set('error', 'no_token_set');
           return reply.redirect(redirectUrl.toString());
@@ -174,7 +179,10 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
       const { state } = request.session.openId;
       request.session.openId.state = undefined;
       return reply.redirect(
-        new URL(state?.from ?? '/', app.config.APP_BASE_URL).toString(),
+        new URL(
+          state?.from ?? '/',
+          state?.baseUrl ?? app.config.APP_BASE_URL,
+        ).toString(),
       );
     });
   },

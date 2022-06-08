@@ -5,6 +5,7 @@ const route = useRoute();
 const connectHref = computed(() => {
   const connectUrl = new URL(authConnectUrl);
   connectUrl.searchParams.set('from', route.path);
+  connectUrl.searchParams.set('baseUrl', window.location.origin);
   return connectUrl.toString();
 });
 </script>
