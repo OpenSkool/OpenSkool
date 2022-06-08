@@ -51,7 +51,7 @@ export function createButtonStyles({
           'border-2 ring-primary-700',
           outline
             ? 'text-primary-700 border-primary-400 active:border-primary-600'
-            : 'text-white bg-primary-400 border-primary-400 active:(bg-primary-500 border-primary-500)',
+            : 'text-white bg-primary-500 border-primary-500 active:(bg-primary-600 border-primary-600)',
         );
         break;
       }
@@ -60,7 +60,7 @@ export function createButtonStyles({
           'border-2 ring-danger-700',
           outline
             ? 'text-danger-700 border-danger-400 active:border-danger-600'
-            : 'text-white bg-danger-400 border-danger-400 active:(bg-danger-500 border-danger-500)',
+            : 'text-white bg-danger-500 border-danger-500 active:(bg-danger-600 border-danger-600)',
         );
         break;
       }

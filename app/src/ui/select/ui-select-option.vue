@@ -25,9 +25,9 @@ defineProps<{
       </div>
       <span
         v-if="selected"
-        class="absolute inset-y-0 left-0 flex items-center pl-3 text-primary-700"
+        class="flex pl-3 inset-y-0 left-0 text-primary-700 absolute items-center"
       >
-        <RiCheckLine aria-hidden="true" class="w-5 h-5" />
+        <RiCheckLine aria-hidden class="h-5 w-5" />
       </span>
     </li>
   </ListboxOption>

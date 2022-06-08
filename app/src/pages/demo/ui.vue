@@ -100,8 +100,8 @@ const inputText = ref<string>('');
       </div>
     </div>
     <div>
-      <UiTitle is="h2" class="mb-3 text-xl">Buttons</UiTitle>
-      <div class="p-3 -m-3 space-y-3 bg-white rounded-md">
+      <UiTitle is="h2" class="text-xl mb-3">Buttons</UiTitle>
+      <div class="bg-white rounded-md space-y-3 -m-3 p-3">
         <div class="space-x-3">
           <UiButton color="primary">Button</UiButton>
           <UiButton color="primary" disabled>Button</UiButton>
@@ -126,7 +126,7 @@ const inputText = ref<string>('');
       </div>
     </div>
     <div>
-      <UiTitle is="h2" class="mb-3 text-xl">Tabs</UiTitle>
+      <UiTitle is="h2" class="text-xl mb-3">Tabs</UiTitle>
       <UiTabs>
         <UiTab title="Button 1">Panel 1</UiTab>
         <UiTab title="Button 2">Panel 2</UiTab>
@@ -134,7 +134,7 @@ const inputText = ref<string>('');
       </UiTabs>
     </div>
     <div>
-      <UiTitle is="h2" class="mb-3 text-xl">Dialog</UiTitle>
+      <UiTitle is="h2" class="text-xl mb-3">Dialog</UiTitle>
       <UiButton @click="isModalOpen = true">Open dialog</UiButton>
       <UiDialog :open="isModalOpen" @close="isModalOpen = false">
         <UiDialogTitle>Payment successful</UiDialogTitle>
@@ -149,7 +149,10 @@ const inputText = ref<string>('');
     </div>
     <div class="space-y-3">
       <UiTitle is="h2" class="text-xl">Inputs</UiTitle>
-      <UiInputText v-model="inputText" placeholder="Hello World!" />
+      <label>
+        <p>Input</p>
+        <UiInputText v-model="inputText" placeholder="Hello World!" />
+      </label>
       <UiSelect
         v-model="selectedEducation"
         :selected-label="selectedEducation?.name"
@@ -174,27 +177,27 @@ const inputText = ref<string>('');
       <UiRadio id="radio4" checked disabled>Checked disabled</UiRadio>
     </div>
     <div>
-      <UiTitle is="h2" class="mb-3 text-xl">Menu</UiTitle>
+      <UiTitle is="h2" class="text-xl mb-3">Menu</UiTitle>
       <UiMenu>
         <UiMenuButton>
           <UiButton>
             Options
-            <RiArrowDropDownLine aria-hidden="true" />
+            <RiArrowDropDownLine aria-hidden />
           </UiButton>
         </UiMenuButton>
         <UiMenuItems>
-          <div class="px-4 py-3">
+          <div class="py-3 px-4">
             <div class="font-bold">Dieter Luypaert</div>
-            <small class="underline text-primary-400">
+            <small class="text-primary-400 underline">
               dieter@foursevens.be
             </small>
           </div>
           <UiMenuItem>
-            <RiPencilLine aria-hidden="true" class="text-primary-400" />
+            <RiPencilLine aria-hidden class="text-primary-400" />
             Edit
           </UiMenuItem>
           <UiMenuItem>
-            <RiDeleteBinLine aria-hidden="true" class="text-danger-400" />
+            <RiDeleteBinLine aria-hidden class="text-danger-400" />
             Delete
           </UiMenuItem>
         </UiMenuItems>
@@ -205,6 +208,6 @@ const inputText = ref<string>('');
 
 <style scoped>
 .palette {
-  @apply inline-block w-16 h-16;
+  @apply h-16 w-16 inline-block;
 }
 </style>

@@ -12,7 +12,7 @@ defineEmits<(event: 'close') => void>();
 <template>
   <TransitionRoot appear :show="open" as="template">
     <Dialog as="template" @close="$emit('close')">
-      <div class="fixed inset-0">
+      <div class="inset-0 fixed">
         <TransitionChild
           enter="duration-300 ease-out"
           enter-from="opacity-0"
@@ -23,8 +23,8 @@ defineEmits<(event: 'close') => void>();
         >
           <Component
             :is="implicitClose ? DialogOverlay : 'div'"
-            aria-hidden="true"
-            class="fixed inset-0 bg-black opacity-30"
+            aria-hidden
+            class="bg-black opacity-30 inset-0 fixed"
           />
         </TransitionChild>
         <TransitionChild
@@ -36,12 +36,12 @@ defineEmits<(event: 'close') => void>();
           leave-to="opacity-0 scale-50"
         >
           <div
-            class="relative z-10 max-w-lg p-6 mx-auto my-8 bg-white shadow-xl rounded-2xl"
+            class="bg-white mx-auto max-w-lg rounded-2xl shadow-xl my-8 p-6 z-10 relative"
             v-bind="$attrs"
           >
-            <div v-if="implicitClose" class="absolute top-0 right-0 p-3">
+            <div v-if="implicitClose" class="p-3 top-0 right-0 absolute">
               <button
-                class="flex rounded-lg p-2 text-dark-700 focus:outline-none focus-visible:(ring-2 ring-dark-700)"
+                class="rounded-lg flex p-2 text-dark-700 focus:outline-none focus-visible:(ring-2 ring-dark-700) "
                 type="button"
                 @click="$emit('close')"
               >
