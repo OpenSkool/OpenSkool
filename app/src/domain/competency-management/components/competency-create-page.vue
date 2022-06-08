@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { GetCreateCompetencyParentDocument } from '~/codegen/graphql';
-import NestedCompetencyCreate from '~/domain/competency-management/components/nested-competency-create.vue';
+
+import NestedCompetencyCreate from './nested-competency-create.vue';
 
 const props = defineProps<{
   competencyId: string;
@@ -65,7 +66,7 @@ const parentCompetency = computed(() =>
     <UiTitle
       is="h1"
       v-t="'competencies.route.create.heading'"
-      class="mb-3 text-xl"
+      class="text-xl mb-3"
     />
     <NestedCompetencyCreate
       :competency-id="competencyId"

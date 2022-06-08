@@ -10,7 +10,7 @@ import server from './mocks/server';
 // These imports trigger Vitest / `unplugin-vue-components` to register all
 // components that don't have tests.
 // https://github.com/antfu/unplugin-vue-components/issues/380
-import '~/domain/global/components/layout/main-layout.vue';
+import '~/domain/global/components/root-layout.vue';
 import '~/pages/demo/forms.vue';
 import '~/pages/demo/ui.vue';
 

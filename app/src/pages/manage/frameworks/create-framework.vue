@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import CompetencyFrameworkCreate from '~/domain/competency-management/components/competency-framework-create.vue';
-import AuthAccessDenied from '~/domain/global/components/auth/auth-access-denied.vue';
+import { CompetencyFrameworkCreate } from '~/domain/competency-management';
+import { AuthAccessDenied } from '~/domain/global';
 
 const ability = useAppAbility();
 
@@ -14,7 +14,7 @@ const { t } = useI18n();
         {{ t('frameworks.route.index.heading') }}
       </UiBreadcrumbItem>
     </UiBreadcrumb>
-    <UiTitle is="h1" class="mb-3 text-xl">
+    <UiTitle is="h1" class="text-xl mb-3">
       {{ t('frameworks.route.create.heading') }}
     </UiTitle>
     <CompetencyFrameworkCreate />

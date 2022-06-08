@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-// import DebugLayout from '~/domain/global/components/layout/debug-layout.vue';
-import LanguageSelect from '~/domain/global/components/layout/language-select.vue';
-import LoadingSpinner from '~/domain/global/components/layout/loading-spinner.vue';
-import MainMenuToggleButton from '~/domain/global/components/layout/main-menu-toggle-button.vue';
-import MainMenu from '~/domain/global/components/layout/main-menu.vue';
-import UserMenu from '~/domain/global/components/layout/user-menu.vue';
 import { i18nLoaderService } from '~/i18n';
 
-import { useMenuState } from './use-menu-state';
+// import DebugLayout from './debug-layout.vue';
+import LanguageSelect from './language-select.vue';
+import LoadingSpinner from './loading-spinner.vue';
+import MainMenuToggleButton from './main-menu/main-menu-toggle-button.vue';
+import MainMenu from './main-menu/main-menu.vue';
+import { useMenuState } from './main-menu/use-menu-state';
+import UserMenu from './user-menu.vue';
 
 await i18nLoaderService.loadGlobalMessages();
 
@@ -17,7 +17,7 @@ const { menuState, toggleMenu } = useMenuState();
 <template>
   <!-- <DebugLayout /> -->
   <div class="grid">
-    <div class="flex items-center justify-between col-span-2 p-3">
+    <div class="flex p-3 col-span-2 items-center justify-between">
       <MainMenuToggleButton
         aria-controls="mainMenu"
         :aria-expanded="menuState.opened"
@@ -31,10 +31,10 @@ const { menuState, toggleMenu } = useMenuState();
     </div>
     <MainMenu id="mainMenu" :state="menuState" />
     <div
-      class="mb-10 bg-gray-100"
+      class="bg-gray-100 mb-10"
       :class="menuState.overlay || !menuState.opened ? 'col-span-2' : ''"
     >
-      <main class="container p-10 mx-auto">
+      <main class="container mx-auto p-10">
         <Suspense>
           <RouterView />
         </Suspense>

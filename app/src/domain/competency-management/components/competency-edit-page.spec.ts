@@ -5,10 +5,10 @@ import { expect, test, vi } from 'vitest';
 import { router } from '~/router';
 import { render } from '~/spec/render';
 
-import competencyEditPage from './competency-edit-page.vue';
+import CompetencyEditPage from './competency-edit-page.vue';
 
 test('input field has prefilled value', async () => {
-  render(competencyEditPage);
+  render(CompetencyEditPage);
   const titleInput: HTMLInputElement = await screen.findByRole('textbox', {
     name: 'competencies.form.name',
   });
@@ -16,7 +16,7 @@ test('input field has prefilled value', async () => {
 });
 
 test('alert shows when empty field is submitted', async () => {
-  render(competencyEditPage);
+  render(CompetencyEditPage);
   await router.isReady();
   const push = vi.spyOn(router, 'push');
   const user = userEvent.setup();
@@ -33,7 +33,7 @@ test('alert shows when empty field is submitted', async () => {
 });
 
 test('form submission works', async () => {
-  render(competencyEditPage);
+  render(CompetencyEditPage);
   await router.isReady();
   const push = vi.spyOn(router, 'push');
   const user = userEvent.setup();

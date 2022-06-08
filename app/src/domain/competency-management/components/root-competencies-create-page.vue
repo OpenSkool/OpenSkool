@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { GetCompetencyFrameworkDocument } from '~/codegen/graphql';
-import RootCompetencyCreate from '~/domain/competency-management/components/root-competency-create.vue';
+
+import RootCompetencyCreate from './root-competency-create.vue';
 
 const props = defineProps<{
   frameworkId: string;
@@ -55,7 +56,7 @@ const competencyFramework = computed(() =>
     <UiTitle
       is="h1"
       v-t="'competencies.route.create.heading'"
-      class="mb-3 text-xl"
+      class="text-xl mb-3"
     />
     <RootCompetencyCreate :framework-id="props.frameworkId" />
   </template>

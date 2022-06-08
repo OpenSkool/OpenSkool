@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import { GetFrameworkRootCompetenciesDocument } from '~/codegen/graphql';
-import CompetencyList from '~/domain/competency-management/components/competency-list.vue';
-import ManagementLayout from '~/domain/competency-management/components/layout/management-layout.vue';
+import { ManagementLayout } from '~/domain/global';
 import { ActionItem } from '~/types';
+
+import CompetencyList from './competency-list.vue';
 
 const props = defineProps<{
   frameworkId: string;
@@ -77,7 +78,7 @@ const actions: ActionItem[] = [
         <span v-t="'frameworks.route.index.heading'" />
       </UiBreadcrumbItem>
     </UiBreadcrumb>
-    <UiTitle is="h1" class="mb-3 text-xl">
+    <UiTitle is="h1" class="text-xl mb-3">
       {{ competencyFramework.title }}
     </UiTitle>
     <ManagementLayout

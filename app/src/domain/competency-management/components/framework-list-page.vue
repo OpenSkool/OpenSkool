@@ -1,7 +1,8 @@
 <script lang="ts" setup>
-import FrameworkList from '~/domain/competency-management/components/framework-list.vue';
-import ManagementLayout from '~/domain/competency-management/components/layout/management-layout.vue';
+import { ManagementLayout } from '~/domain/global';
 import { ActionItem } from '~/types';
+
+import FrameworkList from './framework-list.vue';
 
 const ability = useAppAbility();
 const { t } = useI18n();
@@ -22,7 +23,7 @@ const actions: ActionItem[] = [
   <UiTitle
     is="h1"
     v-t="'frameworks.route.index.heading'"
-    class="mb-3 text-xl"
+    class="text-xl mb-3"
   />
   <ManagementLayout
     :actions="actions"

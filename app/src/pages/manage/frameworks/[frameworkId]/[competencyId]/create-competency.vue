@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import CompetencyCreatePage from '~/domain/competency-management/components/competency-create-page.vue';
-import AuthAccessDenied from '~/domain/global/components/auth/auth-access-denied.vue';
+import { CompetencyCreatePage } from '~/domain/competency-management';
+import { AuthAccessDenied } from '~/domain/global';
 
 defineProps<{
   competencyId: string;
