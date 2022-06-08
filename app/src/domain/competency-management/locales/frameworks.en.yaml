@@ -12,6 +12,7 @@ route:
     index:
       action:
         new: Add competency
+      actionLabel: Framework Actions
       notFound: This framework has no competencies
   index:
     action:

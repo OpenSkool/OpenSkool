@@ -7,14 +7,13 @@ interface Competency {
 }
 
 const props = defineProps<{
+  showArrows: boolean;
   competencies: Competency[];
   frameworkId: string;
   refetchQueries: string[];
 }>();
 
 const { t } = useI18n();
-
-const ability = useAppAbility();
 
 gql`
   mutation swapCompetencies($leftCompetencyId: ID!, $rightCompetencyId: ID!) {
@@ -63,14 +62,14 @@ async function moveCompetency(
 </script>
 
 <template>
-  <UiOrderedList>
+  <UiOrderedList class="flex-1">
     <UiOrderedListItem
       v-for="(competency, index) of competencies"
       :key="competency.id"
       :link-to="`/manage/frameworks/${frameworkId}/${competency.id}`"
       :move-up-text="t('competencies.list.action.moveUp')"
       :move-down-text="t('competencies.list.action.moveDown')"
-      :show-arrows="ability.can('update', 'Competency')"
+      :show-arrows="showArrows"
       @move-up="moveCompetency((competencies[index - 1] as Competency).id, competency.id)"
       @move-down="moveCompetency(competency.id, (competencies[index + 1] as Competency).id)"
     >

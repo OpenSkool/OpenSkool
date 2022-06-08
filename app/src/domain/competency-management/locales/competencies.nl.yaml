@@ -24,6 +24,8 @@ route:
         openDeleteModal: Verwijder competentie
         edit: Bewerk competentie
         new: Voeg competentie toe
+        sort: Competencies herordennen
+      actionsLabel: Competentie acties
       confirmDeleteModal:
         action:
           cancel: Annuleer
