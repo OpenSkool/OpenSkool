@@ -2,7 +2,7 @@
 import { DefaultApolloClient } from '@vue/apollo-composable';
 
 import { apolloClient } from '~/apollo';
-import MainLayout from '~/domain/global/components/layout/main-layout.vue';
+import { RootLayout } from '~/domain/global';
 import { useInitFormkit } from '~/formkit';
 
 useInitFormkit();
@@ -14,9 +14,9 @@ const { locale } = useI18n();
 
 <template>
   <Suspense>
-    <MainLayout :key="locale">
+    <RootLayout :key="locale">
       <RouterView />
-    </MainLayout>
+    </RootLayout>
   </Suspense>
 </template>
 

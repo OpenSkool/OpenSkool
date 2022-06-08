@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useAuthStore, authLogoutUrl } from '~/auth';
-import AuthConnectButton from '~/domain/global/components/auth/auth-connect-button.vue';
+import { AuthConnectButton } from '~/domain/global';
 
 const authStore = useAuthStore();
 
@@ -28,7 +28,7 @@ const logoutHref = computed(() => {
     </UiMenuButton>
     <UiMenuItems>
       <i18n-t
-        class="px-4 py-3 text-base text-dark-500"
+        class="text-base py-3 px-4 text-dark-500"
         keypath="global.userMenu.description"
         tag="div"
       >

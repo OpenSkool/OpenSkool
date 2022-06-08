@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import RootCompetenciesCreatePage from '~/domain/competency-management/components/root-competencies-create-page.vue';
-import AuthAccessDenied from '~/domain/global/components/auth/auth-access-denied.vue';
+import { RootCompetenciesCreatePage } from '~/domain/competency-management';
+import { AuthAccessDenied } from '~/domain/global';
 
 defineProps<{
   frameworkId: string;

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import AuthConnectButton from '~/domain/global/components/auth/auth-connect-button.vue';
+import AuthConnectButton from './auth-connect-button.vue';
 </script>
 
 <template>
