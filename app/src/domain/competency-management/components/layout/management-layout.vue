@@ -8,11 +8,7 @@ const props = defineProps<{
 }>();
 
 const breakpoints = useBreakpoints();
-const showAside = ref<boolean>(breakpoints.md.value);
-
-watch(breakpoints.md, (isMedium) => {
-  showAside.value = isMedium;
-});
+const showAside = breakpoints.lg;
 
 const ableActions = computed(() => {
   return props.actions.filter((action) => action.hasPermission);
