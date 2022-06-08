@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useBreakpoints } from '../../../../hooks/use-breakpoints';
+import { useBreakpoints } from '~/hooks/use-breakpoints';
 
 const breakpoints = useBreakpoints();
 </script>
@@ -9,9 +9,9 @@ const breakpoints = useBreakpoints();
     <div
       v-for="[name, active] of Object.entries(breakpoints)"
       :key="name"
-      class=""
+      class="bg-primary-100"
     >
-      <div class="px-1 py-1" :class="{ 'bg-primary-100': active.value }">
+      <div class="px-1 py-1" :class="{ 'bg-primary-200': active.value }">
         {{ name }}
       </div>
     </div>
