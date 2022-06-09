@@ -21,6 +21,11 @@ gql`
       currentUser {
         id
         name
+        tokenSet {
+          refreshToken {
+            expiresIn
+          }
+        }
       }
     }
   }
@@ -40,6 +45,7 @@ export const useAuthStore = defineStore('auth', () => {
         query: AuthCurrentUserDocument,
       });
       auth.value = authQuery.data.auth;
+      setSessionExpirationTimer(auth.value);
       return auth.value;
     } catch (error) {
       console.error(error);
@@ -50,10 +56,24 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
+  function setSessionExpirationTimer(authData: Auth | undefined): void {
+    const userData = authData?.currentUser;
+    const EXTRA_DELAY = 1000;
+    if (userData) {
+      const expiresIn = Number(userData.tokenSet.refreshToken.expiresIn);
+      if (!Number.isNaN(expiresIn)) {
+        setTimeout(() => {
+          refresh();
+        }, expiresIn + EXTRA_DELAY);
+      }
+    }
+  }
+
   return {
     name: computed(() => auth.value.currentUser?.name),
     isLoggedIn: computed(() => auth.value.currentUser != null),
     refresh,
+    setSessionExpirationTimer,
   };
 });
 
