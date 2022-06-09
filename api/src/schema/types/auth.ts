@@ -80,11 +80,11 @@ builder.objectType(JWT, {
       nullable: true,
       resolve: (jwt) => dateFromJwtTimestamp(jwt.exp),
     }),
-    expiresIn: t.string({
+    expiresIn: t.int({
       nullable: true,
       resolve: (jwt) => {
         const expiredAt = dateFromJwtTimestamp(jwt.exp);
-        return expiredAt == null ? null : ms(expiredAt.getTime() - Date.now());
+        return expiredAt == null ? null : expiredAt.getTime() - Date.now();
       },
     }),
     issuedAgo: t.string({
