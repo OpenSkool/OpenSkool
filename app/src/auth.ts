@@ -33,49 +33,52 @@ gql`
 
 type Auth = AuthCurrentUserQuery['auth'];
 
+const auth = ref<Auth>({
+  abilityRules: [],
+  currentUser: null,
+});
+
+const timer = ref<NodeJS.Timeout>();
+
 export const useAuthStore = defineStore('auth', () => {
-  const auth = ref<Auth>({
-    abilityRules: [],
-    currentUser: null,
-  });
-
-  async function refresh(): Promise<Auth> {
-    try {
-      const authQuery = await apolloClient.query({
-        query: AuthCurrentUserDocument,
-      });
-      auth.value = authQuery.data.auth;
-      setSessionExpirationTimer(auth.value);
-      return auth.value;
-    } catch (error) {
-      console.error(error);
-      return {
-        abilityRules: [],
-        currentUser: null,
-      };
-    }
-  }
-
-  function setSessionExpirationTimer(authData: Auth | undefined): void {
-    const userData = authData?.currentUser;
-    const EXTRA_DELAY = 1000;
-    if (userData) {
-      const expiresIn = Number(userData.tokenSet.refreshToken.expiresIn);
-      if (!Number.isNaN(expiresIn)) {
-        setTimeout(() => {
-          refresh();
-        }, expiresIn + EXTRA_DELAY);
-      }
-    }
-  }
-
   return {
     name: computed(() => auth.value.currentUser?.name),
     isLoggedIn: computed(() => auth.value.currentUser != null),
     refresh,
-    setSessionExpirationTimer,
   };
 });
+
+async function refresh(): Promise<Auth> {
+  try {
+    const authQuery = await apolloClient.query({
+      query: AuthCurrentUserDocument,
+    });
+    auth.value = authQuery.data.auth;
+    setSessionExpirationTimer();
+    return auth.value;
+  } catch (error) {
+    console.error(error);
+    return {
+      abilityRules: [],
+      currentUser: null,
+    };
+  }
+}
+
+export function setSessionExpirationTimer(): void {
+  const userData = auth.value.currentUser;
+  if (userData) {
+    const expiresIn = Number(userData.tokenSet.refreshToken.expiresIn);
+    if (!Number.isNaN(expiresIn)) {
+      if (timer.value) {
+        clearTimeout(timer.value);
+      }
+      timer.value = setTimeout(() => {
+        refresh();
+      }, expiresIn);
+    }
+  }
+}
 
 export async function initAuth(): Promise<Auth> {
   const authStore = useAuthStore(pinia);

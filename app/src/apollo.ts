@@ -1,9 +1,12 @@
 import {
   ApolloClient,
+  ApolloLink,
   createHttpLink,
   InMemoryCache,
 } from '@apollo/client/core';
 import { setContext } from '@apollo/client/link/context';
+
+import { setSessionExpirationTimer } from '~/auth';
 
 import { i18nService } from './i18n';
 
@@ -22,6 +25,13 @@ const httpLink = createHttpLink({
   uri: new URL('./graphql', import.meta.env.VITE_API_BASE_URL).toString(),
 });
 
+const sessionWatchLink = new ApolloLink((operation, forward) => {
+  return forward(operation).map((response) => {
+    setSessionExpirationTimer();
+    return response;
+  });
+});
+
 export const apolloClient = new ApolloClient({
   cache: new InMemoryCache(),
   defaultOptions: {
@@ -29,5 +39,5 @@ export const apolloClient = new ApolloClient({
       fetchPolicy: 'cache-and-network',
     },
   },
-  link: enrichLink.concat(httpLink),
+  link: enrichLink.concat(sessionWatchLink).concat(httpLink),
 });

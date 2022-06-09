@@ -442,6 +442,10 @@ export type AuthCurrentUserQuery = {
       __typename?: 'CurrentUser';
       id: string;
       name: string;
+      tokenSet: {
+        __typename?: 'TokenSet';
+        refreshToken: { __typename?: 'JWT'; expiresIn?: string | null };
+      };
     } | null;
   };
 };
@@ -889,6 +893,28 @@ export const AuthCurrentUserDocument = {
                     selections: [
                       { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'tokenSet' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'refreshToken' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'expiresIn' },
+                                  },
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
                     ],
                   },
                 },
