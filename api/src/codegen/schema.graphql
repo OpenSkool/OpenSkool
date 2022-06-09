@@ -154,7 +154,7 @@ scalar JSON
 
 type JWT {
   expiresAt: DateTime
-  expiresIn: String
+  expiresIn: Int
   issuedAgo: String
   issuedAt: DateTime
   issuer: String
