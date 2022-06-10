@@ -105,16 +105,9 @@ model User {
   educationsCreated Education[] @relation("EducationToUserCreated")
   educationsUpdated Education[] @relation("EducationToUserUpdated")
 
-  internshipPositionToMentor     InternshipPosition[] @relation("InternshipPositionToMentor")
-  internshipToCoordinator        Internship[]         @relation("InternshipToCoordinator")
-  internshipToSupervisor         Internship[]         @relation("InternshipToSupervisor")
-  internshipInstanceToStudent    InternshipInstance[] @relation("InternshipInstanceToStudent")
-  internshipInstanceToSupervisor InternshipInstance[] @relation("InternshipInstanceToSupervisor")
+  internshipInstanceToStudent InternshipInstance[] @relation("InternshipInstanceToStudent")
 
   name String
-
-  organisation   Organisation? @relation(fields: [organisationId], references: [id])
-  organisationId String?
 }
 
 model Course {
@@ -127,71 +120,15 @@ model Course {
   internship Internship[]
 }
 
-model Workplace {
-  id String @id @default(cuid())
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  name               String
-  plainAddress       String
-  organisation       Organisation?        @relation(fields: [organisationId], references: [id])
-  organisationId     String?
-  internshipPosition InternshipPosition[]
-}
-
-model Organisation {
-  id String @id @default(cuid())
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  name               String
-  employees          User[]
-  plainAddress       String
-  workplaces         Workplace[]
-  internshipPosition InternshipPosition[]
-}
-
-model InternshipPosition {
-  id String @id @default(cuid())
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  dateFrom                               DateTime
-  dateTo                                 DateTime
-  description                            String
-  mentor                                 User?               @relation("InternshipPositionToMentor", fields: [mentorId], references: [id])
-  mentorId                               String
-  organisation                           Organisation?       @relation(fields: [organisationId], references: [id])
-  organisationId                         String
-  workplace                              Workplace?          @relation(fields: [workplaceId], references: [id])
-  workplaceId                            String
-  internship                             Internship?         @relation(fields: [internshipId], references: [id])
-  internshipId                           String?
-  finalPositioninForInternshipInstance   InternshipInstance? @relation("FinalInternshipPositionForInternshipInstance", fields: [finalPositioninForInternshipInstanceId], references: [id])
-  finalPositioninForInternshipInstanceId String?             @unique
-  chosenPositionForInternshipInstance    InternshipInstance? @relation("ChosenInternshipPositionsForInternshipInstance", fields: [chosenPositionForInternshipInstanceId], references: [id])
-  chosenPositionForInternshipInstanceId  String?
-}
-
 model Internship {
   id String @id @default(cuid())
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  availablePositions  InternshipPosition[]
-  course              Course?              @relation(fields: [courseId], references: [id])
-  courseId            String?
-  coordinator         User?                @relation("InternshipToCoordinator", fields: [coordinatorId], references: [id])
-  coordinatorId       String?
-  dateFrom            DateTime
-  dateTo              DateTime
-  defaultSupervisor   User?                @relation("InternshipToSupervisor", fields: [defaultSupervisorId], references: [id])
-  defaultSupervisorId String?
-  internshipInstance  InternshipInstance[]
+  course             Course?              @relation(fields: [courseId], references: [id])
+  courseId           String?
+  internshipInstance InternshipInstance[]
 }
 
 model InternshipInstance {
@@ -200,13 +137,8 @@ model InternshipInstance {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  chosenPositions InternshipPosition[] @relation("ChosenInternshipPositionsForInternshipInstance")
-  finalPosition   InternshipPosition?  @relation("FinalInternshipPositionForInternshipInstance")
-
   internship   Internship? @relation(fields: [internshipId], references: [id])
   internshipId String
   student      User        @relation("InternshipInstanceToStudent", fields: [studentId], references: [id])
   studentId    String
-  supervisor   User        @relation("InternshipInstanceToSupervisor", fields: [supervisorId], references: [id])
-  supervisorId String
 }
