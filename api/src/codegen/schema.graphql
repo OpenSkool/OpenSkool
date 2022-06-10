@@ -153,10 +153,10 @@ The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](
 scalar JSON
 
 type JWT {
-  expiresAt: DateTime
-  expiresIn: Int
-  issuedAgo: String
-  issuedAt: DateTime
+  expiresAt: DateTime!
+  expiresIn: Int!
+  issuedAgo: String!
+  issuedAt: DateTime!
   issuer: String
   subject: String
 }
