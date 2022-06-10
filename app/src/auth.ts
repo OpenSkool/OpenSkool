@@ -49,13 +49,10 @@ export const useAuthStore = defineStore('auth', () => {
       });
       auth.value = authQuery.data.auth;
       if (auth.value.currentUser) {
-        const { expiresIn } = auth.value.currentUser.tokenSet.refreshToken;
-        if (expiresIn != null) {
-          refreshTokenTimer.value = window.setTimeout(
-            () => void refresh(),
-            expiresIn,
-          );
-        }
+        refreshTokenTimer.value = window.setTimeout(
+          () => void refresh(),
+          auth.value.currentUser.tokenSet.refreshToken.expiresIn,
+        );
       }
       return auth.value;
     } catch (error) {

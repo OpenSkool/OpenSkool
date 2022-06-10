@@ -3,6 +3,7 @@ import assert from 'node:assert';
 import { decodeJwt, JWTPayload } from 'jose';
 import ms from 'ms';
 import type { JsonObject } from 'type-fest';
+import { z } from 'zod';
 
 import { AppRawRule } from '~/api/ability';
 import type { Auth, AuthUser } from '~/api/auth';
@@ -16,7 +17,14 @@ const AbilityRule = builder.objectRef<AppRawRule>('AbilityRule');
 
 export const CurrentUser = builder.objectRef<AuthUser>('CurrentUser');
 
-const JWT = builder.objectRef<JWTPayload>('JWT');
+const zJwtPayload = z.object({
+  exp: z.number(),
+  iat: z.number(),
+  iss: z.string(),
+  sub: z.string(),
+});
+
+const JWT = builder.objectRef<JWTPayload & z.infer<typeof zJwtPayload>>('JWT');
 
 const TokenSet = builder.objectRef<AppTokenSet>('TokenSet');
 
@@ -77,26 +85,18 @@ builder.objectType(JWT, {
   fields: (t) => ({
     expiresAt: t.field({
       type: 'DateTime',
-      nullable: true,
       resolve: (jwt) => dateFromJwtTimestamp(jwt.exp),
     }),
     expiresIn: t.int({
-      nullable: true,
-      resolve: (jwt) => {
-        const expiredAt = dateFromJwtTimestamp(jwt.exp);
-        return expiredAt == null ? null : expiredAt.getTime() - Date.now();
-      },
+      resolve: (jwt) => dateFromJwtTimestamp(jwt.exp).getTime() - Date.now(),
     }),
     issuedAgo: t.string({
-      nullable: true,
       resolve: (jwt) => {
-        const issuedAt = dateFromJwtTimestamp(jwt.iat);
-        return issuedAt == null ? null : ms(Date.now() - issuedAt.getTime());
+        return ms(Date.now() - dateFromJwtTimestamp(jwt.iat).getTime());
       },
     }),
     issuedAt: t.field({
       type: 'DateTime',
-      nullable: true,
       resolve: (jwt) => dateFromJwtTimestamp(jwt.iat),
     }),
     issuer: t.string({ nullable: true, resolve: (jwt) => jwt.iss }),
@@ -109,15 +109,21 @@ builder.objectType(TokenSet, {
   fields: (t) => ({
     accessToken: t.field({
       type: JWT,
-      resolve: (tokenSet) => decodeJwt(tokenSet.access_token),
+      resolve(tokenSet) {
+        return zJwtPayload.parse(decodeJwt(tokenSet.access_token));
+      },
     }),
     idToken: t.field({
       type: JWT,
-      resolve: (tokenSet) => decodeJwt(tokenSet.id_token),
+      resolve(tokenSet) {
+        return zJwtPayload.parse(decodeJwt(tokenSet.id_token));
+      },
     }),
     refreshToken: t.field({
       type: JWT,
-      resolve: (tokenSet) => decodeJwt(tokenSet.refresh_token),
+      resolve(tokenSet) {
+        return zJwtPayload.parse(decodeJwt(tokenSet.refresh_token));
+      },
     }),
   }),
 });
@@ -146,6 +152,6 @@ builder.queryField('auth', (t) =>
   }),
 );
 
-function dateFromJwtTimestamp(timestamp: number | undefined): Date | null {
-  return timestamp == null ? null : new Date(timestamp * ms('1s'));
+function dateFromJwtTimestamp(timestamp: number): Date {
+  return new Date(timestamp * ms('1s'));
 }
