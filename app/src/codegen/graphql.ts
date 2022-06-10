@@ -170,10 +170,10 @@ export type InternshipPosition = Node & {
 
 export type Jwt = {
   __typename?: 'JWT';
-  expiresAt?: Maybe<Scalars['DateTime']>;
-  expiresIn?: Maybe<Scalars['String']>;
-  issuedAgo?: Maybe<Scalars['String']>;
-  issuedAt?: Maybe<Scalars['DateTime']>;
+  expiresAt: Scalars['DateTime'];
+  expiresIn: Scalars['Int'];
+  issuedAgo: Scalars['String'];
+  issuedAt: Scalars['DateTime'];
   issuer?: Maybe<Scalars['String']>;
   subject?: Maybe<Scalars['String']>;
 };
@@ -442,6 +442,10 @@ export type AuthCurrentUserQuery = {
       __typename?: 'CurrentUser';
       id: string;
       name: string;
+      tokenSet: {
+        __typename?: 'TokenSet';
+        refreshToken: { __typename?: 'JWT'; expiresIn: number };
+      };
     } | null;
   };
 };
@@ -889,6 +893,28 @@ export const AuthCurrentUserDocument = {
                     selections: [
                       { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'tokenSet' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'refreshToken' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'expiresIn' },
+                                  },
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
                     ],
                   },
                 },

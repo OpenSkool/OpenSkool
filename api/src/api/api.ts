@@ -25,7 +25,7 @@ const apiPlugin: FastifyPluginAsync = async (app) => {
       cookieName: 'osid',
       cookie: {
         domain: app.config.SESSION_DOMAIN,
-        maxAge: ms('1h'),
+        maxAge: ms('24h'),
         path: '/',
         sameSite: 'lax',
         secure: !app.config.SESSION_ALLOW_INSECURE,

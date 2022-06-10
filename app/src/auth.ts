@@ -21,6 +21,11 @@ gql`
       currentUser {
         id
         name
+        tokenSet {
+          refreshToken {
+            expiresIn
+          }
+        }
       }
     }
   }
@@ -34,12 +39,21 @@ export const useAuthStore = defineStore('auth', () => {
     currentUser: null,
   });
 
+  const refreshTokenTimer = ref<number>();
+
   async function refresh(): Promise<Auth> {
+    clearTimeout(refreshTokenTimer.value);
     try {
       const authQuery = await apolloClient.query({
         query: AuthCurrentUserDocument,
       });
       auth.value = authQuery.data.auth;
+      if (auth.value.currentUser) {
+        refreshTokenTimer.value = window.setTimeout(
+          () => void refresh(),
+          auth.value.currentUser.tokenSet.refreshToken.expiresIn,
+        );
+      }
       return auth.value;
     } catch (error) {
       console.error(error);
