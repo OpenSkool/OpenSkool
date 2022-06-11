@@ -124,13 +124,8 @@ export type InputError = UserError & {
 
 export type Internship = Node & {
   __typename?: 'Internship';
-  availablePositions: Array<InternshipPosition>;
-  coordinator: Person;
-  dateFrom: Scalars['DateTime'];
-  dateTo: Scalars['DateTime'];
-  defaultSupervisor: Person;
+  course?: Maybe<Course>;
   id: Scalars['ID'];
-  name: Scalars['String'];
 };
 
 export type InternshipChosenPositionConnection = {
@@ -151,12 +146,8 @@ export type InternshipChosenPositionPriorityEdge =
 
 export type InternshipInstance = Node & {
   __typename?: 'InternshipInstance';
-  chosenPositions: InternshipChosenPositionConnection;
-  finalPosition?: Maybe<InternshipPosition>;
   id: Scalars['ID'];
   internship: Internship;
-  student: Person;
-  supervisor: Person;
 };
 
 export type InternshipPosition = Node & {
@@ -366,7 +357,7 @@ export type Query = {
   auth: Auth;
   competency?: Maybe<QueryCompetencyResult>;
   competencyFramework?: Maybe<QueryCompetencyFrameworkResult>;
-  myInternshipInstances: Array<InternshipInstance>;
+  myInternshipInstances?: Maybe<Array<InternshipInstance>>;
 };
 
 export type QueryCompetencyArgs = {

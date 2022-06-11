@@ -108,13 +108,8 @@ type InputError implements UserError {
 }
 
 type Internship implements Node {
-  availablePositions: [InternshipPosition!]!
-  coordinator: Person!
-  dateFrom: DateTime!
-  dateTo: DateTime!
-  defaultSupervisor: Person!
+  course: Course
   id: ID!
-  name: String!
 }
 
 type InternshipChosenPositionConnection {
@@ -131,12 +126,8 @@ type InternshipChosenPositionPriorityEdge implements InternshipChosenPositionEdg
 }
 
 type InternshipInstance implements Node {
-  chosenPositions: InternshipChosenPositionConnection!
-  finalPosition: InternshipPosition
   id: ID!
   internship: Internship!
-  student: Person!
-  supervisor: Person!
 }
 
 type InternshipPosition implements Node {
@@ -314,7 +305,7 @@ type Query {
   auth: Auth!
   competency(id: ID!): QueryCompetencyResult
   competencyFramework(id: ID!): QueryCompetencyFrameworkResult
-  myInternshipInstances: [InternshipInstance!]!
+  myInternshipInstances: [InternshipInstance!]
 }
 
 union QueryCompetencyFrameworkResult =

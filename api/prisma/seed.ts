@@ -1,11 +1,4 @@
-import {
-  CompetencyFramework,
-  User,
-  PrismaClient,
-  Internship,
-} from '@prisma/client';
-
-import { createFakeCourse } from '~/schema/types/course';
+import { CompetencyFramework, User, PrismaClient } from '@prisma/client';
 
 import { CompetencyFixture, competencyFixtures } from './fixtures/competencies';
 
@@ -45,32 +38,42 @@ async function createCompetencies(
   }
 }
 
-async function createInternship(): Promise<Internship> {
-  const { name } = createFakeCourse();
+async function createInternships(user: User): Promise<void> {
+  const COURSE_NAMES = [
+    'Chemistry',
+    'Economics',
+    'Electricity',
+    'Fashion',
+    'Informatics',
+    'Math',
+    'Mechanics',
+    'Photography',
+  ];
 
-  const course = await prisma.course.create({
-    data: {
-      name,
-    },
-  });
+  await prisma.course.deleteMany({ where: {} });
+  await prisma.internship.deleteMany({ where: {} });
+  await prisma.internshipInstance.deleteMany({ where: {} });
 
-  return prisma.internship.create({
-    data: {
-      courseId: course.id,
-    },
-  });
-}
+  for (const name of COURSE_NAMES) {
+    const course = await prisma.course.create({
+      data: {
+        name,
+      },
+    });
 
-async function createInternshipInstance(
-  internship: Internship,
-  user: User,
-): Promise<void> {
-  await prisma.internshipInstance.create({
-    data: {
-      internshipId: internship.id,
-      studentId: user.id,
-    },
-  });
+    const internship = await prisma.internship.create({
+      data: {
+        courseId: course.id,
+      },
+    });
+
+    await prisma.internshipInstance.create({
+      data: {
+        internshipId: internship.id,
+        studentId: user.id,
+      },
+    });
+  }
 }
 
 async function main(): Promise<void> {
@@ -107,11 +110,7 @@ async function main(): Promise<void> {
       },
     });
   }
-
-  await prisma.internship.deleteMany({ where: {} });
-  const internship = await createInternship();
-  await prisma.internshipInstance.deleteMany({ where: {} });
-  await createInternshipInstance(internship, user);
+  await createInternships(user);
 }
 
 try {
