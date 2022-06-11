@@ -105,5 +105,40 @@ model User {
   educationsCreated Education[] @relation("EducationToUserCreated")
   educationsUpdated Education[] @relation("EducationToUserUpdated")
 
+  internshipInstanceToStudent InternshipInstance[] @relation("InternshipInstanceToStudent")
+
   name String
+}
+
+model Course {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name       String
+  internship Internship[]
+}
+
+model Internship {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  course             Course?              @relation(fields: [courseId], references: [id])
+  courseId           String?
+  internshipInstance InternshipInstance[]
+}
+
+model InternshipInstance {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  internship   Internship? @relation(fields: [internshipId], references: [id])
+  internshipId String
+  student      User        @relation("InternshipInstanceToStudent", fields: [studentId], references: [id])
+  studentId    String
 }
