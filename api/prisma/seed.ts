@@ -1,4 +1,11 @@
-import { CompetencyFramework, User, PrismaClient } from '@prisma/client';
+import {
+  CompetencyFramework,
+  User,
+  PrismaClient,
+  Internship,
+} from '@prisma/client';
+
+import { createFakeCourse } from '~/schema/types/course';
 
 import { CompetencyFixture, competencyFixtures } from './fixtures/competencies';
 
@@ -38,6 +45,34 @@ async function createCompetencies(
   }
 }
 
+async function createInternship(): Promise<Internship> {
+  const { name } = createFakeCourse();
+
+  const course = await prisma.course.create({
+    data: {
+      name,
+    },
+  });
+
+  return prisma.internship.create({
+    data: {
+      courseId: course.id,
+    },
+  });
+}
+
+async function createInternshipInstance(
+  internship: Internship,
+  user: User,
+): Promise<void> {
+  await prisma.internshipInstance.create({
+    data: {
+      internshipId: internship.id,
+      studentId: user.id,
+    },
+  });
+}
+
 async function main(): Promise<void> {
   const { SEED_USER_ID, SEED_USER_NAME } = process.env;
   if (SEED_USER_ID == null || SEED_USER_NAME == null) {
@@ -72,6 +107,11 @@ async function main(): Promise<void> {
       },
     });
   }
+
+  await prisma.internship.deleteMany({ where: {} });
+  const internship = await createInternship();
+  await prisma.internshipInstance.deleteMany({ where: {} });
+  await createInternshipInstance(internship, user);
 }
 
 try {
