@@ -137,8 +137,8 @@ model InternshipInstance {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  internship   Internship? @relation(fields: [internshipId], references: [id])
+  internship   Internship @relation(fields: [internshipId], references: [id])
   internshipId String
-  student      User        @relation("InternshipInstanceToStudent", fields: [studentId], references: [id])
-  studentId    String
+  student      User?      @relation("InternshipInstanceToStudent", fields: [studentId], references: [id])
+  studentId    String?
 }
