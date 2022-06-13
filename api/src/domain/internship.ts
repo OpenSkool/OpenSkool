@@ -1,5 +1,6 @@
 import { Internship, InternshipInstance } from '@prisma/client';
 
+import { DomainContext } from '~/domain/context';
 import { handleServiceError } from '~/domain/helpers';
 import { AppNotFoundError } from '~/errors';
 import { prisma } from '~/prisma';
@@ -9,15 +10,12 @@ export interface InternshipModel extends Internship {}
 export interface InternshipInstanceModel extends InternshipInstance {}
 
 export async function getInternshipInstancesForUser(
-  studentId: string | null,
-): Promise<InternshipInstanceModel[] | null> {
+  context: DomainContext,
+): Promise<InternshipInstanceModel[]> {
   try {
     const internshipInstances = await prisma.internshipInstance.findMany({
-      where: { studentId },
+      where: { studentId: context.userId },
     });
-    if (internshipInstances.length === 0) {
-      throw new AppNotFoundError();
-    }
     return internshipInstances;
   } catch (error) {
     handleServiceError(error);

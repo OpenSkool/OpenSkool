@@ -305,7 +305,7 @@ type Query {
   auth: Auth!
   competency(id: ID!): QueryCompetencyResult
   competencyFramework(id: ID!): QueryCompetencyFrameworkResult
-  myInternshipInstances: [InternshipInstance!]
+  myInternshipInstances: [InternshipInstance!]!
 }
 
 union QueryCompetencyFrameworkResult =
