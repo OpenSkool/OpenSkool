@@ -123,6 +123,15 @@ builder.objectType(InternshipInstance, {
   }),
 });
 
+builder.queryField('myInternshipInstances', (t) =>
+  t.field({
+    type: [InternshipInstance],
+    async resolve(parent, argumentz, ctx) {
+      return InternshipService.getInternshipInstancesForUser(ctx.domain);
+    },
+  }),
+);
+
 builder.objectType(InternshipChosenPositionConnection, {
   name: 'InternshipChosenPositionConnection',
   fields: (t) => ({
@@ -165,16 +174,6 @@ builder.objectType(InternshipPosition, {
     workplace: t.expose('workplace', { type: Workplace }),
   }),
 });
-
-builder.queryField('myInternshipInstances', (t) =>
-  t.field({
-    type: [InternshipInstance],
-    nullable: true,
-    async resolve(parent, argumentz, ctx) {
-      return InternshipService.getInternshipInstancesForUser(ctx.domain.userId);
-    },
-  }),
-);
 
 builder.mutationField('applyForPriorityInternshipPosition', (t) =>
   t.field({

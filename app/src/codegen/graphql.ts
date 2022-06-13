@@ -357,7 +357,7 @@ export type Query = {
   auth: Auth;
   competency?: Maybe<QueryCompetencyResult>;
   competencyFramework?: Maybe<QueryCompetencyFrameworkResult>;
-  myInternshipInstances?: Maybe<Array<InternshipInstance>>;
+  myInternshipInstances: Array<InternshipInstance>;
 };
 
 export type QueryCompetencyArgs = {
