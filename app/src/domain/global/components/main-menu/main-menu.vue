@@ -1,9 +1,31 @@
 <script lang="ts" setup>
+import { MyInternshipInstancesQueryDocument } from '~/codegen/graphql';
+
 import type { MenuState } from './use-menu-state';
 
 defineProps<{
   state: MenuState;
 }>();
+
+gql`
+  query MyInternshipInstancesQuery {
+    myInternshipInstances {
+      id
+      internship {
+        id
+        course {
+          name
+        }
+      }
+    }
+  }
+`;
+
+const { result } = useQuery(MyInternshipInstancesQueryDocument);
+
+const myInternshipInstances = computed(() =>
+  result.value ? result.value.myInternshipInstances : null,
+);
 </script>
 
 <template>
@@ -46,6 +68,19 @@ defineProps<{
           <UiMainNavLink
             v-t="'global.mainMenu.managementLink.competencyFrameworks'"
             to="/manage/competencies"
+          />
+        </UiMainNavSection>
+        <UiMainNavSection v-if="myInternshipInstances?.length">
+          <UiMainNavHeader>
+            <span v-t="'global.mainMenu.internships'" />
+          </UiMainNavHeader>
+          <UiMainNavLink
+            v-for="instance of myInternshipInstances"
+            :key="instance.id"
+            v-t="
+              'global.courses.' + instance.internship.course?.name.toLowerCase()
+            "
+            to="/my-internships"
           />
         </UiMainNavSection>
         <UiMainNavSection>

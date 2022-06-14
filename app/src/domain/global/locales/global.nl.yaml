@@ -14,8 +14,19 @@ mainMenu:
   managementLink:
     competencyFrameworks: Competenties
   toggleButton: Menu
+  internships: Stages
 
 userMenu:
   description: You are logged in as {name}.
   toggleButton: Gebruikers menu
   logoutButton: Meld je af
+
+courses:
+  chemistry: Scheikunde
+  economics: Economie
+  electricity: Elektriciteit
+  fashion: Mode
+  informatics: Informatica
+  math: Wiskunde
+  mechanics: Mechanica
+  photography: Fotografie
