@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { MyInternshipInstancesQueryDocument } from '~/codegen/graphql';
+import { MainMenuQueryDocument } from '~/codegen/graphql';
 
 import type { MenuState } from './use-menu-state';
 
@@ -8,7 +8,7 @@ defineProps<{
 }>();
 
 gql`
-  query MyInternshipInstancesQuery {
+  query MainMenuQuery {
     myInternshipInstances {
       id
       internship {
@@ -21,7 +21,7 @@ gql`
   }
 `;
 
-const { result } = useQuery(MyInternshipInstancesQueryDocument);
+const { result } = useQuery(MainMenuQueryDocument);
 
 const myInternshipInstances = computed(() =>
   result.value ? result.value.myInternshipInstances : null,
@@ -77,9 +77,7 @@ const myInternshipInstances = computed(() =>
           <UiMainNavLink
             v-for="instance of myInternshipInstances"
             :key="instance.id"
-            v-t="
-              'global.courses.' + instance.internship.course?.name.toLowerCase()
-            "
+            v-t="instance.internship.course?.name"
             to="/my-internships"
           />
         </UiMainNavSection>

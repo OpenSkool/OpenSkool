@@ -20,13 +20,3 @@ userMenu:
   description: You are logged in as {name}.
   toggleButton: User Menu
   logoutButton: Log out
-
-courses:
-  chemistry: Chemistry
-  economics: Economics
-  electricity: Electricity
-  fashion: Fashion
-  informatics: Informatics
-  math: Math
-  mechanics: Mechanics
-  photography: Photography

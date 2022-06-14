@@ -8,9 +8,14 @@ import { createUserFixture } from './fixtures';
 let internship: { id: string };
 
 beforeAll(async () => {
-  const course = await prisma.course.create({ data: { name: 'Chemistry' } });
   internship = await prisma.internship.create({
-    data: { courseId: course.id },
+    data: {
+      course: {
+        create: {
+          name: 'Chemistry',
+        },
+      },
+    },
   });
 });
 
@@ -18,7 +23,7 @@ beforeEach(async () => {
   await prisma.internshipInstance.deleteMany();
 });
 
-describe.only('InternshipInstance', () => {
+describe('InternshipInstance', () => {
   test('return empty array if no user', async () => {
     const response = await execute<{ id: string; course: { name: string } }>(
       gql`
@@ -37,6 +42,7 @@ describe.only('InternshipInstance', () => {
     );
     expect(response).toHaveProperty('data.myInternshipInstances', []);
   });
+
   test('return an array internship instances', async () => {
     const user = await createUserFixture();
     await prisma.internshipInstance.create({
