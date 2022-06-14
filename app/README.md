@@ -20,6 +20,16 @@ import Home4Line from '~icons/ri/home-4-line';
 </template>
 ```
 
+### Routes
+
+We follow these rules of thumb when developing routes.
+
+- Routes render layouts and components
+- Only routes can access route params
+- Errors are handled in a global handler
+- AccessDenied / NotFound are handled in routes
+- Data is fetched as late as possible
+
 ### Type-safety
 
 Thanks to GraphQL we have end-to-end type-safety.
