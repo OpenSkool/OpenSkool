@@ -94,11 +94,7 @@ builder.objectType(Internship, {
     id: t.exposeID('id'),
     course: t.field({
       type: Course,
-      nullable: true,
       async resolve(parent, argumentz, ctx) {
-        if (parent.courseId == null) {
-          return null;
-        }
         const course = await CourseService.getCourseById(parent.courseId);
         return course;
       },

@@ -126,8 +126,8 @@ model Internship {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  course             Course?              @relation(fields: [courseId], references: [id])
-  courseId           String?
+  course             Course               @relation(fields: [courseId], references: [id])
+  courseId           String
   internshipInstance InternshipInstance[]
 }
 

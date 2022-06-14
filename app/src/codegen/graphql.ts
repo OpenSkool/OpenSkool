@@ -124,7 +124,7 @@ export type InputError = UserError & {
 
 export type Internship = Node & {
   __typename?: 'Internship';
-  course?: Maybe<Course>;
+  course: Course;
   id: Scalars['ID'];
 };
 
@@ -699,6 +699,21 @@ export type ManageRootCompetenciesQuery = {
         };
       }
     | null;
+};
+
+export type MainMenuQueryQueryVariables = Exact<{ [key: string]: never }>;
+
+export type MainMenuQueryQuery = {
+  __typename?: 'Query';
+  myInternshipInstances: Array<{
+    __typename?: 'InternshipInstance';
+    id: string;
+    internship: {
+      __typename?: 'Internship';
+      id: string;
+      course: { __typename?: 'Course'; name: string };
+    };
+  }>;
 };
 
 type BaseErrorFields_InputError_Fragment = {
@@ -1790,6 +1805,54 @@ export const ManageRootCompetenciesDocument = {
   ManageRootCompetenciesQuery,
   ManageRootCompetenciesQueryVariables
 >;
+export const MainMenuQueryDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'MainMenuQuery' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'myInternshipInstances' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'internship' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'course' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'name' },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<MainMenuQueryQuery, MainMenuQueryQueryVariables>;
 export const ManageCompetencyCreateNestedCompetencyRouteDocument = {
   kind: 'Document',
   definitions: [
