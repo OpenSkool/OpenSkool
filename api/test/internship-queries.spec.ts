@@ -1,9 +1,9 @@
 import gql from 'graphql-tag';
 import { beforeAll, beforeEach, describe, expect, test } from 'vitest';
 
-import { execute } from 'test/client';
-import { createUserFixture } from 'test/fixtures';
-import { prisma } from '~/prisma';
+import { prisma } from '../src/prisma';
+import { execute } from './client';
+import { createUserFixture } from './fixtures';
 
 let internship: { id: string };
 
