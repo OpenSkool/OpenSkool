@@ -38,15 +38,7 @@ AUTH_ISSUER="" # Eg. http://localhost:8080/realms/os-local/
 
 #### Create user
 
-You'll need to create a user in your Skool Realm in order to use the App and run the database seed.
-
-Create a user in your realm and configure the seed variables with your new users data.
-
-```ini
-# api/.env.local
-SEED_USER_ID=""
-SEED_USER_NAME=""
-```
+You'll need to create a user in your Skool Realm in order to use the App.
 
 #### Initialize schema
 
@@ -63,25 +55,17 @@ yarn workspace @os/api prisma migrate reset
 yarn workspace @os/api prisma:test migrate reset
 ```
 
+#### Start
+
+Run `yarn workspace @os/api dev` to start the api in development mode and log in with the user you created.
+
 #### First seed
 
-Add a seed user, that matches an existing user from your local Keycloak instance, to your local env file.
-
-```ini
-# api/.env.local
-SEED_USER_ID="" # Eg. 6a29704b-b0de-4a59-8a81-5778efd6b10a
-SEED_USER_NAME="" # Eg. Dieter Luypaert
-```
-
-Go on to seed the database.
+To have a useful app it's recommended to seed the database. It's important to do this after logging in with your user so it can be used as a reference.
 
 ```sh
 yarn workspace @os/api prisma db seed
 ```
-
-#### Start
-
-Run `yarn workspace @os/api dev` to start the api in development mode.
 
 ### Type-safety
 

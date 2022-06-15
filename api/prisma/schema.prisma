@@ -70,6 +70,16 @@ model CompetencyFrameworkTranslation {
   @@unique([frameworkId, languageCode])
 }
 
+model Course {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name       String
+  internship Internship[]
+}
+
 model Education {
   id String @id @default(cuid())
 
@@ -94,32 +104,6 @@ model EducationTranslation {
   @@unique([educationId, languageCode])
 }
 
-model User {
-  id String @id
-
-  competenciesCreated         Competency[]          @relation("CompetencyToUserCreated")
-  competenciesUpdated         Competency[]          @relation("CompetencyToUserUpdated")
-  competencyFrameworksCreated CompetencyFramework[] @relation("CompetencyFrameworkToUserCreated")
-  competencyFrameworksUpdated CompetencyFramework[] @relation("CompetencyFrameworkToUserUpdated")
-
-  educationsCreated Education[] @relation("EducationToUserCreated")
-  educationsUpdated Education[] @relation("EducationToUserUpdated")
-
-  internshipInstanceToStudent InternshipInstance[] @relation("InternshipInstanceToStudent")
-
-  name String
-}
-
-model Course {
-  id String @id @default(cuid())
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  name       String
-  internship Internship[]
-}
-
 model Internship {
   id String @id @default(cuid())
 
@@ -141,4 +125,20 @@ model InternshipInstance {
   internshipId String
   student      User?      @relation("InternshipInstanceToStudent", fields: [studentId], references: [id])
   studentId    String?
+}
+
+model User {
+  id String @id
+
+  competenciesCreated         Competency[]          @relation("CompetencyToUserCreated")
+  competenciesUpdated         Competency[]          @relation("CompetencyToUserUpdated")
+  competencyFrameworksCreated CompetencyFramework[] @relation("CompetencyFrameworkToUserCreated")
+  competencyFrameworksUpdated CompetencyFramework[] @relation("CompetencyFrameworkToUserUpdated")
+
+  educationsCreated Education[] @relation("EducationToUserCreated")
+  educationsUpdated Education[] @relation("EducationToUserUpdated")
+
+  internshipInstanceToStudent InternshipInstance[] @relation("InternshipInstanceToStudent")
+
+  name String
 }
