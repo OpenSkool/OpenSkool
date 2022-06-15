@@ -12,7 +12,7 @@ gql`
     myInternshipInstances {
       id
       internship {
-        id
+        name
         courses {
           name
         }
@@ -79,7 +79,7 @@ const myInternshipInstances = computed(() =>
             :key="instance.id"
             :to="`/my-internships/${instance.id}`"
           >
-            {{ instance.internship.course?.name }}
+            {{ instance.internship.name }}
           </UiMainNavLink>
         </UiMainNavSection>
         <UiMainNavSection>

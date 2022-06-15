@@ -98,6 +98,12 @@ builder.objectType(Internship, {
         return courses;
       },
     }),
+    name: t.string({
+      async resolve(parent, argumentz, ctx) {
+        const courses = await InternshipService.getInternshipCourses(parent.id);
+        return `Internship ${courses[0]?.name}`;
+      },
+    }),
   }),
 });
 

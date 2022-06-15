@@ -110,6 +110,7 @@ type InputError implements UserError {
 type Internship implements Node {
   courses: [Course!]!
   id: ID!
+  name: String!
 }
 
 type InternshipChosenPositionConnection {

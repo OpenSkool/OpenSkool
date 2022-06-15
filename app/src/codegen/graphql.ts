@@ -126,6 +126,7 @@ export type Internship = Node & {
   __typename?: 'Internship';
   courses: Array<Course>;
   id: Scalars['ID'];
+  name: Scalars['String'];
 };
 
 export type InternshipChosenPositionConnection = {
@@ -710,7 +711,7 @@ export type MainMenuQuery = {
     id: string;
     internship: {
       __typename?: 'Internship';
-      id: string;
+      name: string;
       courses: Array<{ __typename?: 'Course'; name: string }>;
     };
   }>;
@@ -1828,7 +1829,7 @@ export const MainMenuDocument = {
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
                       {
                         kind: 'Field',
                         name: { kind: 'Name', value: 'courses' },
