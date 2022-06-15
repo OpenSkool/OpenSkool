@@ -1,6 +1,7 @@
 import { Internship, InternshipInstance } from '@prisma/client';
 
 import { DomainContext } from '~/domain/context';
+import { CourseModel } from '~/domain/course';
 import { handleServiceError } from '~/domain/helpers';
 import { AppNotFoundError } from '~/errors';
 import { prisma } from '~/prisma';
@@ -31,6 +32,21 @@ export async function getInternshipById(id: string): Promise<InternshipModel> {
       throw new AppNotFoundError();
     }
     return internship;
+  } catch (error) {
+    handleServiceError(error);
+  }
+}
+
+export async function getInternshipCourses(id: string): Promise<CourseModel[]> {
+  try {
+    const internship = await prisma.internship.findUnique({
+      where: { id },
+      select: { courses: true },
+    });
+    if (internship == null) {
+      throw new AppNotFoundError();
+    }
+    return internship.courses;
   } catch (error) {
     handleServiceError(error);
   }

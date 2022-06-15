@@ -124,7 +124,7 @@ export type InputError = UserError & {
 
 export type Internship = Node & {
   __typename?: 'Internship';
-  course: Course;
+  courses: Array<Course>;
   id: Scalars['ID'];
 };
 
@@ -711,7 +711,7 @@ export type MainMenuQuery = {
     internship: {
       __typename?: 'Internship';
       id: string;
-      course: { __typename?: 'Course'; name: string };
+      courses: Array<{ __typename?: 'Course'; name: string }>;
     };
   }>;
 };
@@ -1831,7 +1831,7 @@ export const MainMenuDocument = {
                       { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                       {
                         kind: 'Field',
-                        name: { kind: 'Name', value: 'course' },
+                        name: { kind: 'Name', value: 'courses' },
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [

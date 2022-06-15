@@ -6,7 +6,6 @@ import {
   UserModel,
   InternshipModel,
   InternshipInstanceModel,
-  CourseService,
 } from '~/domain';
 import { sample } from '~/utils';
 
@@ -92,11 +91,11 @@ builder.objectType(Internship, {
   interfaces: [Node],
   fields: (t) => ({
     id: t.exposeID('id'),
-    course: t.field({
-      type: Course,
+    courses: t.field({
+      type: [Course],
       async resolve(parent, argumentz, ctx) {
-        const course = await CourseService.getCourseById(parent.courseId);
-        return course;
+        const courses = await InternshipService.getInternshipCourses(parent.id);
+        return courses;
       },
     }),
   }),
