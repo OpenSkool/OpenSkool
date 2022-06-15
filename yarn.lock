@@ -1975,6 +1975,7 @@ __metadata:
     "@testing-library/vue": ^6.5.1
     "@vitejs/plugin-vue": ^2.3.3
     "@vue/apollo-composable": ^4.0.0-alpha.17
+    "@vue/apollo-util": ^4.0.0-alpha.17
     "@vueuse/core": ^8.5.0
     autoprefixer: ^10.4.7
     c8: ^7.11.3
@@ -2636,6 +2637,13 @@ __metadata:
     "@vue/composition-api":
       optional: true
   checksum: 2e202b302033ed4e2778e9f66fdda8ac9de0c216634a86cd9fb3fbac30cda84d6c6bb6a3f0c5c6e05c133c2a4160aef319827dc8fb4ef945fe01134b03cb0c1b
+  languageName: node
+  linkType: hard
+
+"@vue/apollo-util@npm:^4.0.0-alpha.17":
+  version: 4.0.0-alpha.17
+  resolution: "@vue/apollo-util@npm:4.0.0-alpha.17"
+  checksum: 6c0b0a25f4f2500ef79537f1b7d961cd1d6447e1708f78c94ed5063f905dcc39f2b9c5421ae5299ae14bc01a00d6ee84b2dfbe3d12a27a40b32f48b51b06b0b8
   languageName: node
   linkType: hard
 

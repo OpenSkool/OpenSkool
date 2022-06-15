@@ -7,7 +7,7 @@
   "i18n-ally.displayLanguage": "en",
   "i18n-ally.enabledFrameworks": ["vue"],
   "i18n-ally.keystyle": "nested",
-  "i18n-ally.localesPaths": ["app/src/domain/*/locales/"],
+  "i18n-ally.localesPaths": ["app/src/**/locales/"],
   "i18n-ally.namespace": true,
   "i18n-ally.pathMatcher": "{namespace}.{locale}.{ext}",
   "i18n-ally.sortKeys": true,

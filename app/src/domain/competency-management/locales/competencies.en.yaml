@@ -1,3 +1,11 @@
+component:
+  rootCompetencyList:
+    error:
+      notFound: Competency framework not found.
+  nestedCompetencyList:
+    error:
+      notFound: Competency not found.
+
 form:
   action:
     create:

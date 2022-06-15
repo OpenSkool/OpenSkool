@@ -6,9 +6,9 @@ import {
 import { NestedCompetencyList } from '~/domain/competency-management';
 import {
   AuthAccessDeniedLayout,
-  ErrorLayout,
   ManagementLayout,
   NotFoundLayout,
+  useGlobalStore,
 } from '~/domain/global';
 import { ActionItem } from '~/types';
 import { assert } from '~/utils';
@@ -22,20 +22,18 @@ const { t } = useI18n();
 const router = useRouter();
 
 const ability = useAppAbility();
+const globalStore = useGlobalStore();
 
 const isDeleteModalOpen = ref(false);
 const showReorderCompetenciesControls = ref(false);
 const deleteErrorMessage = ref<string | null>(null);
 
 gql`
-  query manageCompetencyDetailRoute($id: ID!) {
-    competency(id: $id) {
+  query manageCompetencyDetailRoute($competencyId: ID!, $frameworkId: ID!) {
+    competency(id: $competencyId) {
       ... on QueryCompetencySuccess {
         data {
           title
-          framework {
-            title
-          }
           parent {
             id
             title
@@ -44,13 +42,31 @@ gql`
       }
       ...BaseErrorFields
     }
+    competencyFramework(id: $frameworkId) {
+      ... on QueryCompetencyFrameworkSuccess {
+        data {
+          title
+        }
+      }
+    }
   }
 `;
 
-const { error, loading, result } = useQuery(
+const { loading, onError, result } = useQuery(
   ManageCompetencyDetailRouteDocument,
-  () => ({ id: props.competencyId }),
+  () => ({
+    competencyId: props.competencyId,
+    frameworkId: props.frameworkId,
+  }),
   { fetchPolicy: 'network-only' },
+);
+onError(globalStore.handleApolloError);
+
+const framework = computed(() =>
+  result.value?.competencyFramework?.__typename ===
+  'QueryCompetencyFrameworkSuccess'
+    ? result.value.competencyFramework.data
+    : null,
 );
 const competency = computed(() =>
   result.value?.competency?.__typename === 'QueryCompetencySuccess'
@@ -133,25 +149,23 @@ const actions: ActionItem[] = [
 <template>
   <UiBreadcrumb>
     <UiBreadcrumbItem link-to="/manage/competencies">
-      <span v-t="'frameworks.route.index.heading'" />
+      {{ $t('frameworks.route.index.heading') }}
     </UiBreadcrumbItem>
-    <template v-if="competency">
-      <UiBreadcrumbItem :link-to="`/manage/competencies/${frameworkId}`">
-        {{ competency.framework.title }}
-      </UiBreadcrumbItem>
-      <UiBreadcrumbItem
-        v-if="competency.parent"
-        :link-to="`/manage/competencies/${frameworkId}/${competency.parent.id}`"
-      >
-        {{ competency.parent.title }}
-      </UiBreadcrumbItem>
-    </template>
+    <UiBreadcrumbItem
+      v-if="framework"
+      :link-to="`/manage/competencies/${frameworkId}`"
+    >
+      {{ framework.title }}
+    </UiBreadcrumbItem>
+    <UiBreadcrumbItem
+      v-if="competency?.parent != null"
+      :link-to="`/manage/competencies/${frameworkId}/${competency.parent.id}`"
+    >
+      {{ competency.parent.title }}
+    </UiBreadcrumbItem>
   </UiBreadcrumb>
   <AuthAccessDeniedLayout v-if="ability.cannot('read', 'Competency')" />
-  <ErrorLayout v-else-if="error">
-    <p>Competency failed to load.</p>
-  </ErrorLayout>
-  <template v-if="!loading">
+  <template v-else-if="!loading">
     <NotFoundLayout v-if="competency == null">
       <p>Competency not found.</p>
     </NotFoundLayout>
@@ -164,7 +178,7 @@ const actions: ActionItem[] = [
           v-if="ability.can('update', 'Competency')"
           :to="`/manage/competencies/${frameworkId}/${competencyId}/edit`"
         >
-          <span
+          <div
             v-t="'competencies.route.id.index.action.edit'"
             class="sr-only"
           />
@@ -181,9 +195,7 @@ const actions: ActionItem[] = [
           @close="isDeleteModalOpen = false"
         >
           <UiDialogTitle class="text-danger-600">
-            <span
-              v-t="'competencies.route.id.index.confirmDeleteModal.heading'"
-            />
+            {{ $t('competencies.route.id.index.confirmDeleteModal.heading') }}
           </UiDialogTitle>
           <UiDialogDescription>
             <i18n-t
@@ -199,20 +211,20 @@ const actions: ActionItem[] = [
             {{ deleteErrorMessage }}
           </p>
           <UiDialogButtons>
-            <UiButton
-              v-t="
-                'competencies.route.id.index.confirmDeleteModal.action.cancel'
-              "
-              outline
-              @click="isDeleteModalOpen = false"
-            />
-            <UiButton
-              v-t="
-                'competencies.route.id.index.confirmDeleteModal.action.confirm'
-              "
-              color="danger"
-              @click="deleteCompetencyHandler"
-            />
+            <UiButton outline @click="isDeleteModalOpen = false">
+              {{
+                $t(
+                  'competencies.route.id.index.confirmDeleteModal.action.cancel',
+                )
+              }}
+            </UiButton>
+            <UiButton color="danger" @click="deleteCompetencyHandler">
+              {{
+                $t(
+                  'competencies.route.id.index.confirmDeleteModal.action.confirm',
+                )
+              }}
+            </UiButton>
           </UiDialogButtons>
         </UiDialog>
         <NestedCompetencyList

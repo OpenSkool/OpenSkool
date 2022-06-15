@@ -3,8 +3,6 @@ import { i18nLoaderService } from '~/i18n';
 
 await i18nLoaderService.loadGlob(import.meta.glob('./locales/demo.*.yaml'));
 
-const { t } = useI18n();
-
 interface Education {
   id: number;
   name: string;
@@ -35,36 +33,40 @@ const values = ref<{
 </script>
 
 <template>
-  <UiTitle is="h1" v-t="'demo.forms.title'" class="mb-3 text-xl" />
-  <UiTitle is="h2" v-t="'demo.forms.subTitle'" class="mb-3 text-lg" />
+  <UiTitle is="h1" class="text-xl mb-3">
+    {{ $t('demo.forms.title') }}
+  </UiTitle>
+  <UiTitle is="h2" class="text-lg mb-3">
+    {{ $t('demo.forms.subTitle') }}
+  </UiTitle>
   <FormKit
     v-model="values"
     type="form"
-    :submit-label="t('demo.forms.submitButton')"
+    :submit-label="$t('demo.forms.submitButton')"
   >
     <FormKit
       name="competencyTitle"
-      :label="t('demo.forms.field.title')"
+      :label="$t('demo.forms.field.title')"
       type="text"
       validation="required"
     />
     <FormKit
       name="education1"
       type="radio"
-      :label="t('demo.forms.field.education1.label')"
+      :label="$t('demo.forms.field.education1.label')"
       :options="educationOptions"
-      :help="t('demo.forms.field.education1.help')"
+      :help="$t('demo.forms.field.education1.help')"
     />
     <FormKit
       name="education2"
       type="checkbox"
       label="Education Checkbox"
       :options="educationOptions"
-      :help="t('demo.forms.field.education1.help')"
+      :help="$t('demo.forms.field.education1.help')"
     />
     <FormKit
       name="education3"
-      :label="t('demo.forms.field.education2')"
+      :label="$t('demo.forms.field.education2')"
       type="select"
       :options="educationOptions"
     />

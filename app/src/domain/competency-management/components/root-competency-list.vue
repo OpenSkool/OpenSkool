@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { ManageRootCompetenciesDocument } from '~/codegen/graphql';
+import { NotFoundCard, useGlobalStore } from '~/domain/global';
 
 import CompetencyList from './competency-list.vue';
 
@@ -9,6 +10,7 @@ const props = defineProps<{
 }>();
 
 const ability = useAppAbility();
+const globalStore = useGlobalStore();
 
 gql`
   query manageRootCompetencies($id: ID!) {
@@ -26,11 +28,12 @@ gql`
   }
 `;
 
-const { result, error, loading } = useQuery(
+const { loading, onError, result } = useQuery(
   ManageRootCompetenciesDocument,
   () => ({ id: props.frameworkId }),
   { fetchPolicy: 'network-only' },
 );
+onError(globalStore.handleFatalApolloError);
 
 const framework = computed(() =>
   result.value?.competencyFramework?.__typename ===
@@ -41,25 +44,26 @@ const framework = computed(() =>
 </script>
 
 <template>
-  <p v-if="error">Something went wrong</p>
-  <div v-else-if="loading">Loading</div>
-  <p v-else-if="framework == null">Not found</p>
-  <template v-else>
+  <template v-if="!loading">
+    <NotFoundCard v-if="framework == null">
+      {{ $t('competencies.component.rootCompetencyList.error.notFound') }}
+    </NotFoundCard>
+    <UiEmptyCard v-else-if="framework.competencies.length === 0">
+      <p>{{ $t('frameworks.route.id.index.notFound') }}</p>
+      <UiButtonRouterLink
+        v-if="ability.can('create', 'Competency')"
+        class="my-5"
+        :to="`${$route.path}/create-competency`"
+      >
+        {{ $t('frameworks.route.id.index.action.new') }}
+      </UiButtonRouterLink>
+    </UiEmptyCard>
     <CompetencyList
-      v-if="framework.competencies.length > 0"
+      v-else
       :competencies="framework.competencies"
       :framework-id="frameworkId"
       :refetch-queries="['getFrameworkRootCompetencies']"
       :show-reorder-controls="showReorderControls"
     />
-    <UiEmptyCard v-else>
-      <p v-t="'frameworks.route.id.index.notFound'" />
-      <UiButtonRouterLink
-        v-if="ability.can('create', 'Competency')"
-        v-t="'frameworks.route.id.index.action.new'"
-        class="my-5"
-        :to="`${$route.path}/create-competency`"
-      />
-    </UiEmptyCard>
   </template>
 </template>

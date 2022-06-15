@@ -23,7 +23,7 @@ const logoutHref = computed(() => {
         ]"
       >
         <RiUser3Line aria-hidden />
-        <span v-t="'global.userMenu.toggleButton'" class="sr-only" />
+        <div v-t="'global.userMenu.toggleButton'" class="sr-only" />
       </button>
     </UiMenuButton>
     <UiMenuItems>
@@ -38,7 +38,7 @@ const logoutHref = computed(() => {
       </i18n-t>
       <UiMenuItem is="a" class="text-base" :href="logoutHref">
         <RiLogoutBoxRLine aria-hidden />
-        <span v-t="'global.userMenu.logoutButton'" />
+        {{ $t('global.userMenu.logoutButton') }}
       </UiMenuItem>
     </UiMenuItems>
   </UiMenu>

@@ -18,18 +18,22 @@ const actions: ActionItem[] = [
 
 <template>
   <UiBreadcrumb>
-    <UiBreadcrumbItem v-t="'global.mainMenu.managementHeader'" />
+    <UiBreadcrumbItem>
+      {{ $t('global.mainMenu.managementHeader') }}
+    </UiBreadcrumbItem>
   </UiBreadcrumb>
-  <UiTitle is="h1" class="text-xl mb-3">
-    {{ $t('frameworks.route.index.heading') }}
-  </UiTitle>
   <AuthAccessDeniedLayout
     v-if="ability.cannot('read', 'CompetencyFramework')"
   />
-  <ManagementLayout
-    :actions="actions"
-    :actions-label="$t('frameworks.route.id.index.actionLabel')"
-  >
-    <CompetencyFrameworkList />
-  </ManagementLayout>
+  <template v-else>
+    <UiTitle is="h1" class="text-xl mb-3">
+      {{ $t('frameworks.route.index.heading') }}
+    </UiTitle>
+    <ManagementLayout
+      :actions="actions"
+      :actions-label="$t('frameworks.route.id.index.actionLabel')"
+    >
+      <CompetencyFrameworkList />
+    </ManagementLayout>
+  </template>
 </template>

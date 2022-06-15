@@ -43,7 +43,7 @@ const framework = computed(() => competency.value?.framework);
 <template>
   <UiBreadcrumb>
     <UiBreadcrumbItem link-to="/manage/competencies">
-      <span v-t="'frameworks.route.index.heading'" />
+      {{ $t('frameworks.route.index.heading') }}
     </UiBreadcrumbItem>
     <UiBreadcrumbItem
       v-if="framework"
@@ -59,9 +59,10 @@ const framework = computed(() => competency.value?.framework);
     </UiBreadcrumbItem>
   </UiBreadcrumb>
   <AuthAccessDeniedLayout v-if="ability.cannot('update', 'Competency')" />
-  <CompetencyEdit
-    v-else
-    :competency-id="competencyId"
-    :framework-id="frameworkId"
-  />
+  <template v-else>
+    <UiTitle is="h1" class="text-xl mb-3">
+      {{ $t('competencies.route.id.edit.heading') }}
+    </UiTitle>
+    <CompetencyEdit :competency-id="competencyId" :framework-id="frameworkId" />
+  </template>
 </template>

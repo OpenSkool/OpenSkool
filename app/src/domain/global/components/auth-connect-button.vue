@@ -10,5 +10,7 @@ const connectHref = computed(() => {
 </script>
 
 <template>
-  <UiButtonLink v-t="'global.auth.action.login'" :href="connectHref" />
+  <UiButtonLink :href="connectHref">
+    {{ $t('global.auth.action.login') }}
+  </UiButtonLink>
 </template>

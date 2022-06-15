@@ -11,8 +11,11 @@ const props = defineProps<{
 const ability = useAppAbility();
 
 gql`
-  query manageCompetencyCreateNestedCompetencyRoute($id: ID!) {
-    competency(id: $id) {
+  query manageCompetencyCreateNestedCompetencyRoute(
+    $competencyId: ID!
+    $frameworkId: ID!
+  ) {
+    competency(id: $competencyId) {
       ... on QueryCompetencySuccess {
         data {
           title
@@ -23,15 +26,29 @@ gql`
       }
       ...BaseErrorFields
     }
+    competencyFramework(id: $frameworkId) {
+      ... on QueryCompetencyFrameworkSuccess {
+        data {
+          title
+        }
+      }
+      ...BaseErrorFields
+    }
   }
 `;
 
 const { result } = useQuery(
   ManageCompetencyCreateNestedCompetencyRouteDocument,
-  { id: props.competencyId },
+  props,
   { fetchPolicy: 'network-only' },
 );
 
+const framework = computed(() =>
+  result.value?.competencyFramework?.__typename ===
+  'QueryCompetencyFrameworkSuccess'
+    ? result.value.competencyFramework.data
+    : null,
+);
 const parent = computed(() =>
   result.value?.competency?.__typename === 'QueryCompetencySuccess'
     ? result.value.competency.data
@@ -42,27 +59,29 @@ const parent = computed(() =>
 <template>
   <UiBreadcrumb>
     <UiBreadcrumbItem link-to="/manage/competencies">
-      <span v-t="'frameworks.route.index.heading'" />
+      {{ $t('frameworks.route.index.heading') }}
     </UiBreadcrumbItem>
-    <template v-if="parent">
-      <UiBreadcrumbItem :link-to="`/manage/competencies/${frameworkId}`">
-        {{ parent.framework.title }}
-      </UiBreadcrumbItem>
-      <UiBreadcrumbItem
-        :link-to="`/manage/competencies/${frameworkId}/${competencyId}`"
-      >
-        {{ parent.title }}
-      </UiBreadcrumbItem>
-    </template>
+    <UiBreadcrumbItem
+      v-if="framework"
+      :link-to="`/manage/competencies/${frameworkId}`"
+    >
+      {{ framework.title }}
+    </UiBreadcrumbItem>
+    <UiBreadcrumbItem
+      v-if="parent"
+      :link-to="`/manage/competencies/${frameworkId}/${competencyId}`"
+    >
+      {{ parent.title }}
+    </UiBreadcrumbItem>
   </UiBreadcrumb>
   <AuthAccessDeniedLayout v-if="ability.cannot('create', 'Competency')" />
-  <UiTitle
-    is="h1"
-    v-t="'competencies.route.create.heading'"
-    class="text-xl mb-3"
-  />
-  <NestedCompetencyCreate
-    :competency-id="competencyId"
-    :framework-id="frameworkId"
-  />
+  <template v-else>
+    <UiTitle is="h1" class="text-xl mb-3">
+      {{ $t('competencies.route.create.heading') }}
+    </UiTitle>
+    <NestedCompetencyCreate
+      :competency-id="competencyId"
+      :framework-id="frameworkId"
+    />
+  </template>
 </template>

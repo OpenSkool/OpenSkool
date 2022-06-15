@@ -48,6 +48,7 @@ declare module '@vue/runtime-core' {
     TabPanels: typeof import('@headlessui/vue')['TabPanels']
     TransitionChild: typeof import('@headlessui/vue')['TransitionChild']
     TransitionRoot: typeof import('@headlessui/vue')['TransitionRoot']
+    UiAlert: typeof import('./../ui/alert/ui-alert.vue')['default']
     UiBreadcrumb: typeof import('./../ui/breadcrumb/ui-breadcrumb.vue')['default']
     UiBreadcrumbItem: typeof import('./../ui/breadcrumb/ui-breadcrumb-item.vue')['default']
     UiButton: typeof import('./../ui/button/ui-button.vue')['default']

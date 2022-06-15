@@ -1,11 +1,14 @@
 <script lang="ts" setup>
 import { MainMenuDocument } from '~/codegen/graphql';
+import { useGlobalStore } from '~/domain/global/store';
 
 import type { MenuState } from './use-menu-state';
 
 defineProps<{
   state: MenuState;
 }>();
+
+const globalStore = useGlobalStore();
 
 gql`
   query MainMenu {
@@ -21,15 +24,16 @@ gql`
   }
 `;
 
-const { result } = useQuery(MainMenuDocument);
+const { loading, onError, result } = useQuery(MainMenuDocument);
+onError(globalStore.handleFatalApolloError);
 
-const myInternshipInstances = computed(() =>
-  result.value ? result.value.myInternshipInstances : null,
+const internshipInstances = computed(() =>
+  result.value ? result.value.myInternshipInstances : [],
 );
 </script>
 
 <template>
-  <div class="relative">
+  <div v-if="!loading" class="relative">
     <Transition
       enter-active-class="absolute transition transform"
       enter-from-class="-translate-x-full"
@@ -63,23 +67,22 @@ const myInternshipInstances = computed(() =>
         </header>
         <UiMainNavSection>
           <UiMainNavHeader>
-            <span v-t="'global.mainMenu.managementHeader'" />
+            {{ $t('global.mainMenu.managementHeader') }}
           </UiMainNavHeader>
-          <UiMainNavLink
-            v-t="'global.mainMenu.managementLink.competencyFrameworks'"
-            to="/manage/competencies"
-          />
+          <UiMainNavLink to="/manage/competencies">
+            {{ $t('global.mainMenu.managementLink.competencyFrameworks') }}
+          </UiMainNavLink>
         </UiMainNavSection>
-        <UiMainNavSection v-if="myInternshipInstances?.length">
+        <UiMainNavSection v-if="internshipInstances.length > 0">
           <UiMainNavHeader>
-            <span v-t="'global.mainMenu.internships'" />
+            {{ $t('global.mainMenu.internships') }}
           </UiMainNavHeader>
           <UiMainNavLink
-            v-for="instance of myInternshipInstances"
-            :key="instance.id"
-            :to="`/my-internships/${instance.id}`"
+            v-for="internshipInstance of internshipInstances"
+            :key="internshipInstance.id"
+            :to="`/my-internships/${internshipInstance.id}`"
           >
-            {{ instance.internship.name }}
+            {{ internshipInstance.internship.name }}
           </UiMainNavLink>
         </UiMainNavSection>
         <UiMainNavSection>
