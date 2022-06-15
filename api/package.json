@@ -90,6 +90,6 @@
     ]
   },
   "prisma": {
-    "seed": "esmo -r dotenv-flow/config prisma/seed.ts"
+    "seed": "esmo prisma/seed.ts"
   }
 }
