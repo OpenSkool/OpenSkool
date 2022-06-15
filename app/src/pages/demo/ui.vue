@@ -20,6 +20,41 @@ const inputText = ref<string>('');
 
 <template>
   <div class="space-y-10">
+    <div class="">
+      <UiTitle is="h2" class="text-xl">Alert</UiTitle>
+      <div class="space-y-3">
+        <div class="ui-alert">
+          <h3 class="ui-alert__heading">Default alert</h3>
+          This is a default alert with some content and
+          <a href="#" class="alert-link">a link</a>.
+        </div>
+        <div class="ui-alert ui-alert--primary">
+          <h3 class="ui-alert__heading">Primary alert</h3>
+          This is a primary alert with some content and
+          <a href="#" class="alert-link">a link</a>.
+        </div>
+        <div class="ui-alert ui-alert--caution">
+          <h3 class="ui-alert__heading">Caution alert</h3>
+          This is a caution alert with some content and
+          <a href="#" class="alert-link">a link</a>.
+        </div>
+        <div class="ui-alert ui-alert--danger">
+          <h3 class="ui-alert__heading">Danger alert</h3>
+          This is a danger alert with some content and
+          <a href="#" class="alert-link">a link</a>.
+        </div>
+        <div class="ui-alert ui-alert--info">
+          <h3 class="ui-alert__heading">Info alert</h3>
+          This is an info alert with some content and
+          <a href="#" class="alert-link">a link</a>.
+        </div>
+        <div class="ui-alert ui-alert--success">
+          <h3 class="ui-alert__heading">Success alert</h3>
+          This is a success alert with some content and
+          <a href="#" class="alert-link">a link</a>.
+        </div>
+      </div>
+    </div>
     <div>
       <UiTitle is="h2" class="text-xl">Title</UiTitle>
       <UiSubtitle is="h3">Subtitle</UiSubtitle>

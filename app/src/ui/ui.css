@@ -1,0 +1,26 @@
+.ui-alert {
+  @apply rounded-md space-y-2 border-2 text-base py-3 px-5;
+
+  & > a {
+    @apply underline;
+  }
+}
+.ui-alert--primary {
+  @apply bg-primary-200 border-primary-800 text-primary-900;
+}
+.ui-alert--caution {
+  @apply bg-caution-200 border-caution-800 text-caution-900;
+}
+.ui-alert--danger {
+  @apply bg-danger-200 border-danger-800 text-danger-900;
+}
+.ui-alert--info {
+  @apply bg-info-200 border-info-800 text-info-900;
+}
+.ui-alert--success {
+  @apply bg-success-200 border-success-800 text-success-900;
+}
+
+.ui-alert__heading {
+  @apply font-semibold;
+}
