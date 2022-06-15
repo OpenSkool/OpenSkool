@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { MainMenuQueryDocument } from '~/codegen/graphql';
+import { MainMenuDocument } from '~/codegen/graphql';
 
 import type { MenuState } from './use-menu-state';
 
@@ -8,7 +8,7 @@ defineProps<{
 }>();
 
 gql`
-  query MainMenuQuery {
+  query MainMenu {
     myInternshipInstances {
       id
       internship {
@@ -21,7 +21,7 @@ gql`
   }
 `;
 
-const { result } = useQuery(MainMenuQueryDocument);
+const { result } = useQuery(MainMenuDocument);
 
 const myInternshipInstances = computed(() =>
   result.value ? result.value.myInternshipInstances : null,
@@ -47,7 +47,7 @@ const myInternshipInstances = computed(() =>
       >
         <header class="-mb-5">
           <RouterLink
-            class="rounded-md flex gap-3 items-center justify-center focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-primary-700)"
+            class="rounded-md flex gap-3 items-center justify-center focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-primary-700) "
             to="/"
           >
             <img
@@ -77,9 +77,10 @@ const myInternshipInstances = computed(() =>
           <UiMainNavLink
             v-for="instance of myInternshipInstances"
             :key="instance.id"
-            v-t="instance.internship.course?.name"
-            to="/my-internships"
-          />
+            :to="`/my-internships/${instance.id}`"
+          >
+            {{ instance.internship.course?.name }}
+          </UiMainNavLink>
         </UiMainNavSection>
         <UiMainNavSection>
           <UiMainNavHeader>Demo</UiMainNavHeader>

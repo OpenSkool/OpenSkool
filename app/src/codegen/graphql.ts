@@ -701,9 +701,9 @@ export type ManageRootCompetenciesQuery = {
     | null;
 };
 
-export type MainMenuQueryQueryVariables = Exact<{ [key: string]: never }>;
+export type MainMenuQueryVariables = Exact<{ [key: string]: never }>;
 
-export type MainMenuQueryQuery = {
+export type MainMenuQuery = {
   __typename?: 'Query';
   myInternshipInstances: Array<{
     __typename?: 'InternshipInstance';
@@ -1805,13 +1805,13 @@ export const ManageRootCompetenciesDocument = {
   ManageRootCompetenciesQuery,
   ManageRootCompetenciesQueryVariables
 >;
-export const MainMenuQueryDocument = {
+export const MainMenuDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'query',
-      name: { kind: 'Name', value: 'MainMenuQuery' },
+      name: { kind: 'Name', value: 'MainMenu' },
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
@@ -1852,7 +1852,7 @@ export const MainMenuQueryDocument = {
       },
     },
   ],
-} as unknown as DocumentNode<MainMenuQueryQuery, MainMenuQueryQueryVariables>;
+} as unknown as DocumentNode<MainMenuQuery, MainMenuQueryVariables>;
 export const ManageCompetencyCreateNestedCompetencyRouteDocument = {
   kind: 'Document',
   definitions: [
