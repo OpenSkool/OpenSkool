@@ -108,7 +108,7 @@ type InputError implements UserError {
 }
 
 type Internship implements Node {
-  course: Course!
+  courses: [Course!]!
   id: ID!
 }
 

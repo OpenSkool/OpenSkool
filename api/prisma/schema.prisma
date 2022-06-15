@@ -76,8 +76,8 @@ model Course {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  name       String
-  internship Internship[]
+  name        String
+  internships Internship[]
 }
 
 model Education {
@@ -110,9 +110,8 @@ model Internship {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  course             Course               @relation(fields: [courseId], references: [id])
-  courseId           String
-  internshipInstance InternshipInstance[]
+  courses             Course[]
+  internshipInstances InternshipInstance[]
 }
 
 model InternshipInstance {

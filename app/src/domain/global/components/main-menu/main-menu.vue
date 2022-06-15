@@ -13,7 +13,7 @@ gql`
       id
       internship {
         id
-        course {
+        courses {
           name
         }
       }
