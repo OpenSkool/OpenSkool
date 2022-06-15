@@ -15,6 +15,6 @@ defineProps<{
   >
     <RiMenuFoldLine v-if="ariaExpanded" aria-hidden />
     <RiMenuLine v-else aria-hidden />
-    <span v-t="'global.mainMenu.toggleButton'" />
+    {{ $t('global.mainMenu.toggleButton') }}
   </button>
 </template>

@@ -5,7 +5,7 @@ import AuthConnectButton from './auth-connect-button.vue';
 <template>
   <UiTitle is="h1" class="text-xl mb-3">Access denied</UiTitle>
   <UiCard>
-    <div class="space-y-8">
+    <div class="space-y-5">
       <p v-t="'global.auth.unauthorized'" />
       <AuthConnectButton />
     </div>

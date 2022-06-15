@@ -1,3 +1,9 @@
+component:
+  notFoundCard:
+    heading: Not found
+  notFoundLayout:
+    title: Not found
+
 message: Global message is global
 title: OpenSkool
 
@@ -8,6 +14,10 @@ auth:
 
 breadcrumb:
   label: Breadcrumb
+
+layout:
+  root:
+    globalError: Some data failed to load correctly. Reload the page, try again later, or inform us if the problem persists.
 
 mainMenu:
   managementHeader: Management

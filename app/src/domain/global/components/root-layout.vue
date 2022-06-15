@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { useGlobalStore } from '~/domain/global/store';
 import { i18nLoaderService } from '~/i18n';
 
 // import DebugLayout from './debug-layout.vue';
@@ -10,6 +11,8 @@ import { useMenuState } from './main-menu/use-menu-state';
 import UserMenu from './user-menu.vue';
 
 await i18nLoaderService.loadGlobalMessages();
+
+const globalStore = useGlobalStore();
 
 const { menuState, toggleMenu } = useMenuState();
 </script>
@@ -35,6 +38,15 @@ const { menuState, toggleMenu } = useMenuState();
       :class="menuState.overlay || !menuState.opened ? 'col-span-2' : ''"
     >
       <main class="container mx-auto p-10">
+        <UiAlert
+          v-if="globalStore.hasGlobalError"
+          class="mb-5"
+          color="danger"
+          role="alert"
+          heading="Something went wrong"
+        >
+          <p v-t="'global.layout.root.globalError'" />
+        </UiAlert>
         <Suspense>
           <RouterView />
         </Suspense>

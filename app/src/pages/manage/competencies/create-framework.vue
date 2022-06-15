@@ -11,11 +11,13 @@ const ability = useAppAbility();
       {{ $t('frameworks.route.index.heading') }}
     </UiBreadcrumbItem>
   </UiBreadcrumb>
-  <UiTitle is="h1" class="text-xl mb-3">
-    {{ $t('frameworks.route.create.heading') }}
-  </UiTitle>
   <AuthAccessDeniedLayout
     v-if="ability.cannot('create', 'CompetencyFramework')"
   />
-  <CompetencyFrameworkCreate v-else />
+  <template v-else>
+    <UiTitle is="h1" class="text-xl mb-3">
+      {{ $t('frameworks.route.create.heading') }}
+    </UiTitle>
+    <CompetencyFrameworkCreate />
+  </template>
 </template>

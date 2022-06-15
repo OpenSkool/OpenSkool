@@ -442,11 +442,11 @@ export type AuthCurrentUserQuery = {
   };
 };
 
-export type GetEditCompetencyQueryVariables = Exact<{
+export type ManageEditCompetencyQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-export type GetEditCompetencyQuery = {
+export type ManageEditCompetencyQuery = {
   __typename?: 'Query';
   competency?:
     | {
@@ -457,15 +457,7 @@ export type GetEditCompetencyQuery = {
       }
     | {
         __typename?: 'QueryCompetencySuccess';
-        data: {
-          __typename?: 'Competency';
-          title: string;
-          framework: {
-            __typename?: 'CompetencyFramework';
-            id: string;
-            title: string;
-          };
-        };
+        data: { __typename?: 'Competency'; title: string };
       }
     | null;
 };
@@ -563,11 +555,11 @@ export type CreateCompetencyFrameworkMutation = {
       };
 };
 
-export type GetAllCompetencyFrameworksQueryVariables = Exact<{
+export type ManageCompetencyFrameworkListQueryVariables = Exact<{
   [key: string]: never;
 }>;
 
-export type GetAllCompetencyFrameworksQuery = {
+export type ManageCompetencyFrameworkListQuery = {
   __typename?: 'Query';
   allCompetencyFrameworks: Array<{
     __typename?: 'CompetencyFramework';
@@ -744,7 +736,8 @@ export type BaseErrorFieldsFragment =
   | BaseErrorFields_UnauthorizedError_Fragment;
 
 export type ManageCompetencyCreateNestedCompetencyRouteQueryVariables = Exact<{
-  id: Scalars['ID'];
+  competencyId: Scalars['ID'];
+  frameworkId: Scalars['ID'];
 }>;
 
 export type ManageCompetencyCreateNestedCompetencyRouteQuery = {
@@ -763,6 +756,18 @@ export type ManageCompetencyCreateNestedCompetencyRouteQuery = {
           title: string;
           framework: { __typename?: 'CompetencyFramework'; title: string };
         };
+      }
+    | null;
+  competencyFramework?:
+    | {
+        __typename?: 'NotFoundError';
+        code: string;
+        message: string;
+        path?: Array<string> | null;
+      }
+    | {
+        __typename?: 'QueryCompetencyFrameworkSuccess';
+        data: { __typename?: 'CompetencyFramework'; title: string };
       }
     | null;
 };
@@ -792,7 +797,8 @@ export type ManageCompetencyEditCompetencyRouteQuery = {
 };
 
 export type ManageCompetencyDetailRouteQueryVariables = Exact<{
-  id: Scalars['ID'];
+  competencyId: Scalars['ID'];
+  frameworkId: Scalars['ID'];
 }>;
 
 export type ManageCompetencyDetailRouteQuery = {
@@ -809,13 +815,19 @@ export type ManageCompetencyDetailRouteQuery = {
         data: {
           __typename?: 'Competency';
           title: string;
-          framework: { __typename?: 'CompetencyFramework'; title: string };
           parent?: {
             __typename?: 'Competency';
             id: string;
             title: string;
           } | null;
         };
+      }
+    | null;
+  competencyFramework?:
+    | { __typename?: 'NotFoundError' }
+    | {
+        __typename?: 'QueryCompetencyFrameworkSuccess';
+        data: { __typename?: 'CompetencyFramework'; title: string };
       }
     | null;
 };
@@ -1000,13 +1012,13 @@ export const AuthCurrentUserDocument = {
   AuthCurrentUserQuery,
   AuthCurrentUserQueryVariables
 >;
-export const GetEditCompetencyDocument = {
+export const ManageEditCompetencyDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'query',
-      name: { kind: 'Name', value: 'getEditCompetency' },
+      name: { kind: 'Name', value: 'manageEditCompetency' },
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
@@ -1055,23 +1067,6 @@ export const GetEditCompetencyDocument = {
                               kind: 'Field',
                               name: { kind: 'Name', value: 'title' },
                             },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'framework' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'id' },
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'title' },
-                                  },
-                                ],
-                              },
-                            },
                           ],
                         },
                       },
@@ -1091,8 +1086,8 @@ export const GetEditCompetencyDocument = {
     ...BaseErrorFieldsFragmentDoc.definitions,
   ],
 } as unknown as DocumentNode<
-  GetEditCompetencyQuery,
-  GetEditCompetencyQueryVariables
+  ManageEditCompetencyQuery,
+  ManageEditCompetencyQueryVariables
 >;
 export const RenameCompetencyDocument = {
   kind: 'Document',
@@ -1400,13 +1395,13 @@ export const CreateCompetencyFrameworkDocument = {
   CreateCompetencyFrameworkMutation,
   CreateCompetencyFrameworkMutationVariables
 >;
-export const GetAllCompetencyFrameworksDocument = {
+export const ManageCompetencyFrameworkListDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'query',
-      name: { kind: 'Name', value: 'GetAllCompetencyFrameworks' },
+      name: { kind: 'Name', value: 'ManageCompetencyFrameworkList' },
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
@@ -1426,8 +1421,8 @@ export const GetAllCompetencyFrameworksDocument = {
     },
   ],
 } as unknown as DocumentNode<
-  GetAllCompetencyFrameworksQuery,
-  GetAllCompetencyFrameworksQueryVariables
+  ManageCompetencyFrameworkListQuery,
+  ManageCompetencyFrameworkListQueryVariables
 >;
 export const CreateNestedCompetencyDocument = {
   kind: 'Document',
@@ -1867,7 +1862,21 @@ export const ManageCompetencyCreateNestedCompetencyRouteDocument = {
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'competencyId' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'frameworkId' },
+          },
           type: {
             kind: 'NonNullType',
             type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
@@ -1886,7 +1895,7 @@ export const ManageCompetencyCreateNestedCompetencyRouteDocument = {
                 name: { kind: 'Name', value: 'id' },
                 value: {
                   kind: 'Variable',
-                  name: { kind: 'Name', value: 'id' },
+                  name: { kind: 'Name', value: 'competencyId' },
                 },
               },
             ],
@@ -1924,6 +1933,57 @@ export const ManageCompetencyCreateNestedCompetencyRouteDocument = {
                                   },
                                 ],
                               },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'BaseErrorFields' },
+                },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'competencyFramework' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'frameworkId' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: {
+                      kind: 'Name',
+                      value: 'QueryCompetencyFrameworkSuccess',
+                    },
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'data' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'title' },
                             },
                           ],
                         },
@@ -2047,7 +2107,21 @@ export const ManageCompetencyDetailRouteDocument = {
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'competencyId' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'frameworkId' },
+          },
           type: {
             kind: 'NonNullType',
             type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
@@ -2066,7 +2140,7 @@ export const ManageCompetencyDetailRouteDocument = {
                 name: { kind: 'Name', value: 'id' },
                 value: {
                   kind: 'Variable',
-                  name: { kind: 'Name', value: 'id' },
+                  name: { kind: 'Name', value: 'competencyId' },
                 },
               },
             ],
@@ -2094,19 +2168,6 @@ export const ManageCompetencyDetailRouteDocument = {
                             },
                             {
                               kind: 'Field',
-                              name: { kind: 'Name', value: 'framework' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'title' },
-                                  },
-                                ],
-                              },
-                            },
-                            {
-                              kind: 'Field',
                               name: { kind: 'Name', value: 'parent' },
                               selectionSet: {
                                 kind: 'SelectionSet',
@@ -2131,6 +2192,53 @@ export const ManageCompetencyDetailRouteDocument = {
                 {
                   kind: 'FragmentSpread',
                   name: { kind: 'Name', value: 'BaseErrorFields' },
+                },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'competencyFramework' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'frameworkId' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: {
+                      kind: 'Name',
+                      value: 'QueryCompetencyFrameworkSuccess',
+                    },
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'data' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'title' },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
                 },
               ],
             },

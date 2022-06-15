@@ -2,9 +2,10 @@
 import { FormKitNode } from '@formkit/core';
 
 import {
-  GetEditCompetencyDocument,
+  ManageEditCompetencyDocument,
   RenameCompetencyDocument,
 } from '~/codegen/graphql';
+import { useGlobalStore } from '~/domain/global';
 import { assert } from '~/utils';
 
 const props = defineProps<{
@@ -15,16 +16,14 @@ const props = defineProps<{
 const { t } = useI18n();
 const router = useRouter();
 
+const globalStore = useGlobalStore();
+
 gql`
-  query getEditCompetency($id: ID!) {
+  query manageEditCompetency($id: ID!) {
     competency(id: $id) {
       ... on QueryCompetencySuccess {
         data {
           title
-          framework {
-            id
-            title
-          }
         }
       }
       ...BaseErrorFields
@@ -32,15 +31,13 @@ gql`
   }
 `;
 
-const {
-  error: getEditCompetencyError,
-  loading,
-  result,
-} = useQuery(
-  GetEditCompetencyDocument,
+const { loading, onError, result } = useQuery(
+  ManageEditCompetencyDocument,
   { id: props.competencyId },
   { fetchPolicy: 'network-only' },
 );
+onError(globalStore.handleFatalApolloError);
+
 const competency = computed(() =>
   result.value?.competency?.__typename === 'QueryCompetencySuccess'
     ? result.value.competency.data
@@ -116,18 +113,7 @@ async function handleFormSubmit(): Promise<void> {
 </script>
 
 <template>
-  <template v-if="getEditCompetencyError">
-    <p>Something went wrong</p>
-  </template>
-  <template v-else-if="loading">
-    <div>Loading</div>
-  </template>
-  <template v-else>
-    <UiTitle
-      is="h1"
-      v-t="'competencies.route.id.edit.heading'"
-      class="text-xl mb-3"
-    />
+  <template v-if="!loading">
     <FormKit
       v-if="formValues != null"
       v-model="formValues"

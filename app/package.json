@@ -28,6 +28,7 @@
     "@os/ability": "workspace:*",
     "@os/css-color-4": "workspace:*",
     "@vue/apollo-composable": "^4.0.0-alpha.17",
+    "@vue/apollo-util": "^4.0.0-alpha.17",
     "@vueuse/core": "^8.5.0",
     "graphql": "^16.5.0",
     "pinia": "^2.0.14",

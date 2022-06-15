@@ -3,7 +3,7 @@ import { graphql } from 'msw';
 import {
   DeleteCompetencyMutation,
   DeleteCompetencyMutationVariables,
-  GetEditCompetencyQuery,
+  ManageEditCompetencyQuery,
   ManageCompetencyDetailRouteQuery,
   ManageNestedCompetenciesQuery,
   MutationCreateCompetencyFrameworkArgs,
@@ -16,9 +16,9 @@ import {
   MutationRenameCompetencySuccess,
 } from '~/codegen/graphql';
 
-// mutations
-
 export default [
+  // mutations
+
   graphql.mutation<
     { createNestedCompetency: MutationCreateNestedCompetencySuccess },
     MutationCreateNestedCompetencyArgs
@@ -153,8 +153,8 @@ export default [
     );
   }),
 
-  graphql.query<GetEditCompetencyQuery>(
-    'getEditCompetency',
+  graphql.query<ManageEditCompetencyQuery>(
+    'manageEditCompetency',
     (req, res, ctx) => {
       return res(
         ctx.data({
@@ -162,10 +162,6 @@ export default [
           competency: {
             __typename: 'QueryCompetencySuccess',
             data: {
-              framework: {
-                id: 'cuid',
-                title: 'Competencty Framework',
-              },
               title: 'Title defined in handlers.ts',
             },
           },
@@ -205,14 +201,17 @@ export default [
           competency: {
             __typename: 'QueryCompetencySuccess',
             data: {
-              framework: {
-                title: 'custom title',
-              },
               parent: {
                 title: 'custom title',
                 id: 'cuid',
               },
               title: 'custom title',
+            },
+          },
+          competencyFramework: {
+            __typename: 'QueryCompetencyFrameworkSuccess',
+            data: {
+              title: 'Competency Framework Title',
             },
           },
         }),

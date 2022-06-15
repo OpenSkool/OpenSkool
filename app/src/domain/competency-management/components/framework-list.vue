@@ -1,8 +1,11 @@
 <script lang="ts" setup>
-import { GetAllCompetencyFrameworksDocument } from '~/codegen/graphql';
+import { ManageCompetencyFrameworkListDocument } from '~/codegen/graphql';
+import { useGlobalStore } from '~/domain/global';
+
+const globalStore = useGlobalStore();
 
 gql`
-  query GetAllCompetencyFrameworks {
+  query ManageCompetencyFrameworkList {
     allCompetencyFrameworks {
       id
       title
@@ -10,27 +13,29 @@ gql`
   }
 `;
 
-const { error, loading, result } = useQuery(GetAllCompetencyFrameworksDocument);
-
-const frameworks = computed(() =>
-  result.value ? result.value.allCompetencyFrameworks : null,
+const { loading, onError, result } = useQuery(
+  ManageCompetencyFrameworkListDocument,
 );
+onError(globalStore.handleFatalApolloError);
+
+const frameworks = computed(() => result.value?.allCompetencyFrameworks);
 
 const ability = useAppAbility();
 </script>
 
 <template>
-  <template v-if="error">
-    <p>Something went wrong</p>
-  </template>
-  <template v-else-if="loading">
-    <p>Loading</p>
-  </template>
-  <template v-else-if="frameworks == null">
-    <p>Not found</p>
-  </template>
-  <template v-else>
-    <UiOrderedList v-if="frameworks.length > 0" class="flex-1">
+  <template v-if="!loading && frameworks != null">
+    <UiEmptyCard v-if="frameworks.length === 0" class="flex-1">
+      <p>{{ $t('frameworks.route.index.notFound') }}</p>
+      <UiButtonRouterLink
+        v-if="ability.can('create', 'CompetencyFramework')"
+        class="my-5"
+        to="/manage/competencies/create-framework"
+      >
+        {{ $t('frameworks.route.index.action.create') }}
+      </UiButtonRouterLink>
+    </UiEmptyCard>
+    <UiOrderedList v-else class="flex-1">
       <UiOrderedListItem
         v-for="framework of frameworks"
         :key="framework.id"
@@ -39,14 +44,5 @@ const ability = useAppAbility();
         {{ framework.title }}
       </UiOrderedListItem>
     </UiOrderedList>
-    <UiEmptyCard v-else class="flex-1">
-      <p v-t="'frameworks.route.index.notFound'" />
-      <UiButtonRouterLink
-        v-if="ability.can('create', 'CompetencyFramework')"
-        v-t="'frameworks.route.index.action.create'"
-        class="my-5"
-        to="/manage/competencies/create-framework"
-      />
-    </UiEmptyCard>
   </template>
 </template>
