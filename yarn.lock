@@ -828,6 +828,36 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@esbuild-kit/cjs-loader@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "@esbuild-kit/cjs-loader@npm:2.1.0"
+  dependencies:
+    "@esbuild-kit/core-utils": ^1.3.0
+    get-tsconfig: ^4.0.0
+  checksum: 7f1e594d9e924244f04957e9b322d03dd8de2d9af51419b159fb850ae21f6bd155c1ae1d7df58f2aa1be28a3bff23130ae38bdfa3ca3ba0a0663b6c18ba80a55
+  languageName: node
+  linkType: hard
+
+"@esbuild-kit/core-utils@npm:^1.3.0, @esbuild-kit/core-utils@npm:^1.3.1":
+  version: 1.3.1
+  resolution: "@esbuild-kit/core-utils@npm:1.3.1"
+  dependencies:
+    esbuild: 0.14.38
+    source-map-support: ^0.5.21
+  checksum: c058237b8d46c39936d0dab8853b07cf00c0a70936bfd647a2b3ab7373bf42c6492eb585f6fd2b6c0a33d4eb52eb5a8f1e921c96dac62a49c7b05e0b4a598408
+  languageName: node
+  linkType: hard
+
+"@esbuild-kit/esm-loader@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "@esbuild-kit/esm-loader@npm:2.2.0"
+  dependencies:
+    "@esbuild-kit/core-utils": ^1.3.1
+    get-tsconfig: ^4.0.0
+  checksum: 65911e915ac8e985d1a5a7f33b6b6937cdc8fdeb12992db96d28d88cc4de3eb04ae06b143a90a1764bf900c7847899c6106871525bdcc3d858415e9dfbe44faf
+  languageName: node
+  linkType: hard
+
 "@eslint/eslintrc@npm:^1.3.0":
   version: 1.3.0
   resolution: "@eslint/eslintrc@npm:1.3.0"
@@ -1962,7 +1992,6 @@ __metadata:
     cuid: ^2.1.8
     dotenv-flow: ^3.2.0
     eslint: ^8.17.0
-    esno: 0.14.1
     fastify: ^4.0.0
     fastify-plugin: ^3.0.1
     graphql: ^16.5.0
@@ -1982,6 +2011,7 @@ __metadata:
     rollup: ^2.74.1
     rollup-plugin-esbuild: ^4.9.1
     rollup-plugin-typescript-paths: ^1.3.1
+    tsx: ^3.4.3
     type-fest: ^2.13.1
     typescript: ~4.7.3
     vite-tsconfig-paths: ^3.5.0
@@ -3604,15 +3634,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"builtins@npm:^4.0.0":
-  version: 4.1.0
-  resolution: "builtins@npm:4.1.0"
-  dependencies:
-    semver: ^7.0.0
-  checksum: 3524f5a5898c3f77a73fee2e0046e676abbb0acc18db1e495676ee07fbef1537134b0e9c4da525f4cb12ba3cd1b430a26c373d32b59b80a5c048f8ace31b595f
-  languageName: node
-  linkType: hard
-
 "busboy@npm:^1.6.0":
   version: 1.6.0
   resolution: "busboy@npm:1.6.0"
@@ -4855,28 +4876,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esbuild-node-loader@npm:^0.6.5":
-  version: 0.6.5
-  resolution: "esbuild-node-loader@npm:0.6.5"
-  dependencies:
-    esbuild: ">=0.13.12"
-  checksum: 564a60a0827f9461e250381462aa1397c01680e9673ed75b5aa80939e868ac1538882c2a7bdcdd04defa9a85a593db16720ac44dddd87e51ab91f1182ee9c03e
-  languageName: node
-  linkType: hard
-
 "esbuild-openbsd-64@npm:0.14.38":
   version: 0.14.38
   resolution: "esbuild-openbsd-64@npm:0.14.38"
   conditions: os=openbsd & cpu=x64
-  languageName: node
-  linkType: hard
-
-"esbuild-register@npm:^3.3.2":
-  version: 3.3.2
-  resolution: "esbuild-register@npm:3.3.2"
-  peerDependencies:
-    esbuild: ">=0.12 <1"
-  checksum: 94c353571b23f9a54d00e4551f03696c99b068699f6afaa2bed9cdf5247ec54536f50ea4c68572485904026a4fd374625418682fd240837895839aeba3f29ec2
   languageName: node
   linkType: hard
 
@@ -4908,7 +4911,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esbuild@npm:>=0.13.0, esbuild@npm:>=0.13.12, esbuild@npm:^0.14.27":
+"esbuild@npm:0.14.38, esbuild@npm:^0.14.27":
   version: 0.14.38
   resolution: "esbuild@npm:0.14.38"
   dependencies:
@@ -5296,22 +5299,6 @@ __metadata:
   bin:
     eslint: bin/eslint.js
   checksum: b484c96681c6b19f5b437f664623f1cd310d3ee9be88400d8450e086e664cd968a9dc202f0b0678578fd50e7a445b92586efe8c787de5073ff2f83213b00bb7b
-  languageName: node
-  linkType: hard
-
-"esno@npm:0.14.1":
-  version: 0.14.1
-  resolution: "esno@npm:0.14.1"
-  dependencies:
-    cross-spawn: ^7.0.3
-    esbuild: ">=0.13.0"
-    esbuild-node-loader: ^0.6.5
-    esbuild-register: ^3.3.2
-    import-meta-resolve: ^1.1.1
-  bin:
-    esmo: esmo.mjs
-    esno: esno.js
-  checksum: 1d1b15c10e610577a83be0b071b3794c2c89d7257287f8d4379ffe75844c1b238d5c3938163e8451740e233563b34596caf81cf053d8c64e118a2b29015b3808
   languageName: node
   linkType: hard
 
@@ -5923,6 +5910,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"get-tsconfig@npm:^4.0.0":
+  version: 4.0.2
+  resolution: "get-tsconfig@npm:4.0.2"
+  checksum: cdd5b81e95a3fc634d2f34f71fc50b7c6462116c864e6cdc203cdb11faa66a2a38feaf93de9b64e35645cdb534a12c64c0168fb54dc69f2855182ffd03482076
+  languageName: node
+  linkType: hard
+
 "glob-parent@npm:^5.1.2, glob-parent@npm:~5.1.2":
   version: 5.1.2
   resolution: "glob-parent@npm:5.1.2"
@@ -6373,15 +6367,6 @@ __metadata:
   version: 2.1.0
   resolution: "import-lazy@npm:2.1.0"
   checksum: 05294f3b9dd4971d3a996f0d2f176410fb6745d491d6e73376429189f5c1c3d290548116b2960a7cf3e89c20cdf11431739d1d2d8c54b84061980795010e803a
-  languageName: node
-  linkType: hard
-
-"import-meta-resolve@npm:^1.1.1":
-  version: 1.1.1
-  resolution: "import-meta-resolve@npm:1.1.1"
-  dependencies:
-    builtins: ^4.0.0
-  checksum: 2024161e169c45ed25a9f51d984a432a9cc342c35737f9410266bab237ca2f756c1f80c15e2297df83c92f585743d5105291f2ad24094a513f804c6023ea1472
   languageName: node
   linkType: hard
 
@@ -9558,7 +9543,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:^7.0.0, semver@npm:^7.3.4, semver@npm:^7.3.5, semver@npm:^7.3.6, semver@npm:^7.3.7":
+"semver@npm:^7.3.4, semver@npm:^7.3.5, semver@npm:^7.3.6, semver@npm:^7.3.7":
   version: 7.3.7
   resolution: "semver@npm:7.3.7"
   dependencies:
@@ -9719,7 +9704,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"source-map-support@npm:^0.5.17":
+"source-map-support@npm:^0.5.17, source-map-support@npm:^0.5.21":
   version: 0.5.21
   resolution: "source-map-support@npm:0.5.21"
   dependencies:
@@ -10348,6 +10333,23 @@ __metadata:
   peerDependencies:
     typescript: ">=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta"
   checksum: 1843f4c1b2e0f975e08c4c21caa4af4f7f65a12ac1b81b3b8489366826259323feb3fc7a243123453d2d1a02314205a7634e048d4a8009921da19f99755cdc48
+  languageName: node
+  linkType: hard
+
+"tsx@npm:^3.4.3":
+  version: 3.4.3
+  resolution: "tsx@npm:3.4.3"
+  dependencies:
+    "@esbuild-kit/cjs-loader": ^2.1.0
+    "@esbuild-kit/core-utils": ^1.3.1
+    "@esbuild-kit/esm-loader": ^2.2.0
+    fsevents: ~2.3.2
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  bin:
+    tsx: dist/cli.js
+  checksum: f471eb7e3ca68183d90192e7e81ddd3cc4872608fe6ce6d04652531461aedb2c50cbc57f2a72cb55b5f25c20ae91444a399f46181c4475639956bcab5fdaac2e
   languageName: node
   linkType: hard
 
