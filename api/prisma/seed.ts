@@ -101,13 +101,11 @@ async function createInternships(): Promise<Set<Internship>> {
   const internships = new Set<Internship>();
   for (const course of courses) {
     const existingInternship = await prisma.internship.findFirst({
-      where: { courses: { some: { id: { equals: course.id } } } },
+      where: { courseId: { equals: course.id } },
     });
     if (existingInternship == null) {
       internships.add(
-        await prisma.internship.create({
-          data: { courses: { connect: [{ id: course.id }] } },
-        }),
+        await prisma.internship.create({ data: { courseId: course.id } }),
       );
     } else {
       internships.add(existingInternship);

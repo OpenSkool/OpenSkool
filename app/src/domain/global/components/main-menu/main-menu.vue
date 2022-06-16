@@ -15,8 +15,8 @@ gql`
     myInternshipInstances {
       id
       internship {
-        name
-        courses {
+        id
+        course {
           name
         }
       }
@@ -78,11 +78,11 @@ const internshipInstances = computed(() =>
             {{ $t('global.mainMenu.internships') }}
           </UiMainNavHeader>
           <UiMainNavLink
-            v-for="internshipInstance of internshipInstances"
-            :key="internshipInstance.id"
-            :to="`/my-internships/${internshipInstance.id}`"
+            v-for="instance of internshipInstances"
+            :key="instance.id"
+            :to="`/my-internships/${instance.id}`"
           >
-            {{ internshipInstance.internship.name }}
+            {{ instance.internship.course.name }}
           </UiMainNavLink>
         </UiMainNavSection>
         <UiMainNavSection>
