@@ -18,7 +18,7 @@
     "dist/"
   ],
   "dependencies": {
-    "@casl/ability": "^5.4.3"
+    "@casl/ability": "^5.4.4"
   },
   "devDependencies": {
     "@types/eslint": "^8.4.3",

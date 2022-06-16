@@ -22,7 +22,7 @@
     "turbo": "^1.2.16"
   },
   "resolutions": {
-    "cross-undici-fetch": "0.4.3"
+    "cross-undici-fetch": "0.4.5"
   },
   "packageManager": "yarn@3.2.0",
   "prettier": {
