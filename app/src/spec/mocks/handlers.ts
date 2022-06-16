@@ -7,90 +7,55 @@ import {
   ManageCompetencyDetailRouteQuery,
   ManageNestedCompetenciesQuery,
   MutationCreateCompetencyFrameworkArgs,
-  MutationCreateCompetencyFrameworkSuccess,
   MutationCreateNestedCompetencyArgs,
-  MutationCreateNestedCompetencySuccess,
   MutationCreateRootCompetencyArgs,
-  MutationCreateRootCompetencySuccess,
   MutationRenameCompetencyArgs,
-  MutationRenameCompetencySuccess,
+  RenameCompetencyMutation,
+  CreateCompetencyFrameworkMutation,
+  CreateRootCompetencyMutation,
+  CreateNestedCompetencyMutation,
 } from '~/codegen/graphql';
 
 export default [
   // mutations
 
   graphql.mutation<
-    { createNestedCompetency: MutationCreateNestedCompetencySuccess },
+    CreateNestedCompetencyMutation,
     MutationCreateNestedCompetencyArgs
   >('CreateNestedCompetency', (req, res, ctx) => {
-    const { variables } = req;
-
     return res(
       ctx.data({
         createNestedCompetency: {
           __typename: 'MutationCreateNestedCompetencySuccess',
-          data: {
-            id: 'cuid',
-            createdAt: '2022-04-01T00:00:00.000Z',
-            createdBy: {} as any,
-            framework: {
-              id: '1',
-              competencies: [],
-              title: 'CanMEDS 2015',
-            },
-            title: variables.data.title,
-            updatedAt: '2022-04-01T00:00:00.000Z',
-            updatedBy: {} as any,
-          },
+          data: { id: 'a-new-uuid' },
         },
       }),
     );
   }),
 
   graphql.mutation<
-    { createRootCompetency: MutationCreateRootCompetencySuccess },
+    CreateRootCompetencyMutation,
     MutationCreateRootCompetencyArgs
   >('CreateRootCompetency', (req, res, ctx) => {
-    const { variables } = req;
-
     return res(
       ctx.data({
         createRootCompetency: {
           __typename: 'MutationCreateRootCompetencySuccess',
-          data: {
-            id: 'cuid',
-            createdAt: '2022-04-01T00:00:00.000Z',
-            createdBy: {} as any,
-            framework: {
-              id: '1',
-              competencies: [],
-              title: 'CanMEDS 2015',
-            },
-            title: variables.data.title,
-            updatedAt: '2022-04-01T00:00:00.000Z',
-            updatedBy: {} as any,
-          },
+          data: { framework: { competencies: [] } },
         },
       }),
     );
   }),
 
   graphql.mutation<
-    { createCompetencyFramework: MutationCreateCompetencyFrameworkSuccess },
+    CreateCompetencyFrameworkMutation,
     MutationCreateCompetencyFrameworkArgs
   >('CreateCompetencyFramework', (req, res, ctx) => {
-    const { variables } = req;
-
     return res(
       ctx.data({
         createCompetencyFramework: {
           __typename: 'MutationCreateCompetencyFrameworkSuccess',
-          data: {
-            __typename: 'CompetencyFramework',
-            competencies: [],
-            id: 'cuid',
-            title: variables.data.title,
-          },
+          data: { id: 'a-new-cuid' },
         },
       }),
     );
@@ -98,46 +63,31 @@ export default [
 
   graphql.mutation<DeleteCompetencyMutation, DeleteCompetencyMutationVariables>(
     'deleteCompetency',
-    (_, res, ctx) => {
+    (req, res, ctx) => {
       return res(
         ctx.data({
           deleteCompetency: {
             __typename: 'MutationDeleteCompetencySuccess',
-            data: {
-              id: 'cuid',
-            },
+            data: { id: req.variables.id },
           },
         }),
       );
     },
   ),
 
-  graphql.mutation<
-    { renameCompetency: MutationRenameCompetencySuccess },
-    MutationRenameCompetencyArgs
-  >('renameCompetency', (req, res, ctx) => {
-    const { variables } = req;
-    return res(
-      ctx.data({
-        renameCompetency: {
-          __typename: 'MutationRenameCompetencySuccess',
-          data: {
-            id: 'cuid',
-            createdAt: '2022-04-01T00:00:00.000Z',
-            createdBy: {} as any,
-            framework: {
-              id: '1',
-              competencies: [],
-              title: 'CanMEDS 2015',
-            },
-            title: variables.data.title,
-            updatedAt: '2022-04-01T00:00:00.000Z',
-            updatedBy: {} as any,
+  graphql.mutation<RenameCompetencyMutation, MutationRenameCompetencyArgs>(
+    'renameCompetency',
+    (req, res, ctx) => {
+      return res(
+        ctx.data({
+          renameCompetency: {
+            __typename: 'MutationRenameCompetencySuccess',
+            data: { id: req.variables.id },
           },
-        },
-      }),
-    );
-  }),
+        }),
+      );
+    },
+  ),
 
   // queries
 
