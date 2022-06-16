@@ -2,7 +2,7 @@ import type { Ref } from 'vue';
 
 export function useMediaQuery(query: string): Ref<boolean> {
   const matches = ref(true);
-  if (!('matchMedia' in window)) {
+  if ((window.matchMedia as unknown) == null) {
     return matches;
   }
   const mediaQuery = window.matchMedia(query);

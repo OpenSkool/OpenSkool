@@ -13,7 +13,9 @@ defineEmits<(event: 'update:modelValue', value: string) => void>();
     type="text"
     :disabled="disabled"
     :value="modelValue"
-    @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
+    @input="
+      $emit('update:modelValue', ($event.target as HTMLInputElement).value)
+    "
   />
 </template>
 

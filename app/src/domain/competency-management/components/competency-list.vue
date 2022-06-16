@@ -65,8 +65,18 @@ async function swapCompetencies(
       :move-up-text="t('competencies.list.action.moveUp')"
       :move-down-text="t('competencies.list.action.moveDown')"
       :show-reorder-controls="showReorderControls"
-      @move-up="swapCompetencies((competencies[index - 1] as Competency).id, competency.id)"
-      @move-down="swapCompetencies(competency.id, (competencies[index + 1] as Competency).id)"
+      @move-up="
+        swapCompetencies(
+          (competencies[index - 1] as Competency).id,
+          competency.id,
+        )
+      "
+      @move-down="
+        swapCompetencies(
+          competency.id,
+          (competencies[index + 1] as Competency).id,
+        )
+      "
     >
       {{ competency.title }}
     </UiOrderedListItem>

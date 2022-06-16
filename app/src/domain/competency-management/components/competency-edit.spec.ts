@@ -1,5 +1,5 @@
 import userEvent from '@testing-library/user-event';
-import { screen } from '@testing-library/vue';
+import { screen, waitFor } from '@testing-library/vue';
 import { expect, test, vi } from 'vitest';
 
 import { router } from '~/router';
@@ -41,5 +41,5 @@ test('form submission works', async () => {
     name: 'competencies.form.action.edit.label',
   });
   await user.click(submitButton);
-  expect(push).toBeCalled();
+  waitFor(() => void expect(push).toBeCalled());
 });
