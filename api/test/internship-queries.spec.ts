@@ -10,7 +10,7 @@ let internship: { id: string };
 beforeAll(async () => {
   internship = await prisma.internship.create({
     data: {
-      courses: {
+      course: {
         create: {
           name: 'Chemistry',
         },
@@ -25,13 +25,13 @@ beforeEach(async () => {
 
 describe('InternshipInstance', () => {
   test('return empty array if no user', async () => {
-    const response = await execute<{ id: string; courses: { name: string } }>(
+    const response = await execute<{ id: string; course: { name: string } }>(
       gql`
         query {
           myInternshipInstances {
             internship {
               id
-              courses {
+              course {
                 name
               }
             }
@@ -48,13 +48,13 @@ describe('InternshipInstance', () => {
     await prisma.internshipInstance.create({
       data: { studentId: user.id, internshipId: internship.id },
     });
-    const response = await execute<{ id: string; courses: { name: string } }>(
+    const response = await execute<{ id: string; course: { name: string } }>(
       gql`
         query {
           myInternshipInstances {
             internship {
               id
-              courses {
+              course {
                 name
               }
             }
@@ -65,7 +65,7 @@ describe('InternshipInstance', () => {
     );
     expect(response).toHaveProperty('data.myInternshipInstances', [
       {
-        internship: { courses: [{ name: 'Chemistry' }], id: internship.id },
+        internship: { course: { name: 'Chemistry' }, id: internship.id },
       },
     ]);
   });
