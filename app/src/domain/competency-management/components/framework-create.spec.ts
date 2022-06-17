@@ -33,11 +33,9 @@ test('title is required', async () => {
       ],
     },
   });
-  const submitButton = screen.getByRole('button', {
-    name: 'frameworks.form.action.create.label',
-  });
-  user.click(submitButton);
-  await screen.findByText('Frameworks.form.name is required.');
+  const submitButton = screen.getByRole('button', { name: /submitButton/ });
+  await user.click(submitButton);
+  screen.getByText(/field.name is required./);
   expect(push).not.toHaveBeenCalled();
 });
 
@@ -57,14 +55,10 @@ test('create competencyFramework submit', async () => {
     },
   });
 
-  const titleInput: HTMLInputElement = screen.getByRole('textbox', {
-    name: 'frameworks.form.name',
-  });
+  const titleInput = screen.getByRole('textbox', { name: /field.name/ });
   await user.type(titleInput, 'Hello World!');
 
-  const submitButton = screen.getByRole('button', {
-    name: 'frameworks.form.action.create.label',
-  });
+  const submitButton = screen.getByRole('button', { name: /submitButton/ });
   await user.click(submitButton);
 
   await waitFor(() => {

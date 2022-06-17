@@ -62,8 +62,8 @@ async function swapCompetencies(
       v-for="(competency, index) of competencies"
       :key="competency.id"
       :link-to="`/manage/competencies/${frameworkId}/${competency.id}`"
-      :move-up-text="t('competencies.list.action.moveUp')"
-      :move-down-text="t('competencies.list.action.moveDown')"
+      :move-up-text="t('management.competency.list.action.moveUp')"
+      :move-down-text="t('management.competency.list.action.moveDown')"
       :show-reorder-controls="showReorderControls"
       @move-up="
         swapCompetencies(

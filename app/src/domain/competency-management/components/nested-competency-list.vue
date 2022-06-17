@@ -47,16 +47,16 @@ const subCompetencies = computed(() => competency.value?.subCompetencies ?? []);
 <template>
   <template v-if="!loading">
     <NotFoundCard v-if="competency == null">
-      {{ $t('competencies.component.nestedCompetencyList.error.notFound') }}
+      {{ $t('management.competency.error.notFound') }}
     </NotFoundCard>
     <UiEmptyCard v-else-if="subCompetencies.length === 0">
-      <p>{{ $t('frameworks.route.id.index.notFound') }}</p>
+      <p v-t="'management.competency.list.emptyDescription'" />
       <UiButtonRouterLink
         v-if="ability.can('create', 'Competency')"
         class="my-5"
         :to="`${$route.path}/create-competency`"
       >
-        {{ $t('frameworks.route.id.index.action.new') }}
+        {{ $t('management.competency.action.create') }}
       </UiButtonRouterLink>
     </UiEmptyCard>
     <CompetencyList

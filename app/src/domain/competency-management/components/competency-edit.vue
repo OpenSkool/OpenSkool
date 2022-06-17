@@ -107,7 +107,7 @@ async function handleFormSubmit(): Promise<void> {
     }
   } catch (error) {
     console.error('crash during execution', error);
-    formErrors.value.push(t('competencies.form.action.edit.error'));
+    formErrors.value.push(t('management.competency.edit.error.internal'));
   }
 }
 </script>
@@ -118,14 +118,14 @@ async function handleFormSubmit(): Promise<void> {
       v-if="formValues != null"
       v-model="formValues"
       type="form"
-      :submit-label="t('competencies.form.action.edit.label')"
+      :submit-label="t('management.competency.edit.submitButton')"
       :errors="formErrors"
       @submit="handleFormSubmit"
       @node="formNode = $event"
     >
       <FormKit
         name="title"
-        :label="t('competencies.form.name')"
+        :label="t('management.competency.field.name')"
         type="text"
         validation="required"
       />

@@ -44,7 +44,7 @@ async function handleFormSubmit(): Promise<void> {
           'unexpected mutation response',
           response?.data?.createNestedCompetency,
         );
-        formErrors.value.push(t('competencies.form.action.create.error'));
+        formErrors.value.push(t('management.competency.create.error.internal'));
         return;
       case 'InputError': {
         const mutationError = response.data.createNestedCompetency;
@@ -67,7 +67,7 @@ async function handleFormSubmit(): Promise<void> {
     }
   } catch (error) {
     console.error('crash during execution', error);
-    formErrors.value.push(t('competencies.form.action.create.error'));
+    formErrors.value.push(t('management.competency.create.error.internal'));
   }
 }
 </script>
@@ -76,14 +76,14 @@ async function handleFormSubmit(): Promise<void> {
   <FormKit
     v-model="formValues"
     type="form"
-    :submit-label="t('competencies.form.action.create.label')"
+    :submit-label="t('management.competency.create.submitButton')"
     :errors="formErrors"
     @node="formNode = $event"
     @submit="handleFormSubmit"
   >
     <FormKit
       name="title"
-      :label="t('competencies.form.name')"
+      :label="t('management.competency.field.name')"
       type="text"
       validation="required"
     />

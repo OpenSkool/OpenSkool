@@ -8,7 +8,7 @@ const ability = useAppAbility();
 <template>
   <UiBreadcrumb>
     <UiBreadcrumbItem link-to="/manage/competencies">
-      {{ $t('frameworks.route.index.heading') }}
+      {{ $t('management.competencyFramework.list.heading') }}
     </UiBreadcrumbItem>
   </UiBreadcrumb>
   <AuthAccessDeniedLayout
@@ -16,7 +16,7 @@ const ability = useAppAbility();
   />
   <template v-else>
     <UiTitle is="h1" class="text-xl mb-3">
-      {{ $t('frameworks.route.create.heading') }}
+      {{ $t('management.competencyFramework.create.heading') }}
     </UiTitle>
     <CompetencyFrameworkCreate />
   </template>

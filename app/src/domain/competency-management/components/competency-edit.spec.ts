@@ -10,7 +10,7 @@ import CompetencyEdit from './competency-edit.vue';
 test('input field has prefilled value', async () => {
   render(CompetencyEdit);
   const titleInput: HTMLInputElement = await screen.findByRole('textbox', {
-    name: 'competencies.form.name',
+    name: /field.name/,
   });
   expect(titleInput.value).toBe('Title defined in handlers.ts');
 });
@@ -20,15 +20,11 @@ test('alert shows when empty field is submitted', async () => {
   await router.isReady();
   const push = vi.spyOn(router, 'push');
   const user = userEvent.setup();
-  const titleInput: HTMLInputElement = await screen.findByRole('textbox', {
-    name: 'competencies.form.name',
-  });
+  const titleInput = await screen.findByRole('textbox', { name: /field.name/ });
   await user.clear(titleInput);
-  const submitButton = screen.getByRole('button', {
-    name: 'competencies.form.action.edit.label',
-  });
+  const submitButton = screen.getByRole('button', { name: /submitButton/ });
   await user.click(submitButton);
-  await screen.findByText('Competencies.form.name is required.');
+  await screen.findByText(/field.name is required./);
   expect(push).not.toBeCalled();
 });
 
@@ -38,8 +34,10 @@ test('form submission works', async () => {
   const push = vi.spyOn(router, 'push');
   const user = userEvent.setup();
   const submitButton = await screen.findByRole('button', {
-    name: 'competencies.form.action.edit.label',
+    name: /submitButton/,
   });
   await user.click(submitButton);
-  waitFor(() => void expect(push).toBeCalled());
+  waitFor(() => {
+    expect(push).toBeCalled();
+  });
 });

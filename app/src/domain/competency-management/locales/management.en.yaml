@@ -1,0 +1,54 @@
+competency:
+  action:
+    create: Add competency
+  create:
+    error:
+      internal: Something went wrong. Competency could not be created.
+    heading: New Competency
+    submitButton: Create competency
+  detail:
+    action:
+      delete: Delete competency
+      edit: Edit competency
+    confirmDeleteModal:
+      action:
+        cancel: Cancel
+        confirm: Delete Competency
+      description: Are you sure you want to delete "{title}" and all its sub-competencies?
+      error:
+        internal: Something went wrong, competency could not be deleted.
+      heading: Delete competencies?
+    heading: Competencies
+  edit:
+    error:
+      internal: Something went wrong. Competency could not be renamed.
+    heading: Edit Competency
+    submitButton: Update competency
+  error:
+    notFound: Competency not found.
+  field:
+    name: Name
+  list:
+    action:
+      moveDown: Move competency down
+      moveUp: Move competency up
+      reorder: Reorder competencies
+    emptyDescription: This competency has no sub-competencies.
+
+competencyFramework:
+  action:
+    create: Add framework
+  create:
+    error:
+      internal: Something went wrong. Competency framework could not be created.
+    heading: New Framework
+    submitButton: Create framework
+  detail:
+    emptyDescription: This framework has no competencies.
+  error:
+    notFound: Competency framework not found.
+  field:
+    name: Name
+  list:
+    emptyDescription: There are no frameworks.
+    heading: Competency frameworks
