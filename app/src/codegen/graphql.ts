@@ -124,6 +124,7 @@ export type InputError = UserError & {
 
 export type Internship = Node & {
   __typename?: 'Internship';
+  availablePositions: Array<InternshipPosition>;
   course: Course;
   id: Scalars['ID'];
 };
@@ -152,11 +153,10 @@ export type InternshipInstance = Node & {
 
 export type InternshipPosition = Node & {
   __typename?: 'InternshipPosition';
-  description: Scalars['String'];
   id: Scalars['ID'];
-  mentor: Person;
+  internshipInstance: InternshipInstance;
   organisation: Organisation;
-  workplace: Workplace;
+  summary: Scalars['String'];
 };
 
 export type Jwt = {
@@ -334,11 +334,8 @@ export type NotFoundError = UserError & {
 
 export type Organisation = Node & {
   __typename?: 'Organisation';
-  employees: Array<Person>;
   id: Scalars['ID'];
   name: Scalars['String'];
-  plainAddress: Scalars['String'];
-  workplaces: Array<Workplace>;
 };
 
 export type Person = Node & {

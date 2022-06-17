@@ -1,6 +1,8 @@
 import {
   CompetencyFramework,
   Internship,
+  InternshipInstance,
+  Organisation,
   PrismaClient,
   User,
 } from '@prisma/client';
@@ -12,9 +14,11 @@ import {
   competencyFixtures,
   COURSE_NAMES,
   EDUCATION_TITLES,
+  ORGANISATION_NAMES,
 } from './fixtures';
 
 const INTERNSHIP_INSTANCE_COUNT = 3;
+const INTERNSHIP_POSITIONS_COUNT = 2;
 
 const prisma = new PrismaClient();
 
@@ -49,6 +53,56 @@ async function createCourse(name: string): Promise<void> {
     return;
   }
   await prisma.course.create({ data: { name } });
+}
+
+async function createOrganisation(name: string): Promise<Organisation> {
+  let organisation = await prisma.organisation.findFirst({
+    where: { name: { equals: name } },
+  });
+  if (organisation == null) {
+    organisation = await prisma.organisation.create({ data: { name } });
+  }
+  return organisation;
+}
+
+async function createInternshipPositions(user: User): Promise<void> {
+  const internshipInstances = await prisma.internshipInstance.findMany({
+    where: { studentId: { equals: user.id } },
+  });
+
+  for (const internshipInstance of internshipInstances) {
+    const existingPositions = await prisma.internshipPosition.findMany({
+      where: { internshipInstanceId: { equals: internshipInstance.id } },
+    });
+
+    const positionNamesPool = COURSE_NAMES.filter(
+      (courseName) =>
+        !existingPositions.some((position) =>
+          position.summary.includes(courseName),
+        ),
+    );
+
+    const somePositionNames = sampleMany(
+      Math.max(0, INTERNSHIP_POSITIONS_COUNT - existingPositions.length),
+      positionNamesPool,
+    );
+
+    const organisation = await createOrganisation(sample(ORGANISATION_NAMES));
+    for (const positionName of somePositionNames) {
+      await prisma.internshipPosition.create({
+        data: {
+          internshipInstanceId: internshipInstance.id,
+          summary: `${organisation.name} ${positionName}`,
+          organisationId: organisation.id,
+          internships: {
+            connect: {
+              id: internshipInstance.internshipId,
+            },
+          },
+        },
+      });
+    }
+  }
 }
 
 async function createCompetencies(
@@ -158,9 +212,14 @@ try {
     createEducation(educationTitle, sample(users));
   }
 
+  for (const organisationName of ORGANISATION_NAMES) {
+    createOrganisation(organisationName);
+  }
+
   const internships = await createInternships();
   for (const user of users) {
     await createInternshipInstance(internships, user);
+    await createInternshipPositions(user);
   }
 } catch (error) {
   console.error(error);

@@ -1,4 +1,8 @@
-import { Internship, InternshipInstance } from '@prisma/client';
+import {
+  Internship,
+  InternshipInstance,
+  InternshipPosition,
+} from '@prisma/client';
 
 import { DomainContext } from '~/domain/context';
 import { handleServiceError } from '~/domain/helpers';
@@ -8,6 +12,8 @@ import { prisma } from '~/prisma';
 export interface InternshipModel extends Internship {}
 
 export interface InternshipInstanceModel extends InternshipInstance {}
+
+export interface InternshipPositionModel extends InternshipPosition {}
 
 export async function getInternshipInstancesForUser(
   context: DomainContext,
@@ -31,6 +37,39 @@ export async function getInternshipById(id: string): Promise<InternshipModel> {
       throw new AppNotFoundError();
     }
     return internship;
+  } catch (error) {
+    handleServiceError(error);
+  }
+}
+
+export async function getInternshipInstanceById(
+  id: string,
+): Promise<InternshipInstanceModel> {
+  try {
+    const internshipInstance = await prisma.internshipInstance.findUnique({
+      where: { id },
+    });
+    if (internshipInstance == null) {
+      throw new AppNotFoundError();
+    }
+    return internshipInstance;
+  } catch (error) {
+    handleServiceError(error);
+  }
+}
+
+export async function getAvailablePositions(
+  id: string,
+): Promise<InternshipPositionModel[]> {
+  try {
+    const internship = await prisma.internship.findUnique({
+      where: { id },
+      include: { availablePositions: true },
+    });
+    if (internship == null) {
+      throw new AppNotFoundError();
+    }
+    return internship.availablePositions as InternshipPositionModel[];
   } catch (error) {
     handleServiceError(error);
   }
