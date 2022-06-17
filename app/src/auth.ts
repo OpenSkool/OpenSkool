@@ -51,7 +51,8 @@ export const useAuthStore = defineStore('auth', () => {
       if (auth.value.currentUser) {
         refreshTokenTimer.value = window.setTimeout(
           () => void refresh(),
-          auth.value.currentUser.tokenSet.refreshToken.expiresIn,
+          // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+          auth.value.currentUser.tokenSet.refreshToken.expiresIn + 1000,
         );
       }
       return auth.value;
