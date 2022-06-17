@@ -1,3 +1,3 @@
 <template>
-  <p>{{ $t('global.message') }}</p>
+  <div />
 </template>

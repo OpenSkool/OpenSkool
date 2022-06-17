@@ -1,32 +1,31 @@
-component:
-  notFoundCard:
-    heading: Niet gevonden
-  notFoundLayout:
-    title: Niet gevonden
-
-message: Global message is global
-title: OpenSkool
-
 auth:
-  action:
-    login: Connect
-  unauthorized: You are not authorized to view this content. Please login with the correct authorization.
+  accessDenied:
+    heading: Toegang geweigerd
+    message: You are not authorized to view this content. Please login with the correct authorization.
+  loginButton: Connect
 
 breadcrumb:
   label: Breadcrumb
 
 layout:
+  notFound:
+    heading: Niet gevonden
   root:
     globalError: Niet alle gegevens kunnen correct geladen worden. Herlaad de pagina, probeer later opnieuw, of breng ons op de hoogte als het probleem blijft.
 
 mainMenu:
-  managementHeader: Beheer
-  managementLink:
-    competencyFrameworks: Competenties
   toggleButton: Menu
-  internships: Stages
+  logoAlt: OpenSkool backpack line-art logo
+  title: OpenSkool
+  internshipsHeading: Stages
+  management:
+    heading: Beheer
+    competencies: Competenties
+
+notFound:
+  heading: Niet gevonden
 
 userMenu:
   description: You are logged in as {name}.
-  toggleButton: Gebruikers menu
   logoutButton: Meld je af
+  toggleButton: Gebruikers menu

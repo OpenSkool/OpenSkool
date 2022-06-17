@@ -11,6 +11,6 @@ const connectHref = computed(() => {
 
 <template>
   <UiButtonLink :href="connectHref">
-    {{ $t('global.auth.action.login') }}
+    {{ $t('global.auth.loginButton') }}
   </UiButtonLink>
 </template>

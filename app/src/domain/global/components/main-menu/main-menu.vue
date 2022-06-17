@@ -51,31 +51,31 @@ const internshipInstances = computed(() =>
       >
         <header class="-mb-5">
           <RouterLink
-            class="rounded-md flex gap-3 items-center justify-center focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-primary-700)"
+            class="rounded-md flex gap-3 items-center justify-center focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-primary-700) "
             to="/"
           >
             <img
-              alt="OpenSkool logo backpack line art"
+              :alt="$t('global.mainMenu.logoAlt')"
               class="my-2 inline-block"
               src="/logo.svg"
             />
             <div
-              v-t="'global.title'"
+              v-t="'global.mainMenu.title'"
               class="font-normal text-xl text-primary-400"
             />
           </RouterLink>
         </header>
         <UiMainNavSection>
           <UiMainNavHeader>
-            {{ $t('global.mainMenu.managementHeader') }}
+            {{ $t('global.mainMenu.management.heading') }}
           </UiMainNavHeader>
           <UiMainNavLink to="/manage/competencies">
-            {{ $t('global.mainMenu.managementLink.competencyFrameworks') }}
+            {{ $t('global.mainMenu.management.competencies') }}
           </UiMainNavLink>
         </UiMainNavSection>
         <UiMainNavSection v-if="internshipInstances.length > 0">
           <UiMainNavHeader>
-            {{ $t('global.mainMenu.internships') }}
+            {{ $t('global.mainMenu.internshipsHeading') }}
           </UiMainNavHeader>
           <UiMainNavLink
             v-for="instance of internshipInstances"

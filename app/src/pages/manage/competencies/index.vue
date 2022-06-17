@@ -19,7 +19,7 @@ const actions: ActionItem[] = [
 <template>
   <UiBreadcrumb>
     <UiBreadcrumbItem>
-      {{ $t('global.mainMenu.managementHeader') }}
+      {{ $t('global.mainMenu.management.heading') }}
     </UiBreadcrumbItem>
   </UiBreadcrumb>
   <AuthAccessDeniedLayout
