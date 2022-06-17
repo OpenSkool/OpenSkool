@@ -1,8 +1,5 @@
 <template>
-  <UiAlert
-    color="caution"
-    :heading="$t('global.component.notFoundCard.heading')"
-  >
+  <UiAlert color="caution" :heading="$t('global.notFound.heading')">
     <slot />
   </UiAlert>
 </template>

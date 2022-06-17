@@ -4,7 +4,7 @@ import NotFoundCard from './not-found-card.vue';
 
 <template>
   <UiTitle is="h1" class="text-xl mb-3">
-    {{ $t('global.component.notFoundLayout.title') }}
+    {{ $t('global.layout.notFound.heading') }}
   </UiTitle>
   <NotFoundCard>
     <slot />
