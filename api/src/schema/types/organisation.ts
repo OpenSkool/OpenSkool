@@ -1,8 +1,8 @@
 import { faker } from '@faker-js/faker';
 import cuid from 'cuid';
 
-import { UserModel } from '~/domain';
-import { getFakeUsers, Person } from '~/schema/types/person';
+import { OrganisationModel, UserModel } from '~/domain';
+import { getFakeUsers } from '~/schema/types/person';
 import { sampleMany, times } from '~/utils';
 
 import builder from '../builder';
@@ -10,7 +10,7 @@ import { Node } from './node';
 
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 
-export interface OrganisationModel {
+export interface OrganisationModelFake {
   id: string;
   employees: UserModel[];
   name: string;
@@ -21,7 +21,7 @@ export interface OrganisationModel {
 export const Organisation =
   builder.objectRef<OrganisationModel>('Organisation');
 
-export async function createFakeOrganisation(): Promise<OrganisationModel> {
+export async function createFakeOrganisation(): Promise<OrganisationModelFake> {
   const workplaces = times(2, () => createFakeWorkplace());
   const users = await getFakeUsers();
   return {
@@ -54,10 +54,7 @@ builder.objectType(Organisation, {
   interfaces: [Node],
   fields: (t) => ({
     id: t.exposeID('id'),
-    employees: t.expose('employees', { type: [Person] }),
     name: t.exposeString('name'),
-    plainAddress: t.exposeString('plainAddress'),
-    workplaces: t.expose('workplaces', { type: [Workplace] }),
   }),
 });
 

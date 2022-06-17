@@ -1,27 +1,16 @@
-import { faker } from '@faker-js/faker';
-import cuid from 'cuid';
-
 import {
   InternshipService,
-  UserModel,
   InternshipModel,
   InternshipInstanceModel,
   CourseService,
+  InternshipPositionModel,
+  OrganisationService,
 } from '~/domain';
-import { sample } from '~/utils';
 
 import builder from '../builder';
 import { Course } from './course';
 import { Node } from './node';
-import {
-  createFakeOrganisation,
-  createFakeWorkplace,
-  Organisation,
-  OrganisationModel,
-  Workplace,
-  WorkplaceModel,
-} from './organisation';
-import { Person } from './person';
+import { Organisation } from './organisation';
 
 interface GraphConnection<T> {
   edges: T[];
@@ -32,9 +21,8 @@ interface GraphEdge<T> {
 
 export const Internship = builder.objectRef<InternshipModel>('Internship');
 
-export const InternshipInstance = builder.objectRef<InternshipInstanceModel>(
-  'InternshipInstanceModel',
-);
+export const InternshipInstance =
+  builder.objectRef<InternshipInstanceModel>('InternshipInstance');
 interface InternshipChosenPositionConnectionModel
   extends GraphConnection<InternshipChosenPositionPriorityEdgeModel> {}
 
@@ -56,33 +44,6 @@ export const InternshipChosenPositionPriorityEdge =
   builder.objectRef<InternshipChosenPositionPriorityEdgeModel>(
     'InternshipChosenPositionPriorityEdge',
   );
-interface InternshipPositionModel {
-  id: string;
-  dateFrom: Date;
-  dateTo: Date;
-  description: string;
-  mentor: UserModel;
-  organisation: OrganisationModel;
-  workplace: WorkplaceModel;
-}
-
-export async function createFakeInternshipPosition({
-  users,
-}: {
-  users: UserModel[];
-}): Promise<InternshipPositionModel> {
-  const dateFrom = faker.date.future();
-  const dateTo = faker.date.future(1, dateFrom);
-  return {
-    id: cuid(),
-    dateFrom,
-    dateTo,
-    description: faker.lorem.paragraph(),
-    mentor: sample(users),
-    organisation: await createFakeOrganisation(),
-    workplace: createFakeWorkplace(),
-  };
-}
 
 export const InternshipPosition =
   builder.objectRef<InternshipPositionModel>('InternshipPosition');
@@ -97,6 +58,15 @@ builder.objectType(Internship, {
       async resolve(parent, argumentz, ctx) {
         const course = await CourseService.getCourseById(parent.courseId);
         return course;
+      },
+    }),
+    availablePositions: t.field({
+      type: [InternshipPosition],
+      async resolve(parent, argumentz, ctx) {
+        const positions = await InternshipService.getAvailablePositions(
+          parent.id,
+        );
+        return positions;
       },
     }),
   }),
@@ -128,6 +98,34 @@ builder.queryField('myInternshipInstances', (t) =>
   }),
 );
 
+builder.objectType(InternshipPosition, {
+  name: 'InternshipPosition',
+  interfaces: [Node],
+  fields: (t) => ({
+    id: t.exposeID('id'),
+    summary: t.exposeString('summary'),
+    organisation: t.field({
+      type: Organisation,
+      async resolve(parent) {
+        const organisation = await OrganisationService.getOrganisationById(
+          parent.organisationId,
+        );
+        return organisation;
+      },
+    }),
+    internshipInstance: t.field({
+      type: InternshipInstance,
+      async resolve(parent) {
+        const internshipInstance =
+          await InternshipService.getInternshipInstanceById(
+            parent.internshipInstanceId,
+          );
+        return internshipInstance;
+      },
+    }),
+  }),
+});
+
 builder.objectType(InternshipChosenPositionConnection, {
   name: 'InternshipChosenPositionConnection',
   fields: (t) => ({
@@ -156,18 +154,6 @@ builder.objectType(InternshipChosenPositionPriorityEdge, {
   },
   fields: (t) => ({
     priority: t.exposeInt('priority'),
-  }),
-});
-
-builder.objectType(InternshipPosition, {
-  name: 'InternshipPosition',
-  interfaces: [Node],
-  fields: (t) => ({
-    id: t.exposeID('id'),
-    description: t.exposeString('description'),
-    mentor: t.expose('mentor', { type: Person }),
-    organisation: t.expose('organisation', { type: Organisation }),
-    workplace: t.expose('workplace', { type: Workplace }),
   }),
 });
 

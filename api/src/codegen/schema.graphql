@@ -108,6 +108,7 @@ type InputError implements UserError {
 }
 
 type Internship implements Node {
+  availablePositions: [InternshipPosition!]!
   course: Course!
   id: ID!
 }
@@ -131,11 +132,10 @@ type InternshipInstance implements Node {
 }
 
 type InternshipPosition implements Node {
-  description: String!
   id: ID!
-  mentor: Person!
+  internshipInstance: InternshipInstance!
   organisation: Organisation!
-  workplace: Workplace!
+  summary: String!
 }
 
 """
@@ -290,11 +290,8 @@ type NotFoundError implements UserError {
 }
 
 type Organisation implements Node {
-  employees: [Person!]!
   id: ID!
   name: String!
-  plainAddress: String!
-  workplaces: [Workplace!]!
 }
 
 type Person implements Node {

@@ -11,4 +11,11 @@ export const COURSE_NAMES = [
   'Photography',
 ];
 
+export const ORGANISATION_NAMES = [
+  'Foursevens',
+  'Cronos',
+  'Pitzemburg Atheneum',
+  'Busleyden Atheneum',
+];
+
 export const EDUCATION_TITLES = ['Informatics', 'Chemistry', 'Medicine'];
