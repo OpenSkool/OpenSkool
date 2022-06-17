@@ -105,12 +105,12 @@ async function deleteCompetencyHandler(): Promise<void> {
       );
     } else {
       deleteErrorMessage.value = t(
-        'competencies.route.id.index.confirmDeleteModal.error',
+        'management.competency.detail.confirmDeleteModal.error.internal',
       );
     }
   } catch {
     deleteErrorMessage.value = t(
-      'competencies.route.id.index.confirmDeleteModal.error',
+      'management.competency.detail.confirmDeleteModal.error.internal',
     );
   }
 }
@@ -129,19 +129,19 @@ const actions: ActionItem[] = [
     action: `/manage/competencies/${props.frameworkId}/${props.competencyId}/create-competency`,
     icon: 'ri-add-line',
     hasPermission: ability.can('create', 'CompetencyFramework'),
-    title: t('competencies.route.id.index.action.new'),
+    title: t('management.competency.action.create'),
   },
   {
     action: showReorderArrows,
     icon: 'ri-arrow-up-down-line',
     hasPermission: ability.can('update', 'Competency'),
-    title: t('competencies.route.id.index.action.sort'),
+    title: t('management.competency.list.action.reorder'),
   },
   {
     action: openDeleteModal,
     icon: 'ri-delete-bin-line',
     hasPermission: ability.can('delete', 'Competency'),
-    title: t('competencies.route.id.index.action.openDeleteModal'),
+    title: t('management.competency.detail.action.delete'),
   },
 ];
 </script>
@@ -149,7 +149,7 @@ const actions: ActionItem[] = [
 <template>
   <UiBreadcrumb>
     <UiBreadcrumbItem link-to="/manage/competencies">
-      {{ $t('frameworks.route.index.heading') }}
+      {{ $t('management.competencyFramework.list.heading') }}
     </UiBreadcrumbItem>
     <UiBreadcrumbItem
       v-if="framework"
@@ -179,28 +179,25 @@ const actions: ActionItem[] = [
           :to="`/manage/competencies/${frameworkId}/${competencyId}/edit`"
         >
           <div
-            v-t="'competencies.route.id.index.action.edit'"
+            v-t="'management.competency.detail.action.edit'"
             class="sr-only"
           />
           <RiEditBoxLine aria-hidden />
         </RouterLink>
       </div>
-      <ManagementLayout
-        :actions="actions"
-        :actions-label="t('competencies.route.id.index.actionsLabel')"
-      >
+      <ManagementLayout :actions="actions">
         <UiDialog
           implicit-close
           :open="isDeleteModalOpen"
           @close="isDeleteModalOpen = false"
         >
           <UiDialogTitle class="text-danger-600">
-            {{ $t('competencies.route.id.index.confirmDeleteModal.heading') }}
+            {{ $t('management.competency.detail.confirmDeleteModal.heading') }}
           </UiDialogTitle>
           <UiDialogDescription>
             <i18n-t
               scope="global"
-              keypath="competencies.route.id.index.confirmDeleteModal.message"
+              keypath="management.competency.detail.confirmDeleteModal.description"
             >
               <template #title>
                 <strong class="text-danger-500">{{ competency.title }}</strong>
@@ -214,14 +211,14 @@ const actions: ActionItem[] = [
             <UiButton outline @click="isDeleteModalOpen = false">
               {{
                 $t(
-                  'competencies.route.id.index.confirmDeleteModal.action.cancel',
+                  'management.competency.detail.confirmDeleteModal.action.cancel',
                 )
               }}
             </UiButton>
             <UiButton color="danger" @click="deleteCompetencyHandler">
               {{
                 $t(
-                  'competencies.route.id.index.confirmDeleteModal.action.confirm',
+                  'management.competency.detail.confirmDeleteModal.action.confirm',
                 )
               }}
             </UiButton>

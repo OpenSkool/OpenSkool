@@ -12,13 +12,11 @@ test('delete competency works', async () => {
   await router.isReady();
   const replace = vi.spyOn(router, 'replace');
   const user = userEvent.setup();
-  const openDeleteModalButton: HTMLButtonElement = await screen.findByText(
-    'competencies.route.id.index.action.openDeleteModal',
-  );
-  await user.click(openDeleteModalButton);
-  const deleteButton: HTMLButtonElement = screen.getByRole('button', {
-    name: 'competencies.route.id.index.confirmDeleteModal.action.confirm',
+  const openDeleteModalButton = await screen.findByRole('menuitem', {
+    name: /action.delete/,
   });
+  await user.click(openDeleteModalButton);
+  const deleteButton = screen.getByRole('button', { name: /action.confirm/ });
   await user.click(deleteButton);
   await waitFor(() => {
     expect(replace).toBeCalled();

@@ -11,7 +11,7 @@ const actions: ActionItem[] = [
     action: '/manage/competencies/create-framework',
     icon: 'ri-add-line',
     hasPermission: ability.can('create', 'CompetencyFramework'),
-    title: t('frameworks.route.index.action.create'),
+    title: t('management.competencyFramework.action.create'),
   },
 ];
 </script>
@@ -27,12 +27,9 @@ const actions: ActionItem[] = [
   />
   <template v-else>
     <UiTitle is="h1" class="text-xl mb-3">
-      {{ $t('frameworks.route.index.heading') }}
+      {{ $t('management.competencyFramework.list.heading') }}
     </UiTitle>
-    <ManagementLayout
-      :actions="actions"
-      :actions-label="$t('frameworks.route.id.index.actionLabel')"
-    >
+    <ManagementLayout :actions="actions">
       <CompetencyFrameworkList />
     </ManagementLayout>
   </template>

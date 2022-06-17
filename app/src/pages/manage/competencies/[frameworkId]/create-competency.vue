@@ -39,7 +39,7 @@ const framework = computed(() =>
 <template>
   <UiBreadcrumb>
     <UiBreadcrumbItem link-to="/manage/competencies">
-      {{ $t('frameworks.route.index.heading') }}
+      {{ $t('management.competencyFramework.list.heading') }}
     </UiBreadcrumbItem>
     <UiBreadcrumbItem
       v-if="framework"
@@ -54,7 +54,7 @@ const framework = computed(() =>
   </NotFoundLayout>
   <template v-else-if="!loading">
     <UiTitle is="h1" class="text-xl mb-3">
-      {{ $t('competencies.route.create.heading') }}
+      {{ $t('management.competency.create.heading') }}
     </UiTitle>
     <RootCompetencyCreate :framework-id="frameworkId" />
   </template>

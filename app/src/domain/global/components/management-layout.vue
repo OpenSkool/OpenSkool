@@ -4,7 +4,6 @@ import { ActionItem } from '~/types';
 
 const props = defineProps<{
   actions: ActionItem[];
-  actionsLabel: string;
 }>();
 
 const breakpoints = useBreakpoints();
@@ -19,7 +18,6 @@ const ableActions = computed(() => {
   <div class="flex items-stretch">
     <div v-if="showAside" class="bg-white w-1/3">
       <ol
-        :aria-label="actionsLabel"
         aria-orientation="vertical"
         class="flex flex-col items-stretch focus:outline-none focus-visible:(ring-2 ring-secondary-300 ring-offset-2) "
         role="menubar"
@@ -58,7 +56,6 @@ const ableActions = computed(() => {
       <UiFab
         v-if="ableActions.length > 0"
         :actions="ableActions"
-        :actions-label="actionsLabel"
         class="right-10 bottom-10 absolute"
       />
     </div>

@@ -59,7 +59,7 @@ const parent = computed(() =>
 <template>
   <UiBreadcrumb>
     <UiBreadcrumbItem link-to="/manage/competencies">
-      {{ $t('frameworks.route.index.heading') }}
+      {{ $t('management.competencyFramework.list.heading') }}
     </UiBreadcrumbItem>
     <UiBreadcrumbItem
       v-if="framework"
@@ -77,7 +77,7 @@ const parent = computed(() =>
   <AuthAccessDeniedLayout v-if="ability.cannot('create', 'Competency')" />
   <template v-else>
     <UiTitle is="h1" class="text-xl mb-3">
-      {{ $t('competencies.route.create.heading') }}
+      {{ $t('management.competency.create.heading') }}
     </UiTitle>
     <NestedCompetencyCreate
       :competency-id="competencyId"

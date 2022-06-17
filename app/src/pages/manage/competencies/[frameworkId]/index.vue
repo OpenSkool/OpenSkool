@@ -48,7 +48,7 @@ const actions: ActionItem[] = [
     action: `/manage/competencies/${props.frameworkId}/create-competency`,
     icon: 'ri-add-line',
     hasPermission: ability.can('create', 'Competency'),
-    title: t('competencies.route.id.index.action.new'),
+    title: t('management.competency.action.create'),
   },
   {
     action(): void {
@@ -57,7 +57,7 @@ const actions: ActionItem[] = [
     },
     icon: 'ri-arrow-up-down-line',
     hasPermission: ability.can('update', 'Competency'),
-    title: t('competencies.route.id.index.action.sort'),
+    title: t('management.competency.list.action.reorder'),
   },
 ];
 </script>
@@ -65,7 +65,7 @@ const actions: ActionItem[] = [
 <template>
   <UiBreadcrumb>
     <UiBreadcrumbItem link-to="/manage/competencies">
-      {{ $t('frameworks.route.index.heading') }}
+      {{ $t('management.competencyFramework.list.heading') }}
     </UiBreadcrumbItem>
   </UiBreadcrumb>
   <AuthAccessDeniedLayout
@@ -79,10 +79,7 @@ const actions: ActionItem[] = [
       <UiTitle is="h1" class="text-xl mb-3">
         {{ competencyFramework.title }}
       </UiTitle>
-      <ManagementLayout
-        :actions="actions"
-        :actions-label="$t('frameworks.route.id.index.actionLabel')"
-      >
+      <ManagementLayout :actions="actions">
         <RootCompetencyList
           :framework-id="frameworkId"
           :show-reorder-controls="showReorderCompetenciesControls"

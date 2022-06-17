@@ -38,11 +38,9 @@ test('title is required', async () => {
       frameworkId: 'cuid',
     },
   });
-  const submitButton = screen.getByRole('button', {
-    name: /competencies.form.action.create.label/i,
-  });
-  user.click(submitButton);
-  await screen.findByText('Competencies.form.name is required.');
+  const submitButton = screen.getByRole('button', { name: /submitButton/ });
+  await user.click(submitButton);
+  screen.getByText(/field.name is required./);
   expect(push).not.toHaveBeenCalled();
 });
 
@@ -66,14 +64,10 @@ test('create competency submit', async () => {
     },
   });
 
-  const titleInput: HTMLInputElement = screen.getByRole('textbox', {
-    name: /competencies.form.name/i,
-  });
+  const titleInput = screen.getByRole('textbox', { name: /field.name/ });
   await user.type(titleInput, 'Hello World!');
 
-  const submitButton = screen.getByRole('button', {
-    name: /competencies.form.action.create.label/i,
-  });
+  const submitButton = screen.getByRole('button', { name: /submitButton/ });
   await user.click(submitButton);
 
   await waitFor(() => {

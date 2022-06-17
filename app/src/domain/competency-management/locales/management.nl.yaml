@@ -1,0 +1,54 @@
+competency:
+  action:
+    create: Voeg competentie toe
+  create:
+    error:
+      internal: Er ging iets mis. Competentie kon niet aangemaakt worden.
+    heading: Nieuwe Competentie
+    submitButton: Maak competentie
+  detail:
+    action:
+      delete: Verwijder competentie
+      edit: Bewerk competentie
+    confirmDeleteModal:
+      action:
+        cancel: Annuleer
+        confirm: Verwijder Competentie
+      description: Ben je zeker dat je "{title}" en diens geneste competenties wilt verwijderen?
+      error:
+        internal: Er ging iets mis. Competentie kon niet verwijderd worden.
+      heading: Verwijder competenties?
+    heading: Competenties
+  edit:
+    error:
+      internal: Er ging iets mis. Competentie kon niet bewerkt worden.
+    heading: Bewerk Competentie
+    submitButton: Update competentie
+  error:
+    notFound: Competentie niet gevonden.
+  field:
+    name: Naam
+  list:
+    action:
+      moveDown: Competentie omlaag bewegen
+      moveUp: Competentie omhoog bewegen
+      reorder: Competencies herschikken
+    emptyDescription: Deze competency heeft geen sub-competencies.
+
+competencyFramework:
+  action:
+    create: Voeg framework toe
+  create:
+    error:
+      internal: Er ging iets mis. Competentie framework kon niet aangemaakt worden.
+    heading: Nieuw Framework
+    submitButton: Maak framework
+  detail:
+    emptyDescription: Dit framework heeft geen competencies.
+  error:
+    notFound: Competentie framework niet gevonden.
+  field:
+    name: Naam
+  list:
+    emptyDescription: Er zijn geen frameworks.
+    heading: Competentie frameworks
