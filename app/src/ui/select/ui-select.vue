@@ -19,13 +19,7 @@ defineEmits<
     <div class="relative" v-bind="$attrs">
       <ListboxButton
         :disabled="disabled"
-        :class="[
-          'toggle-button',
-          'flex items-center justify-between px-3 py-2',
-          'bg-white rounded-md shadow-md border-1 border-gray-200',
-          'focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-primary-700)',
-          'cursor-default select-none',
-        ]"
+        class="bg-white rounded-md cursor-default flex border-1 border-gray-200 shadow-md py-2 px-3 toggle-button items-center justify-between select-none focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-primary-700) "
       >
         <div class="text-base truncate">{{ selectedLabel ?? '–' }}</div>
         <RiArrowDropDownLine aria-hidden class="ml-2" />
@@ -37,7 +31,7 @@ defineEmits<
       >
         <ListboxOptions
           v-slot="{ open }"
-          class="absolute z-10 py-1 mt-1 overflow-auto bg-white rounded-md shadow-lg max-h-60 focus:outline-none"
+          class="bg-white rounded-md shadow-lg mt-1 max-h-60 py-1 z-10 absolute overflow-auto focus:outline-none"
           ring="1 black opacity-5"
           text="base"
         >

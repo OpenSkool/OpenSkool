@@ -21,10 +21,7 @@ const ableActions = computed(() => {
       <ol
         :aria-label="actionsLabel"
         aria-orientation="vertical"
-        :class="[
-          'flex flex-col items-stretch',
-          'focus:outline-none focus-visible:(ring-2 ring-secondary-300 ring-offset-2)',
-        ]"
+        class="flex flex-col items-stretch focus:outline-none focus-visible:(ring-2 ring-secondary-300 ring-offset-2) "
         role="menubar"
       >
         <li

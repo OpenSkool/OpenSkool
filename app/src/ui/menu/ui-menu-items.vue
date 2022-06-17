@@ -10,11 +10,7 @@
     <MenuItems
       v-slot="{ active, disabled }"
       as="div"
-      :class="[
-        'absolute right-0 origin-top-right z-5 min-w-xs mt-1',
-        'bg-white rounded-md shadow-lg p-1 divide-y divide-gray-100',
-        'focus:outline-none ring-1 ring-black ring-opacity-5',
-      ]"
+      class="divide-y bg-white rounded-md min-w-xs divide-gray-100 shadow-lg ring-black mt-1 p-1 origin-top-right right-0 ring-1 ring-opacity-5 z-5 absolute focus:outline-none"
     >
       <slot v-bind="{ active, disabled }" />
     </MenuItems>

@@ -6,16 +6,11 @@ defineProps<{
 
 <template>
   <label
-    class="flex items-center gap-2"
+    class="flex gap-2 items-center"
     :class="{ 'text-stone-300': disabled }"
   >
     <input
-      :class="[
-        'relative w-5 h-5',
-        'bg-white rounded-full checked:bg-primary-400',
-        'focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-primary-700)',
-        'disabled:bg-stone-300 disabled:cursor-not-allowed',
-      ]"
+      class="bg-white rounded-full h-5 w-5 relative focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-primary-700) checked:bg-primary-400 disabled:cursor-not-allowed disabled:bg-stone-300 "
       :disabled="disabled"
       type="radio"
       v-bind="$attrs"
@@ -27,8 +22,8 @@ defineProps<{
 <style scoped>
 input:checked::before {
   content: '';
-  @apply absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2;
-  @apply block w-2 h-2;
+  @apply transform top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 absolute;
+  @apply h-2 w-2 block;
   @apply bg-white rounded-full;
 }
 </style>

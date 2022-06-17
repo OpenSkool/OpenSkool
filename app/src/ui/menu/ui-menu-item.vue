@@ -10,10 +10,8 @@ defineProps<{
   <MenuItem v-slot="{ active, disabled }">
     <Component
       :is="is ?? 'button'"
-      :class="[
-        'w-full flex gap-3 items-center px-4 py-3 rounded-md',
-        { 'bg-primary-100': active },
-      ]"
+      class="rounded-md flex w-full py-3 px-4 gap-3 items-center"
+      :class="{ 'bg-primary-100': active }"
     >
       <slot v-bind="{ active, disabled }" />
     </Component>

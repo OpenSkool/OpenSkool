@@ -25,13 +25,7 @@ defineProps<{
     </UiFabMenuItems>
     <UiMenuButton class="ml-auto">
       <button
-        :class="[
-          'flex items-center justify-center',
-          'bg-primary-300 w-16 h-16 shadow ml-auto',
-          'border-2 aspect-square rounded-full',
-          'active:shadow-lg transition ease-in duration-200',
-          'focus:outline-none focus-visible:(ring-2 ring-secondary-300 ring-offset-2)',
-        ]"
+        class="rounded-full flex ml-auto bg-primary-300 border-2 h-16 shadow transition ease-in w-16 duration-200 items-center justify-center aspect-square focus:outline-none active:shadow-lg focus-visible:(ring-2 ring-secondary-300 ring-offset-2) "
       >
         <RiCloseLine v-if="open" />
         <RiMenuAddLine v-else />
