@@ -16,11 +16,7 @@ const logoutHref = computed(() => {
   <UiMenu v-if="authStore.isLoggedIn">
     <UiMenuButton>
       <button
-        :class="[
-          'p-3 border-2 aspect-square rounded-full',
-          'focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-primary-700)',
-          'flex items-center justify-center',
-        ]"
+        class="rounded-full flex border-2 p-3 aspect-square items-center justify-center focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-primary-700) "
       >
         <RiUser3Line aria-hidden />
         <div v-t="'global.userMenu.toggleButton'" class="sr-only" />
