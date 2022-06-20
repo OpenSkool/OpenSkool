@@ -154,7 +154,6 @@ export type InternshipInstance = Node & {
 export type InternshipPosition = Node & {
   __typename?: 'InternshipPosition';
   id: Scalars['ID'];
-  internshipInstance: InternshipInstance;
   organisation: Organisation;
   summary: Scalars['String'];
 };
@@ -356,6 +355,7 @@ export type Query = {
   auth: Auth;
   competency?: Maybe<QueryCompetencyResult>;
   competencyFramework?: Maybe<QueryCompetencyFrameworkResult>;
+  myInternshipInstance?: Maybe<QueryMyInternshipInstanceResult>;
   myInternshipInstances: Array<InternshipInstance>;
 };
 
@@ -364,6 +364,10 @@ export type QueryCompetencyArgs = {
 };
 
 export type QueryCompetencyFrameworkArgs = {
+  id: Scalars['ID'];
+};
+
+export type QueryMyInternshipInstanceArgs = {
   id: Scalars['ID'];
 };
 
@@ -381,6 +385,16 @@ export type QueryCompetencyResult = NotFoundError | QueryCompetencySuccess;
 export type QueryCompetencySuccess = {
   __typename?: 'QueryCompetencySuccess';
   data: Competency;
+};
+
+export type QueryMyInternshipInstanceResult =
+  | NotFoundError
+  | QueryMyInternshipInstanceSuccess
+  | UnauthorizedError;
+
+export type QueryMyInternshipInstanceSuccess = {
+  __typename?: 'QueryMyInternshipInstanceSuccess';
+  data: InternshipInstance;
 };
 
 export type RenameCompetencyInput = {
@@ -892,6 +906,43 @@ export type ManageCompetencyFrameworkDetailRouteQuery = {
     | {
         __typename?: 'QueryCompetencyFrameworkSuccess';
         data: { __typename?: 'CompetencyFramework'; id: string; title: string };
+      }
+    | null;
+};
+
+export type AvailablePositionsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type AvailablePositionsQuery = {
+  __typename?: 'Query';
+  myInternshipInstance?:
+    | {
+        __typename?: 'NotFoundError';
+        code: string;
+        message: string;
+        path?: Array<string> | null;
+      }
+    | {
+        __typename?: 'QueryMyInternshipInstanceSuccess';
+        data: {
+          __typename?: 'InternshipInstance';
+          internship: {
+            __typename?: 'Internship';
+            availablePositions: Array<{
+              __typename?: 'InternshipPosition';
+              id: string;
+              summary: string;
+              organisation: { __typename?: 'Organisation'; name: string };
+            }>;
+          };
+        };
+      }
+    | {
+        __typename?: 'UnauthorizedError';
+        code: string;
+        message: string;
+        path?: Array<string> | null;
       }
     | null;
 };
@@ -2496,4 +2547,131 @@ export const ManageCompetencyFrameworkDetailRouteDocument = {
 } as unknown as DocumentNode<
   ManageCompetencyFrameworkDetailRouteQuery,
   ManageCompetencyFrameworkDetailRouteQueryVariables
+>;
+export const AvailablePositionsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'availablePositions' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'myInternshipInstance' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'id' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: {
+                      kind: 'Name',
+                      value: 'QueryMyInternshipInstanceSuccess',
+                    },
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'data' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'internship' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: {
+                                      kind: 'Name',
+                                      value: 'availablePositions',
+                                    },
+                                    selectionSet: {
+                                      kind: 'SelectionSet',
+                                      selections: [
+                                        {
+                                          kind: 'Field',
+                                          name: { kind: 'Name', value: 'id' },
+                                        },
+                                        {
+                                          kind: 'Field',
+                                          name: {
+                                            kind: 'Name',
+                                            value: 'summary',
+                                          },
+                                        },
+                                        {
+                                          kind: 'Field',
+                                          name: {
+                                            kind: 'Name',
+                                            value: 'organisation',
+                                          },
+                                          selectionSet: {
+                                            kind: 'SelectionSet',
+                                            selections: [
+                                              {
+                                                kind: 'Field',
+                                                name: {
+                                                  kind: 'Name',
+                                                  value: 'name',
+                                                },
+                                              },
+                                            ],
+                                          },
+                                        },
+                                      ],
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'BaseErrorFields' },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...BaseErrorFieldsFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<
+  AvailablePositionsQuery,
+  AvailablePositionsQueryVariables
 >;

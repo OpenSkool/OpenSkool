@@ -1,7 +1,6 @@
 import {
   CompetencyFramework,
   Internship,
-  InternshipInstance,
   Organisation,
   PrismaClient,
   User,
@@ -66,13 +65,17 @@ async function createOrganisation(name: string): Promise<Organisation> {
 }
 
 async function createInternshipPositions(user: User): Promise<void> {
-  const internshipInstances = await prisma.internshipInstance.findMany({
-    where: { studentId: { equals: user.id } },
+  const internships = await prisma.internship.findMany({
+    where: {
+      internshipInstances: { some: { studentId: { equals: user.id } } },
+    },
   });
 
-  for (const internshipInstance of internshipInstances) {
+  for (const internship of internships) {
     const existingPositions = await prisma.internshipPosition.findMany({
-      where: { internshipInstanceId: { equals: internshipInstance.id } },
+      where: {
+        internships: { some: { id: { equals: internship.id } } },
+      },
     });
 
     const positionNamesPool = COURSE_NAMES.filter(
@@ -91,12 +94,11 @@ async function createInternshipPositions(user: User): Promise<void> {
     for (const positionName of somePositionNames) {
       await prisma.internshipPosition.create({
         data: {
-          internshipInstanceId: internshipInstance.id,
           summary: `${organisation.name} ${positionName}`,
           organisationId: organisation.id,
           internships: {
             connect: {
-              id: internshipInstance.internshipId,
+              id: internship.id,
             },
           },
         },

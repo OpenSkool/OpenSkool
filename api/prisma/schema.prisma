@@ -111,7 +111,7 @@ model Internship {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  course              Course               @relation(fields: [courseId], onDelete: Cascade, references: [id])
+  course              Course               @relation(fields: [courseId], references: [id], onDelete: Restrict)
   courseId            String
   internshipInstances InternshipInstance[]
   availablePositions  InternshipPosition[]
@@ -123,11 +123,10 @@ model InternshipInstance {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  internship          Internship           @relation(fields: [internshipId], references: [id])
-  internshipId        String
-  student             User?                @relation("InternshipInstanceToStudent", fields: [studentId], references: [id])
-  studentId           String?
-  internshipPositions InternshipPosition[]
+  internship   Internship @relation(fields: [internshipId], references: [id], onDelete: Restrict)
+  internshipId String
+  student      User?      @relation("InternshipInstanceToStudent", fields: [studentId], references: [id])
+  studentId    String?
 }
 
 model InternshipPosition {
@@ -136,12 +135,10 @@ model InternshipPosition {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  internships          Internship[]
-  internshipInstance   InternshipInstance @relation(fields: [internshipInstanceId], references: [id])
-  internshipInstanceId String
-  organisation         Organisation       @relation(fields: [organisationId], references: [id])
-  organisationId       String
-  summary              String
+  internships    Internship[]
+  organisation   Organisation @relation(fields: [organisationId], references: [id], onDelete: Restrict)
+  organisationId String
+  summary        String
 }
 
 model Organisation {

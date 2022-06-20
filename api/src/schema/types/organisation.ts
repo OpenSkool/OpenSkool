@@ -1,37 +1,13 @@
 import { faker } from '@faker-js/faker';
 import cuid from 'cuid';
 
-import { OrganisationModel, UserModel } from '~/domain';
-import { getFakeUsers } from '~/schema/types/person';
-import { sampleMany, times } from '~/utils';
+import { OrganisationModel } from '~/domain';
 
 import builder from '../builder';
 import { Node } from './node';
 
-/* eslint-disable @typescript-eslint/no-magic-numbers */
-
-export interface OrganisationModelFake {
-  id: string;
-  employees: UserModel[];
-  name: string;
-  plainAddress: string;
-  workplaces: WorkplaceModel[];
-}
-
 export const Organisation =
   builder.objectRef<OrganisationModel>('Organisation');
-
-export async function createFakeOrganisation(): Promise<OrganisationModelFake> {
-  const workplaces = times(2, () => createFakeWorkplace());
-  const users = await getFakeUsers();
-  return {
-    id: cuid(),
-    employees: sampleMany(3, users),
-    name: faker.company.companyName(),
-    plainAddress: (workplaces[0] as WorkplaceModel).plainAddress,
-    workplaces,
-  };
-}
 
 export interface WorkplaceModel {
   id: string;
