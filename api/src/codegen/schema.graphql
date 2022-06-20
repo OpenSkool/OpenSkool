@@ -133,7 +133,6 @@ type InternshipInstance implements Node {
 
 type InternshipPosition implements Node {
   id: ID!
-  internshipInstance: InternshipInstance!
   organisation: Organisation!
   summary: String!
 }
@@ -302,6 +301,7 @@ type Query {
   auth: Auth!
   competency(id: ID!): QueryCompetencyResult
   competencyFramework(id: ID!): QueryCompetencyFrameworkResult
+  myInternshipInstance(id: ID!): QueryMyInternshipInstanceResult
   myInternshipInstances: [InternshipInstance!]!
 }
 
@@ -317,6 +317,15 @@ union QueryCompetencyResult = NotFoundError | QueryCompetencySuccess
 
 type QueryCompetencySuccess {
   data: Competency!
+}
+
+union QueryMyInternshipInstanceResult =
+    NotFoundError
+  | QueryMyInternshipInstanceSuccess
+  | UnauthorizedError
+
+type QueryMyInternshipInstanceSuccess {
+  data: InternshipInstance!
 }
 
 input RenameCompetencyInput {

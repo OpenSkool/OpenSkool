@@ -6,6 +6,7 @@ import {
   InternshipPositionModel,
   OrganisationService,
 } from '~/domain';
+import { AppNotFoundError, AppUnauthorizedError } from '~/errors';
 
 import builder from '../builder';
 import { Course } from './course';
@@ -98,6 +99,22 @@ builder.queryField('myInternshipInstances', (t) =>
   }),
 );
 
+builder.queryField('myInternshipInstance', (t) =>
+  t.field({
+    args: {
+      id: t.arg.id({ required: true }),
+    },
+    nullable: true,
+    type: InternshipInstance,
+    errors: {
+      types: [AppNotFoundError, AppUnauthorizedError],
+    },
+    async resolve(parent, { id }, ctx) {
+      return InternshipService.getInternshipInstanceById(id, ctx.domain);
+    },
+  }),
+);
+
 builder.objectType(InternshipPosition, {
   name: 'InternshipPosition',
   interfaces: [Node],
@@ -111,16 +128,6 @@ builder.objectType(InternshipPosition, {
           parent.organisationId,
         );
         return organisation;
-      },
-    }),
-    internshipInstance: t.field({
-      type: InternshipInstance,
-      async resolve(parent) {
-        const internshipInstance =
-          await InternshipService.getInternshipInstanceById(
-            parent.internshipInstanceId,
-          );
-        return internshipInstance;
       },
     }),
   }),

@@ -1,3 +1,6 @@
+-- DropForeignKey
+ALTER TABLE "InternshipInstance" DROP CONSTRAINT "InternshipInstance_internshipId_fkey";
+
 -- CreateTable
 CREATE TABLE "InternshipPosition" (
     "id" TEXT NOT NULL,
@@ -33,10 +36,13 @@ CREATE UNIQUE INDEX "_InternshipToInternshipPosition_AB_unique" ON "_InternshipT
 CREATE INDEX "_InternshipToInternshipPosition_B_index" ON "_InternshipToInternshipPosition"("B");
 
 -- AddForeignKey
-ALTER TABLE "InternshipPosition" ADD CONSTRAINT "InternshipPosition_internshipInstanceId_fkey" FOREIGN KEY ("internshipInstanceId") REFERENCES "InternshipInstance"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "InternshipInstance" ADD CONSTRAINT "InternshipInstance_internshipId_fkey" FOREIGN KEY ("internshipId") REFERENCES "Internship"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "InternshipPosition" ADD CONSTRAINT "InternshipPosition_organisationId_fkey" FOREIGN KEY ("organisationId") REFERENCES "Organisation"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "InternshipPosition" ADD CONSTRAINT "InternshipPosition_internshipInstanceId_fkey" FOREIGN KEY ("internshipInstanceId") REFERENCES "InternshipInstance"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "InternshipPosition" ADD CONSTRAINT "InternshipPosition_organisationId_fkey" FOREIGN KEY ("organisationId") REFERENCES "Organisation"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_InternshipToInternshipPosition" ADD CONSTRAINT "_InternshipToInternshipPosition_A_fkey" FOREIGN KEY ("A") REFERENCES "Internship"("id") ON DELETE CASCADE ON UPDATE CASCADE;
