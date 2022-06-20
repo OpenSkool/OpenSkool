@@ -7,6 +7,18 @@ import {
 } from '~/codegen/graphql';
 import { pinia } from '~/pinia';
 
+const ONE_MINUTE = 60_000;
+
+export const authConnectUrl = new URL(
+  '/openid/connect',
+  import.meta.env.VITE_API_BASE_URL,
+);
+
+export const authLogoutUrl = new URL(
+  '/openid/logout',
+  import.meta.env.VITE_API_BASE_URL,
+);
+
 gql`
   query authCurrentUser {
     auth {
@@ -52,21 +64,21 @@ export const useAuthStore = defineStore('auth', () => {
         const expiresIn =
           Date.parse(
             auth.value.currentUser.tokenSet.refreshToken.expiresAt as string,
-          ) - Date.now();
-        console.log('SET TIMEOUT', { expiresIn });
+          ) -
+          Date.now() -
+          ONE_MINUTE;
+        if (expiresIn < 0) {
+          throw new Error('session expired');
+        }
         refreshTokenTimer.value = window.setTimeout(
           () => void refresh(),
           expiresIn,
         );
       }
-      return auth.value;
-    } catch (error) {
-      console.error(error);
-      return {
-        abilityRules: [],
-        currentUser: null,
-      };
+    } catch {
+      window.location.href = authLogoutUrl.toString();
     }
+    return auth.value;
   }
 
   return {
@@ -80,13 +92,3 @@ export async function initAuth(): Promise<Auth> {
   const authStore = useAuthStore(pinia);
   return authStore.refresh();
 }
-
-export const authConnectUrl = new URL(
-  '/openid/connect',
-  import.meta.env.VITE_API_BASE_URL,
-);
-
-export const authLogoutUrl = new URL(
-  '/openid/logout',
-  import.meta.env.VITE_API_BASE_URL,
-);
