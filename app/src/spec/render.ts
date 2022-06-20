@@ -1,5 +1,6 @@
 import { render as originalRender, RenderResult } from '@testing-library/vue';
 import { DefaultApolloClient } from '@vue/apollo-composable';
+import { createHead } from '@vueuse/head';
 import { createI18n } from 'vue-i18n';
 
 import { AppAbility, casl } from '~/ability';
@@ -14,6 +15,7 @@ export function render(component: any): RenderResult {
     global: {
       plugins: [
         [casl, ability],
+        createHead(),
         createI18n({
           legacy: false,
           fallbackWarn: false,

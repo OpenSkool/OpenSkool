@@ -1,6 +1,11 @@
 <script lang="ts" setup>
 import { CompetencyFrameworkCreate } from '~/domain/competency-management';
 import { AuthAccessDeniedLayout } from '~/domain/global';
+import { useHead } from '~/i18n';
+
+useHead(({ t }) => ({
+  title: t('management.competencyFramework.create.heading'),
+}));
 
 const ability = useAppAbility();
 </script>

@@ -22,6 +22,9 @@ mainMenu:
     heading: Management
     competencies: Competencies
 
+meta:
+  title: OpenSkool
+
 notFound:
   heading: Not found
 

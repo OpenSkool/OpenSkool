@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { AvailablePositionsDocument } from '~/codegen/graphql';
 import { useGlobalStore } from '~/domain/global/store';
+import { useHead } from '~/i18n';
 
 const props = defineProps<{
   internshipInstanceId: string; // route param
@@ -12,6 +13,9 @@ gql`
       ... on QueryMyInternshipInstanceSuccess {
         data {
           internship {
+            course {
+              name
+            }
             availablePositions {
               id
               summary
@@ -28,22 +32,25 @@ gql`
 `;
 const globalStore = useGlobalStore();
 
-const { result, onError } = useQuery(
+const { loading, onError, result } = useQuery(
   AvailablePositionsDocument,
   () => ({
     id: props.internshipInstanceId,
   }),
   { fetchPolicy: 'cache-first' },
 );
-
 onError(globalStore.handleFatalApolloError);
 
-const availablePositions = computed(() =>
+const internshipInstance = computed(() =>
   result.value?.myInternshipInstance?.__typename ===
   'QueryMyInternshipInstanceSuccess'
-    ? result.value.myInternshipInstance.data.internship.availablePositions
-    : [],
+    ? result.value.myInternshipInstance.data.internship
+    : null,
 );
+
+useHead(() => ({
+  title: internshipInstance.value?.course.name,
+}));
 </script>
 
 <template>
@@ -53,9 +60,9 @@ const availablePositions = computed(() =>
     </UiBreadcrumbItem>
   </UiBreadcrumb>
   <UiTitle is="h1" class="text-xl mb-3">My Internship</UiTitle>
-  <ul class="flex flex-wrap gap-5">
+  <ul v-if="!loading" class="flex flex-wrap gap-5">
     <li
-      v-for="position in availablePositions"
+      v-for="position in internshipInstance?.availablePositions"
       :key="position.id"
       class="bg-gray-200 p-5 w-64"
     >

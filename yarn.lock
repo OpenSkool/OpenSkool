@@ -2046,6 +2046,7 @@ __metadata:
     "@vue/apollo-composable": ^4.0.0-alpha.17
     "@vue/apollo-util": ^4.0.0-alpha.17
     "@vueuse/core": ^8.6.0
+    "@vueuse/head": 0.7.6
     autoprefixer: ^10.4.7
     c8: ^7.11.3
     eslint: ^8.17.0
@@ -2850,6 +2851,15 @@ __metadata:
     vue:
       optional: true
   checksum: 5577699514e9d0c240f3322c8676814539340acc3c1f23dc44e80f96bc6b1d3241ec7da18fbcfccd3f4215374613714664c09f8293071bb2aaceac929a75c8c5
+  languageName: node
+  linkType: hard
+
+"@vueuse/head@npm:0.7.6":
+  version: 0.7.6
+  resolution: "@vueuse/head@npm:0.7.6"
+  peerDependencies:
+    vue: ">=3"
+  checksum: d8f49f5c2894b0d517231424a73e0efc42c6887cf2cc9e9dce7190229ac736a1864bc60d952080be3fa620e1309dd120b34595ae7a02800f29c44949f1590a21
   languageName: node
   linkType: hard
 

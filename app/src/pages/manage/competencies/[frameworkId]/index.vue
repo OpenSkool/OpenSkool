@@ -6,6 +6,7 @@ import {
   ManagementLayout,
   NotFoundLayout,
 } from '~/domain/global';
+import { useHead } from '~/i18n';
 import { ActionItem } from '~/types';
 
 const props = defineProps<{
@@ -40,6 +41,10 @@ const competencyFramework = computed(() =>
     ? result.value.competencyFramework.data
     : null,
 );
+
+useHead(() => ({
+  title: competencyFramework.value?.title,
+}));
 
 const showReorderCompetenciesControls = ref(false);
 

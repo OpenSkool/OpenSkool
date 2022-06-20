@@ -22,6 +22,9 @@ mainMenu:
     heading: Beheer
     competencies: Competenties
 
+meta:
+  title: OpenSkool
+
 notFound:
   heading: Niet gevonden
 
