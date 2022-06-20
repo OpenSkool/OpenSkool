@@ -2063,7 +2063,7 @@ __metadata:
     vite-plugin-graphql-codegen: ^1.7.0
     vite-plugin-pages: 0.24.1
     vite-plugin-windicss: ^1.8.4
-    vitest: 0.15.1
+    vitest: 0.12.10
     vue: ^3.2.37
     vue-i18n: ^9.2.0-beta.36
     vue-router: ^4.0.16
@@ -10958,7 +10958,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^2.9.12":
+"vite@npm:^2.9.12, vite@npm:^2.9.9":
   version: 2.9.12
   resolution: "vite@npm:2.9.12"
   dependencies:
@@ -10984,6 +10984,38 @@ __metadata:
   bin:
     vite: bin/vite.js
   checksum: 33cf8b6bfbbcae4b7f856d739ae519bed6b1ce23fc652ca98db1d4878bf35424885951c13e0d2536248423a0836d91ef7cae744ff40cbcbd6e7ffe495bd15ea5
+  languageName: node
+  linkType: hard
+
+"vitest@npm:0.12.10":
+  version: 0.12.10
+  resolution: "vitest@npm:0.12.10"
+  dependencies:
+    "@types/chai": ^4.3.1
+    "@types/chai-subset": ^1.3.3
+    chai: ^4.3.6
+    debug: ^4.3.4
+    local-pkg: ^0.4.1
+    tinypool: ^0.1.3
+    tinyspy: ^0.3.2
+    vite: ^2.9.9
+  peerDependencies:
+    "@vitest/ui": "*"
+    c8: "*"
+    happy-dom: "*"
+    jsdom: "*"
+  peerDependenciesMeta:
+    "@vitest/ui":
+      optional: true
+    c8:
+      optional: true
+    happy-dom:
+      optional: true
+    jsdom:
+      optional: true
+  bin:
+    vitest: vitest.mjs
+  checksum: e085e5429baf2124aa8f4b2b734aa123085f308a9f83bb42e296d6b5b3ec242b1433f5304548451c8b116ec892c330f301ab09b973e014310e080e04d28fabba
   languageName: node
   linkType: hard
 

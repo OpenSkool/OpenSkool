@@ -64,7 +64,7 @@
     "vite-plugin-graphql-codegen": "^1.7.0",
     "vite-plugin-pages": "0.24.1",
     "vite-plugin-windicss": "^1.8.4",
-    "vitest": "0.15.1",
+    "vitest": "0.12.10",
     "vue-tsc": "0.37.9",
     "whatwg-fetch": "^3.6.2"
   }
