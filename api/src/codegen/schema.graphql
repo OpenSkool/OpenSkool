@@ -145,7 +145,15 @@ scalar JSON
 
 type JWT {
   expiresAt: DateTime!
-  expiresIn: Int!
+
+  """
+  This field is for debugging purposes. If you need to know the expiration time of the JWT, use the `expiresAt` field.
+  """
+  expiresIn: String!
+
+  """
+  This field is for debugging purposes. If you need to know the expiration time of the JWT, use the `issuedAt` field.
+  """
   issuedAgo: String!
   issuedAt: DateTime!
   issuer: String

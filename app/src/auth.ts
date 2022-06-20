@@ -23,7 +23,7 @@ gql`
         name
         tokenSet {
           refreshToken {
-            expiresIn
+            expiresAt
           }
         }
       }
@@ -49,9 +49,14 @@ export const useAuthStore = defineStore('auth', () => {
       });
       auth.value = authQuery.data.auth;
       if (auth.value.currentUser) {
+        const expiresIn =
+          Date.parse(
+            auth.value.currentUser.tokenSet.refreshToken.expiresAt as string,
+          ) - Date.now();
+        console.log('SET TIMEOUT', { expiresIn });
         refreshTokenTimer.value = window.setTimeout(
           () => void refresh(),
-          auth.value.currentUser.tokenSet.refreshToken.expiresIn,
+          expiresIn,
         );
       }
       return auth.value;

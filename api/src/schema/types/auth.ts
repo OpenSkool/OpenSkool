@@ -72,7 +72,7 @@ builder.objectType(CurrentUser, {
     name: t.exposeString('name'),
     tokenSet: t.field({
       type: TokenSet,
-      resolve(parent, argumentz, { request }) {
+      resolve(user, argumentz, { request }) {
         assert(request.session.openId.tokenSet, 'missing token set');
         return request.session.openId.tokenSet;
       },
@@ -87,10 +87,15 @@ builder.objectType(JWT, {
       type: 'DateTime',
       resolve: (jwt) => dateFromJwtTimestamp(jwt.exp),
     }),
-    expiresIn: t.int({
-      resolve: (jwt) => dateFromJwtTimestamp(jwt.exp).getTime() - Date.now(),
+    expiresIn: t.string({
+      description:
+        'This field is for debugging purposes. If you need to know the expiration time of the JWT, use the `expiresAt` field.',
+      resolve: (jwt) =>
+        ms(dateFromJwtTimestamp(jwt.exp).getTime() - Date.now()),
     }),
     issuedAgo: t.string({
+      description:
+        'This field is for debugging purposes. If you need to know the expiration time of the JWT, use the `issuedAt` field.',
       resolve: (jwt) => {
         return ms(Date.now() - dateFromJwtTimestamp(jwt.iat).getTime());
       },

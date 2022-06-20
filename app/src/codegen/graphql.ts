@@ -162,7 +162,9 @@ export type InternshipPosition = Node & {
 export type Jwt = {
   __typename?: 'JWT';
   expiresAt: Scalars['DateTime'];
-  expiresIn: Scalars['Int'];
+  /** This field is for debugging purposes. If you need to know the expiration time of the JWT, use the `expiresAt` field. */
+  expiresIn: Scalars['String'];
+  /** This field is for debugging purposes. If you need to know the expiration time of the JWT, use the `issuedAt` field. */
   issuedAgo: Scalars['String'];
   issuedAt: Scalars['DateTime'];
   issuer?: Maybe<Scalars['String']>;
@@ -435,7 +437,7 @@ export type AuthCurrentUserQuery = {
       name: string;
       tokenSet: {
         __typename?: 'TokenSet';
-        refreshToken: { __typename?: 'JWT'; expiresIn: number };
+        refreshToken: { __typename?: 'JWT'; expiresAt: any };
       };
     } | null;
   };
@@ -989,7 +991,7 @@ export const AuthCurrentUserDocument = {
                                 selections: [
                                   {
                                     kind: 'Field',
-                                    name: { kind: 'Name', value: 'expiresIn' },
+                                    name: { kind: 'Name', value: 'expiresAt' },
                                   },
                                 ],
                               },
