@@ -2,6 +2,7 @@
 import { ManageCompetencyCreateNestedCompetencyRouteDocument } from '~/codegen/graphql';
 import { NestedCompetencyCreate } from '~/domain/competency-management';
 import { AuthAccessDeniedLayout } from '~/domain/global';
+import { useHead } from '~/i18n';
 
 const props = defineProps<{
   competencyId: string; // route param
@@ -9,6 +10,10 @@ const props = defineProps<{
 }>();
 
 const ability = useAppAbility();
+
+useHead(({ t }) => ({
+  title: t('management.competency.create.heading'),
+}));
 
 gql`
   query manageCompetencyCreateNestedCompetencyRoute(

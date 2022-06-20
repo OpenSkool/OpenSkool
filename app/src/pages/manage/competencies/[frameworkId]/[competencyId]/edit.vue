@@ -2,6 +2,7 @@
 import { ManageCompetencyEditCompetencyRouteDocument } from '~/codegen/graphql';
 import { CompetencyEdit } from '~/domain/competency-management';
 import { AuthAccessDeniedLayout } from '~/domain/global';
+import { useHead } from '~/i18n';
 
 const props = defineProps<{
   competencyId: string; // route param
@@ -9,6 +10,10 @@ const props = defineProps<{
 }>();
 
 const ability = useAppAbility();
+
+useHead(({ t }) => ({
+  title: t('management.competency.edit.heading'),
+}));
 
 gql`
   query manageCompetencyEditCompetencyRoute($id: ID!) {

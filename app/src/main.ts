@@ -1,3 +1,4 @@
+import { createHead } from '@vueuse/head';
 import { createApp } from 'vue';
 
 import { AppAbility, AppRawRule, casl } from './ability';
@@ -15,9 +16,12 @@ import 'virtual:windi.css';
   const auth = await initAuth();
   await i18nService.initI18n();
 
+  const head = createHead();
+
   createApp(App)
     .use(casl, new AppAbility(auth.abilityRules as AppRawRule[]))
     .use(formkit)
+    .use(head)
     .use(i18n)
     .use(pinia)
     .use(router)

@@ -10,6 +10,7 @@ import {
   NotFoundLayout,
   useGlobalStore,
 } from '~/domain/global';
+import { useHead } from '~/i18n';
 import { ActionItem } from '~/types';
 import { assert } from '~/utils';
 
@@ -73,6 +74,10 @@ const competency = computed(() =>
     ? result.value.competency.data
     : null,
 );
+
+useHead(() => ({
+  title: competency.value?.title,
+}));
 
 gql`
   mutation deleteCompetency($id: ID!) {

@@ -2,12 +2,17 @@
 import { ManageCompetencyCreateRootCompetencyRouteDocument } from '~/codegen/graphql';
 import { RootCompetencyCreate } from '~/domain/competency-management';
 import { AuthAccessDeniedLayout, NotFoundLayout } from '~/domain/global';
+import { useHead } from '~/i18n';
 
 const props = defineProps<{
   frameworkId: string; // route param
 }>();
 
 const ability = useAppAbility();
+
+useHead(({ t }) => ({
+  title: t('management.competency.create.heading'),
+}));
 
 gql`
   query manageCompetencyCreateRootCompetencyRoute($id: ID!) {

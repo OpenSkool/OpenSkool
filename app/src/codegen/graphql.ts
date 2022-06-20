@@ -929,6 +929,7 @@ export type AvailablePositionsQuery = {
           __typename?: 'InternshipInstance';
           internship: {
             __typename?: 'Internship';
+            course: { __typename?: 'Course'; name: string };
             availablePositions: Array<{
               __typename?: 'InternshipPosition';
               id: string;
@@ -2608,6 +2609,19 @@ export const AvailablePositionsDocument = {
                               selectionSet: {
                                 kind: 'SelectionSet',
                                 selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'course' },
+                                    selectionSet: {
+                                      kind: 'SelectionSet',
+                                      selections: [
+                                        {
+                                          kind: 'Field',
+                                          name: { kind: 'Name', value: 'name' },
+                                        },
+                                      ],
+                                    },
+                                  },
                                   {
                                     kind: 'Field',
                                     name: {
