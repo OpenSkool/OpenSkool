@@ -11,8 +11,10 @@
       "cache": false
     },
     "codegen": {
-      "dependsOn": ["^codegen"],
       "outputs": ["src/codegen/**"]
+    },
+    "@os/app#codegen": {
+      "dependsOn": ["@os/api#codegen"]
     },
     "dev": {
       "cache": false
