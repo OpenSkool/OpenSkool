@@ -1,5 +1,6 @@
 import {
   CompetencyFramework,
+  Course,
   Internship,
   Organisation,
   PrismaClient,
@@ -44,67 +45,24 @@ async function createCompetency(
   }
 }
 
-async function createCourse(name: string): Promise<void> {
+async function createCourse(name: string): Promise<Course> {
   const existingCourse = await prisma.course.findFirst({
     where: { name: { equals: name } },
   });
   if (existingCourse != null) {
-    return;
+    return existingCourse;
   }
-  await prisma.course.create({ data: { name } });
+  return prisma.course.create({ data: { name } });
 }
 
 async function createOrganisation(name: string): Promise<Organisation> {
-  let organisation = await prisma.organisation.findFirst({
+  const organisation = await prisma.organisation.findFirst({
     where: { name: { equals: name } },
   });
-  if (organisation == null) {
-    organisation = await prisma.organisation.create({ data: { name } });
+  if (organisation != null) {
+    return organisation;
   }
-  return organisation;
-}
-
-async function createInternshipPositions(user: User): Promise<void> {
-  const internships = await prisma.internship.findMany({
-    where: {
-      internshipInstances: { some: { studentId: { equals: user.id } } },
-    },
-  });
-
-  for (const internship of internships) {
-    const existingPositions = await prisma.internshipPosition.findMany({
-      where: {
-        internships: { some: { id: { equals: internship.id } } },
-      },
-    });
-
-    const positionNamesPool = COURSE_NAMES.filter(
-      (courseName) =>
-        !existingPositions.some((position) =>
-          position.summary.includes(courseName),
-        ),
-    );
-
-    const somePositionNames = sampleMany(
-      Math.max(0, INTERNSHIP_POSITIONS_COUNT - existingPositions.length),
-      positionNamesPool,
-    );
-
-    const organisation = await createOrganisation(sample(ORGANISATION_NAMES));
-    for (const positionName of somePositionNames) {
-      await prisma.internshipPosition.create({
-        data: {
-          summary: `${organisation.name} ${positionName}`,
-          organisationId: organisation.id,
-          internships: {
-            connect: {
-              id: internship.id,
-            },
-          },
-        },
-      });
-    }
-  }
+  return prisma.organisation.create({ data: { name } });
 }
 
 async function createCompetencies(
@@ -153,12 +111,15 @@ async function createEducation(title: string, user: User): Promise<void> {
 }
 
 async function createInternships(): Promise<Set<Internship>> {
-  const courses = await prisma.course.findMany();
   const internships = new Set<Internship>();
-  for (const course of courses) {
+
+  for (const courseName of COURSE_NAMES) {
+    const course = await createCourse(courseName);
+
     const existingInternship = await prisma.internship.findFirst({
       where: { courseId: { equals: course.id } },
     });
+
     if (existingInternship == null) {
       internships.add(
         await prisma.internship.create({ data: { courseId: course.id } }),
@@ -170,23 +131,64 @@ async function createInternships(): Promise<Set<Internship>> {
   return internships;
 }
 
-async function createInternshipInstance(
+async function createInternshipPositions(
+  internship: Internship,
+): Promise<void> {
+  const existingPositions = await prisma.internshipPosition.findMany({
+    where: {
+      internships: { some: { id: { equals: internship.id } } },
+    },
+  });
+
+  const positionNamesPool = COURSE_NAMES.filter(
+    (courseName) =>
+      !existingPositions.some((position) =>
+        position.summary.includes(courseName),
+      ),
+  );
+
+  const somePositionNames = sampleMany(
+    Math.max(0, INTERNSHIP_POSITIONS_COUNT - existingPositions.length),
+    positionNamesPool,
+  );
+
+  const organisation = await createOrganisation(sample(ORGANISATION_NAMES));
+
+  for (const positionName of somePositionNames) {
+    await prisma.internshipPosition.create({
+      data: {
+        summary: `${organisation.name} ${positionName}`,
+        organisationId: organisation.id,
+        internships: {
+          connect: {
+            id: internship.id,
+          },
+        },
+      },
+    });
+  }
+}
+
+async function createInternshipInstances(
   internships: Set<Internship>,
   user: User,
 ): Promise<void> {
   const existingInternships = await prisma.internshipInstance.findMany({
     where: { studentId: { equals: user.id } },
   });
+
   const internshipsPool = Array.from(internships).filter(
     (internship) =>
       !existingInternships.some(
         (existingInternship) => existingInternship.id === internship.id,
       ),
   );
+
   const someInternships = sampleMany(
     Math.max(0, INTERNSHIP_INSTANCE_COUNT - existingInternships.length),
     internshipsPool,
   );
+
   for (const internship of someInternships) {
     await prisma.internshipInstance.create({
       data: {
@@ -194,6 +196,8 @@ async function createInternshipInstance(
         studentId: user.id,
       },
     });
+
+    await createInternshipPositions(internship);
   }
 }
 
@@ -206,22 +210,13 @@ try {
   const competenciesUser = sample(users);
   await createCompetencyFramework(competenciesUser);
 
-  for (const courseName of COURSE_NAMES) {
-    createCourse(courseName);
-  }
-
   for (const educationTitle of EDUCATION_TITLES) {
     createEducation(educationTitle, sample(users));
   }
 
-  for (const organisationName of ORGANISATION_NAMES) {
-    createOrganisation(organisationName);
-  }
-
   const internships = await createInternships();
   for (const user of users) {
-    await createInternshipInstance(internships, user);
-    await createInternshipPositions(user);
+    await createInternshipInstances(internships, user);
   }
 } catch (error) {
   console.error(error);
