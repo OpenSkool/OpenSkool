@@ -84,12 +84,18 @@ builder.queryFields((t) => ({
   allCompetencyFrameworks: t.field({
     type: [CompetencyFramework],
     async resolve(root, argumentz, ctx) {
+      if (ctx.request.auth.ability.cannot('read', 'CompetencyFramework')) {
+        throw new AppUnauthorizedError();
+      }
       return CompetencyService.getAllFrameworks(ctx.domain);
     },
   }),
   allRootCompetencies: t.field({
     type: [Competency],
     async resolve(root, { id }, ctx) {
+      if (ctx.request.auth.ability.cannot('read', 'Competency')) {
+        throw new AppUnauthorizedError();
+      }
       return CompetencyService.getAllRootCompetencies(ctx.domain);
     },
   }),
@@ -101,6 +107,9 @@ builder.queryFields((t) => ({
       types: [AppNotFoundError],
     },
     async resolve(root, { id }, ctx) {
+      if (ctx.request.auth.ability.cannot('read', 'Competency')) {
+        throw new AppUnauthorizedError();
+      }
       return CompetencyService.findCompetencyById(id, ctx.domain);
     },
   }),
@@ -112,6 +121,9 @@ builder.queryFields((t) => ({
       types: [AppNotFoundError],
     },
     async resolve(root, { id }, ctx) {
+      if (ctx.request.auth.ability.cannot('read', 'CompetencyFramework')) {
+        throw new AppUnauthorizedError();
+      }
       return CompetencyService.findFrameworkById(id, ctx.domain);
     },
   }),

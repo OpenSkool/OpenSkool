@@ -34,6 +34,7 @@ afterAll(async () => {
 beforeEach(async () => {
   await prisma.internshipPosition.deleteMany({});
   await prisma.internshipInstance.deleteMany({});
+  await prisma.user.deleteMany({});
 });
 
 describe('myInternshipInstances', () => {
@@ -86,15 +87,19 @@ describe('myInternshipInstances', () => {
 
 describe('myInternshipInstance', () => {
   test('return `unauthorized` if no user', async () => {
-    const user1 = await createUserFixture();
-    const user2 = await createUserFixture();
+    const user1 = await createUserFixture({ id: 'user-id-1' });
+    const user2 = await createUserFixture({ id: 'user-id-2' });
     const instance = await prisma.internshipInstance.create({
-      data: { studentId: user1.id, internshipId: internship.id },
+      data: {
+        student: { connect: { id: user1.id } },
+        internship: { connect: { id: internship.id } },
+      },
     });
     const response = await execute(
       gql`
         query ($id: ID!) {
           myInternshipInstance(id: $id) {
+            __typename
             ... on UserError {
               code
             }

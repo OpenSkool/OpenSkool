@@ -54,8 +54,8 @@ export async function createCompetencyFixture({
   });
 }
 
-export async function createUserFixture(): Promise<User> {
+export async function createUserFixture(data?: Partial<User>): Promise<User> {
   return prisma.user.create({
-    data: { id: cuid(), name: 'Joske Vermeulen' },
+    data: { id: cuid(), name: 'Joske Vermeulen', ...data },
   });
 }

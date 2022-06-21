@@ -1,3 +1,5 @@
+import { subject } from '@casl/ability';
+
 import {
   InternshipService,
   InternshipModel,
@@ -110,7 +112,16 @@ builder.queryField('myInternshipInstance', (t) =>
       types: [AppNotFoundError, AppUnauthorizedError],
     },
     async resolve(parent, { id }, ctx) {
-      return InternshipService.getInternshipInstanceById(id, ctx.domain);
+      const instance = await InternshipService.getInternshipInstanceById(id);
+      if (
+        ctx.request.auth.ability.cannot(
+          'read',
+          subject('InternshipInstance', instance),
+        )
+      ) {
+        throw new AppUnauthorizedError();
+      }
+      return instance;
     },
   }),
 );

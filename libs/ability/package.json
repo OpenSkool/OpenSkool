@@ -18,7 +18,8 @@
     "dist/"
   ],
   "dependencies": {
-    "@casl/ability": "^5.4.4"
+    "@casl/ability": "^5.4.4",
+    "@prisma/client": "^3.15.2"
   },
   "devDependencies": {
     "@types/eslint": "^8.4.3",

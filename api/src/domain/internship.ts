@@ -6,7 +6,7 @@ import {
 
 import { DomainContext } from '~/domain/context';
 import { handleServiceError } from '~/domain/helpers';
-import { AppNotFoundError, AppUnauthorizedError } from '~/errors';
+import { AppNotFoundError } from '~/errors';
 import { prisma } from '~/prisma';
 
 export interface InternshipModel extends Internship {}
@@ -44,7 +44,6 @@ export async function getInternshipById(id: string): Promise<InternshipModel> {
 
 export async function getInternshipInstanceById(
   id: string,
-  context: DomainContext,
 ): Promise<InternshipInstanceModel> {
   try {
     const internshipInstance = await prisma.internshipInstance.findUnique({
@@ -52,9 +51,6 @@ export async function getInternshipInstanceById(
     });
     if (internshipInstance == null) {
       throw new AppNotFoundError();
-    }
-    if (internshipInstance.studentId !== context.userId) {
-      throw new AppUnauthorizedError();
     }
     return internshipInstance;
   } catch (error) {

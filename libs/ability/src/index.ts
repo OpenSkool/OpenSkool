@@ -1,4 +1,9 @@
 import { Ability, AbilityClass, MongoQuery, RawRuleOf } from '@casl/ability';
+import {
+  Competency,
+  CompetencyFramework,
+  InternshipInstance,
+} from '@prisma/client';
 
 type AppManageAction = 'manage'; // 'manage' is a special keyword in CASL representing any action
 type AppCrudAction = 'create' | 'read' | 'update' | 'delete';
@@ -6,10 +11,12 @@ type AppAction = AppManageAction | AppCrudAction;
 
 type AppAllSubject = 'all'; // 'all' is a special keyword in CASL representing any subject
 type AppDomainSubject =
-  | 'CompetencyFramework'
   | 'Competency'
-  | 'Education'
-  | 'User';
+  | Competency
+  | 'CompetencyFramework'
+  | CompetencyFramework
+  | 'InternshipInstance'
+  | InternshipInstance;
 type AppSubject = AppAllSubject | AppDomainSubject;
 
 export type AppAbility = Ability<[AppAction, AppSubject], MongoQuery>;
