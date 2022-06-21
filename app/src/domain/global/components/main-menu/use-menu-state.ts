@@ -37,10 +37,8 @@ export function useMenuState(): {
     }
   });
   watch(breakpoints.lg, (isLarge) => {
-    if (isLarge) {
-      // FSS transition GROW_TO_LARGE
-      menuState.opened = true;
-    }
+    // FSS transition GROW_TO_LARGE / SHRINK_TO_MEDIUM
+    menuState.opened = isLarge;
   });
 
   return {

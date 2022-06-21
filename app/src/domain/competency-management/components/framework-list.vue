@@ -25,7 +25,7 @@ const ability = useAppAbility();
 
 <template>
   <template v-if="!loading && frameworks != null">
-    <UiEmptyCard v-if="frameworks.length === 0" class="flex-1">
+    <UiEmptyCard v-if="frameworks.length === 0">
       <p>{{ $t('management.competencyFramework.list.emptyDescription') }}</p>
       <UiButtonRouterLink
         v-if="ability.can('create', 'CompetencyFramework')"
@@ -35,7 +35,7 @@ const ability = useAppAbility();
         {{ $t('management.competencyFramework.action.create') }}
       </UiButtonRouterLink>
     </UiEmptyCard>
-    <UiOrderedList v-else class="flex-1">
+    <UiOrderedList v-else>
       <UiOrderedListItem
         v-for="framework of frameworks"
         :key="framework.id"

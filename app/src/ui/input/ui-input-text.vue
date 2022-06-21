@@ -9,7 +9,7 @@ defineEmits<(event: 'update:modelValue', value: string) => void>();
 
 <template>
   <input
-    class="bg-white rounded-md border-1 border-gray-200 shadow-md text-base py-2 px-3 inline-block focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-primary-700)"
+    class="bg-white rounded-md border-1 border-gray-200 shadow-md py-2 px-3 inline-block focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-primary-700) "
     type="text"
     :disabled="disabled"
     :value="modelValue"

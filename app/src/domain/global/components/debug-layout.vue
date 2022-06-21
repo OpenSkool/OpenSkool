@@ -5,7 +5,7 @@ const breakpoints = useBreakpoints();
 </script>
 
 <template>
-  <div class="space-y-1 bg-primary-100 text-sm p-1 right-0 bottom-0 fixed">
+  <div class="flex bg-primary-100 text-sm p-1 bottom-0 left-0 z-10 gap-1 fixed">
     <div
       v-for="[name, active] of Object.entries(breakpoints)"
       :key="name"

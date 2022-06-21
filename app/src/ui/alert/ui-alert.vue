@@ -34,7 +34,7 @@ withDefaults(
 
 <style>
 .ui-alert {
-  @apply rounded-md space-y-5 border-1 text-base py-3 px-5;
+  @apply rounded-md space-y-5 border-1 py-3 px-5;
 
   & > a {
     @apply underline;

@@ -6,13 +6,20 @@ import {
 import { NestedCompetencyList } from '~/domain/competency-management';
 import {
   AuthAccessDeniedLayout,
-  ManagementLayout,
   NotFoundLayout,
   useGlobalStore,
 } from '~/domain/global';
+import {
+  ManagementLayout,
+  ManagementLayoutItem,
+  ManagementLayoutLink,
+} from '~/domain/management';
 import { useHead } from '~/i18n';
-import { ActionItem } from '~/types';
 import { assert } from '~/utils';
+
+import RiAddLine from '~icons/ri/add-line';
+import RiArrowUpDownLine from '~icons/ri/arrow-up-down-line';
+import RiDeleteBinLine from '~icons/ri/delete-bin-line';
 
 const props = defineProps<{
   competencyId: string; // route param
@@ -119,36 +126,6 @@ async function deleteCompetencyHandler(): Promise<void> {
     );
   }
 }
-
-function openDeleteModal(): void {
-  isDeleteModalOpen.value = true;
-}
-
-function showReorderArrows(): void {
-  showReorderCompetenciesControls.value =
-    !showReorderCompetenciesControls.value;
-}
-
-const actions: ActionItem[] = [
-  {
-    action: `/manage/competencies/${props.frameworkId}/${props.competencyId}/create-competency`,
-    icon: 'ri-add-line',
-    hasPermission: ability.can('create', 'CompetencyFramework'),
-    title: t('management.competency.action.create'),
-  },
-  {
-    action: showReorderArrows,
-    icon: 'ri-arrow-up-down-line',
-    hasPermission: ability.can('update', 'Competency'),
-    title: t('management.competency.list.action.reorder'),
-  },
-  {
-    action: openDeleteModal,
-    icon: 'ri-delete-bin-line',
-    hasPermission: ability.can('delete', 'Competency'),
-    title: t('management.competency.detail.action.delete'),
-  },
-];
 </script>
 
 <template>
@@ -190,7 +167,34 @@ const actions: ActionItem[] = [
           <RiEditBoxLine aria-hidden />
         </RouterLink>
       </div>
-      <ManagementLayout :actions="actions">
+      <ManagementLayout>
+        <template #actions>
+          <ManagementLayoutLink
+            v-if="ability.can('create', 'Competency')"
+            :icon="RiAddLine"
+            :to="`/manage/competencies/${props.frameworkId}/${props.competencyId}/create-competency`"
+          >
+            {{ $t('management.competency.action.create') }}
+          </ManagementLayoutLink>
+          <ManagementLayoutItem
+            is="button"
+            v-if="ability.can('update', 'Competency')"
+            :icon="RiArrowUpDownLine"
+            @click="
+              showReorderCompetenciesControls = !showReorderCompetenciesControls
+            "
+          >
+            {{ $t('management.competency.list.action.reorder') }}
+          </ManagementLayoutItem>
+          <ManagementLayoutItem
+            is="button"
+            v-if="ability.can('delete', 'Competency')"
+            :icon="RiDeleteBinLine"
+            @click="isDeleteModalOpen = true"
+          >
+            {{ $t('management.competency.detail.action.delete') }}
+          </ManagementLayoutItem>
+        </template>
         <UiDialog
           implicit-close
           :open="isDeleteModalOpen"

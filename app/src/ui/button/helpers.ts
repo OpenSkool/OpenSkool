@@ -23,15 +23,15 @@ export function createButtonStyles({
   size = 'base',
 }: ButtonStyleOptions = {}): string {
   const classes: string[] = [
-    'inline-flex items-center gap-1 rounded-md font-semibold select-none',
+    'inline-flex items-center rounded-md font-semibold select-none',
   ];
   switch (size) {
     case 'sm': {
-      classes.push('text-sm px-8 py-1');
+      classes.push('gap-3 text-sm px-8 py-1');
       break;
     }
     case 'base': {
-      classes.push('text-base px-10 py-2');
+      classes.push('gap-5 px-10 py-2');
       break;
     }
   }

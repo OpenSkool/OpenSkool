@@ -20,7 +20,9 @@ const { menuState, toggleMenu } = useMenuState();
 <template>
   <!-- <DebugLayout /> -->
   <div class="grid">
-    <div class="flex p-3 col-span-2 items-center justify-between">
+    <div
+      class="flex bg-light-100 shadow-sm p-3 shadow-gray-200 col-span-2 relative items-center justify-between"
+    >
       <MainMenuToggleButton
         aria-controls="mainMenu"
         :aria-expanded="menuState.opened"
@@ -32,12 +34,16 @@ const { menuState, toggleMenu } = useMenuState();
         <UserMenu />
       </div>
     </div>
-    <MainMenu id="mainMenu" :state="menuState" />
+    <MainMenu
+      id="mainMenu"
+      class="shadow-sm shadow-gray-200"
+      :state="menuState"
+    />
     <div
       class="bg-gray-100 mb-10"
-      :class="menuState.overlay || !menuState.opened ? 'col-span-2' : ''"
+      :class="{ 'col-span-2': menuState.overlay || !menuState.opened }"
     >
-      <main class="container mx-auto p-10">
+      <main class="mx-auto p-10 lg:container">
         <UiAlert
           v-if="globalStore.hasGlobalError"
           class="mb-5"

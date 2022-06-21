@@ -21,7 +21,7 @@ defineEmits<
         :disabled="disabled"
         class="bg-white rounded-md cursor-default flex border-1 border-gray-200 shadow-md py-2 px-3 toggle-button items-center justify-between select-none focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-primary-700) "
       >
-        <div class="text-base truncate">{{ selectedLabel ?? '–' }}</div>
+        <div class="truncate">{{ selectedLabel ?? '–' }}</div>
         <RiArrowDropDownLine aria-hidden class="ml-2" />
       </ListboxButton>
       <Transition

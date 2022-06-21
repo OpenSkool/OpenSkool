@@ -75,19 +75,21 @@ async function handleFormSubmit(): Promise<void> {
 </script>
 
 <template>
-  <FormKit
-    v-model="formValues"
-    type="form"
-    :submit-label="t('management.competency.create.submitButton')"
-    :errors="formErrors"
-    @node="formNode = $event"
-    @submit="handleFormSubmit"
-  >
+  <UiCard class="p-5">
     <FormKit
-      name="title"
-      :label="t('management.competency.field.name')"
-      type="text"
-      validation="required"
-    />
-  </FormKit>
+      v-model="formValues"
+      type="form"
+      :submit-label="t('management.competency.create.submitButton')"
+      :errors="formErrors"
+      @node="formNode = $event"
+      @submit="handleFormSubmit"
+    >
+      <FormKit
+        name="title"
+        :label="t('management.competency.field.name')"
+        type="text"
+        validation="required"
+      />
+    </FormKit>
+  </UiCard>
 </template>

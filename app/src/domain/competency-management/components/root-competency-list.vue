@@ -44,7 +44,7 @@ const framework = computed(() =>
 </script>
 
 <template>
-  <template v-if="!loading">
+  <template v-if="framework != null || !loading">
     <NotFoundCard v-if="framework == null">
       {{ $t('management.competencyFramework.error.notFound') }}
     </NotFoundCard>

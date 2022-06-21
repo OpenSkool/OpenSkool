@@ -1,24 +1,16 @@
 <script lang="ts" setup>
 import { CompetencyFrameworkList } from '~/domain/competency-management';
-import { AuthAccessDeniedLayout, ManagementLayout } from '~/domain/global';
+import { AuthAccessDeniedLayout } from '~/domain/global';
+import { ManagementLayout, ManagementLayoutLink } from '~/domain/management';
 import { useHead } from '~/i18n';
-import { ActionItem } from '~/types';
+
+import RiAddLine from '~icons/ri/add-line';
 
 useHead(({ t }) => ({
   title: t('management.competencyFramework.list.heading'),
 }));
 
-const { t } = useI18n();
 const ability = useAppAbility();
-
-const actions: ActionItem[] = [
-  {
-    action: '/manage/competencies/create-framework',
-    icon: 'ri-add-line',
-    hasPermission: ability.can('create', 'CompetencyFramework'),
-    title: t('management.competencyFramework.action.create'),
-  },
-];
 </script>
 
 <template>
@@ -34,7 +26,16 @@ const actions: ActionItem[] = [
     <UiTitle is="h1" class="text-xl mb-3">
       {{ $t('management.competencyFramework.list.heading') }}
     </UiTitle>
-    <ManagementLayout :actions="actions">
+    <ManagementLayout>
+      <template #actions>
+        <ManagementLayoutLink
+          v-if="ability.can('create', 'CompetencyFramework')"
+          :icon="RiAddLine"
+          to="/manage/competencies/create-framework"
+        >
+          {{ $t('management.competencyFramework.action.create') }}
+        </ManagementLayoutLink>
+      </template>
       <CompetencyFrameworkList />
     </ManagementLayout>
   </template>

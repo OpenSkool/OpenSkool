@@ -12,7 +12,7 @@ test('delete competency works', async () => {
   await router.isReady();
   const replace = vi.spyOn(router, 'replace');
   const user = userEvent.setup();
-  const openDeleteModalButton = await screen.findByRole('menuitem', {
+  const openDeleteModalButton = await screen.findByRole('button', {
     name: /action.delete/,
   });
   await user.click(openDeleteModalButton);

@@ -59,7 +59,7 @@ async function swapCompetencies(
 </script>
 
 <template>
-  <UiOrderedList class="flex-1">
+  <UiOrderedList>
     <UiOrderedListItem
       v-for="(competency, index) of competencies"
       :key="competency.id"
