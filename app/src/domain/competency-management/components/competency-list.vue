@@ -1,12 +1,13 @@
 <script lang="ts" setup>
 import { Competency, SwapCompetenciesDocument } from '~/codegen/graphql';
 
-const props = defineProps<{
+defineProps<{
   competencies: Array<Pick<Competency, 'id' | 'title'>>;
   frameworkId: string;
-  refetchQueries: string[];
   showReorderControls?: boolean;
 }>();
+
+const emit = defineEmits<(event: 'swap') => void>();
 
 const { t } = useI18n();
 
@@ -33,7 +34,6 @@ gql`
 
 const { mutate: mutateSwapCompetencies } = useMutation(
   SwapCompetenciesDocument,
-  { refetchQueries: props.refetchQueries },
 );
 
 async function swapCompetencies(
@@ -45,9 +45,11 @@ async function swapCompetencies(
     rightCompetencyId,
   });
   if (
-    response?.data?.swapCompetencies.__typename !==
+    response?.data?.swapCompetencies.__typename ===
     'MutationSwapCompetenciesSuccess'
   ) {
+    emit('swap');
+  } else {
     console.error(
       'unexpected mutation response',
       response?.data?.swapCompetencies,

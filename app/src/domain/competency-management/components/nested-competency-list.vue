@@ -29,7 +29,7 @@ gql`
   }
 `;
 
-const { loading, onError, result } = useQuery(
+const { loading, onError, refetch, result } = useQuery(
   ManageNestedCompetenciesDocument,
   () => ({ id: props.competencyId }),
   { fetchPolicy: 'network-only' },
@@ -63,8 +63,8 @@ const subCompetencies = computed(() => competency.value?.subCompetencies ?? []);
       v-else
       :competencies="subCompetencies"
       :framework-id="frameworkId"
-      :refetch-queries="['getFrameworkRootCompetencies']"
       :show-reorder-controls="showReorderControls"
+      @swap="refetch()"
     />
   </template>
 </template>

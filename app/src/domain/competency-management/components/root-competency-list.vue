@@ -28,7 +28,7 @@ gql`
   }
 `;
 
-const { loading, onError, result } = useQuery(
+const { loading, onError, refetch, result } = useQuery(
   ManageRootCompetenciesDocument,
   () => ({ id: props.frameworkId }),
   { fetchPolicy: 'network-only' },
@@ -62,8 +62,8 @@ const framework = computed(() =>
       v-else
       :competencies="framework.competencies"
       :framework-id="frameworkId"
-      :refetch-queries="['getFrameworkRootCompetencies']"
       :show-reorder-controls="showReorderControls"
+      @swap="refetch()"
     />
   </template>
 </template>
