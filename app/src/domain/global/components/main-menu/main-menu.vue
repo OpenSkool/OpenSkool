@@ -65,14 +65,6 @@ const internshipInstances = computed(() =>
             />
           </RouterLink>
         </header>
-        <UiMainNavSection>
-          <UiMainNavHeader>
-            {{ $t('global.mainMenu.management.heading') }}
-          </UiMainNavHeader>
-          <UiMainNavLink to="/manage/competencies">
-            {{ $t('global.mainMenu.management.competencies') }}
-          </UiMainNavLink>
-        </UiMainNavSection>
         <UiMainNavSection v-if="internshipInstances.length > 0">
           <UiMainNavHeader>
             {{ $t('global.mainMenu.internshipsHeading') }}
@@ -83,6 +75,14 @@ const internshipInstances = computed(() =>
             :to="`/my-internships/${instance.id}`"
           >
             {{ instance.internship.course.name }}
+          </UiMainNavLink>
+        </UiMainNavSection>
+        <UiMainNavSection>
+          <UiMainNavHeader>
+            {{ $t('global.mainMenu.management.heading') }}
+          </UiMainNavHeader>
+          <UiMainNavLink to="/manage/competencies">
+            {{ $t('global.mainMenu.management.competencies') }}
           </UiMainNavLink>
         </UiMainNavSection>
         <UiMainNavSection>
