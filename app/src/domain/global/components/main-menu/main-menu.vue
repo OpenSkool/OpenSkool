@@ -33,7 +33,7 @@ const internshipInstances = computed(() =>
 </script>
 
 <template>
-  <div v-if="!loading" class="relative">
+  <div class="relative">
     <Transition
       enter-active-class="absolute transition transform"
       enter-from-class="-translate-x-full"
@@ -43,7 +43,7 @@ const internshipInstances = computed(() =>
       leave-to-class="-translate-x-full"
     >
       <UiMainNav
-        v-if="state.opened"
+        v-if="!loading && state.opened"
         class="bg-white"
         :class="{
           'fixed z-10 w-screen h-screen': state.opened && state.overlay,
