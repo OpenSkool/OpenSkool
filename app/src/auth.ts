@@ -51,6 +51,10 @@ export const useAuthStore = defineStore('auth', () => {
     currentUser: null,
   });
 
+  function logout(): void {
+    window.location.href = authLogoutUrl.toString();
+  }
+
   const refreshTokenTimer = ref<number>();
 
   async function refresh(): Promise<Auth> {
@@ -59,6 +63,7 @@ export const useAuthStore = defineStore('auth', () => {
       const authQuery = await apolloClient.query({
         query: AuthCurrentUserDocument,
       });
+      const previousUser = auth.value.currentUser;
       auth.value = authQuery.data.auth;
       if (auth.value.currentUser) {
         const expiresIn =
@@ -68,15 +73,18 @@ export const useAuthStore = defineStore('auth', () => {
           Date.now() -
           ONE_MINUTE;
         if (expiresIn < 0) {
-          throw new Error('session expired');
+          logout();
+        } else {
+          refreshTokenTimer.value = window.setTimeout(
+            () => void refresh(),
+            expiresIn,
+          );
         }
-        refreshTokenTimer.value = window.setTimeout(
-          () => void refresh(),
-          expiresIn,
-        );
+      } else if (previousUser) {
+        logout();
       }
-    } catch {
-      window.location.href = authLogoutUrl.toString();
+    } catch (error) {
+      console.error(error);
     }
     return auth.value;
   }
