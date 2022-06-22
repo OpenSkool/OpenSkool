@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia';
+import { acceptHMRUpdate, defineStore } from 'pinia';
 
 import { apolloClient } from '~/apollo';
 import {
@@ -91,4 +91,8 @@ export const useAuthStore = defineStore('auth', () => {
 export async function initAuth(): Promise<Auth> {
   const authStore = useAuthStore(pinia);
   return authStore.refresh();
+}
+
+if (import.meta.hot) {
+  import.meta.hot.accept(acceptHMRUpdate(useAuthStore, import.meta.hot));
 }

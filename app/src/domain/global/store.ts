@@ -1,6 +1,6 @@
 import { ApolloError } from '@apollo/client';
 import { logErrorMessages } from '@vue/apollo-util';
-import { defineStore } from 'pinia';
+import { acceptHMRUpdate, defineStore } from 'pinia';
 
 const ERROR_TIMEOUT = 30_000;
 
@@ -32,3 +32,7 @@ export const useGlobalStore = defineStore('global', () => {
     handleFatalApolloError,
   };
 });
+
+if (import.meta.hot) {
+  import.meta.hot.accept(acceptHMRUpdate(useGlobalStore, import.meta.hot));
+}
