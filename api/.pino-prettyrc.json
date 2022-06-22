@@ -1,0 +1,6 @@
+{
+  "colorize": true,
+  "ignore": "hostname,pid",
+  "levelFirst": true,
+  "translateTime": "HH:MM:ss"
+}

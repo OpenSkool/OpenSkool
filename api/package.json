@@ -11,7 +11,7 @@
     "build": "rollup -c",
     "clean": "rm -rf .eslintcache .turbo/ dist/",
     "codegen": "tsx -r dotenv-flow/config scripts/codegen.ts",
-    "dev": "FORCE_COLOR=1 NODE_ENV=development nodemon src/server.ts",
+    "dev": "FORCE_COLOR=1 NODE_ENV=development nodemon src/server.ts | pino-pretty",
     "lint": "eslint --cache --ext .cjs,.mjs,.ts .",
     "postinstall": "yarn run prisma generate",
     "preview": "FORCE_COLOR=1 NODE_ENV=production node -r dotenv-flow/config dist/index.js",
