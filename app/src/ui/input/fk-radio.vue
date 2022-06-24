@@ -13,6 +13,7 @@ defineProps<{
     :options="context.options"
     :model-value="context._value"
     :name="context.id"
+    v-bind="context.attrs"
     @update:model-value="context.node.input"
   />
 </template>

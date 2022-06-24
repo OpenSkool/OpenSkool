@@ -22,6 +22,7 @@ function handleUpdate(changedValue: unknown): void {
     :id="context.id"
     :model-value="props.context._value"
     :selected-label="selectedLabel"
+    v-bind="context.attrs"
     @update:model-value="handleUpdate"
   >
     <UiSelectOption
