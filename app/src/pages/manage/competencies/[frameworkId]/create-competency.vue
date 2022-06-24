@@ -54,13 +54,15 @@ const framework = computed(() =>
     </UiBreadcrumbItem>
   </UiBreadcrumb>
   <AuthAccessDeniedLayout v-if="ability.cannot('create', 'Competency')" />
-  <NotFoundLayout v-else-if="framework == null">
-    <p>Competency framework not found.</p>
-  </NotFoundLayout>
   <template v-else-if="!loading">
-    <UiTitle is="h1" class="text-xl mb-3">
-      {{ $t('management.competency.create.heading') }}
-    </UiTitle>
-    <RootCompetencyCreate :framework-id="frameworkId" />
+    <NotFoundLayout v-if="framework == null">
+      <p>Competency framework not found.</p>
+    </NotFoundLayout>
+    <template v-else>
+      <UiTitle is="h1" class="text-xl mb-3">
+        {{ $t('management.competency.create.heading') }}
+      </UiTitle>
+      <RootCompetencyCreate :framework-id="frameworkId" />
+    </template>
   </template>
 </template>
