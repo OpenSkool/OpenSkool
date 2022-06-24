@@ -12,6 +12,7 @@ declare module '@vue/runtime-core' {
     FkInputText: typeof import('./../ui/input/fk-input-text.vue')['default']
     FkRadio: typeof import('./../ui/input/fk-radio.vue')['default']
     FkSelect: typeof import('./../ui/select/fk-select.vue')['default']
+    FkTextarea: typeof import('./../ui/input/fk-textarea.vue')['default']
     Listbox: typeof import('@headlessui/vue')['Listbox']
     ListboxButton: typeof import('@headlessui/vue')['ListboxButton']
     ListboxOption: typeof import('@headlessui/vue')['ListboxOption']
