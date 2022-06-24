@@ -2015,7 +2015,7 @@ __metadata:
     type-fest: ^2.13.1
     typescript: ~4.7.3
     vite-tsconfig-paths: ^3.5.0
-    vitest: 0.15.1
+    vitest: 0.15.2
     zod: ^3.17.3
   languageName: unknown
   linkType: soft
@@ -2049,6 +2049,7 @@ __metadata:
     "@vueuse/head": 0.7.6
     autoprefixer: ^10.4.7
     c8: ^7.11.3
+    cross-fetch: ^3.1.5
     eslint: ^8.17.0
     graphql: ^16.5.0
     jsdom: ^20.0.0
@@ -2065,12 +2066,11 @@ __metadata:
     vite-plugin-graphql-codegen: ^1.7.0
     vite-plugin-pages: 0.24.1
     vite-plugin-windicss: ^1.8.4
-    vitest: 0.12.10
+    vitest: 0.15.2
     vue: ^3.2.37
     vue-i18n: ^9.2.0-beta.36
     vue-router: ^4.0.16
     vue-tsc: 0.37.9
-    whatwg-fetch: ^3.6.2
     windicss: ^3.5.4
   languageName: unknown
   linkType: soft
@@ -10116,10 +10116,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tinyspy@npm:^0.3.2":
-  version: 0.3.2
-  resolution: "tinyspy@npm:0.3.2"
-  checksum: 674d238c9b879a9d7acee3c30cfbc94334016d15a43b9db2f750aa74f107fa7096821d3866603576ea8efda9f2ec0683ffbd960f83de166f250ed583e68f25b3
+"tinyspy@npm:^0.3.3":
+  version: 0.3.3
+  resolution: "tinyspy@npm:0.3.3"
+  checksum: 1beb8f04c100d9ac769ff85266594f07d6f08f41cfb95c4bef9da3e59988b42e8d4e66c2ec455d3ecad80027347920e87d7a7098c5a2a28637f9fee25e11a8f1
   languageName: node
   linkType: hard
 
@@ -10969,7 +10969,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^2.9.12, vite@npm:^2.9.9":
+"vite@npm:^2.9.12":
   version: 2.9.12
   resolution: "vite@npm:2.9.12"
   dependencies:
@@ -10998,41 +10998,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vitest@npm:0.12.10":
-  version: 0.12.10
-  resolution: "vitest@npm:0.12.10"
-  dependencies:
-    "@types/chai": ^4.3.1
-    "@types/chai-subset": ^1.3.3
-    chai: ^4.3.6
-    debug: ^4.3.4
-    local-pkg: ^0.4.1
-    tinypool: ^0.1.3
-    tinyspy: ^0.3.2
-    vite: ^2.9.9
-  peerDependencies:
-    "@vitest/ui": "*"
-    c8: "*"
-    happy-dom: "*"
-    jsdom: "*"
-  peerDependenciesMeta:
-    "@vitest/ui":
-      optional: true
-    c8:
-      optional: true
-    happy-dom:
-      optional: true
-    jsdom:
-      optional: true
-  bin:
-    vitest: vitest.mjs
-  checksum: e085e5429baf2124aa8f4b2b734aa123085f308a9f83bb42e296d6b5b3ec242b1433f5304548451c8b116ec892c330f301ab09b973e014310e080e04d28fabba
-  languageName: node
-  linkType: hard
-
-"vitest@npm:0.15.1":
-  version: 0.15.1
-  resolution: "vitest@npm:0.15.1"
+"vitest@npm:0.15.2":
+  version: 0.15.2
+  resolution: "vitest@npm:0.15.2"
   dependencies:
     "@types/chai": ^4.3.1
     "@types/chai-subset": ^1.3.3
@@ -11041,7 +11009,7 @@ __metadata:
     debug: ^4.3.4
     local-pkg: ^0.4.1
     tinypool: ^0.1.3
-    tinyspy: ^0.3.2
+    tinyspy: ^0.3.3
     vite: ^2.9.12
   peerDependencies:
     "@vitest/ui": "*"
@@ -11059,7 +11027,7 @@ __metadata:
       optional: true
   bin:
     vitest: vitest.mjs
-  checksum: a39959815977eb0d19807c629b6eff4aff51c30ded41335f03d405a4585da47b2d0e6a121ab912615b44876ed9a19e73d900b37382819091a4efcc9c1060784e
+  checksum: 48b6f98ece8019c3ac7742e7a5324ada514c98025c34cef6c01ccd6d83c4f0a62af6d98f13c158313e9595d131506139211f924b71dd18b03036296e30974f6e
   languageName: node
   linkType: hard
 
@@ -11225,7 +11193,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"whatwg-fetch@npm:^3.4.1, whatwg-fetch@npm:^3.6.2":
+"whatwg-fetch@npm:^3.4.1":
   version: 3.6.2
   resolution: "whatwg-fetch@npm:3.6.2"
   checksum: ee976b7249e7791edb0d0a62cd806b29006ad7ec3a3d89145921ad8c00a3a67e4be8f3fb3ec6bc7b58498724fd568d11aeeeea1f7827e7e1e5eae6c8a275afed

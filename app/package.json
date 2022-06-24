@@ -31,6 +31,7 @@
     "@vue/apollo-util": "^4.0.0-alpha.17",
     "@vueuse/core": "^8.6.0",
     "@vueuse/head": "0.7.6",
+    "cross-fetch": "^3.1.5",
     "graphql": "^16.5.0",
     "pinia": "^2.0.14",
     "the-new-css-reset": "^1.6.1",
@@ -65,8 +66,7 @@
     "vite-plugin-graphql-codegen": "^1.7.0",
     "vite-plugin-pages": "0.24.1",
     "vite-plugin-windicss": "^1.8.4",
-    "vitest": "0.12.10",
-    "vue-tsc": "0.37.9",
-    "whatwg-fetch": "^3.6.2"
+    "vitest": "0.15.2",
+    "vue-tsc": "0.37.9"
   }
 }

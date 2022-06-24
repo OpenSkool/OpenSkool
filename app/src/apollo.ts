@@ -4,6 +4,7 @@ import {
   InMemoryCache,
 } from '@apollo/client/core';
 import { setContext } from '@apollo/client/link/context';
+import fetch from 'cross-fetch';
 
 import { i18nService } from './i18n';
 
@@ -19,6 +20,7 @@ const enrichLink = setContext(
 
 const httpLink = createHttpLink({
   credentials: 'include',
+  fetch: import.meta.env.MODE === 'test' ? fetch : undefined,
   uri: new URL('./graphql', import.meta.env.VITE_API_BASE_URL).toString(),
 });
 
