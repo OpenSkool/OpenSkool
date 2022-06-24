@@ -28,4 +28,7 @@ defineEmits<(event: 'update:modelValue', value: string) => void>();
 .root:disabled {
   @apply cursor-not-allowed bg-stone-300 border-stone-400 border-opacity-50 text-stone-400;
 }
+.root {
+  width: min(100%, 60ch);
+}
 </style>
