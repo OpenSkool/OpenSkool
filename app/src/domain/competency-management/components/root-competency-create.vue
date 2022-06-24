@@ -87,7 +87,7 @@ async function handleFormSubmit(): Promise<void> {
       <FormKit
         name="title"
         :label="t('management.competency.field.name')"
-        type="text"
+        type="textarea"
         validation="required"
       />
     </FormKit>
