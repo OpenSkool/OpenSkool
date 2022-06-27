@@ -1,9 +1,6 @@
-export interface CompetencyFixture {
-  children?: CompetencyFixture[];
-  title: string;
-}
+import { CompetencyFixture } from './types';
 
-export const competencyFixtures: CompetencyFixture[] = [
+export const canMedsCompetencies: CompetencyFixture[] = [
   {
     title: 'Medical Expert',
     children: [

@@ -12,6 +12,9 @@ module.exports = {
     {
       files: 'prisma/**',
       extends: ['noise/node', 'noise/node/script'],
+      rules: {
+        '@typescript-eslint/no-magic-numbers': 'off',
+      },
     },
     {
       files: ['*', '**/*.spec.*'],
