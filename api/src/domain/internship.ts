@@ -44,15 +44,9 @@ export async function getInternshipById(id: string): Promise<InternshipModel> {
 
 export async function getInternshipInstanceById(
   id: string,
-): Promise<InternshipInstanceModel> {
+): Promise<InternshipInstanceModel | null> {
   try {
-    const internshipInstance = await prisma.internshipInstance.findUnique({
-      where: { id },
-    });
-    if (internshipInstance == null) {
-      throw new AppNotFoundError();
-    }
-    return internshipInstance;
+    return prisma.internshipInstance.findUnique({ where: { id } });
   } catch (error) {
     handleServiceError(error);
   }

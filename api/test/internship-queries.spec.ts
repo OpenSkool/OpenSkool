@@ -26,11 +26,6 @@ beforeAll(async () => {
   });
 });
 
-afterAll(async () => {
-  await prisma.internshipInstance.deleteMany({});
-  await prisma.internship.deleteMany({});
-});
-
 beforeEach(async () => {
   await prisma.internshipPosition.deleteMany({});
   await prisma.internshipInstance.deleteMany({});
@@ -86,7 +81,7 @@ describe('myInternshipInstances', () => {
 });
 
 describe('myInternshipInstance', () => {
-  test('return `unauthorized` if no user', async () => {
+  test('return null if not authorized', async () => {
     const user1 = await createUserFixture({ id: 'user-id-1' });
     const user2 = await createUserFixture({ id: 'user-id-2' });
     const instance = await prisma.internshipInstance.create({
@@ -99,10 +94,7 @@ describe('myInternshipInstance', () => {
       gql`
         query ($id: ID!) {
           myInternshipInstance(id: $id) {
-            __typename
-            ... on UserError {
-              code
-            }
+            id
           }
         }
       `,
@@ -111,19 +103,16 @@ describe('myInternshipInstance', () => {
         variables: { id: instance.id },
       },
     );
-    expect(response).not.toHaveProperty('errors');
-    expect(response).toHaveProperty('data.myInternshipInstance.code', 'AE401');
+    expect(response).toHaveProperty('data.myInternshipInstance', null);
   });
 
-  test('return `not found` if no internship instance', async () => {
+  test('return null if not found', async () => {
     const user = await createUserFixture();
     const response = await execute(
       gql`
         query ($id: ID!) {
           myInternshipInstance(id: $id) {
-            ... on UserError {
-              code
-            }
+            id
           }
         }
       `,
@@ -132,44 +121,39 @@ describe('myInternshipInstance', () => {
         variables: { id: 'id-does-not-exist' },
       },
     );
-    expect(response).not.toHaveProperty('errors');
-    expect(response).toHaveProperty('data.myInternshipInstance.code', 'AE404');
+    expect(response).toHaveProperty('data.myInternshipInstance', null);
   });
 
-  test('return an array of positions', async () => {
+  test('return internship position', async () => {
     const user = await createUserFixture();
     const organisation = await prisma.organisation.create({
       data: { name: 'Organisation' },
     });
     const instance = await prisma.internshipInstance.create({
       data: {
-        studentId: user.id,
         internshipId: internship.id,
+        studentId: user.id,
       },
     });
     await prisma.internshipPosition.create({
       data: {
-        summary: 'Internship position',
-        organisationId: organisation.id,
         internships: {
           connect: { id: internship.id },
         },
+        summary: 'Internship position',
+        organisationId: organisation.id,
       },
     });
     const response = await execute(
       gql`
         query ($id: ID!) {
           myInternshipInstance(id: $id) {
-            ... on QueryMyInternshipInstanceSuccess {
-              data {
-                internship {
-                  availablePositions {
-                    organisation {
-                      name
-                    }
-                    summary
-                  }
+            internship {
+              availablePositions {
+                organisation {
+                  name
                 }
+                summary
               }
             }
           }
@@ -180,9 +164,8 @@ describe('myInternshipInstance', () => {
         variables: { id: instance.id },
       },
     );
-    expect(response).not.toHaveProperty('errors');
     expect(response).toHaveProperty(
-      'data.myInternshipInstance.data.internship.availablePositions',
+      'data.myInternshipInstance.internship.availablePositions',
       [
         {
           organisation: { name: 'Organisation' },
@@ -191,4 +174,9 @@ describe('myInternshipInstance', () => {
       ],
     );
   });
+});
+
+afterAll(async () => {
+  await prisma.internshipInstance.deleteMany({});
+  await prisma.internship.deleteMany({});
 });

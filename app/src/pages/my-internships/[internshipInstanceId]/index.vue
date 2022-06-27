@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { AvailablePositionsDocument } from '~/codegen/graphql';
+import { MyInternshipsRouteDocument } from '~/codegen/graphql';
 import { useGlobalStore } from '~/domain/global/store';
 import { useHead } from '~/i18n';
 
@@ -8,32 +8,27 @@ const props = defineProps<{
 }>();
 
 gql`
-  query availablePositions($id: ID!) {
+  query MyInternshipsRoute($id: ID!) {
     myInternshipInstance(id: $id) {
-      ... on QueryMyInternshipInstanceSuccess {
-        data {
-          internship {
-            course {
-              name
-            }
-            availablePositions {
-              id
-              summary
-              organisation {
-                name
-              }
-            }
+      internship {
+        course {
+          name
+        }
+        availablePositions {
+          id
+          summary
+          organisation {
+            name
           }
         }
       }
-      ...BaseErrorFields
     }
   }
 `;
 const globalStore = useGlobalStore();
 
 const { loading, onError, result } = useQuery(
-  AvailablePositionsDocument,
+  MyInternshipsRouteDocument,
   () => ({
     id: props.internshipInstanceId,
   }),
@@ -41,15 +36,10 @@ const { loading, onError, result } = useQuery(
 );
 onError(globalStore.handleFatalApolloError);
 
-const internshipInstance = computed(() =>
-  result.value?.myInternshipInstance?.__typename ===
-  'QueryMyInternshipInstanceSuccess'
-    ? result.value.myInternshipInstance.data.internship
-    : null,
-);
+const myInternshipInstance = computed(() => result.value?.myInternshipInstance);
 
 useHead(() => ({
-  title: internshipInstance.value?.course.name,
+  title: myInternshipInstance.value?.internship.course.name,
 }));
 </script>
 
@@ -63,7 +53,7 @@ useHead(() => ({
   <template v-if="!loading">
     <ul class="grid gap-5">
       <li
-        v-for="position in internshipInstance?.availablePositions"
+        v-for="position in myInternshipInstance?.internship.availablePositions"
         :key="position.id"
       >
         <UiCard class="p-5">

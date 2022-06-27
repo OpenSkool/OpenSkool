@@ -8,7 +8,6 @@ import {
   InternshipPositionModel,
   OrganisationService,
 } from '~/domain';
-import { AppNotFoundError, AppUnauthorizedError } from '~/errors';
 
 import builder from '../builder';
 import { Course } from './course';
@@ -58,18 +57,14 @@ builder.objectType(Internship, {
     id: t.exposeID('id'),
     course: t.field({
       type: Course,
-      async resolve(parent, argumentz, ctx) {
-        const course = await CourseService.getCourseById(parent.courseId);
-        return course;
+      async resolve(internship, argumentz, ctx) {
+        return CourseService.getCourseById(internship.courseId);
       },
     }),
     availablePositions: t.field({
       type: [InternshipPosition],
-      async resolve(parent, argumentz, ctx) {
-        const positions = await InternshipService.getAvailablePositions(
-          parent.id,
-        );
-        return positions;
+      async resolve(internship, argumentz, ctx) {
+        return InternshipService.getAvailablePositions(internship.id);
       },
     }),
   }),
@@ -82,11 +77,8 @@ builder.objectType(InternshipInstance, {
     id: t.exposeID('id'),
     internship: t.field({
       type: Internship,
-      async resolve(parent) {
-        const internship = await InternshipService.getInternshipById(
-          parent.internshipId,
-        );
-        return internship;
+      async resolve(instance) {
+        return InternshipService.getInternshipById(instance.internshipId);
       },
     }),
   }),
@@ -95,7 +87,7 @@ builder.objectType(InternshipInstance, {
 builder.queryField('myInternshipInstances', (t) =>
   t.field({
     type: [InternshipInstance],
-    async resolve(parent, argumentz, ctx) {
+    async resolve(root, argumentz, ctx) {
       return InternshipService.getInternshipInstancesForUser(ctx.domain);
     },
   }),
@@ -108,20 +100,17 @@ builder.queryField('myInternshipInstance', (t) =>
     },
     nullable: true,
     type: InternshipInstance,
-    errors: {
-      types: [AppNotFoundError, AppUnauthorizedError],
-    },
-    async resolve(parent, { id }, ctx) {
+    async resolve(root, { id }, ctx) {
       const instance = await InternshipService.getInternshipInstanceById(id);
-      if (
-        ctx.request.auth.ability.cannot(
-          'read',
-          subject('InternshipInstance', instance),
-        )
-      ) {
-        throw new AppUnauthorizedError();
+      if (instance == null) {
+        return instance;
       }
-      return instance;
+      return ctx.request.auth.ability.can(
+        'read',
+        subject('InternshipInstance', instance),
+      )
+        ? instance
+        : null;
     },
   }),
 );

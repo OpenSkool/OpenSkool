@@ -309,7 +309,7 @@ type Query {
   auth: Auth!
   competency(id: ID!): QueryCompetencyResult
   competencyFramework(id: ID!): QueryCompetencyFrameworkResult
-  myInternshipInstance(id: ID!): QueryMyInternshipInstanceResult
+  myInternshipInstance(id: ID!): InternshipInstance
   myInternshipInstances: [InternshipInstance!]!
 }
 
@@ -325,15 +325,6 @@ union QueryCompetencyResult = NotFoundError | QueryCompetencySuccess
 
 type QueryCompetencySuccess {
   data: Competency!
-}
-
-union QueryMyInternshipInstanceResult =
-    NotFoundError
-  | QueryMyInternshipInstanceSuccess
-  | UnauthorizedError
-
-type QueryMyInternshipInstanceSuccess {
-  data: InternshipInstance!
 }
 
 input RenameCompetencyInput {
