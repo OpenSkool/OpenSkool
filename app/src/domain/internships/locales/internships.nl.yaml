@@ -1,3 +1,5 @@
 internshipInstance:
+  detail:
+    heading: Stage {courseName}
   error:
     notFound: Stage niet gevonden.

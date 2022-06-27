@@ -39,8 +39,10 @@ onError(globalStore.handleFatalApolloError);
 
 const myInternshipInstance = computed(() => result.value?.myInternshipInstance);
 
-useHead(() => ({
-  title: myInternshipInstance.value?.internship.course.name,
+useHead(({ t }) => ({
+  title: t('internships.internshipInstance.detail.heading', {
+    courseName: myInternshipInstance.value?.internship.course.name,
+  }),
 }));
 </script>
 
@@ -55,7 +57,13 @@ useHead(() => ({
       <p v-t="'internships.internshipInstance.error.notFound'" />
     </NotFoundLayout>
     <template v-else>
-      <UiTitle is="h1" class="text-xl mb-3">My Internship</UiTitle>
+      <UiTitle is="h1" class="text-xl mb-3">
+        {{
+          $t('internships.internshipInstance.detail.heading', {
+            courseName: myInternshipInstance.internship.course.name,
+          })
+        }}
+      </UiTitle>
       <ul class="grid gap-5">
         <li
           v-for="position in myInternshipInstance.internship.availablePositions"
