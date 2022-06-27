@@ -2,6 +2,9 @@ import { faker } from '@faker-js/faker';
 import cuid from 'cuid';
 
 import { OrganisationModel } from '~/domain';
+import { cacheFakeData } from '~/schema/helpers';
+import { generateFakePerson, Person } from '~/schema/types/person';
+import { times } from '~/utils';
 
 import builder from '../builder';
 import { Node } from './node';
@@ -16,26 +19,43 @@ export interface WorkplaceModel {
 
 export const Workplace = builder.objectRef<WorkplaceModel>('Workplace');
 
-export function createFakeWorkplace(): WorkplaceModel {
-  return {
-    id: cuid(),
-    plainAddress: `${faker.address.streetAddress(
-      true,
-    )}, ${faker.address.city()}`,
-  };
-}
-
 builder.objectType(Organisation, {
   name: 'Organisation',
   interfaces: [Node],
   fields: (t) => ({
     id: t.exposeID('id'),
+    employees: t.field({
+      type: [Person],
+      resolve(organisation) {
+        /* eslint-disable @typescript-eslint/no-magic-numbers */
+        return cacheFakeData(`organisation-${organisation.id}-employees`, () =>
+          times(faker.mersenne.rand(3, 1), generateFakePerson),
+        );
+      },
+    }),
     imageUrl: t.string({
       resolve(organisation) {
         return `https://picsum.photos/seed/${organisation.id}/640/360.webp`;
       },
     }),
     name: t.exposeString('name'),
+    plainAddress: t.string({
+      resolve(organisation) {
+        return cacheFakeData(
+          `organisation-${organisation.id}-plain-address`,
+          generateFakePlainAddress,
+        );
+      },
+    }),
+    workplaces: t.field({
+      type: [Workplace],
+      resolve(organisation) {
+        /* eslint-disable @typescript-eslint/no-magic-numbers */
+        return cacheFakeData(`organisation-${organisation.id}-workplaces`, () =>
+          times(faker.mersenne.rand(3, 1), generateFakeWorkplace),
+        );
+      },
+    }),
   }),
 });
 
@@ -47,3 +67,16 @@ builder.objectType(Workplace, {
     plainAddress: t.exposeString('plainAddress'),
   }),
 });
+
+function generateFakePlainAddress(): string {
+  return `${faker.address.streetAddress()}, ${faker.address.zipCode(
+    '####',
+  )} ${faker.address.cityName()}`;
+}
+
+export function generateFakeWorkplace(): WorkplaceModel {
+  return {
+    id: cuid(),
+    plainAddress: generateFakePlainAddress(),
+  };
+}

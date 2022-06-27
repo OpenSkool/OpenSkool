@@ -125,37 +125,47 @@ export type InputError = UserError & {
 export type Internship = Node & {
   __typename?: 'Internship';
   availablePositions: Array<InternshipPosition>;
+  coordinator: Person;
   course: Course;
+  dateFrom: Scalars['DateTime'];
+  dateTo: Scalars['DateTime'];
+  defaultSupervisor: Person;
   id: Scalars['ID'];
 };
 
-export type InternshipChosenPositionConnection = {
-  __typename?: 'InternshipChosenPositionConnection';
-  edges: Array<InternshipChosenPositionEdge>;
+export type InternshipAppliedPositionConnection = {
+  __typename?: 'InternshipAppliedPositionConnection';
+  edges: Array<InternshipAppliedPositionEdge>;
 };
 
-export type InternshipChosenPositionEdge = {
+export type InternshipAppliedPositionEdge = {
   node: InternshipPosition;
 };
 
-export type InternshipChosenPositionPriorityEdge =
-  InternshipChosenPositionEdge & {
-    __typename?: 'InternshipChosenPositionPriorityEdge';
+export type InternshipAppliedPositionPriorityEdge =
+  InternshipAppliedPositionEdge & {
+    __typename?: 'InternshipAppliedPositionPriorityEdge';
     node: InternshipPosition;
     priority: Scalars['Int'];
   };
 
 export type InternshipInstance = Node & {
   __typename?: 'InternshipInstance';
+  appliedPositions: InternshipAppliedPositionConnection;
+  assignedPosition?: Maybe<InternshipPosition>;
   id: Scalars['ID'];
   internship: Internship;
+  student: Person;
+  supervisor: Person;
 };
 
 export type InternshipPosition = Node & {
   __typename?: 'InternshipPosition';
   id: Scalars['ID'];
+  mentor: Person;
   organisation: Organisation;
   summary: Scalars['String'];
+  workplace: Workplace;
 };
 
 export type Jwt = {
@@ -172,7 +182,7 @@ export type Jwt = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  applyForPriorityInternshipPosition: InternshipChosenPositionPriorityEdge;
+  applyForPriorityInternshipPosition: InternshipAppliedPositionPriorityEdge;
   createCompetencyFramework: MutationCreateCompetencyFrameworkResult;
   createEducation: MutationCreateEducationResult;
   createNestedCompetency: MutationCreateNestedCompetencyResult;
@@ -335,9 +345,12 @@ export type NotFoundError = UserError & {
 
 export type Organisation = Node & {
   __typename?: 'Organisation';
+  employees: Array<Person>;
   id: Scalars['ID'];
   imageUrl: Scalars['String'];
   name: Scalars['String'];
+  plainAddress: Scalars['String'];
+  workplaces: Array<Workplace>;
 };
 
 export type Person = Node & {

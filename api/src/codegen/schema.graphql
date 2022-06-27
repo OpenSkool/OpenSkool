@@ -109,32 +109,42 @@ type InputError implements UserError {
 
 type Internship implements Node {
   availablePositions: [InternshipPosition!]!
+  coordinator: Person!
   course: Course!
+  dateFrom: DateTime!
+  dateTo: DateTime!
+  defaultSupervisor: Person!
   id: ID!
 }
 
-type InternshipChosenPositionConnection {
-  edges: [InternshipChosenPositionEdge!]!
+type InternshipAppliedPositionConnection {
+  edges: [InternshipAppliedPositionEdge!]!
 }
 
-interface InternshipChosenPositionEdge {
+interface InternshipAppliedPositionEdge {
   node: InternshipPosition!
 }
 
-type InternshipChosenPositionPriorityEdge implements InternshipChosenPositionEdge {
+type InternshipAppliedPositionPriorityEdge implements InternshipAppliedPositionEdge {
   node: InternshipPosition!
   priority: Int!
 }
 
 type InternshipInstance implements Node {
+  appliedPositions: InternshipAppliedPositionConnection!
+  assignedPosition: InternshipPosition
   id: ID!
   internship: Internship!
+  student: Person!
+  supervisor: Person!
 }
 
 type InternshipPosition implements Node {
   id: ID!
+  mentor: Person!
   organisation: Organisation!
   summary: String!
+  workplace: Workplace!
 }
 
 """
@@ -164,7 +174,7 @@ type Mutation {
     instanceId: ID!
     positionId: ID!
     priority: Int!
-  ): InternshipChosenPositionPriorityEdge!
+  ): InternshipAppliedPositionPriorityEdge!
   createCompetencyFramework(
     data: CreateCompetencyFrameworkInput!
   ): MutationCreateCompetencyFrameworkResult!
@@ -289,9 +299,12 @@ type NotFoundError implements UserError {
 }
 
 type Organisation implements Node {
+  employees: [Person!]!
   id: ID!
   imageUrl: String!
   name: String!
+  plainAddress: String!
+  workplaces: [Workplace!]!
 }
 
 type Person implements Node {
