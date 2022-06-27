@@ -93,7 +93,7 @@ builder.queryField('myInternshipInstances', (t) =>
   }),
 );
 
-builder.queryField('myInternshipInstance', (t) =>
+builder.queryField('internshipInstance', (t) =>
   t.field({
     args: {
       id: t.arg.id({ required: true }),

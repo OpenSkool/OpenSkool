@@ -356,7 +356,7 @@ export type Query = {
   auth: Auth;
   competency?: Maybe<QueryCompetencyResult>;
   competencyFramework?: Maybe<QueryCompetencyFrameworkResult>;
-  myInternshipInstance?: Maybe<InternshipInstance>;
+  internshipInstance?: Maybe<InternshipInstance>;
   myInternshipInstances: Array<InternshipInstance>;
 };
 
@@ -368,7 +368,7 @@ export type QueryCompetencyFrameworkArgs = {
   id: Scalars['ID'];
 };
 
-export type QueryMyInternshipInstanceArgs = {
+export type QueryInternshipInstanceArgs = {
   id: Scalars['ID'];
 };
 
@@ -901,13 +901,13 @@ export type ManageCompetencyFrameworkDetailRouteQuery = {
     | null;
 };
 
-export type MyInternshipsRouteQueryVariables = Exact<{
+export type InternshipInstanceDetailQueryQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-export type MyInternshipsRouteQuery = {
+export type InternshipInstanceDetailQueryQuery = {
   __typename?: 'Query';
-  myInternshipInstance?: {
+  internshipInstance?: {
     __typename?: 'InternshipInstance';
     internship: {
       __typename?: 'Internship';
@@ -2527,13 +2527,13 @@ export const ManageCompetencyFrameworkDetailRouteDocument = {
   ManageCompetencyFrameworkDetailRouteQuery,
   ManageCompetencyFrameworkDetailRouteQueryVariables
 >;
-export const MyInternshipsRouteDocument = {
+export const InternshipInstanceDetailQueryDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'query',
-      name: { kind: 'Name', value: 'MyInternshipsRoute' },
+      name: { kind: 'Name', value: 'InternshipInstanceDetailQuery' },
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
@@ -2549,7 +2549,7 @@ export const MyInternshipsRouteDocument = {
         selections: [
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'myInternshipInstance' },
+            name: { kind: 'Name', value: 'internshipInstance' },
             arguments: [
               {
                 kind: 'Argument',
@@ -2627,6 +2627,6 @@ export const MyInternshipsRouteDocument = {
     },
   ],
 } as unknown as DocumentNode<
-  MyInternshipsRouteQuery,
-  MyInternshipsRouteQueryVariables
+  InternshipInstanceDetailQueryQuery,
+  InternshipInstanceDetailQueryQueryVariables
 >;

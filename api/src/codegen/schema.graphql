@@ -310,7 +310,7 @@ type Query {
   auth: Auth!
   competency(id: ID!): QueryCompetencyResult
   competencyFramework(id: ID!): QueryCompetencyFrameworkResult
-  myInternshipInstance(id: ID!): InternshipInstance
+  internshipInstance(id: ID!): InternshipInstance
   myInternshipInstances: [InternshipInstance!]!
 }
 

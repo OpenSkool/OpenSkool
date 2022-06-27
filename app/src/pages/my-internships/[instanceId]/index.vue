@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { MyInternshipsRouteDocument } from '~/codegen/graphql';
+import { InternshipInstanceDetailQueryDocument } from '~/codegen/graphql';
 import NotFoundLayout from '~/domain/global/components/not-found-layout.vue';
 import { useGlobalStore } from '~/domain/global/store';
 import { useHead } from '~/i18n';
@@ -9,8 +9,8 @@ const props = defineProps<{
 }>();
 
 gql`
-  query MyInternshipsRoute($id: ID!) {
-    myInternshipInstance(id: $id) {
+  query InternshipInstanceDetailQuery($id: ID!) {
+    internshipInstance(id: $id) {
       internship {
         course {
           name
@@ -30,7 +30,7 @@ gql`
 const globalStore = useGlobalStore();
 
 const { loading, onError, result } = useQuery(
-  MyInternshipsRouteDocument,
+  InternshipInstanceDetailQueryDocument,
   () => ({
     id: props.instanceId,
   }),
@@ -38,11 +38,11 @@ const { loading, onError, result } = useQuery(
 );
 onError(globalStore.handleFatalApolloError);
 
-const myInternshipInstance = computed(() => result.value?.myInternshipInstance);
+const internshipInstance = computed(() => result.value?.internshipInstance);
 
 useHead(({ t }) => ({
   title: t('internships.internshipInstance.detail.heading', {
-    courseName: myInternshipInstance.value?.internship.course.name,
+    courseName: internshipInstance.value?.internship.course.name,
   }),
 }));
 </script>
@@ -54,20 +54,20 @@ useHead(({ t }) => ({
     </UiBreadcrumbItem>
   </UiBreadcrumb>
   <template v-if="!loading">
-    <NotFoundLayout v-if="myInternshipInstance == null">
+    <NotFoundLayout v-if="internshipInstance == null">
       <p v-t="'internships.internshipInstance.error.notFound'" />
     </NotFoundLayout>
     <template v-else>
       <UiTitle is="h1" class="text-xl mb-3">
         {{
           $t('internships.internshipInstance.detail.heading', {
-            courseName: myInternshipInstance.internship.course.name,
+            courseName: internshipInstance.internship.course.name,
           })
         }}
       </UiTitle>
       <ul class="grid gap-5">
         <li
-          v-for="position in myInternshipInstance.internship.availablePositions"
+          v-for="position in internshipInstance.internship.availablePositions"
           :key="position.id"
         >
           <UiCard>

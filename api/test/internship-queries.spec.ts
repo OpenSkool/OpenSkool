@@ -80,7 +80,7 @@ describe('myInternshipInstances', () => {
   });
 });
 
-describe('myInternshipInstance', () => {
+describe('internshipInstance', () => {
   test('return null if not authorized', async () => {
     const user1 = await createUserFixture({ id: 'user-id-1' });
     const user2 = await createUserFixture({ id: 'user-id-2' });
@@ -93,7 +93,7 @@ describe('myInternshipInstance', () => {
     const response = await execute(
       gql`
         query ($id: ID!) {
-          myInternshipInstance(id: $id) {
+          internshipInstance(id: $id) {
             id
           }
         }
@@ -103,7 +103,7 @@ describe('myInternshipInstance', () => {
         variables: { id: instance.id },
       },
     );
-    expect(response).toHaveProperty('data.myInternshipInstance', null);
+    expect(response).toHaveProperty('data.internshipInstance', null);
   });
 
   test('return null if not found', async () => {
@@ -111,7 +111,7 @@ describe('myInternshipInstance', () => {
     const response = await execute(
       gql`
         query ($id: ID!) {
-          myInternshipInstance(id: $id) {
+          internshipInstance(id: $id) {
             id
           }
         }
@@ -121,7 +121,7 @@ describe('myInternshipInstance', () => {
         variables: { id: 'id-does-not-exist' },
       },
     );
-    expect(response).toHaveProperty('data.myInternshipInstance', null);
+    expect(response).toHaveProperty('data.internshipInstance', null);
   });
 
   test('return internship position', async () => {
@@ -147,7 +147,7 @@ describe('myInternshipInstance', () => {
     const response = await execute(
       gql`
         query ($id: ID!) {
-          myInternshipInstance(id: $id) {
+          internshipInstance(id: $id) {
             internship {
               availablePositions {
                 organisation {
@@ -165,7 +165,7 @@ describe('myInternshipInstance', () => {
       },
     );
     expect(response).toHaveProperty(
-      'data.myInternshipInstance.internship.availablePositions',
+      'data.internshipInstance.internship.availablePositions',
       [
         {
           organisation: { name: 'Organisation' },
