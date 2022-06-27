@@ -311,6 +311,7 @@ type Query {
   competency(id: ID!): QueryCompetencyResult
   competencyFramework(id: ID!): QueryCompetencyFrameworkResult
   internshipInstance(id: ID!): InternshipInstance
+  internshipPosition(id: ID!): InternshipPosition
   myInternshipInstances: [InternshipInstance!]!
 }
 

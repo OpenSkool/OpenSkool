@@ -1,12 +1,13 @@
 <script lang="ts" setup>
 import { InternshipInstanceDetailQueryDocument } from '~/codegen/graphql';
-import NotFoundLayout from '~/domain/global/components/not-found-layout.vue';
-import { useGlobalStore } from '~/domain/global/store';
+import { NotFoundLayout, useGlobalStore } from '~/domain/global';
 import { useHead } from '~/i18n';
 
 const props = defineProps<{
   instanceId: string; // route param
 }>();
+
+const globalStore = useGlobalStore();
 
 gql`
   query InternshipInstanceDetailQuery($id: ID!) {
@@ -27,7 +28,6 @@ gql`
     }
   }
 `;
-const globalStore = useGlobalStore();
 
 const { loading, onError, result } = useQuery(
   InternshipInstanceDetailQueryDocument,
@@ -49,7 +49,7 @@ useHead(({ t }) => ({
 
 <template>
   <UiBreadcrumb>
-    <UiBreadcrumbItem link-to="/manage/competencies">
+    <UiBreadcrumbItem>
       {{ $t('global.mainMenu.internshipsHeading') }}
     </UiBreadcrumbItem>
   </UiBreadcrumb>
@@ -78,7 +78,12 @@ useHead(({ t }) => ({
             />
             <div class="p-5">
               <UiTitle is="h2" class="text-lg">
-                {{ position.organisation.name }}
+                <RouterLink
+                  class="underline"
+                  :to="`/my-internships/${instanceId}/available-positions/${position.id}`"
+                >
+                  {{ position.organisation.name }}
+                </RouterLink>
               </UiTitle>
               <p>{{ position.summary }}</p>
             </div>

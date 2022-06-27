@@ -62,10 +62,7 @@ gql`
 
 const { loading, onError, result } = useQuery(
   ManageCompetencyDetailRouteDocument,
-  () => ({
-    competencyId: props.competencyId,
-    frameworkId: props.frameworkId,
-  }),
+  () => props,
   { fetchPolicy: 'network-only' },
 );
 onError(globalStore.handleApolloError);

@@ -84,15 +84,6 @@ builder.objectType(InternshipInstance, {
   }),
 });
 
-builder.queryField('myInternshipInstances', (t) =>
-  t.field({
-    type: [InternshipInstance],
-    async resolve(root, argumentz, ctx) {
-      return InternshipService.getInternshipInstancesForUser(ctx.domain);
-    },
-  }),
-);
-
 builder.queryField('internshipInstance', (t) =>
   t.field({
     args: {
@@ -115,6 +106,15 @@ builder.queryField('internshipInstance', (t) =>
   }),
 );
 
+builder.queryField('myInternshipInstances', (t) =>
+  t.field({
+    type: [InternshipInstance],
+    async resolve(root, argumentz, ctx) {
+      return InternshipService.getInternshipInstancesForUser(ctx.domain);
+    },
+  }),
+);
+
 builder.objectType(InternshipPosition, {
   name: 'InternshipPosition',
   interfaces: [Node],
@@ -132,6 +132,19 @@ builder.objectType(InternshipPosition, {
     }),
   }),
 });
+
+builder.queryField('internshipPosition', (t) =>
+  t.field({
+    args: {
+      id: t.arg.id({ required: true }),
+    },
+    nullable: true,
+    type: InternshipPosition,
+    async resolve(root, { id }, ctx) {
+      return InternshipService.getInternshipPositionById(id);
+    },
+  }),
+);
 
 builder.objectType(InternshipChosenPositionConnection, {
   name: 'InternshipChosenPositionConnection',

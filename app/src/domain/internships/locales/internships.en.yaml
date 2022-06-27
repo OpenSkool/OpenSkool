@@ -3,3 +3,9 @@ internshipInstance:
     heading: Internship {courseName}
   error:
     notFound: Internship not found.
+
+internshipPosition:
+  detail:
+    heading: Internship {courseName} at {organisationName}
+  error:
+    notFound: Internship position not found.

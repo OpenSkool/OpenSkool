@@ -20,6 +20,7 @@ module.exports = {
     {
       files: ['src/pages/**/*.vue'],
       rules: {
+        'unicorn/filename-case': 'off',
         'vue/multi-word-component-names': 'off',
       },
     },
