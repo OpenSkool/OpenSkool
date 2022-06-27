@@ -1,10 +1,15 @@
 import { faker } from '@faker-js/faker';
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
+
+import { times } from '~/utils';
 
 export async function seedOrganisations(prisma: PrismaClient): Promise<void> {
-  for (let count = await prisma.organisation.count(); count <= 50; count += 1) {
-    await prisma.organisation.create({
-      data: { name: faker.company.companyName() },
-    });
-  }
+  await prisma.organisation.createMany({
+    data: times(
+      Math.max(0, 50 - (await prisma.organisation.count())),
+      (): Prisma.OrganisationUncheckedCreateInput => ({
+        name: faker.company.companyName(),
+      }),
+    ),
+  });
 }

@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
 
 import { times } from '~/utils';
 
@@ -33,19 +33,20 @@ export async function seedInternships(prisma: PrismaClient): Promise<void> {
   const users = await prisma.user.findMany();
 
   for (const user of users) {
-    for (
-      let count = await prisma.internshipInstance.count({
-        where: { studentId: user.id },
-      });
-      count <= 5;
-      count += 1
-    ) {
-      await prisma.internshipInstance.create({
-        data: {
+    await prisma.internshipInstance.createMany({
+      data: times(
+        Math.max(
+          0,
+          5 -
+            (await prisma.internshipInstance.count({
+              where: { studentId: user.id },
+            })),
+        ),
+        (): Prisma.InternshipInstanceUncheckedCreateInput => ({
           internshipId: faker.helpers.arrayElement(internships).id,
           studentId: user.id,
-        },
-      });
-    }
+        }),
+      ),
+    });
   }
 }
