@@ -149,7 +149,7 @@ async function deleteCompetencyHandler(): Promise<void> {
   <AuthAccessDeniedLayout v-if="ability.cannot('read', 'Competency')" />
   <template v-else-if="!loading">
     <NotFoundLayout v-if="competency == null">
-      <p>Competency not found.</p>
+      <p v-t="'management.competency.error.notFound'" />
     </NotFoundLayout>
     <template v-else>
       <div class="flex gap-3 items-baseline">

@@ -62,7 +62,7 @@ const showReorderCompetenciesControls = ref(false);
   />
   <template v-else-if="!loading">
     <NotFoundLayout v-if="competencyFramework == null">
-      <p>Competency framework not found.</p>
+      <p v-t="'management.competencyFramework.error.notFound'" />
     </NotFoundLayout>
     <template v-else>
       <UiTitle is="h1" class="text-xl mb-3">
