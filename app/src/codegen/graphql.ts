@@ -161,6 +161,7 @@ export type InternshipInstance = Node & {
 
 export type InternshipPosition = Node & {
   __typename?: 'InternshipPosition';
+  description: Scalars['String'];
   id: Scalars['ID'];
   mentor: Person;
   organisation: Organisation;

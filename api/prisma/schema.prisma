@@ -137,7 +137,7 @@ model InternshipPosition {
   organisation   Organisation @relation(fields: [organisationId], references: [id], onDelete: Restrict)
   organisationId String
 
-  summary String
+  description String
 }
 
 model Organisation {

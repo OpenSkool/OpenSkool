@@ -18,8 +18,8 @@ export async function seedInternships(prisma: PrismaClient): Promise<void> {
       data: {
         availablePositions: {
           create: times(faker.mersenne.rand(20, 10), () => ({
+            description: faker.lorem.paragraphs(),
             organisationId: faker.helpers.arrayElement(organisations).id,
-            summary: faker.lorem.paragraph(),
           })),
         },
         courseId: faker.helpers.arrayElement(courses).id,

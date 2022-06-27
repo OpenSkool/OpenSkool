@@ -218,6 +218,7 @@ builder.objectType(InternshipPosition, {
   interfaces: [Node],
   fields: (t) => ({
     id: t.exposeID('id'),
+    description: t.exposeString('description'),
     mentor: t.field({
       type: Person,
       resolve(position) {
@@ -236,7 +237,15 @@ builder.objectType(InternshipPosition, {
         return organisation;
       },
     }),
-    summary: t.exposeString('summary'),
+    summary: t.string({
+      resolve(position) {
+        const [summary] = position.description.split('\n', 2) as [
+          string,
+          ...string[],
+        ];
+        return summary;
+      },
+    }),
     workplace: t.field({
       type: Workplace,
       resolve(position) {

@@ -137,10 +137,8 @@ describe('internshipInstance', () => {
     });
     await prisma.internshipPosition.create({
       data: {
-        internships: {
-          connect: { id: internship.id },
-        },
-        summary: 'Internship position',
+        description: 'Internship position',
+        internships: { connect: { id: internship.id } },
         organisationId: organisation.id,
       },
     });

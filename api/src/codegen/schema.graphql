@@ -140,6 +140,7 @@ type InternshipInstance implements Node {
 }
 
 type InternshipPosition implements Node {
+  description: String!
   id: ID!
   mentor: Person!
   organisation: Organisation!
