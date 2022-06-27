@@ -5,7 +5,7 @@ import { useGlobalStore } from '~/domain/global/store';
 import { useHead } from '~/i18n';
 
 const props = defineProps<{
-  internshipInstanceId: string; // route param
+  instanceId: string; // route param
 }>();
 
 gql`
@@ -32,7 +32,7 @@ const globalStore = useGlobalStore();
 const { loading, onError, result } = useQuery(
   MyInternshipsRouteDocument,
   () => ({
-    id: props.internshipInstanceId,
+    id: props.instanceId,
   }),
   { fetchPolicy: 'cache-first' },
 );
