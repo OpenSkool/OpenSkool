@@ -290,6 +290,7 @@ type NotFoundError implements UserError {
 
 type Organisation implements Node {
   id: ID!
+  imageUrl: String!
   name: String!
 }
 

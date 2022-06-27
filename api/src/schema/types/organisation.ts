@@ -30,6 +30,11 @@ builder.objectType(Organisation, {
   interfaces: [Node],
   fields: (t) => ({
     id: t.exposeID('id'),
+    imageUrl: t.string({
+      resolve(organisation) {
+        return `https://picsum.photos/seed/${organisation.id}/640/360.webp`;
+      },
+    }),
     name: t.exposeString('name'),
   }),
 });

@@ -336,6 +336,7 @@ export type NotFoundError = UserError & {
 export type Organisation = Node & {
   __typename?: 'Organisation';
   id: Scalars['ID'];
+  imageUrl: Scalars['String'];
   name: Scalars['String'];
 };
 
@@ -915,7 +916,11 @@ export type MyInternshipsRouteQuery = {
         __typename?: 'InternshipPosition';
         id: string;
         summary: string;
-        organisation: { __typename?: 'Organisation'; name: string };
+        organisation: {
+          __typename?: 'Organisation';
+          imageUrl: string;
+          name: string;
+        };
       }>;
     };
   } | null;
@@ -2597,6 +2602,10 @@ export const MyInternshipsRouteDocument = {
                               selectionSet: {
                                 kind: 'SelectionSet',
                                 selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'imageUrl' },
+                                  },
                                   {
                                     kind: 'Field',
                                     name: { kind: 'Name', value: 'name' },

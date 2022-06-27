@@ -19,6 +19,7 @@ gql`
           id
           summary
           organisation {
+            imageUrl
             name
           }
         }
@@ -69,9 +70,18 @@ useHead(({ t }) => ({
           v-for="position in myInternshipInstance.internship.availablePositions"
           :key="position.id"
         >
-          <UiCard class="p-5">
-            <UiTitle is="h2">{{ position.organisation.name }}</UiTitle>
-            <p>{{ position.summary }}</p>
+          <UiCard>
+            <img
+              class="bg-light-500"
+              loading="lazy"
+              :src="position.organisation.imageUrl"
+            />
+            <div class="p-5">
+              <UiTitle is="h2" class="text-lg">
+                {{ position.organisation.name }}
+              </UiTitle>
+              <p>{{ position.summary }}</p>
+            </div>
           </UiCard>
         </li>
       </ul>
@@ -82,5 +92,8 @@ useHead(({ t }) => ({
 <style scoped>
 .grid {
   grid-template-columns: repeat(auto-fill, minmax(30ch, 1fr));
+}
+img {
+  aspect-ratio: 16 / 9;
 }
 </style>
