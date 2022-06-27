@@ -9,3 +9,19 @@ internshipPosition:
     heading: Stage {courseName} bij {organisationName}
   error:
     notFound: Stagepositie niet gevonden.
+  section:
+    contact:
+      heading: Contact
+    details:
+      heading: Details
+      term:
+        organisation: Organisatie
+        location: Locatie
+        period: Periode
+    summary:
+      heading: Korte beschrijving
+
+roles:
+  coordinator: Coördinator
+  mentor: Mentor
+  supervisor: Begeleider

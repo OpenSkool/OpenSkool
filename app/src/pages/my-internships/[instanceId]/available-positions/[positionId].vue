@@ -97,18 +97,34 @@ const internshipPosition = computed(() => result.value?.internshipPosition);
           :src="internshipPosition.organisation.imageUrl"
         />
         <div class="p-5">
-          <UiSubtitle is="h2" class="mb-5">Summary</UiSubtitle>
+          <UiSubtitle is="h2" class="mb-5">
+            {{ $t('internships.internshipPosition.section.summary.heading') }}
+          </UiSubtitle>
           <p class="max-w-65ch">{{ internshipPosition.summary }}</p>
         </div>
       </UiCard>
       <UiCard class="space-y-5 p-5">
         <UiSubtitle is="h2" class="mb-5">Details</UiSubtitle>
         <dl class="gap-5 md:grid">
-          <dt>Organisation</dt>
+          <dt>
+            {{
+              $t(
+                'internships.internshipPosition.section.details.term.organisation',
+              )
+            }}
+          </dt>
           <dd>{{ internshipPosition.organisation.name }}</dd>
-          <dt>Location</dt>
+          <dt>
+            {{
+              $t('internships.internshipPosition.section.details.term.location')
+            }}
+          </dt>
           <dd>{{ internshipPosition.workplace.plainAddress }}</dd>
-          <dt>Period</dt>
+          <dt>
+            {{
+              $t('internships.internshipPosition.section.details.term.period')
+            }}
+          </dt>
           <dd>
             {{
               new Intl.DateTimeFormat($i18n.locale, {
@@ -124,7 +140,9 @@ const internshipPosition = computed(() => result.value?.internshipPosition);
         </dl>
       </UiCard>
       <UiCard class="p-5">
-        <UiSubtitle is="h2" class="mb-5">Contact</UiSubtitle>
+        <UiSubtitle is="h2" class="mb-5">
+          {{ $t('internships.internshipPosition.section.contact.heading') }}
+        </UiSubtitle>
         <ul class="space-y-3">
           <li class="flex gap-5 items-center">
             <img
@@ -135,7 +153,7 @@ const internshipPosition = computed(() => result.value?.internshipPosition);
               <h3 class="font-semibold">
                 {{ internshipInstance.internship.coordinator.name }}
               </h3>
-              <div>Coordinator</div>
+              <div v-t="'internships.roles.coordinator'" />
             </div>
           </li>
           <li class="flex gap-5 items-center">
@@ -147,7 +165,7 @@ const internshipPosition = computed(() => result.value?.internshipPosition);
               <h3 class="font-semibold">
                 {{ internshipInstance.supervisor.name }}
               </h3>
-              <div>Supervisor</div>
+              <div v-t="'internships.roles.supervisor'" />
             </div>
           </li>
           <li class="flex gap-5 items-center">
@@ -159,7 +177,7 @@ const internshipPosition = computed(() => result.value?.internshipPosition);
               <h3 class="font-semibold">
                 {{ internshipPosition.mentor.name }}
               </h3>
-              <div>Mentor</div>
+              <div v-t="'internships.roles.mentor'" />
             </div>
           </li>
         </ul>

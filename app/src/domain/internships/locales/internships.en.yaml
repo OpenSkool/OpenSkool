@@ -9,3 +9,19 @@ internshipPosition:
     heading: Internship {courseName} at {organisationName}
   error:
     notFound: Internship position not found.
+  section:
+    contact:
+      heading: Contact
+    details:
+      heading: Details
+      term:
+        organisation: Organisation
+        location: Location
+        period: Period
+    summary:
+      heading: Summary
+
+roles:
+  coordinator: Coordinator
+  mentor: Mentor
+  supervisor: Supervisor
