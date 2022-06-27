@@ -14,22 +14,20 @@ enum Language {
 }
 
 model Competency {
-  id   String @id @default(cuid())
-  sort Int    @default(autoincrement())
+  id String @id @default(cuid())
 
   createdAt   DateTime @default(now())
   createdBy   User?    @relation("CompetencyToUserCreated", fields: [createdById], references: [id])
   createdById String?
-
+  sort        Int      @default(autoincrement())
   updatedAt   DateTime @updatedAt
   updatedBy   User?    @relation("CompetencyToUserUpdated", fields: [updatedById], references: [id])
   updatedById String?
 
-  framework   CompetencyFramework @relation(fields: [frameworkId], references: [id])
-  frameworkId String
-
-  subCompetencies    Competency[] @relation("CompetencyToCompetency")
-  parentCompetency   Competency?  @relation("CompetencyToCompetency", fields: [parentCompetencyId], onDelete: Cascade, references: [id])
+  framework          CompetencyFramework @relation(fields: [frameworkId], references: [id])
+  frameworkId        String
+  subCompetencies    Competency[]        @relation("CompetencyToCompetency")
+  parentCompetency   Competency?         @relation("CompetencyToCompetency", fields: [parentCompetencyId], onDelete: Cascade, references: [id])
   parentCompetencyId String?
 
   translations CompetencyTranslation[]
@@ -40,7 +38,8 @@ model CompetencyTranslation {
   competency   Competency @relation(fields: [competencyId], onDelete: Cascade, references: [id])
   competencyId String
   languageCode Language
-  title        String
+
+  title String
 
   @@unique([competencyId, languageCode])
 }
@@ -51,13 +50,11 @@ model CompetencyFramework {
   createdAt   DateTime @default(now())
   createdBy   User?    @relation("CompetencyFrameworkToUserCreated", fields: [createdById], references: [id])
   createdById String?
-
   updatedAt   DateTime @updatedAt
   updatedBy   User?    @relation("CompetencyFrameworkToUserUpdated", fields: [updatedById], references: [id])
   updatedById String?
 
   competencies Competency[]
-
   translations CompetencyFrameworkTranslation[]
 }
 
@@ -66,7 +63,8 @@ model CompetencyFrameworkTranslation {
   framework    CompetencyFramework @relation(fields: [frameworkId], onDelete: Cascade, references: [id])
   frameworkId  String
   languageCode Language
-  title        String
+
+  title String
 
   @@unique([frameworkId, languageCode])
 }
@@ -87,7 +85,6 @@ model Education {
   createdAt   DateTime @default(now())
   createdBy   User?    @relation("EducationToUserCreated", fields: [createdById], references: [id])
   createdById String?
-
   updatedAt   DateTime @updatedAt
   updatedBy   User?    @relation("EducationToUserUpdated", fields: [updatedById], references: [id])
   updatedById String?
@@ -100,7 +97,8 @@ model EducationTranslation {
   education    Education @relation(fields: [educationId], onDelete: Cascade, references: [id])
   educationId  String
   languageCode Language
-  title        String
+
+  title String
 
   @@unique([educationId, languageCode])
 }
@@ -111,10 +109,10 @@ model Internship {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  availablePositions  InternshipPosition[]
   course              Course               @relation(fields: [courseId], references: [id], onDelete: Restrict)
   courseId            String
   internshipInstances InternshipInstance[]
-  availablePositions  InternshipPosition[]
 }
 
 model InternshipInstance {
@@ -138,7 +136,8 @@ model InternshipPosition {
   internships    Internship[]
   organisation   Organisation @relation(fields: [organisationId], references: [id], onDelete: Restrict)
   organisationId String
-  summary        String
+
+  summary String
 }
 
 model Organisation {
@@ -147,15 +146,17 @@ model Organisation {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  name                String
   internshipPositions InternshipPosition[]
+
+  name String
 }
 
 model User {
   id String @id
 
-  competenciesCreated         Competency[]          @relation("CompetencyToUserCreated")
-  competenciesUpdated         Competency[]          @relation("CompetencyToUserUpdated")
+  competenciesCreated Competency[] @relation("CompetencyToUserCreated")
+  competenciesUpdated Competency[] @relation("CompetencyToUserUpdated")
+
   competencyFrameworksCreated CompetencyFramework[] @relation("CompetencyFrameworkToUserCreated")
   competencyFrameworksUpdated CompetencyFramework[] @relation("CompetencyFrameworkToUserUpdated")
 
