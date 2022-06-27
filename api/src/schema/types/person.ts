@@ -2,6 +2,7 @@ import { faker } from '@faker-js/faker';
 import cuid from 'cuid';
 
 import { UserModel, UserService } from '~/domain';
+import { cacheFakeData } from '~/schema/helpers';
 
 import builder from '../builder';
 import { Node } from './node';
@@ -12,6 +13,15 @@ builder.objectType(Person, {
   name: 'Person',
   interfaces: [Node],
   fields: (t) => ({
+    avatarUrl: t.string({
+      resolve(user) {
+        return cacheFakeData(`user-${user.id}-avatar-url`, () => {
+          const avatarUrl = new URL(faker.image.avatar());
+          avatarUrl.searchParams.set('user', user.id);
+          return avatarUrl.toString();
+        });
+      },
+    }),
     name: t.exposeString('name'),
   }),
 });

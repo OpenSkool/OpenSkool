@@ -35,7 +35,14 @@ builder.objectType(Organisation, {
     }),
     imageUrl: t.string({
       resolve(organisation) {
-        return `https://picsum.photos/seed/${organisation.id}/640/360.webp`;
+        return cacheFakeData(
+          `organisation-${organisation.id}-image-url`,
+          () => {
+            const businessImageUrl = new URL(faker.image.business(640, 360));
+            businessImageUrl.searchParams.set('organisation', organisation.id);
+            return businessImageUrl.toString();
+          },
+        );
       },
     }),
     name: t.exposeString('name'),

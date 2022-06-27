@@ -355,6 +355,7 @@ export type Organisation = Node & {
 
 export type Person = Node & {
   __typename?: 'Person';
+  avatarUrl: Scalars['String'];
   /** A CUID for a resource */
   id: Scalars['ID'];
   name: Scalars['String'];
@@ -930,18 +931,24 @@ export type InternshipInstancePositionDetailQueryQuery = {
     __typename?: 'InternshipInstance';
     internship: {
       __typename?: 'Internship';
+      dateFrom: any;
+      dateTo: any;
+      coordinator: { __typename?: 'Person'; avatarUrl: string; name: string };
       course: { __typename?: 'Course'; name: string };
     };
+    supervisor: { __typename?: 'Person'; avatarUrl: string; name: string };
   } | null;
   internshipPosition?: {
     __typename?: 'InternshipPosition';
     id: string;
     summary: string;
+    mentor: { __typename?: 'Person'; avatarUrl: string; name: string };
     organisation: {
       __typename?: 'Organisation';
       imageUrl: string;
       name: string;
     };
+    workplace: { __typename?: 'Workplace'; plainAddress: string };
   } | null;
 };
 
@@ -2629,6 +2636,23 @@ export const InternshipInstancePositionDetailQueryDocument = {
                     selections: [
                       {
                         kind: 'Field',
+                        name: { kind: 'Name', value: 'coordinator' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'avatarUrl' },
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'name' },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: 'Field',
                         name: { kind: 'Name', value: 'course' },
                         selectionSet: {
                           kind: 'SelectionSet',
@@ -2640,6 +2664,28 @@ export const InternshipInstancePositionDetailQueryDocument = {
                           ],
                         },
                       },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'dateFrom' },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'dateTo' },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'supervisor' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'avatarUrl' },
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
                     ],
                   },
                 },
@@ -2665,6 +2711,20 @@ export const InternshipInstancePositionDetailQueryDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 {
                   kind: 'Field',
+                  name: { kind: 'Name', value: 'mentor' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'avatarUrl' },
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
                   name: { kind: 'Name', value: 'organisation' },
                   selectionSet: {
                     kind: 'SelectionSet',
@@ -2678,6 +2738,19 @@ export const InternshipInstancePositionDetailQueryDocument = {
                   },
                 },
                 { kind: 'Field', name: { kind: 'Name', value: 'summary' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'workplace' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'plainAddress' },
+                      },
+                    ],
+                  },
+                },
               ],
             },
           },

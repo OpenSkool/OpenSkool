@@ -16,18 +16,35 @@ gql`
   ) {
     internshipInstance(id: $instanceId) {
       internship {
+        coordinator {
+          avatarUrl
+          name
+        }
         course {
           name
         }
+        dateFrom
+        dateTo
+      }
+      supervisor {
+        avatarUrl
+        name
       }
     }
     internshipPosition(id: $positionId) {
       id
+      mentor {
+        avatarUrl
+        name
+      }
       organisation {
         imageUrl
         name
       }
       summary
+      workplace {
+        plainAddress
+      }
     }
   }
 `;
@@ -65,8 +82,8 @@ const internshipPosition = computed(() => result.value?.internshipPosition);
     >
       <p v-t="'internships.internshipPosition.error.notFound'" />
     </NotFoundLayout>
-    <template v-else>
-      <UiTitle is="h1" class="text-xl mb-3">
+    <article v-else class="space-y-5">
+      <UiTitle is="h1" class="text-xl">
         {{
           $t('internships.internshipPosition.detail.heading', {
             courseName: internshipInstance.internship.course.name,
@@ -74,23 +91,92 @@ const internshipPosition = computed(() => result.value?.internshipPosition);
           })
         }}
       </UiTitle>
-      <UiCard class="pt-3">
+      <UiCard>
         <img
-          class="bg-light-500"
+          class="bg-light-500 organisation-image"
           :src="internshipPosition.organisation.imageUrl"
         />
-        <div class="space-y-3 p-5">
-          <UiSubtitle is="h2">Summary</UiSubtitle>
-          <p>{{ internshipPosition.summary }}</p>
+        <div class="p-5">
+          <UiSubtitle is="h2" class="mb-5">Summary</UiSubtitle>
+          <p class="max-w-65ch">{{ internshipPosition.summary }}</p>
         </div>
       </UiCard>
-    </template>
+      <UiCard class="space-y-5 p-5">
+        <UiSubtitle is="h2" class="mb-5">Details</UiSubtitle>
+        <dl class="gap-5 md:grid">
+          <dt>Organisation</dt>
+          <dd>{{ internshipPosition.organisation.name }}</dd>
+          <dt>Location</dt>
+          <dd>{{ internshipPosition.workplace.plainAddress }}</dd>
+          <dt>Period</dt>
+          <dd>
+            {{
+              new Intl.DateTimeFormat($i18n.locale, {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+              }).formatRange(
+                new Date(internshipInstance.internship.dateFrom),
+                new Date(internshipInstance.internship.dateTo),
+              )
+            }}
+          </dd>
+        </dl>
+      </UiCard>
+      <UiCard class="p-5">
+        <UiSubtitle is="h2" class="mb-5">Contact</UiSubtitle>
+        <ul class="space-y-3">
+          <li class="flex gap-5 items-center">
+            <img
+              class="rounded-full w-12 aspect-square"
+              :src="internshipInstance.internship.coordinator.avatarUrl"
+            />
+            <div>
+              <h3 class="font-semibold">
+                {{ internshipInstance.internship.coordinator.name }}
+              </h3>
+              <div>Coordinator</div>
+            </div>
+          </li>
+          <li class="flex gap-5 items-center">
+            <img
+              class="rounded-full w-12 aspect-square"
+              :src="internshipInstance.supervisor.avatarUrl"
+            />
+            <div>
+              <h3 class="font-semibold">
+                {{ internshipInstance.supervisor.name }}
+              </h3>
+              <div>Supervisor</div>
+            </div>
+          </li>
+          <li class="flex gap-5 items-center">
+            <img
+              class="rounded-full w-12 aspect-square"
+              :src="internshipPosition.mentor.avatarUrl"
+            />
+            <div>
+              <h3 class="font-semibold">
+                {{ internshipPosition.mentor.name }}
+              </h3>
+              <div>Mentor</div>
+            </div>
+          </li>
+        </ul>
+      </UiCard>
+    </article>
   </template>
 </template>
 
 <style scoped>
-img {
+.organisation-image {
   width: 640px;
   aspect-ratio: 16 / 9;
+}
+dl {
+  grid-template-columns: max-content 1fr;
+}
+dt {
+  @apply font-semibold;
 }
 </style>

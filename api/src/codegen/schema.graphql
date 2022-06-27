@@ -308,6 +308,8 @@ type Organisation implements Node {
 }
 
 type Person implements Node {
+  avatarUrl: String!
+
   """
   A CUID for a resource
   """
