@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { MyInternshipsRouteDocument } from '~/codegen/graphql';
+import NotFoundLayout from '~/domain/global/components/not-found-layout.vue';
 import { useGlobalStore } from '~/domain/global/store';
 import { useHead } from '~/i18n';
 
@@ -49,19 +50,24 @@ useHead(() => ({
       {{ $t('global.mainMenu.internshipsHeading') }}
     </UiBreadcrumbItem>
   </UiBreadcrumb>
-  <UiTitle is="h1" class="text-xl mb-3">My Internship</UiTitle>
   <template v-if="!loading">
-    <ul class="grid gap-5">
-      <li
-        v-for="position in myInternshipInstance?.internship.availablePositions"
-        :key="position.id"
-      >
-        <UiCard class="p-5">
-          <UiTitle is="h2">{{ position.organisation.name }}</UiTitle>
-          <p>{{ position.summary }}</p>
-        </UiCard>
-      </li>
-    </ul>
+    <NotFoundLayout v-if="myInternshipInstance == null">
+      <p v-t="'internships.internshipInstance.error.notFound'" />
+    </NotFoundLayout>
+    <template v-else>
+      <UiTitle is="h1" class="text-xl mb-3">My Internship</UiTitle>
+      <ul class="grid gap-5">
+        <li
+          v-for="position in myInternshipInstance.internship.availablePositions"
+          :key="position.id"
+        >
+          <UiCard class="p-5">
+            <UiTitle is="h2">{{ position.organisation.name }}</UiTitle>
+            <p>{{ position.summary }}</p>
+          </UiCard>
+        </li>
+      </ul>
+    </template>
   </template>
 </template>
 
