@@ -161,6 +161,11 @@ model Organisation {
   name String
 }
 
+model Session {
+  id   String @unique
+  data String
+}
+
 model User {
   id String @id
 

@@ -1,3 +1,5 @@
+import { callbackify } from 'node:util';
+
 import cookiePlugin from '@fastify/cookie';
 import corsPlugin from '@fastify/cors';
 import sessionPlugin from '@fastify/session';
@@ -13,6 +15,7 @@ import { authPlugin } from './auth';
 import { graphqlRoutes } from './graphql';
 import { healthPlugin } from './health';
 import { openIdPlugin } from './openid';
+import * as sessionStore from './session-store';
 
 const HTTP_NO_CONTENT = 204;
 
@@ -31,6 +34,11 @@ const apiPlugin: FastifyPluginAsync = async (app) => {
         secure: !app.config.SESSION_ALLOW_INSECURE,
       },
       secret: app.config.SESSION_SECRET,
+      store: {
+        destroy: callbackify(sessionStore.destroy),
+        get: callbackify(sessionStore.get),
+        set: callbackify(sessionStore.set),
+      },
     })
     .register(healthPlugin)
     .register(openIdPlugin, { prefix: '/openid' })

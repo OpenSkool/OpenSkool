@@ -189,7 +189,6 @@ const zCodeFlowTokenSet = z.object({
   token_type: z.string(),
   id_token: z.string(),
   refresh_token: z.string(),
-  expires_in: z.number(),
   expires_at: z.number(),
   session_state: z.string(),
   scope: z.string(),
