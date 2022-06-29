@@ -25,7 +25,6 @@ You'll need to configure an OAuth client in Keycloak for your local API to use. 
 Open the client settings and update these settings.
 
 - Access Type: `confidential`
-- Base URL: `http://localhost:3000` (Or wherever you run your local App)
 
 Configure this client in your `env` files.
 
