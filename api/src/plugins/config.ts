@@ -4,12 +4,11 @@ import plugin from 'fastify-plugin';
 
 const schema = Type.Object({
   APP_BASE_URL: Type.String(),
-
+  API_BASE_URL: Type.String(),
   AUTH_CLIENT_ID: Type.String(),
   AUTH_CLIENT_SECRET: Type.String(),
   AUTH_ISSUER: Type.String(),
-
-  API_BASE_URL: Type.String(),
+  DATABASE_URL: Type.String(),
   HOST: Type.String(),
   NODE_ENV: Type.Union(
     [
@@ -20,7 +19,6 @@ const schema = Type.Object({
     { default: 'production' },
   ),
   PORT: Type.Number(),
-
   SESSION_ALLOW_INSECURE: Type.Boolean({ default: false }),
   SESSION_DOMAIN: Type.String(),
   SESSION_SECRET: Type.String({ minLength: 32 }),
