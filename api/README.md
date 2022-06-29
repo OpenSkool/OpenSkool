@@ -36,10 +36,6 @@ AUTH_CLIENT_SECRET="" # You can find the secret in the credentials tabs.
 AUTH_ISSUER="" # Eg. http://localhost:8080/realms/os-local/
 ```
 
-#### Create user
-
-You'll need to create a user in your Skool Realm in order to use the App.
-
 #### Initialize schema
 
 We use [prisma migrate](https://www.prisma.io/migrate/) to manage our database schema.

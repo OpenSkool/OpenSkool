@@ -64,3 +64,7 @@ This will start a [Keycloak dev instance](http://localhost:8080) amd 3 databases
 Open the [Keycloak Admin panel](http://localhost:8080/admin) and log in with your root credentials. (`keycloak` / `keycloak` when using Docker)
 
 Create [a realm](https://www.keycloak.org/docs/latest/server_admin/index.html#configuring-realms) called "os-local" for your local "Skool" to store your local users in.
+
+#### Create user
+
+You'll need to create a user in your Skool Realm in order to use the App.
