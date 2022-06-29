@@ -1,12 +1,7 @@
-import { CourseModel } from '~/domain';
-
 import builder from '../builder';
 import { Node } from './node';
 
-export const Course = builder.objectRef<CourseModel>('Course');
-
-builder.objectType(Course, {
-  name: 'Course',
+export const Course = builder.prismaObject('Course', {
   interfaces: [Node],
   fields: (t) => ({
     id: t.exposeID('id'),

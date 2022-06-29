@@ -1,42 +1,28 @@
 import { subject } from '@casl/ability';
 import { faker } from '@faker-js/faker';
+import { InternshipPosition as InternshipPositionModel } from '@prisma/client';
 
-import {
-  InternshipService,
-  InternshipModel,
-  InternshipInstanceModel,
-  CourseService,
-  InternshipPositionModel,
-  OrganisationService,
-  UserService,
-} from '~/domain';
+import { UserService } from '~/domain';
 import { prisma } from '~/prisma';
 import { cacheFakeData } from '~/schema/helpers';
+import { Course } from '~/schema/types/course';
 import { generateFakePerson, Person } from '~/schema/types/person';
 
 import builder from '../builder';
-import { Course } from './course';
 import { Node } from './node';
-import { generateFakeWorkplace, Organisation, Workplace } from './organisation';
+import { generateFakeWorkplace, Workplace } from './organisation';
 
 interface GraphConnection<T> {
   edges: T[];
 }
+
 interface GraphEdge<T> {
   node: T;
 }
 
-export const Internship = builder.objectRef<InternshipModel>('Internship');
-
-export const InternshipInstance =
-  builder.objectRef<InternshipInstanceModel>('InternshipInstance');
-interface InternshipAppliedPositionConnectionModel
-  extends GraphConnection<InternshipAppliedPositionPriorityEdgeModel> {}
-
-export const InternshipAppliedPositionConnection =
-  builder.objectRef<InternshipAppliedPositionConnectionModel>(
-    'InternshipAppliedPositionConnection',
-  );
+export const InternshipAppliedPositionConnection = builder.objectRef<
+  GraphConnection<InternshipAppliedPositionPriorityEdgeModel>
+>('InternshipAppliedPositionConnection');
 
 export const InternshipAppliedPositionEdge = builder.interfaceRef<
   GraphEdge<InternshipPositionModel>
@@ -52,20 +38,11 @@ export const InternshipAppliedPositionPriorityEdge =
     'InternshipAppliedPositionPriorityEdge',
   );
 
-export const InternshipPosition =
-  builder.objectRef<InternshipPositionModel>('InternshipPosition');
-
-builder.objectType(Internship, {
-  name: 'Internship',
+export const Internship = builder.prismaObject('Internship', {
   interfaces: [Node],
   fields: (t) => ({
     id: t.exposeID('id'),
-    availablePositions: t.field({
-      type: [InternshipPosition],
-      async resolve(internship, argumentz, ctx) {
-        return InternshipService.getAvailablePositions(internship.id);
-      },
-    }),
+    availablePositions: t.relation('availablePositions'),
     coordinator: t.field({
       type: Person,
       resolve(internship) {
@@ -75,6 +52,7 @@ builder.objectType(Internship, {
         );
       },
     }),
+    course: t.relation('course', { type: Course }),
     dateFrom: t.field({
       type: 'DateTime',
       async resolve(internship) {
@@ -104,17 +82,10 @@ builder.objectType(Internship, {
         );
       },
     }),
-    course: t.field({
-      type: Course,
-      async resolve(internship, argumentz, ctx) {
-        return CourseService.getCourseById(internship.courseId);
-      },
-    }),
   }),
 });
 
-builder.objectType(InternshipInstance, {
-  name: 'InternshipInstance',
+const InternshipInstance = builder.prismaObject('InternshipInstance', {
   interfaces: [Node],
   fields: (t) => ({
     id: t.exposeID('id'),
@@ -122,17 +93,9 @@ builder.objectType(InternshipInstance, {
       type: InternshipAppliedPositionConnection,
       async resolve(instance) {
         /* eslint-disable @typescript-eslint/no-magic-numbers */
-        const positions = await cacheFakeData(
-          `internship-instance-${instance.id}-applied-positions`,
-          async () => {
-            const allPositions = await prisma.internshipPosition.findMany();
-            return faker.helpers.arrayElements(
-              allPositions,
-              faker.mersenne.rand(3),
-            );
-          },
-        );
-
+        const positions = await prisma.internshipInstance
+          .findUnique({ where: { id: instance.id } })
+          .appliedPositions();
         return {
           edges: positions.map((position) => ({
             node: position,
@@ -141,29 +104,8 @@ builder.objectType(InternshipInstance, {
         };
       },
     }),
-    assignedPosition: t.field({
-      type: InternshipPosition,
-      nullable: true,
-      resolve(instance) {
-        /* eslint-disable @typescript-eslint/no-magic-numbers */
-        return cacheFakeData(
-          `internship-instance-${instance.id}-assigned-position`,
-          async () => {
-            return faker.mersenne.rand(100) > 90
-              ? faker.helpers.arrayElement(
-                  await prisma.internshipPosition.findMany(),
-                )
-              : null;
-          },
-        );
-      },
-    }),
-    internship: t.field({
-      type: Internship,
-      async resolve(instance) {
-        return InternshipService.getInternshipById(instance.internshipId);
-      },
-    }),
+    assignedPosition: t.relation('assignedPosition', { nullable: true }),
+    internship: t.relation('internship'),
     student: t.field({
       type: Person,
       resolve(instance) {
@@ -183,38 +125,41 @@ builder.objectType(InternshipInstance, {
 });
 
 builder.queryField('internshipInstance', (t) =>
-  t.field({
+  t.prismaField({
     args: {
       id: t.arg.id({ required: true }),
     },
     nullable: true,
     type: InternshipInstance,
-    async resolve(root, { id }, ctx) {
-      const instance = await InternshipService.getInternshipInstanceById(id);
-      if (instance == null) {
-        return instance;
-      }
-      return ctx.request.auth.ability.can(
-        'read',
-        subject('InternshipInstance', instance),
-      )
-        ? instance
-        : null;
+    async resolve(query, root, { id }, ctx) {
+      const instance = await prisma.internshipInstance.findUnique({
+        ...query,
+        where: { id },
+      });
+      return instance == null ||
+        ctx.request.auth.ability.cannot(
+          'read',
+          subject('InternshipInstance', instance),
+        )
+        ? null
+        : instance;
     },
   }),
 );
 
 builder.queryField('myInternshipInstances', (t) =>
-  t.field({
-    type: [InternshipInstance],
-    async resolve(root, argumentz, ctx) {
-      return InternshipService.getInternshipInstancesForUser(ctx.domain);
+  t.prismaField({
+    type: ['InternshipInstance'],
+    resolve(query, root, argumentz, ctx) {
+      return prisma.internshipInstance.findMany({
+        ...query,
+        where: { studentId: ctx.domain.userId },
+      });
     },
   }),
 );
 
-builder.objectType(InternshipPosition, {
-  name: 'InternshipPosition',
+export const InternshipPosition = builder.prismaObject('InternshipPosition', {
   interfaces: [Node],
   fields: (t) => ({
     id: t.exposeID('id'),
@@ -228,15 +173,7 @@ builder.objectType(InternshipPosition, {
         );
       },
     }),
-    organisation: t.field({
-      type: Organisation,
-      async resolve(parent) {
-        const organisation = await OrganisationService.getOrganisationById(
-          parent.organisationId,
-        );
-        return organisation;
-      },
-    }),
+    organisation: t.relation('organisation'),
     summary: t.string({
       resolve(position) {
         const [summary] = position.description.split('\n', 2) as [
@@ -259,14 +196,17 @@ builder.objectType(InternshipPosition, {
 });
 
 builder.queryField('internshipPosition', (t) =>
-  t.field({
+  t.prismaField({
     args: {
-      id: t.arg.id({ required: true }),
+      id: t.arg.id(),
     },
     nullable: true,
     type: InternshipPosition,
-    async resolve(root, { id }, ctx) {
-      return InternshipService.getInternshipPositionById(id);
+    resolve(query, root, { id }) {
+      return prisma.internshipPosition.findUnique({
+        ...query,
+        where: { id },
+      });
     },
   }),
 );

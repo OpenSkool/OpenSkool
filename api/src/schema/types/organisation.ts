@@ -19,8 +19,7 @@ export interface WorkplaceModel {
 
 export const Workplace = builder.objectRef<WorkplaceModel>('Workplace');
 
-builder.objectType(Organisation, {
-  name: 'Organisation',
+builder.prismaObject('Organisation', {
   interfaces: [Node],
   fields: (t) => ({
     id: t.exposeID('id'),
