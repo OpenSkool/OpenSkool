@@ -46,6 +46,18 @@ export async function getAllEducations(
   );
 }
 
+export async function getEducationById(
+  id: string,
+  ctx: DomainContext,
+): Promise<EducationModel> {
+  const education = await prisma.education.findUnique({
+    rejectOnNotFound: true,
+    include: { translations: true },
+    where: { id },
+  });
+  return mapToModel(education, mapLocaleToLanguageCode(ctx.locale));
+}
+
 export async function createEducation(
   data: { title: string },
   context: DomainContext,

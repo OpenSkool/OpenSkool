@@ -94,6 +94,8 @@ model Education {
   updatedBy   User?    @relation("EducationToUserUpdated", fields: [updatedById], references: [id])
   updatedById String?
 
+  internships Internship[]
+
   translations EducationTranslation[]
 }
 
@@ -117,7 +119,13 @@ model Internship {
   availablePositions  InternshipPosition[]
   course              Course               @relation(fields: [courseId], references: [id], onDelete: Restrict)
   courseId            String
+  education           Education            @relation(fields: [educationId], references: [id])
+  educationId         String
   internshipInstances InternshipInstance[]
+
+  descriptionLong  String
+  descriptionShort String
+  title            String
 }
 
 model InternshipInstance {

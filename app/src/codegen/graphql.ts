@@ -130,7 +130,11 @@ export type Internship = Node & {
   dateFrom: Scalars['DateTime'];
   dateTo: Scalars['DateTime'];
   defaultSupervisor: Person;
+  descriptionLong: Scalars['String'];
+  descriptionShort: Scalars['String'];
+  education: Education;
   id: Scalars['ID'];
+  title: Scalars['String'];
 };
 
 export type InternshipAppliedPositionConnection = {

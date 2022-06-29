@@ -10,18 +10,20 @@ import {
 
 import { prisma } from '../src/prisma';
 import { execute } from './client';
-import { createUserFixture } from './fixtures';
+import { createEducationFixture, createUserFixture } from './fixtures';
 
 let internship: { id: string };
 
 beforeAll(async () => {
+  const education = await createEducationFixture();
+
   internship = await prisma.internship.create({
     data: {
-      course: {
-        create: {
-          name: 'Chemistry',
-        },
-      },
+      course: { create: { name: 'Chemistry' } },
+      descriptionLong: 'Long description',
+      descriptionShort: 'Short description',
+      education: { connect: { id: education.id } },
+      title: 'Internship Test',
     },
   });
 });

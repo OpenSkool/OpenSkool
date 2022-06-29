@@ -1,6 +1,7 @@
 import {
   Competency,
   CompetencyFramework,
+  Education,
   Language,
   User,
 } from '@prisma/client';
@@ -50,6 +51,18 @@ export async function createCompetencyFixture({
       parentCompetencyId: parentId,
       translations: { create: { languageCode: language, title } },
       updatedById: user.id,
+    },
+  });
+}
+
+export async function createEducationFixture(): Promise<Education> {
+  const user = await createUserFixture();
+  return prisma.education.create({
+    data: {
+      createdById: user.id,
+      translations: {
+        create: { languageCode: Language.EN, title: 'Education Test' },
+      },
     },
   });
 }

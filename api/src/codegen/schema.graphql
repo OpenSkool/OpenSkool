@@ -114,7 +114,11 @@ type Internship implements Node {
   dateFrom: DateTime!
   dateTo: DateTime!
   defaultSupervisor: Person!
+  descriptionLong: String!
+  descriptionShort: String!
+  education: Education!
   id: ID!
+  title: String!
 }
 
 type InternshipAppliedPositionConnection {

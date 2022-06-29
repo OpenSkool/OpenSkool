@@ -4,13 +4,16 @@ import { Prisma, PrismaClient } from '@prisma/client';
 import { times } from '~/utils';
 
 import { seedCourses } from './course';
+import { seedEducations } from './education';
 import { seedOrganisations } from './organisation';
 
 export async function seedInternships(prisma: PrismaClient): Promise<void> {
   await seedCourses(prisma);
+  await seedEducations(prisma);
   await seedOrganisations(prisma);
 
   const courses = await prisma.course.findMany();
+  const educations = await prisma.education.findMany();
   const organisations = await prisma.organisation.findMany();
 
   for (let count = await prisma.internship.count(); count <= 50; count += 1) {
@@ -23,6 +26,10 @@ export async function seedInternships(prisma: PrismaClient): Promise<void> {
           })),
         },
         courseId: faker.helpers.arrayElement(courses).id,
+        descriptionLong: faker.lorem.paragraphs(faker.mersenne.rand(5, 3)),
+        descriptionShort: faker.lorem.paragraph(),
+        educationId: faker.helpers.arrayElement(educations).id,
+        title: faker.company.catchPhrase(),
       },
     });
   }

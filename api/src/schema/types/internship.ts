@@ -2,10 +2,11 @@ import { subject } from '@casl/ability';
 import { faker } from '@faker-js/faker';
 import { InternshipPosition as InternshipPositionModel } from '@prisma/client';
 
-import { UserService } from '~/domain';
+import { EducationService, UserService } from '~/domain';
 import { prisma } from '~/prisma';
 import { cacheFakeData } from '~/schema/helpers';
 import { Course } from '~/schema/types/course';
+import { Education } from '~/schema/types/education';
 import { generateFakePerson, Person } from '~/schema/types/person';
 
 import builder from '../builder';
@@ -82,6 +83,18 @@ export const Internship = builder.prismaObject('Internship', {
         );
       },
     }),
+    descriptionLong: t.exposeString('descriptionLong'),
+    descriptionShort: t.exposeString('descriptionShort'),
+    education: t.field({
+      type: Education,
+      resolve(internship, argumentz, ctx) {
+        return EducationService.getEducationById(
+          internship.educationId,
+          ctx.domain,
+        );
+      },
+    }),
+    title: t.exposeString('title'),
   }),
 });
 
