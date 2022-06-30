@@ -50,8 +50,7 @@ export async function getEducationById(
   id: string,
   ctx: DomainContext,
 ): Promise<EducationModel> {
-  const education = await prisma.education.findUnique({
-    rejectOnNotFound: true,
+  const education = await prisma.education.findUniqueOrThrow({
     include: { translations: true },
     where: { id },
   });

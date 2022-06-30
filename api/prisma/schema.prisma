@@ -138,7 +138,7 @@ model InternshipInstance {
 
   appliedPositions   InternshipPosition[] @relation("InternshipInstancesAppliedPositions")
   assignedPosition   InternshipPosition?  @relation("InternshipInstanceAssignedPosition", fields: [assignedPositionId], references: [id])
-  assignedPositionId String?
+  assignedPositionId String?              @unique
   internship         Internship           @relation(fields: [internshipId], references: [id], onDelete: Restrict)
   internshipId       String
   student            User?                @relation("InternshipInstanceToStudent", fields: [studentId], references: [id])
