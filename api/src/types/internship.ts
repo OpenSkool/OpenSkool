@@ -57,26 +57,8 @@ export const Internship = builder.prismaObject('Internship', {
       },
     }),
     course: t.relation('course', { type: Course }),
-    dateFrom: t.field({
-      type: 'DateTime',
-      async resolve(internship) {
-        const [from] = await cacheFakeData(
-          `internship-${internship.id}-range`,
-          generateFakeRange,
-        );
-        return from;
-      },
-    }),
-    dateTo: t.field({
-      type: 'DateTime',
-      async resolve(internship) {
-        const [, to] = await cacheFakeData(
-          `internship-${internship.id}-range`,
-          generateFakeRange,
-        );
-        return to;
-      },
-    }),
+    dateFrom: t.expose('dateFrom', { type: 'DateTime' }),
+    dateTo: t.expose('dateTo', { type: 'DateTime' }),
     defaultSupervisor: t.field({
       type: Person,
       resolve(internship) {
@@ -291,17 +273,3 @@ builder.mutationField('applyForPriorityInternshipPosition', (t) =>
     },
   }),
 );
-
-function generateFakeRange(): [Date, Date] {
-  const from = generateFutureDate();
-  return [from, generateFutureDate(from)];
-}
-
-function generateFutureDate(reference?: Date): Date {
-  const date = faker.date.future(1, reference);
-  date.setUTCHours(0);
-  date.setUTCMinutes(0);
-  date.setUTCSeconds(0);
-  date.setUTCMilliseconds(0);
-  return date;
-}

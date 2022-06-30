@@ -20,6 +20,8 @@ beforeAll(async () => {
   internship = await prisma.internship.create({
     data: {
       course: { create: { name: 'Chemistry' } },
+      dateFrom: new Date(),
+      dateTo: new Date(),
       descriptionLong: 'Long description',
       descriptionShort: 'Short description',
       education: { connect: { id: education.id } },

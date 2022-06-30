@@ -123,6 +123,8 @@ model Internship {
   educationId         String
   internshipInstances InternshipInstance[]
 
+  dateFrom         DateTime
+  dateTo           DateTime
   descriptionLong  String
   descriptionShort String
   title            String

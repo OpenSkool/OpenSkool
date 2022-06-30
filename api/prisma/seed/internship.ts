@@ -5,6 +5,7 @@ import { chance, times } from '~/utils';
 
 import { seedCourses } from './course';
 import { seedEducations } from './education';
+import { generateFakeRange } from './helpers';
 import { seedOrganisations } from './organisation';
 
 export async function seedInternships(prisma: PrismaClient): Promise<void> {
@@ -17,6 +18,8 @@ export async function seedInternships(prisma: PrismaClient): Promise<void> {
   const organisations = await prisma.organisation.findMany();
 
   for (let count = await prisma.internship.count(); count <= 50; count += 1) {
+    const [dateFrom, dateTo] = generateFakeRange();
+
     await prisma.internship.create({
       data: {
         availablePositions: {
@@ -28,6 +31,8 @@ export async function seedInternships(prisma: PrismaClient): Promise<void> {
           })),
         },
         courseId: faker.helpers.arrayElement(courses).id,
+        dateFrom,
+        dateTo,
         descriptionLong: faker.lorem.paragraphs(faker.mersenne.rand(5, 3)),
         descriptionShort: faker.lorem.paragraph(),
         educationId: faker.helpers.arrayElement(educations).id,
