@@ -43,27 +43,27 @@ export interface OsTheme {
 export const baseColors: OsColors = {
   gray: windiColors.slate as WindiColors,
   primary: generateRange({
-    lightness: { from: 94 },
+    lightness: { from: 0.94 },
     chroma: 0.218,
     hue: 262.38,
   }) as WindiColors,
   caution: generateRange({
-    lightness: { from: 99, to: 25 },
+    lightness: { from: 0.99, to: 0.25 },
     chroma: 0.147,
     hue: 83.57,
   }) as WindiColors,
   danger: generateRange({
-    lightness: { from: 93 },
+    lightness: { from: 0.93 },
     chroma: 0.201,
     hue: 7.34,
   }) as WindiColors,
   info: generateRange({
-    lightness: { from: 90 },
+    lightness: { from: 0.9 },
     chroma: 0.204,
     hue: 293.91,
   }) as WindiColors,
   success: generateRange({
-    lightness: { from: 90 },
+    lightness: { from: 0.9 },
     chroma: 0.082,
     hue: 126.93,
   }) as WindiColors,

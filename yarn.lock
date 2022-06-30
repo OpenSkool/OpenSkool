@@ -2040,7 +2040,6 @@ __metadata:
     "@iconify-json/ri": ^1.1.2
     "@intlify/vite-plugin-vue-i18n": ^3.4.0
     "@os/ability": "workspace:*"
-    "@os/css-color-4": "workspace:*"
     "@os/eslint-config": "workspace:*"
     "@testing-library/user-event": 14.2.0
     "@testing-library/vue": ^6.6.0
@@ -2051,6 +2050,7 @@ __metadata:
     "@vueuse/head": 0.7.6
     autoprefixer: ^10.4.7
     c8: ^7.11.3
+    colorjs.io: ^0.2.4
     cross-fetch: ^3.1.5
     eslint: ^8.17.0
     graphql: ^16.5.0
@@ -2074,17 +2074,6 @@ __metadata:
     vue-router: ^4.0.16
     vue-tsc: 0.37.9
     windicss: ^3.5.4
-  languageName: unknown
-  linkType: soft
-
-"@os/css-color-4@workspace:*, @os/css-color-4@workspace:libs/css-color-4":
-  version: 0.0.0-use.local
-  resolution: "@os/css-color-4@workspace:libs/css-color-4"
-  dependencies:
-    rollup: ^2.75.6
-    rollup-plugin-dts: ^4.2.2
-    rollup-plugin-esbuild: ^4.9.1
-    typescript: ~4.7.3
   languageName: unknown
   linkType: soft
 
@@ -4057,6 +4046,13 @@ __metadata:
   version: 2.0.16
   resolution: "colorette@npm:2.0.16"
   checksum: cd55596a3a2d1071c1a28eee7fd8a5387593ff1bd10a3e8d0a6221499311fe34a9f2b9272d77c391e0e003dcdc8934fb2f8d106e7ef1f7516f8060c901d41a27
+  languageName: node
+  linkType: hard
+
+"colorjs.io@npm:^0.2.4":
+  version: 0.2.4
+  resolution: "colorjs.io@npm:0.2.4"
+  checksum: 90ed728f2c3d38e6752c2170f289ed84559433fe280d16bc5af25f4cd3df4a3f5efa954f6f8c36e0ede283f4a4968447a5db0835758beb352b7cf5bf320273ee
   languageName: node
   linkType: hard
 

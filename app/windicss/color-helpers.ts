@@ -1,12 +1,14 @@
-import { oklchToSRgb } from '@os/css-color-4';
+import Color from 'colorjs.io';
 
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 
-const toHex = (number: number, maxLength = 2): string =>
-  number.toString(16).padStart(maxLength, '0');
+const percentageToHex = (number: number): string =>
+  Math.round(number * 255)
+    .toString(16)
+    .padStart(2, '0');
 
 export function generateRange({
-  lightness: { from = 95, steps = 9, to = 17 } = {},
+  lightness: { from = 0.95, steps = 9, to = 0.17 } = {},
   chroma = 0.162,
   hue,
 }: {
@@ -16,26 +18,25 @@ export function generateRange({
 }): Record<string, string> {
   if (
     from < to ||
-    from > 99 ||
-    to < 15 ||
+    from > 0.99 ||
+    to < 0.15 ||
     chroma < 0 ||
-    chroma > 230 ||
+    chroma > 0.23 ||
     hue < 0 ||
     hue > 360
   ) {
-    throw new RangeError('HCL color range out of bounds');
+    throw new RangeError('oklch color range out of bounds');
   }
   // console.log(`-- RANGE ${chroma} / ${hue} --`);
   const range: Record<string, string> = {};
   const lightnessGap = (from - to) / (steps - 1);
   let lightness = from;
   for (let step = 1; step <= steps; step += 1) {
-    const [r, g, b] = oklchToSRgb([lightness / 100, chroma, hue]);
-    const hex = `#${toHex(r)}${toHex(g)}${toHex(b)}`;
-    // console.log(
-    //   `step ${step} – rgb: ${r} ${g} ${b} – lch ${lightness}% ${chroma} ${hue} – hex ${hex}`,
-    // );
-    range[`${step}00`] = hex;
+    // console.log(`-- step ${step} – lch ${lightness}% ${chroma} ${hue} --`);
+    const color = new Color('oklch', [lightness, chroma, hue])
+      .to('srgb')
+      .toGamut();
+    range[`${step}00`] = `#${color.coords.map(percentageToHex).join('')}`;
     lightness -= lightnessGap;
   }
   return range;
