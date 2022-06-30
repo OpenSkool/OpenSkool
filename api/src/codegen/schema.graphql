@@ -108,6 +108,9 @@ type InputError implements UserError {
   path: [String!]
 }
 
+"""
+An internship is part of some courses where the students executes activities within another organisation.
+"""
 type Internship implements Node {
   availablePositions: [InternshipPosition!]!
   coordinator: Person!
@@ -136,6 +139,9 @@ type InternshipAppliedPositionPriorityEdge implements InternshipAppliedPositionE
   priority: Int!
 }
 
+"""
+An instance of an internship contains all information about the internship of 1 student. It is the link between 1 internship and 1 student.
+"""
 type InternshipInstance implements Node {
   appliedPositions: InternshipAppliedPositionConnection!
   assignedPosition: InternshipPosition
@@ -146,6 +152,9 @@ type InternshipInstance implements Node {
   urls: [String!]!
 }
 
+"""
+An internship position is one specific position within an organisation to execute an internship. When an organisation can host multiple students for a similar positions, there as many internship positions as there are possible hosted students.
+"""
 type InternshipPosition implements Node {
   description: String!
   id: ID!
@@ -307,6 +316,9 @@ type NotFoundError implements UserError {
   path: [String!]
 }
 
+"""
+An organisation can be a commercial company, a non-profit or an educational institution.
+"""
 type Organisation implements Node {
   employees: [Person!]!
   id: ID!
@@ -376,6 +388,9 @@ interface UserError {
   path: [String!]
 }
 
+"""
+This is the location, address where the internship will be executed,
+"""
 type Workplace implements Node {
   id: ID!
   plainAddress: String!

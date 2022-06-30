@@ -123,6 +123,7 @@ export type InputError = UserError & {
   path?: Maybe<Array<Scalars['String']>>;
 };
 
+/** An internship is part of some courses where the students executes activities within another organisation. */
 export type Internship = Node & {
   __typename?: 'Internship';
   availablePositions: Array<InternshipPosition>;
@@ -155,6 +156,7 @@ export type InternshipAppliedPositionPriorityEdge =
     priority: Scalars['Int'];
   };
 
+/** An instance of an internship contains all information about the internship of 1 student. It is the link between 1 internship and 1 student. */
 export type InternshipInstance = Node & {
   __typename?: 'InternshipInstance';
   appliedPositions: InternshipAppliedPositionConnection;
@@ -166,6 +168,7 @@ export type InternshipInstance = Node & {
   urls: Array<Scalars['String']>;
 };
 
+/** An internship position is one specific position within an organisation to execute an internship. When an organisation can host multiple students for a similar positions, there as many internship positions as there are possible hosted students. */
 export type InternshipPosition = Node & {
   __typename?: 'InternshipPosition';
   description: Scalars['String'];
@@ -352,6 +355,7 @@ export type NotFoundError = UserError & {
   path?: Maybe<Array<Scalars['String']>>;
 };
 
+/** An organisation can be a commercial company, a non-profit or an educational institution. */
 export type Organisation = Node & {
   __typename?: 'Organisation';
   employees: Array<Person>;
@@ -441,6 +445,7 @@ export type UserError = {
   path?: Maybe<Array<Scalars['String']>>;
 };
 
+/** This is the location, address where the internship will be executed, */
 export type Workplace = Node & {
   __typename?: 'Workplace';
   id: Scalars['ID'];

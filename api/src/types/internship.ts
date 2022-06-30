@@ -41,6 +41,8 @@ export const InternshipAppliedPositionPriorityEdge =
   );
 
 export const Internship = builder.prismaObject('Internship', {
+  description:
+    'An internship is part of some courses where the students executes activities within another organisation.',
   interfaces: [Node],
   fields: (t) => ({
     id: t.exposeID('id'),
@@ -103,6 +105,8 @@ export const Internship = builder.prismaObject('Internship', {
 });
 
 const InternshipInstance = builder.prismaObject('InternshipInstance', {
+  description:
+    'An instance of an internship contains all information about the internship of 1 student. It is the link between 1 internship and 1 student.',
   interfaces: [Node],
   fields: (t) => ({
     id: t.exposeID('id'),
@@ -180,6 +184,8 @@ builder.queryField('myInternshipInstances', (t) =>
 );
 
 export const InternshipPosition = builder.prismaObject('InternshipPosition', {
+  description:
+    'An internship position is one specific position within an organisation to execute an internship. When an organisation can host multiple students for a similar positions, there as many internship positions as there are possible hosted students.',
   interfaces: [Node],
   fields: (t) => ({
     id: t.exposeID('id'),

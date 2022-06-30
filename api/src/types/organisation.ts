@@ -20,6 +20,8 @@ export interface WorkplaceModel {
 export const Workplace = builder.objectRef<WorkplaceModel>('Workplace');
 
 builder.prismaObject('Organisation', {
+  description:
+    'An organisation can be a commercial company, a non-profit or an educational institution.',
   interfaces: [Node],
   fields: (t) => ({
     id: t.exposeID('id'),
@@ -70,6 +72,8 @@ builder.prismaObject('Organisation', {
 
 builder.objectType(Workplace, {
   name: 'Workplace',
+  description:
+    'This is the location, address where the internship will be executed,',
   interfaces: [Node],
   fields: (t) => ({
     id: t.exposeID('id'),
