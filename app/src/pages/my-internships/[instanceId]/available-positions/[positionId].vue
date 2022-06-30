@@ -26,7 +26,8 @@ gql`
         dateFrom
         dateTo
       }
-      supervisor {
+      supervisors {
+        id
         avatarUrl
         name
       }
@@ -156,14 +157,18 @@ const internshipPosition = computed(() => result.value?.internshipPosition);
               <div v-t="'internships.roles.coordinator'" />
             </div>
           </li>
-          <li class="flex gap-5 items-center">
+          <li
+            v-for="supervisor of internshipInstance.supervisors"
+            :key="supervisor.id"
+            class="flex gap-5 items-center"
+          >
             <img
               class="rounded-full w-12 aspect-square"
-              :src="internshipInstance.supervisor.avatarUrl"
+              :src="supervisor.avatarUrl"
             />
             <div>
               <h3 class="font-semibold">
-                {{ internshipInstance.supervisor.name }}
+                {{ supervisor.name }}
               </h3>
               <div v-t="'internships.roles.supervisor'" />
             </div>

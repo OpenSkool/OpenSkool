@@ -129,12 +129,12 @@ const InternshipInstance = builder.prismaObject('InternshipInstance', {
         return UserService.findUserById(instance.studentId);
       },
     }),
-    supervisor: t.field({
-      type: Person,
-      resolve(instance) {
+    supervisors: t.field({
+      type: [Person],
+      async resolve(instance) {
         return cacheFakeData(
-          `internship-instance-${instance.id}-supervisor`,
-          generateFakePerson,
+          `internship-instance-${instance.id}-supervisors`,
+          () => times(faker.mersenne.rand(3, 1), generateFakePerson),
         );
       },
     }),
