@@ -4,8 +4,7 @@ import {
   AppUnauthorizedError,
   AppUserError,
 } from '~/errors';
-
-import builder from '../builder';
+import builder from '~/schema/builder';
 
 const UserError = builder.interfaceType(AppUserError, {
   name: 'UserError',

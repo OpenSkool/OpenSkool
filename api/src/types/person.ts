@@ -2,9 +2,9 @@ import { faker } from '@faker-js/faker';
 import cuid from 'cuid';
 
 import { UserModel, UserService } from '~/domain';
+import builder from '~/schema/builder';
 import { cacheFakeData } from '~/schema/helpers';
 
-import builder from '../builder';
 import { Node } from './node';
 
 export const Person = builder.objectRef<UserModel>('Person');

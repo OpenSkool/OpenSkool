@@ -1,6 +1,6 @@
 import { EducationModel, EducationService } from '~/domain';
+import builder from '~/schema/builder';
 
-import builder from '../builder';
 import { Accountable } from './accountable';
 import { Node } from './node';
 

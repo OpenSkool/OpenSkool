@@ -8,9 +8,9 @@ import { z } from 'zod';
 import { AppRawRule } from '~/api/ability';
 import type { Auth, AuthUser } from '~/api/auth';
 import { AppTokenSet } from '~/api/openid';
+import builder from '~/schema/builder';
 import { castArray } from '~/utils';
 
-import builder from '../builder';
 import { Node } from './node';
 
 const AbilityRule = builder.objectRef<AppRawRule>('AbilityRule');

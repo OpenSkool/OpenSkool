@@ -1,4 +1,5 @@
-import builder from '../builder';
+import builder from '~/schema/builder';
+
 import { Node } from './node';
 
 export const Course = builder.prismaObject('Course', {

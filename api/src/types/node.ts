@@ -1,4 +1,4 @@
-import builder from '../builder';
+import builder from '~/schema/builder';
 
 export const Node = builder.interfaceRef<{ id: string }>('Node');
 

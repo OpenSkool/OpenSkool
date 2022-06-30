@@ -4,12 +4,12 @@ import { InternshipPosition as InternshipPositionModel } from '@prisma/client';
 
 import { EducationService, UserService } from '~/domain';
 import { prisma } from '~/prisma';
+import builder from '~/schema/builder';
 import { cacheFakeData } from '~/schema/helpers';
-import { Course } from '~/schema/types/course';
-import { Education } from '~/schema/types/education';
-import { generateFakePerson, Person } from '~/schema/types/person';
+import { Course } from '~/types/course';
+import { Education } from '~/types/education';
+import { generateFakePerson, Person } from '~/types/person';
 
-import builder from '../builder';
 import { Node } from './node';
 import { generateFakeWorkplace, Workplace } from './organisation';
 

@@ -1,6 +1,6 @@
 import { UserService } from '~/domain';
+import builder from '~/schema/builder';
 
-import builder from '../builder';
 import { Person } from './person';
 
 interface IAccountable {

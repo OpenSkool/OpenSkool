@@ -8,8 +8,8 @@ import {
   AppNotFoundError,
   AppUnauthorizedError,
 } from '~/errors';
+import builder from '~/schema/builder';
 
-import builder from '../builder';
 import { Accountable } from './accountable';
 import { Node } from './node';
 
