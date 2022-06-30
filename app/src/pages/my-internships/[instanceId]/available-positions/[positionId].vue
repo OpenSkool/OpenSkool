@@ -147,39 +147,11 @@ const internshipPosition = computed(() => result.value?.internshipPosition);
           </dd>
         </dl>
       </UiCard>
-      <UiCard class="p-5">
+      <UiCard v-if="internshipPosition.mentors.length > 0" class="p-5">
         <UiSubtitle is="h2" class="mb-5">
           {{ $t('internships.internshipPosition.section.contact.heading') }}
         </UiSubtitle>
         <ul class="space-y-3">
-          <li class="flex gap-5 items-center">
-            <img
-              class="rounded-full w-12 aspect-square"
-              :src="internshipInstance.internship.coordinator.avatarUrl"
-            />
-            <div>
-              <h3 class="font-semibold">
-                {{ internshipInstance.internship.coordinator.name }}
-              </h3>
-              <div v-t="'internships.roles.coordinator'" />
-            </div>
-          </li>
-          <li
-            v-for="supervisor of internshipInstance.supervisors"
-            :key="supervisor.id"
-            class="flex gap-5 items-center"
-          >
-            <img
-              class="rounded-full w-12 aspect-square"
-              :src="supervisor.avatarUrl"
-            />
-            <div>
-              <h3 class="font-semibold">
-                {{ supervisor.name }}
-              </h3>
-              <div v-t="'internships.roles.supervisor'" />
-            </div>
-          </li>
           <li
             v-for="mentor of internshipPosition.mentors"
             :key="mentor.id"
