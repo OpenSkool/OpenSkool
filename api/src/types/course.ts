@@ -12,7 +12,7 @@ export const Course = builder.prismaObject('Course', {
     name: t.exposeString('name'),
     urls: t.stringList({
       /* eslint-disable @typescript-eslint/no-magic-numbers */
-      resolve: () => times(faker.mersenne.rand(2), () => faker.internet.url()),
+      resolve: () => times(faker.mersenne.rand(3), () => faker.internet.url()),
     }),
   }),
 });

@@ -81,7 +81,8 @@ export const Internship = builder.prismaObject('Internship', {
     }),
     title: t.exposeString('title'),
     urls: t.stringList({
-      resolve: () => times(faker.mersenne.rand(1), () => faker.internet.url()),
+      /* eslint-disable @typescript-eslint/no-magic-numbers */
+      resolve: () => times(faker.mersenne.rand(2), () => faker.internet.url()),
     }),
   }),
 });
@@ -102,7 +103,7 @@ const InternshipInstance = builder.prismaObject('InternshipInstance', {
         return {
           edges: positions.map((position) => ({
             node: position,
-            priority: faker.mersenne.rand(3, 1),
+            priority: faker.mersenne.rand(4, 1),
           })),
         };
       },
@@ -120,12 +121,12 @@ const InternshipInstance = builder.prismaObject('InternshipInstance', {
       async resolve(instance) {
         return cacheFakeData(
           `internship-instance-${instance.id}-supervisors`,
-          () => times(faker.mersenne.rand(3, 1), generateFakePerson),
+          () => times(faker.mersenne.rand(4, 1), generateFakePerson),
         );
       },
     }),
     urls: t.stringList({
-      resolve: () => times(faker.mersenne.rand(1), () => faker.internet.url()),
+      resolve: () => times(faker.mersenne.rand(2), () => faker.internet.url()),
     }),
   }),
 });
@@ -180,7 +181,7 @@ export const InternshipPosition = builder.prismaObject('InternshipPosition', {
           () => {
             return chance(5)
               ? []
-              : times(faker.mersenne.rand(2, 1), generateFakePerson);
+              : times(faker.mersenne.rand(3, 1), generateFakePerson);
           },
         );
       },
@@ -208,7 +209,7 @@ export const InternshipPosition = builder.prismaObject('InternshipPosition', {
       },
     }),
     urls: t.stringList({
-      resolve: () => times(faker.mersenne.rand(1), () => faker.internet.url()),
+      resolve: () => times(faker.mersenne.rand(2), () => faker.internet.url()),
     }),
   }),
 });

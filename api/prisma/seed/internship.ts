@@ -33,7 +33,7 @@ export async function seedInternships(prisma: PrismaClient): Promise<void> {
         courseId: faker.helpers.arrayElement(courses).id,
         dateFrom,
         dateTo,
-        descriptionLong: faker.lorem.paragraphs(faker.mersenne.rand(5, 3)),
+        descriptionLong: faker.lorem.paragraphs(faker.mersenne.rand(6, 3)),
         descriptionShort: faker.lorem.paragraph(),
         educationId: faker.helpers.arrayElement(educations).id,
         title: faker.company.catchPhrase(),

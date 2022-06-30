@@ -30,7 +30,7 @@ builder.prismaObject('Organisation', {
       resolve(organisation) {
         /* eslint-disable @typescript-eslint/no-magic-numbers */
         return cacheFakeData(`organisation-${organisation.id}-employees`, () =>
-          times(faker.mersenne.rand(3, 1), generateFakePerson),
+          times(faker.mersenne.rand(4, 1), generateFakePerson),
         );
       },
     }),
@@ -60,12 +60,12 @@ builder.prismaObject('Organisation', {
       resolve(organisation) {
         /* eslint-disable @typescript-eslint/no-magic-numbers */
         return cacheFakeData(`organisation-${organisation.id}-workplaces`, () =>
-          times(faker.mersenne.rand(3, 1), generateFakeWorkplace),
+          times(faker.mersenne.rand(4, 1), generateFakeWorkplace),
         );
       },
     }),
     urls: t.stringList({
-      resolve: () => times(faker.mersenne.rand(2), () => faker.internet.url()),
+      resolve: () => times(faker.mersenne.rand(3), () => faker.internet.url()),
     }),
   }),
 });
