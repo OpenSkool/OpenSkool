@@ -9,6 +9,7 @@ import { cacheFakeData } from '~/schema/helpers';
 import { Course } from '~/types/course';
 import { Education } from '~/types/education';
 import { generateFakePerson, Person } from '~/types/person';
+import { times } from '~/utils';
 
 import { Node } from './node';
 import { generateFakeWorkplace, Workplace } from './organisation';
@@ -95,6 +96,9 @@ export const Internship = builder.prismaObject('Internship', {
       },
     }),
     title: t.exposeString('title'),
+    urls: t.stringList({
+      resolve: () => times(faker.mersenne.rand(1), () => faker.internet.url()),
+    }),
   }),
 });
 
@@ -133,6 +137,9 @@ const InternshipInstance = builder.prismaObject('InternshipInstance', {
           generateFakePerson,
         );
       },
+    }),
+    urls: t.stringList({
+      resolve: () => times(faker.mersenne.rand(1), () => faker.internet.url()),
     }),
   }),
 });
@@ -204,6 +211,9 @@ export const InternshipPosition = builder.prismaObject('InternshipPosition', {
           generateFakeWorkplace,
         );
       },
+    }),
+    urls: t.stringList({
+      resolve: () => times(faker.mersenne.rand(1), () => faker.internet.url()),
     }),
   }),
 });

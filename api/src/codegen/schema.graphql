@@ -54,6 +54,7 @@ type CompetencyFramework implements Node {
 type Course implements Node {
   id: ID!
   name: String!
+  urls: [String!]!
 }
 
 input CreateCompetencyFrameworkInput {
@@ -119,6 +120,7 @@ type Internship implements Node {
   education: Education!
   id: ID!
   title: String!
+  urls: [String!]!
 }
 
 type InternshipAppliedPositionConnection {
@@ -141,6 +143,7 @@ type InternshipInstance implements Node {
   internship: Internship!
   student: Person!
   supervisor: Person!
+  urls: [String!]!
 }
 
 type InternshipPosition implements Node {
@@ -149,6 +152,7 @@ type InternshipPosition implements Node {
   mentor: Person!
   organisation: Organisation!
   summary: String!
+  urls: [String!]!
   workplace: Workplace!
 }
 
@@ -309,6 +313,7 @@ type Organisation implements Node {
   imageUrl: String!
   name: String!
   plainAddress: String!
+  urls: [String!]!
   workplaces: [Workplace!]!
 }
 

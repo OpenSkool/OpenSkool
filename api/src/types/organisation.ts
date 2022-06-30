@@ -62,6 +62,9 @@ builder.prismaObject('Organisation', {
         );
       },
     }),
+    urls: t.stringList({
+      resolve: () => times(faker.mersenne.rand(2), () => faker.internet.url()),
+    }),
   }),
 });
 

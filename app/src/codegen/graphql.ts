@@ -75,6 +75,7 @@ export type Course = Node & {
   __typename?: 'Course';
   id: Scalars['ID'];
   name: Scalars['String'];
+  urls: Array<Scalars['String']>;
 };
 
 export type CreateCompetencyFrameworkInput = {
@@ -135,6 +136,7 @@ export type Internship = Node & {
   education: Education;
   id: Scalars['ID'];
   title: Scalars['String'];
+  urls: Array<Scalars['String']>;
 };
 
 export type InternshipAppliedPositionConnection = {
@@ -161,6 +163,7 @@ export type InternshipInstance = Node & {
   internship: Internship;
   student: Person;
   supervisor: Person;
+  urls: Array<Scalars['String']>;
 };
 
 export type InternshipPosition = Node & {
@@ -170,6 +173,7 @@ export type InternshipPosition = Node & {
   mentor: Person;
   organisation: Organisation;
   summary: Scalars['String'];
+  urls: Array<Scalars['String']>;
   workplace: Workplace;
 };
 
@@ -355,6 +359,7 @@ export type Organisation = Node & {
   imageUrl: Scalars['String'];
   name: Scalars['String'];
   plainAddress: Scalars['String'];
+  urls: Array<Scalars['String']>;
   workplaces: Array<Workplace>;
 };
 
