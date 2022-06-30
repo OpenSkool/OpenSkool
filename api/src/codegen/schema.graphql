@@ -158,7 +158,7 @@ An internship position is one specific position within an organisation to execut
 type InternshipPosition implements Node {
   description: String!
   id: ID!
-  mentor: Person!
+  mentors: [Person!]!
   organisation: Organisation!
   summary: String!
   urls: [String!]!

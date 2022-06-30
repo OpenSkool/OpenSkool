@@ -173,7 +173,7 @@ export type InternshipPosition = Node & {
   __typename?: 'InternshipPosition';
   description: Scalars['String'];
   id: Scalars['ID'];
-  mentor: Person;
+  mentors: Array<Person>;
   organisation: Organisation;
   summary: Scalars['String'];
   urls: Array<Scalars['String']>;
@@ -962,7 +962,12 @@ export type InternshipInstancePositionDetailQueryQuery = {
     __typename?: 'InternshipPosition';
     id: string;
     summary: string;
-    mentor: { __typename?: 'Person'; avatarUrl: string; name: string };
+    mentors: Array<{
+      __typename?: 'Person';
+      id: string;
+      avatarUrl: string;
+      name: string;
+    }>;
     organisation: {
       __typename?: 'Organisation';
       imageUrl: string;
@@ -2732,10 +2737,11 @@ export const InternshipInstancePositionDetailQueryDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'mentor' },
+                  name: { kind: 'Name', value: 'mentors' },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                       {
                         kind: 'Field',
                         name: { kind: 'Name', value: 'avatarUrl' },

@@ -190,12 +190,16 @@ export const InternshipPosition = builder.prismaObject('InternshipPosition', {
   fields: (t) => ({
     id: t.exposeID('id'),
     description: t.exposeString('description'),
-    mentor: t.field({
-      type: Person,
+    mentors: t.field({
+      type: [Person],
       resolve(position) {
         return cacheFakeData(
-          `internship-position-${position.id}-mentor`,
-          generateFakePerson,
+          `internship-position-${position.id}-mentors`,
+          () => {
+            return chance(5)
+              ? []
+              : times(faker.mersenne.rand(2, 1), generateFakePerson);
+          },
         );
       },
     }),

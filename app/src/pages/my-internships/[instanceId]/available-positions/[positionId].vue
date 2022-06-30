@@ -34,7 +34,8 @@ gql`
     }
     internshipPosition(id: $positionId) {
       id
-      mentor {
+      mentors {
+        id
         avatarUrl
         name
       }
@@ -173,14 +174,18 @@ const internshipPosition = computed(() => result.value?.internshipPosition);
               <div v-t="'internships.roles.supervisor'" />
             </div>
           </li>
-          <li class="flex gap-5 items-center">
+          <li
+            v-for="mentor of internshipPosition.mentors"
+            :key="mentor.id"
+            class="flex gap-5 items-center"
+          >
             <img
               class="rounded-full w-12 aspect-square"
-              :src="internshipPosition.mentor.avatarUrl"
+              :src="mentor.avatarUrl"
             />
             <div>
               <h3 class="font-semibold">
-                {{ internshipPosition.mentor.name }}
+                {{ mentor.name }}
               </h3>
               <div v-t="'internships.roles.mentor'" />
             </div>
