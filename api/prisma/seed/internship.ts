@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { Prisma, PrismaClient } from '@prisma/client';
 
-import { times } from '~/utils';
+import { chance, times } from '~/utils';
 
 import { seedCourses } from './course';
 import { seedEducations } from './education';
@@ -22,7 +22,9 @@ export async function seedInternships(prisma: PrismaClient): Promise<void> {
         availablePositions: {
           create: times(faker.mersenne.rand(20, 10), () => ({
             description: faker.lorem.paragraphs(),
-            organisationId: faker.helpers.arrayElement(organisations).id,
+            organisationId: chance(90)
+              ? faker.helpers.arrayElement(organisations).id
+              : undefined,
           })),
         },
         courseId: faker.helpers.arrayElement(courses).id,

@@ -159,10 +159,10 @@ type InternshipPosition implements Node {
   description: String!
   id: ID!
   mentors: [Person!]!
-  organisation: Organisation!
+  organisation: Organisation
   summary: String!
   urls: [String!]!
-  workplace: Workplace!
+  workplace: Workplace
 }
 
 """

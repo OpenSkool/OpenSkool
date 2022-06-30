@@ -6,7 +6,7 @@ internshipInstance:
 
 internshipPosition:
   detail:
-    heading: Internship {courseName} at {organisationName}
+    heading: Internship {courseName}
   error:
     notFound: Internship position not found.
   section:

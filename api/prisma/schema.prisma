@@ -152,8 +152,8 @@ model InternshipPosition {
   appliedForInstances InternshipInstance[] @relation("InternshipInstancesAppliedPositions")
   assignedToInstance  InternshipInstance[] @relation("InternshipInstanceAssignedPosition")
   internships         Internship[]
-  organisation        Organisation         @relation(fields: [organisationId], references: [id], onDelete: Restrict)
-  organisationId      String
+  organisation        Organisation?        @relation(fields: [organisationId], references: [id], onDelete: Restrict)
+  organisationId      String?
 
   description String
 }

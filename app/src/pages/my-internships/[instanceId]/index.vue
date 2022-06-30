@@ -72,6 +72,7 @@ useHead(({ t }) => ({
         >
           <UiCard>
             <img
+              v-if="position.organisation"
               class="bg-light-500"
               loading="lazy"
               :src="position.organisation.imageUrl"
@@ -82,7 +83,12 @@ useHead(({ t }) => ({
                   class="underline"
                   :to="`/my-internships/${instanceId}/available-positions/${position.id}`"
                 >
-                  {{ position.organisation.name }}
+                  {{
+                    position.organisation?.name ??
+                    $t('internships.internshipInstance.detail.heading', {
+                      courseName: internshipInstance.internship.course.name,
+                    })
+                  }}
                 </RouterLink>
               </UiTitle>
               <p>{{ position.summary }}</p>

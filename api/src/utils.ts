@@ -2,6 +2,11 @@ export function castArray<T>(value: T | T[]): T[] {
   return Array.isArray(value) ? value : [value];
 }
 
+export function chance(percentage = 50): boolean {
+  const MAX_CHANCE_PERCENTAGE = 100;
+  return random(MAX_CHANCE_PERCENTAGE) < percentage;
+}
+
 export function first<T>(array: T[]): T | undefined {
   const itemZero = array[0];
   return itemZero == null ? undefined : itemZero;

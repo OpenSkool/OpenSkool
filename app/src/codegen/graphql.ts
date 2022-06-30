@@ -174,10 +174,10 @@ export type InternshipPosition = Node & {
   description: Scalars['String'];
   id: Scalars['ID'];
   mentors: Array<Person>;
-  organisation: Organisation;
+  organisation?: Maybe<Organisation>;
   summary: Scalars['String'];
   urls: Array<Scalars['String']>;
-  workplace: Workplace;
+  workplace?: Maybe<Workplace>;
 };
 
 export type Jwt = {
@@ -968,12 +968,12 @@ export type InternshipInstancePositionDetailQueryQuery = {
       avatarUrl: string;
       name: string;
     }>;
-    organisation: {
+    organisation?: {
       __typename?: 'Organisation';
       imageUrl: string;
       name: string;
-    };
-    workplace: { __typename?: 'Workplace'; plainAddress: string };
+    } | null;
+    workplace?: { __typename?: 'Workplace'; plainAddress: string } | null;
   } | null;
 };
 
@@ -992,11 +992,11 @@ export type InternshipInstanceDetailQueryQuery = {
         __typename?: 'InternshipPosition';
         id: string;
         summary: string;
-        organisation: {
+        organisation?: {
           __typename?: 'Organisation';
           imageUrl: string;
           name: string;
-        };
+        } | null;
       }>;
     };
   } | null;

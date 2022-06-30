@@ -9,7 +9,7 @@ import { cacheFakeData } from '~/schema/helpers';
 import { Course } from '~/types/course';
 import { Education } from '~/types/education';
 import { generateFakePerson, Person } from '~/types/person';
-import { times } from '~/utils';
+import { chance, times } from '~/utils';
 
 import { Node } from './node';
 import { generateFakeWorkplace, Workplace } from './organisation';
@@ -203,7 +203,9 @@ export const InternshipPosition = builder.prismaObject('InternshipPosition', {
         );
       },
     }),
-    organisation: t.relation('organisation'),
+    organisation: t.relation('organisation', {
+      nullable: true,
+    }),
     summary: t.string({
       resolve(position) {
         const [summary] = position.description.split('\n', 2) as [
@@ -215,10 +217,11 @@ export const InternshipPosition = builder.prismaObject('InternshipPosition', {
     }),
     workplace: t.field({
       type: Workplace,
+      nullable: true,
       resolve(position) {
         return cacheFakeData(
           `internship-position-organisation-${position.organisationId}-workplace`,
-          generateFakeWorkplace,
+          () => (chance() ? generateFakeWorkplace() : undefined),
         );
       },
     }),

@@ -6,7 +6,7 @@ internshipInstance:
 
 internshipPosition:
   detail:
-    heading: Stage {courseName} bij {organisationName}
+    heading: Stage {courseName}
   error:
     notFound: Stagepositie niet gevonden.
   section:
