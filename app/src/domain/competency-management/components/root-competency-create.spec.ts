@@ -1,73 +1,34 @@
 import userEvent from '@testing-library/user-event';
-import { render, waitFor, screen } from '@testing-library/vue';
-import { DefaultApolloClient } from '@vue/apollo-composable';
-import { expect, MockedFunction, test, vi } from 'vitest';
-import { createI18n } from 'vue-i18n';
-import { useRouter } from 'vue-router';
+import { waitFor, screen } from '@testing-library/vue';
+import { expect, test, vi } from 'vitest';
 
-import { apolloClient } from '~/apollo';
-import { formkit } from '~/formkit';
+import { router } from '~/router';
+import { render } from '~/spec/render';
 
 import RootCompetencyCreate from './root-competency-create.vue';
 
-const mockUseRouter = useRouter as unknown as MockedFunction<typeof useRouter>;
-
-vi.mock('vue-router', () => ({
-  useRouter: vi.fn(() => ({
-    push: (): void => {
-      /**/
-    },
-  })),
-}));
-
 test('title is required', async () => {
-  const push = vi.fn();
-  mockUseRouter.mockImplementationOnce((): any => ({
-    push,
-  }));
+  render(RootCompetencyCreate);
   const user = userEvent.setup();
-  render(RootCompetencyCreate, {
-    global: {
-      plugins: [
-        createI18n({ legacy: false, fallbackWarn: false, missingWarn: false }),
-        formkit,
-      ],
-    },
-    props: {
-      frameworkId: 'cuid',
-    },
-  });
+
   const submitButton = screen.getByRole('button', { name: /submitButton/ });
   await user.click(submitButton);
+
   screen.getByText(/field.name is required./);
-  expect(push).not.toHaveBeenCalled();
 });
 
 test('create rootCompetency submit', async () => {
-  const push = vi.fn();
-  mockUseRouter.mockImplementationOnce((): any => ({ push }));
+  render(RootCompetencyCreate);
+  const spyRouterPush = vi.spyOn(router, 'push');
   const user = userEvent.setup();
-  render(RootCompetencyCreate, {
-    global: {
-      plugins: [
-        createI18n({ legacy: false, fallbackWarn: false, missingWarn: false }),
-        formkit,
-      ],
-      provide: { [DefaultApolloClient]: apolloClient },
-    },
-    props: {
-      competencyId: 'cuid',
-      frameworkId: 'cuid',
-    },
-  });
 
   const titleInput = screen.getByRole('textbox', { name: /field.name/ });
   await user.type(titleInput, 'Hello World!');
-
   const submitButton = screen.getByRole('button', { name: /submitButton/ });
   await user.click(submitButton);
 
   await waitFor(() => {
-    expect(push).toHaveBeenCalled();
+    expect(spyRouterPush).toHaveBeenCalled();
   });
+  spyRouterPush.mockRestore();
 });
