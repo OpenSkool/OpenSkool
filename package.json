@@ -25,7 +25,7 @@
     "cross-undici-fetch": "0.4.5",
     "get-tsconfig": "npm:@unts/get-tsconfig@latest"
   },
-  "packageManager": "yarn@3.2.0",
+  "packageManager": "yarn@3.2.1",
   "prettier": {
     "arrowParens": "always",
     "singleQuote": true,
