@@ -3,7 +3,7 @@ import { callbackify } from 'node:util';
 import cookiePlugin from '@fastify/cookie';
 import corsPlugin from '@fastify/cors';
 import sessionPlugin from '@fastify/session';
-import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
+import type { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
 import * as Boom from '@hapi/boom';
 import { Type } from '@sinclair/typebox';
 import type { FastifyPluginAsync } from 'fastify';
