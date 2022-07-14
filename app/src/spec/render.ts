@@ -1,6 +1,11 @@
-import { render as originalRender, RenderResult } from '@testing-library/vue';
+import {
+  render as originalRender,
+  type RenderOptions,
+  type RenderResult,
+} from '@testing-library/vue';
 import { DefaultApolloClient } from '@vue/apollo-composable';
 import { createHead } from '@vueuse/head';
+import type { Component } from 'vue';
 import { createI18n } from 'vue-i18n';
 
 import { AppAbility, casl } from '~/ability';
@@ -9,7 +14,10 @@ import { formkit } from '~/formkit';
 import { pinia } from '~/pinia';
 import { router } from '~/router';
 
-export function render(component: any): RenderResult {
+export function render(
+  component: Component,
+  options?: Pick<RenderOptions, 'props'>,
+): RenderResult {
   const ability = new AppAbility([{ action: 'manage', subject: 'all' }]);
   return originalRender(component, {
     global: {
@@ -27,6 +35,6 @@ export function render(component: any): RenderResult {
       ],
       provide: { [DefaultApolloClient]: apolloClient },
     },
-    props: { competencyId: 'cuid', frameworkId: 'ciud' },
+    ...options,
   });
 }

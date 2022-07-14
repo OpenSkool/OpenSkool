@@ -7,8 +7,13 @@ import { render } from '~/spec/render';
 
 import NestedCompetencyCreate from './nested-competency-create.vue';
 
+const props = {
+  competencyId: 'test-competency-id',
+  frameworkId: 'test-framework-id',
+};
+
 test('title is required', async () => {
-  render(NestedCompetencyCreate);
+  render(NestedCompetencyCreate, { props });
   const user = userEvent.setup();
 
   const submitButton = screen.getByRole('button', { name: /submitButton/ });
@@ -18,7 +23,7 @@ test('title is required', async () => {
 });
 
 test('create competency submit', async () => {
-  render(NestedCompetencyCreate);
+  render(NestedCompetencyCreate, { props });
   const spyRouterPush = vi.spyOn(router, 'push');
   const user = userEvent.setup();
 

@@ -7,8 +7,13 @@ import { render } from '~/spec/render';
 
 import CompetencyEdit from './competency-edit.vue';
 
+const props = {
+  competencyId: 'test-competency-id',
+  frameworkId: 'test-framework-id',
+};
+
 test('input field has prefilled value', async () => {
-  render(CompetencyEdit);
+  render(CompetencyEdit, { props });
 
   const titleInput: HTMLInputElement = await screen.findByRole('textbox', {
     name: /field.name/,
@@ -18,7 +23,7 @@ test('input field has prefilled value', async () => {
 });
 
 test('alert shows when empty field is submitted', async () => {
-  render(CompetencyEdit);
+  render(CompetencyEdit, { props });
   await router.isReady();
   const user = userEvent.setup();
 
@@ -31,7 +36,7 @@ test('alert shows when empty field is submitted', async () => {
 });
 
 test('form submission works', async () => {
-  render(CompetencyEdit);
+  render(CompetencyEdit, { props });
   await router.isReady();
   const spyRouterPush = vi.spyOn(router, 'push');
   const user = userEvent.setup();

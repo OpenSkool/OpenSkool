@@ -7,8 +7,12 @@ import { render } from '~/spec/render';
 
 import RootCompetencyCreate from './root-competency-create.vue';
 
+const props = {
+  frameworkId: 'test-framework-id',
+};
+
 test('title is required', async () => {
-  render(RootCompetencyCreate);
+  render(RootCompetencyCreate, { props });
   const user = userEvent.setup();
 
   const submitButton = screen.getByRole('button', { name: /submitButton/ });
@@ -18,7 +22,7 @@ test('title is required', async () => {
 });
 
 test('create rootCompetency submit', async () => {
-  render(RootCompetencyCreate);
+  render(RootCompetencyCreate, { props });
   const spyRouterPush = vi.spyOn(router, 'push');
   const user = userEvent.setup();
 
