@@ -50,7 +50,7 @@
     "@os/eslint-config": "workspace:*",
     "@testing-library/user-event": "14.2.0",
     "@testing-library/vue": "^6.6.0",
-    "@vitejs/plugin-vue": "^2.3.3",
+    "@vitejs/plugin-vue": "3.0.0",
     "autoprefixer": "^10.4.7",
     "c8": "^7.11.3",
     "eslint": "^8.17.0",
@@ -62,11 +62,11 @@
     "unplugin-auto-import": "0.8.8",
     "unplugin-icons": "0.14.4",
     "unplugin-vue-components": "0.19.6",
-    "vite": "^2.9.12",
+    "vite": "^3.0.0",
     "vite-plugin-graphql-codegen": "^1.7.0",
     "vite-plugin-pages": "0.24.1",
     "vite-plugin-windicss": "^1.8.4",
-    "vitest": "0.15.2",
+    "vitest": "0.18.0",
     "vue-tsc": "0.37.9"
   }
 }

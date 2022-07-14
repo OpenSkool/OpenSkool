@@ -1,7 +1,9 @@
 <script lang="ts" setup>
-import { i18nLoaderService } from '~/i18n';
+import { i18nLoaderService, LoaderMap } from '~/i18n';
 
-await i18nLoaderService.loadGlob(import.meta.glob('./locales/demo.*.yaml'));
+await i18nLoaderService.loadGlob(
+  import.meta.glob('./locales/demo.*.yaml') as LoaderMap,
+);
 
 interface Education {
   id: number;

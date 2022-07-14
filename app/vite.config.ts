@@ -80,6 +80,9 @@ export default defineConfig({
       '~/': `${path.resolve(__dirname, 'src')}/`,
     },
   },
+  server: {
+    port: 3000,
+  },
   test: {
     environment: 'jsdom',
     setupFiles: ['./src/spec/setup.ts'],

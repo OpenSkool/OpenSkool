@@ -1,7 +1,7 @@
 import { DEFAULT_LOCALE } from './constants';
 import { parseLocalesGlob } from './helpers';
 import { getLocaleString, mergeLocaleMessage } from './service';
-import { Loader } from './types';
+import { Loader, LoaderMap } from './types';
 
 const messageLoaders: {
   [namespace: string]: {
@@ -9,9 +9,7 @@ const messageLoaders: {
   };
 } = {};
 
-export async function loadGlob(
-  globLoaderMap: Record<string, Loader>,
-): Promise<void> {
+export async function loadGlob(globLoaderMap: LoaderMap): Promise<void> {
   const parsedGlobEntries = parseLocalesGlob(globLoaderMap);
   for (const { loader, locale, namespace } of parsedGlobEntries) {
     registerLoader(namespace, locale, loader);
@@ -20,7 +18,9 @@ export async function loadGlob(
 }
 
 export async function loadGlobalMessages(): Promise<void> {
-  await loadGlob(import.meta.glob('~/domain/global/locales/*.yaml'));
+  await loadGlob(
+    import.meta.glob('~/domain/global/locales/*.yaml') as LoaderMap,
+  );
 }
 
 async function loadNecessaryLocales(): Promise<void> {

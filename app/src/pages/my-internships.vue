@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { i18nLoaderService } from '~/i18n';
+import { i18nLoaderService, LoaderMap } from '~/i18n';
 
 await i18nLoaderService.loadGlob(
-  import.meta.glob('~/domain/internships/locales/*.yaml'),
+  import.meta.glob('~/domain/internships/locales/*.yaml') as LoaderMap,
 );
 </script>
 
