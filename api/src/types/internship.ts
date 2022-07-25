@@ -1,6 +1,6 @@
 import { subject } from '@casl/ability';
 import { faker } from '@faker-js/faker';
-import { InternshipPosition as InternshipPositionModel } from '@prisma/client';
+import * as Prisma from '@prisma/client';
 
 import { EducationService, UserService } from '~/domain';
 import { prisma } from '~/prisma';
@@ -13,32 +13,6 @@ import { chance, times } from '~/utils';
 
 import { Node } from './node';
 import { generateFakeWorkplace, Workplace } from './organisation';
-
-interface GraphConnection<T> {
-  edges: T[];
-}
-
-interface GraphEdge<T> {
-  node: T;
-}
-
-export const InternshipAppliedPositionConnection = builder.objectRef<
-  GraphConnection<InternshipAppliedPositionPriorityEdgeModel>
->('InternshipAppliedPositionConnection');
-
-export const InternshipAppliedPositionEdge = builder.interfaceRef<
-  GraphEdge<InternshipPositionModel>
->('InternshipAppliedPositionEdge');
-
-interface InternshipAppliedPositionPriorityEdgeModel
-  extends GraphEdge<InternshipPositionModel> {
-  priority: number;
-}
-
-export const InternshipAppliedPositionPriorityEdge =
-  builder.objectRef<InternshipAppliedPositionPriorityEdgeModel>(
-    'InternshipAppliedPositionPriorityEdge',
-  );
 
 export const Internship = builder.prismaObject('Internship', {
   description:
@@ -87,6 +61,9 @@ export const Internship = builder.prismaObject('Internship', {
   }),
 });
 
+const InternshipApplication =
+  builder.interfaceRef<Prisma.InternshipApplication>('InternshipApplication');
+
 const InternshipInstance = builder.prismaObject('InternshipInstance', {
   description:
     'An instance of an internship contains all information about the internship of 1 student. It is the link between 1 internship and 1 student.',
@@ -94,18 +71,11 @@ const InternshipInstance = builder.prismaObject('InternshipInstance', {
   fields: (t) => ({
     id: t.exposeID('id'),
     applications: t.field({
-      type: InternshipAppliedPositionConnection,
-      async resolve(instance) {
-        /* eslint-disable @typescript-eslint/no-magic-numbers */
-        const applications = await prisma.internshipInstance
+      type: [InternshipApplication],
+      resolve(instance) {
+        return prisma.internshipInstance
           .findUnique({ where: { id: instance.id } })
-          .applications({ include: { position: true } });
-        return {
-          edges: applications.map((application) => ({
-            node: application.position,
-            priority: faker.mersenne.rand(4, 1),
-          })),
-        };
+          .applications();
       },
     }),
     assigned: t.relation('assigned', { nullable: true }),
@@ -230,40 +200,45 @@ builder.queryField('internshipPosition', (t) =>
   }),
 );
 
-builder.objectType(InternshipAppliedPositionConnection, {
-  name: 'InternshipAppliedPositionConnection',
+builder.interfaceType(InternshipApplication, {
   fields: (t) => ({
-    edges: t.expose('edges', {
-      type: [InternshipAppliedPositionEdge],
+    instance: t.field({
+      type: InternshipInstance,
+      async resolve(application, arguments_, ctx) {
+        return prisma.internshipInstance.findUnique({
+          rejectOnNotFound: true,
+          where: { id: application.instanceId },
+        });
+      },
+    }),
+    position: t.field({
+      type: InternshipPosition,
+      resolve(application, arguments_, ctx) {
+        return prisma.internshipPosition.findUnique({
+          rejectOnNotFound: true,
+          where: { id: application.positionId },
+        });
+      },
     }),
   }),
 });
 
-builder.interfaceType(InternshipAppliedPositionEdge, {
-  name: 'InternshipAppliedPositionEdge',
-  fields: (t) => ({
-    node: t.expose('node', { type: InternshipPosition }),
-  }),
-});
+const InternshipPriorityApplication =
+  builder.objectRef<Prisma.InternshipApplication>(
+    'InternshipPriorityApplication',
+  );
 
-builder.objectType(InternshipAppliedPositionPriorityEdge, {
-  name: 'InternshipAppliedPositionPriorityEdge',
-  interfaces: [InternshipAppliedPositionEdge],
-  isTypeOf(internshipAppliedPositionEdge) {
-    return (
-      internshipAppliedPositionEdge != null &&
-      typeof internshipAppliedPositionEdge === 'object' &&
-      'priority' in internshipAppliedPositionEdge
-    );
-  },
+builder.objectType(InternshipPriorityApplication, {
+  interfaces: [InternshipApplication],
+  isTypeOf: () => true,
   fields: (t) => ({
-    priority: t.exposeInt('priority'),
+    priority: t.int({ resolve: () => faker.mersenne.rand(4, 1) }),
   }),
 });
 
 builder.mutationField('applyForPriorityInternshipPosition', (t) =>
   t.field({
-    type: InternshipAppliedPositionPriorityEdge,
+    type: InternshipApplication,
     args: {
       instanceId: t.arg.id(),
       positionId: t.arg.id(),

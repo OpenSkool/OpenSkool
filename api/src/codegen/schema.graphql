@@ -126,24 +126,16 @@ type Internship implements Node {
   urls: [String!]!
 }
 
-type InternshipAppliedPositionConnection {
-  edges: [InternshipAppliedPositionEdge!]!
-}
-
-interface InternshipAppliedPositionEdge {
-  node: InternshipPosition!
-}
-
-type InternshipAppliedPositionPriorityEdge implements InternshipAppliedPositionEdge {
-  node: InternshipPosition!
-  priority: Int!
+interface InternshipApplication {
+  instance: InternshipInstance!
+  position: InternshipPosition!
 }
 
 """
 An instance of an internship contains all information about the internship of 1 student. It is the link between 1 internship and 1 student.
 """
 type InternshipInstance implements Node {
-  applications: InternshipAppliedPositionConnection!
+  applications: [InternshipApplication!]!
   assigned: InternshipPosition
   id: ID!
   internship: Internship!
@@ -163,6 +155,12 @@ type InternshipPosition implements Node {
   summary: String!
   urls: [String!]!
   workplace: Workplace
+}
+
+type InternshipPriorityApplication implements InternshipApplication {
+  instance: InternshipInstance!
+  position: InternshipPosition!
+  priority: Int!
 }
 
 """
@@ -192,7 +190,7 @@ type Mutation {
     instanceId: ID!
     positionId: ID!
     priority: Int!
-  ): InternshipAppliedPositionPriorityEdge!
+  ): InternshipApplication!
   createCompetencyFramework(
     data: CreateCompetencyFrameworkInput!
   ): MutationCreateCompetencyFrameworkResult!

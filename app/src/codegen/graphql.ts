@@ -140,26 +140,15 @@ export type Internship = Node & {
   urls: Array<Scalars['String']>;
 };
 
-export type InternshipAppliedPositionConnection = {
-  __typename?: 'InternshipAppliedPositionConnection';
-  edges: Array<InternshipAppliedPositionEdge>;
+export type InternshipApplication = {
+  instance: InternshipInstance;
+  position: InternshipPosition;
 };
-
-export type InternshipAppliedPositionEdge = {
-  node: InternshipPosition;
-};
-
-export type InternshipAppliedPositionPriorityEdge =
-  InternshipAppliedPositionEdge & {
-    __typename?: 'InternshipAppliedPositionPriorityEdge';
-    node: InternshipPosition;
-    priority: Scalars['Int'];
-  };
 
 /** An instance of an internship contains all information about the internship of 1 student. It is the link between 1 internship and 1 student. */
 export type InternshipInstance = Node & {
   __typename?: 'InternshipInstance';
-  applications: InternshipAppliedPositionConnection;
+  applications: Array<InternshipApplication>;
   assigned?: Maybe<InternshipPosition>;
   id: Scalars['ID'];
   internship: Internship;
@@ -180,6 +169,13 @@ export type InternshipPosition = Node & {
   workplace?: Maybe<Workplace>;
 };
 
+export type InternshipPriorityApplication = InternshipApplication & {
+  __typename?: 'InternshipPriorityApplication';
+  instance: InternshipInstance;
+  position: InternshipPosition;
+  priority: Scalars['Int'];
+};
+
 export type Jwt = {
   __typename?: 'JWT';
   expiresAt: Scalars['DateTime'];
@@ -194,7 +190,7 @@ export type Jwt = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  applyForPriorityInternshipPosition: InternshipAppliedPositionPriorityEdge;
+  applyForPriorityInternshipPosition: InternshipApplication;
   createCompetencyFramework: MutationCreateCompetencyFrameworkResult;
   createEducation: MutationCreateEducationResult;
   createNestedCompetency: MutationCreateNestedCompetencyResult;
