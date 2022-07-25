@@ -143,8 +143,8 @@ type InternshipAppliedPositionPriorityEdge implements InternshipAppliedPositionE
 An instance of an internship contains all information about the internship of 1 student. It is the link between 1 internship and 1 student.
 """
 type InternshipInstance implements Node {
-  appliedPositions: InternshipAppliedPositionConnection!
-  assignedPosition: InternshipPosition
+  applications: InternshipAppliedPositionConnection!
+  assigned: InternshipPosition
   id: ID!
   internship: Internship!
   student: Person!

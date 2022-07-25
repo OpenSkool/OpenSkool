@@ -130,19 +130,28 @@ model Internship {
   title            String
 }
 
+model InternshipApplication {
+  instance   InternshipInstance @relation(fields: [instanceId], references: [id])
+  instanceId String
+  position   InternshipPosition @relation(fields: [positionId], references: [id])
+  positionId String
+
+  @@id([instanceId, positionId])
+}
+
 model InternshipInstance {
   id String @id @default(cuid())
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  appliedPositions   InternshipPosition[] @relation("InternshipInstancesAppliedPositions")
-  assignedPosition   InternshipPosition?  @relation("InternshipInstanceAssignedPosition", fields: [assignedPositionId], references: [id])
-  assignedPositionId String?              @unique
-  internship         Internship           @relation(fields: [internshipId], references: [id], onDelete: Restrict)
-  internshipId       String
-  student            User?                @relation("InternshipInstanceToStudent", fields: [studentId], references: [id])
-  studentId          String?
+  applications InternshipApplication[]
+  assigned     InternshipPosition?     @relation(fields: [assignedId], references: [id])
+  assignedId   String?                 @unique
+  internship   Internship              @relation(fields: [internshipId], references: [id], onDelete: Restrict)
+  internshipId String
+  student      User?                   @relation("InternshipInstanceToStudent", fields: [studentId], references: [id])
+  studentId    String?
 }
 
 model InternshipPosition {
@@ -151,11 +160,11 @@ model InternshipPosition {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  appliedForInstances InternshipInstance[] @relation("InternshipInstancesAppliedPositions")
-  assignedToInstance  InternshipInstance[] @relation("InternshipInstanceAssignedPosition")
-  internships         Internship[]
-  organisation        Organisation?        @relation(fields: [organisationId], references: [id], onDelete: Restrict)
-  organisationId      String?
+  applications   InternshipApplication[]
+  assignee       InternshipInstance?
+  internships    Internship[]
+  organisation   Organisation?           @relation(fields: [organisationId], references: [id], onDelete: Restrict)
+  organisationId String?
 
   description String
 }

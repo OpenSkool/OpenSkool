@@ -159,8 +159,8 @@ export type InternshipAppliedPositionPriorityEdge =
 /** An instance of an internship contains all information about the internship of 1 student. It is the link between 1 internship and 1 student. */
 export type InternshipInstance = Node & {
   __typename?: 'InternshipInstance';
-  appliedPositions: InternshipAppliedPositionConnection;
-  assignedPosition?: Maybe<InternshipPosition>;
+  applications: InternshipAppliedPositionConnection;
+  assigned?: Maybe<InternshipPosition>;
   id: Scalars['ID'];
   internship: Internship;
   student: Person;

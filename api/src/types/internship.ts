@@ -93,22 +93,22 @@ const InternshipInstance = builder.prismaObject('InternshipInstance', {
   interfaces: [Node],
   fields: (t) => ({
     id: t.exposeID('id'),
-    appliedPositions: t.field({
+    applications: t.field({
       type: InternshipAppliedPositionConnection,
       async resolve(instance) {
         /* eslint-disable @typescript-eslint/no-magic-numbers */
-        const positions = await prisma.internshipInstance
+        const applications = await prisma.internshipInstance
           .findUnique({ where: { id: instance.id } })
-          .appliedPositions();
+          .applications({ include: { position: true } });
         return {
-          edges: positions.map((position) => ({
-            node: position,
+          edges: applications.map((application) => ({
+            node: application.position,
             priority: faker.mersenne.rand(4, 1),
           })),
         };
       },
     }),
-    assignedPosition: t.relation('assignedPosition', { nullable: true }),
+    assigned: t.relation('assigned', { nullable: true }),
     internship: t.relation('internship'),
     student: t.field({
       type: Person,
