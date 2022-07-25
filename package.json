@@ -7,6 +7,8 @@
     "node": "16.15.0"
   },
   "scripts": {
+    "api": "yarn workspace @os/api",
+    "app": "yarn workspace @os/app",
     "build": "yarn turbo run build",
     "clean": "yarn turbo run clean",
     "codegen": "yarn turbo run codegen",
