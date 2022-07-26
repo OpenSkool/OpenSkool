@@ -227,14 +227,6 @@ builder.interfaceType(InternshipApplication, {
       },
     }),
   }),
-  resolveType(application) {
-    switch (application.variantType) {
-      case 'Priority':
-        return InternshipPriorityApplication;
-      default:
-        throw new Error('Unknown internship application type');
-    }
-  },
 });
 
 const priorityValidator = z.number().int().positive();
@@ -248,6 +240,16 @@ builder.objectType(InternshipPriorityApplication, {
       },
     }),
   }),
+  isTypeOf(source) {
+    try {
+      z.object({
+        variantType: z.literal(InternshipApplicationVariant.Priority),
+      }).parse(source);
+      return true;
+    } catch {
+      return false;
+    }
+  },
 });
 
 builder.mutationField('applyForPriorityInternshipPosition', (t) =>
