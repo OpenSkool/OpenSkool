@@ -136,7 +136,14 @@ model InternshipApplication {
   position   InternshipPosition @relation(fields: [positionId], references: [id])
   positionId String
 
+  variantType  InternshipApplicationVariant
+  variantValue Json
+
   @@id([instanceId, positionId])
+}
+
+enum InternshipApplicationVariant {
+  Priority
 }
 
 model InternshipInstance {

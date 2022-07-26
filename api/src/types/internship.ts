@@ -1,6 +1,7 @@
 import { subject } from '@casl/ability';
 import { faker } from '@faker-js/faker';
 import * as Prisma from '@prisma/client';
+import { z } from 'zod';
 
 import { EducationService, UserService } from '~/domain';
 import { prisma } from '~/prisma';
@@ -63,6 +64,11 @@ export const Internship = builder.prismaObject('Internship', {
 
 const InternshipApplication =
   builder.interfaceRef<Prisma.InternshipApplication>('InternshipApplication');
+
+const InternshipPriorityApplication =
+  builder.objectRef<Prisma.InternshipApplication>(
+    'InternshipPriorityApplication',
+  );
 
 const InternshipInstance = builder.prismaObject('InternshipInstance', {
   description:
@@ -221,18 +227,26 @@ builder.interfaceType(InternshipApplication, {
       },
     }),
   }),
+  resolveType(application) {
+    switch (application.variantType) {
+      case 'Priority':
+        return InternshipPriorityApplication;
+      default:
+        throw new Error('Unknown internship application type');
+    }
+  },
 });
 
-const InternshipPriorityApplication =
-  builder.objectRef<Prisma.InternshipApplication>(
-    'InternshipPriorityApplication',
-  );
+const priorityValidator = z.number().int().positive();
 
 builder.objectType(InternshipPriorityApplication, {
   interfaces: [InternshipApplication],
-  isTypeOf: () => true,
   fields: (t) => ({
-    priority: t.int({ resolve: () => faker.mersenne.rand(4, 1) }),
+    priority: t.int({
+      resolve: (application) => {
+        return priorityValidator.parse(application.variantValue);
+      },
+    }),
   }),
 });
 
@@ -244,8 +258,15 @@ builder.mutationField('applyForPriorityInternshipPosition', (t) =>
       positionId: t.arg.id(),
       priority: t.arg.int(),
     },
-    resolve() {
-      throw new Error('TODO mutate apply for intern position');
+    async resolve(root, argumentz) {
+      return prisma.internshipApplication.create({
+        data: {
+          variantType: 'Priority',
+          variantValue: argumentz.priority,
+          instanceId: argumentz.instanceId,
+          positionId: argumentz.positionId,
+        },
+      });
     },
   }),
 );
