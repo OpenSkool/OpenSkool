@@ -1,3 +1,16 @@
+internshipApplication:
+  appliedCard:
+    description: Je hebt je kandidaat gesteld voor deze stageplaats.
+  applyCard:
+    action:
+      submit: Stel je kandidaat
+    heading: Available
+    description: Deze stageplaats is beschikbaar.
+  field:
+    priority:
+      label: Prioriteit
+      placeholder: Selecteer een prioriteit
+
 internshipInstance:
   detail:
     heading: Stage {courseName}

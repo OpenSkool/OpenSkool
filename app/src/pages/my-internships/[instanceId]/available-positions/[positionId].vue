@@ -158,7 +158,7 @@ const internshipPosition = computed(() => result.value?.internshipPosition);
     </UiCard>
     <template v-if="!loading">
       <UiNotification v-if="internshipInstance.appliedForPosition" color="info">
-        <p>You have applied for this position.</p>
+        <p v-t="'internships.internshipApplication.appliedCard.description'" />
       </UiNotification>
       <PositionApplyCard
         v-else

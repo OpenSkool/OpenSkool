@@ -1,3 +1,16 @@
+internshipApplication:
+  appliedCard:
+    description: You have applied for this internship position.
+  applyCard:
+    action:
+      submit: Apply for position
+    heading: Available
+    description: This internship position is available.
+  field:
+    priority:
+      label: Priority
+      placeholder: Select a priority
+
 internshipInstance:
   detail:
     heading: Internship {courseName}

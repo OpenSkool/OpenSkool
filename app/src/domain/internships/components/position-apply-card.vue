@@ -47,16 +47,21 @@ async function handleFormSubmit(): Promise<void> {
 <template>
   <UiNotification color="info" heading="Available">
     <div class="grid gap-3 md:grid-cols-2">
-      <p>This internship is available.</p>
+      <p v-t="'internships.internshipApplication.applyCard.description'" />
       <FormKit
         v-model="formValues"
         :disabled="loading"
         type="form"
+        :submit-label="
+          $t('internships.internshipApplication.applyCard.action.submit')
+        "
         @submit="handleFormSubmit"
       >
         <FormKit
-          label="Priority"
-          placeholder="Select a priority"
+          :label="$t('internships.internshipApplication.field.priority.label')"
+          :placeholder="
+            $t('internships.internshipApplication.field.priority.placeholder')
+          "
           name="priority"
           :options="priorityOptions"
           type="select"
