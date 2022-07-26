@@ -16,20 +16,11 @@ gql`
   ) {
     internshipInstance(id: $instanceId) {
       internship {
-        coordinator {
-          avatarUrl
-          name
-        }
         course {
           name
         }
         dateFrom
         dateTo
-      }
-      supervisors {
-        id
-        avatarUrl
-        name
       }
     }
     internshipPosition(id: $positionId) {

@@ -944,15 +944,8 @@ export type InternshipInstancePositionDetailQueryQuery = {
       __typename?: 'Internship';
       dateFrom: any;
       dateTo: any;
-      coordinator: { __typename?: 'Person'; avatarUrl: string; name: string };
       course: { __typename?: 'Course'; name: string };
     };
-    supervisors: Array<{
-      __typename?: 'Person';
-      id: string;
-      avatarUrl: string;
-      name: string;
-    }>;
   } | null;
   internshipPosition?: {
     __typename?: 'InternshipPosition';
@@ -2657,23 +2650,6 @@ export const InternshipInstancePositionDetailQueryDocument = {
                     selections: [
                       {
                         kind: 'Field',
-                        name: { kind: 'Name', value: 'coordinator' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'avatarUrl' },
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'name' },
-                            },
-                          ],
-                        },
-                      },
-                      {
-                        kind: 'Field',
                         name: { kind: 'Name', value: 'course' },
                         selectionSet: {
                           kind: 'SelectionSet',
@@ -2693,21 +2669,6 @@ export const InternshipInstancePositionDetailQueryDocument = {
                         kind: 'Field',
                         name: { kind: 'Name', value: 'dateTo' },
                       },
-                    ],
-                  },
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'supervisors' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'avatarUrl' },
-                      },
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
                     ],
                   },
                 },
