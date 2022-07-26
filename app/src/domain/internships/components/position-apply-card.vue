@@ -46,7 +46,7 @@ async function handleFormSubmit(): Promise<void> {
 
 <template>
   <UiNotification color="info" heading="Available">
-    <div class="grid gap-3">
+    <div class="grid gap-3 md:grid-cols-2">
       <p>This internship is available.</p>
       <FormKit
         v-model="formValues"
@@ -66,9 +66,3 @@ async function handleFormSubmit(): Promise<void> {
     </div>
   </UiNotification>
 </template>
-
-<style scoped>
-.grid {
-  grid-template-columns: 1fr 1fr;
-}
-</style>
