@@ -6,10 +6,14 @@ const props = defineProps<{
 }>();
 
 const selectedLabel = computed(() => {
+  const placeholder =
+    typeof props.context.attrs.placeholder === 'string'
+      ? props.context.attrs.placeholder
+      : undefined;
   const selectedOption = props.context.options?.find(
     (option) => option.value === props.context._value,
   );
-  return selectedOption?.label;
+  return selectedOption?.label ?? placeholder;
 });
 
 function handleUpdate(changedValue: unknown): void {
