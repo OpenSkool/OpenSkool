@@ -5,12 +5,12 @@ const props = defineProps<{
   context: FormKitFrameworkContext;
 }>();
 
-const selectedLabel = computed(
-  () =>
-    props.context.options?.find(
-      (option) => option.value === props.context._value,
-    )?.label,
-);
+const selectedLabel = computed(() => {
+  const selectedOption = props.context.options?.find(
+    (option) => option.value === props.context._value,
+  );
+  return selectedOption?.label;
+});
 
 function handleUpdate(changedValue: unknown): void {
   props.context.node.input(changedValue);
