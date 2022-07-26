@@ -211,8 +211,7 @@ builder.interfaceType(InternshipApplication, {
     instance: t.field({
       type: InternshipInstance,
       async resolve(application, arguments_, ctx) {
-        return prisma.internshipInstance.findUnique({
-          rejectOnNotFound: true,
+        return prisma.internshipInstance.findUniqueOrThrow({
           where: { id: application.instanceId },
         });
       },
@@ -220,8 +219,7 @@ builder.interfaceType(InternshipApplication, {
     position: t.field({
       type: InternshipPosition,
       resolve(application, arguments_, ctx) {
-        return prisma.internshipPosition.findUnique({
-          rejectOnNotFound: true,
+        return prisma.internshipPosition.findUniqueOrThrow({
           where: { id: application.positionId },
         });
       },
