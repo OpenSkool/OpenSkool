@@ -44,7 +44,7 @@ const { menuState, toggleMenu } = useMenuState();
       :class="{ 'col-span-2': menuState.overlay || !menuState.opened }"
     >
       <main class="mx-auto p-10 lg:container">
-        <UiAlert
+        <UiNotification
           v-if="globalStore.hasGlobalError"
           class="mb-5"
           color="danger"
@@ -52,7 +52,7 @@ const { menuState, toggleMenu } = useMenuState();
           heading="Something went wrong"
         >
           <p v-t="'global.layout.root.globalError'" />
-        </UiAlert>
+        </UiNotification>
         <Suspense>
           <RouterView />
         </Suspense>

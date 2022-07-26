@@ -45,7 +45,7 @@ async function handleFormSubmit(): Promise<void> {
 </script>
 
 <template>
-  <UiAlert color="info" heading="Available">
+  <UiNotification color="info" heading="Available">
     <div class="grid gap-3">
       <p>This internship is available.</p>
       <FormKit
@@ -64,7 +64,7 @@ async function handleFormSubmit(): Promise<void> {
         />
       </FormKit>
     </div>
-  </UiAlert>
+  </UiNotification>
 </template>
 
 <style scoped>

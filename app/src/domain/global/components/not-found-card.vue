@@ -1,5 +1,5 @@
 <template>
-  <UiAlert color="caution" :heading="$t('global.notFound.heading')">
+  <UiNotification color="caution" :heading="$t('global.notFound.heading')">
     <slot />
-  </UiAlert>
+  </UiNotification>
 </template>

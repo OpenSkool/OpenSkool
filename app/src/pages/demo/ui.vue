@@ -23,42 +23,42 @@ const inputText = ref<string>('');
     <div class="">
       <UiTitle is="h2" class="text-xl">Alert</UiTitle>
       <div class="space-y-3">
-        <UiAlert heading="Default alert">
+        <UiNotification heading="Default alert">
           <p>
             This is a default alert with some content and
             <a href="#" class="alert-link">a link</a>.
           </p>
-        </UiAlert>
-        <UiAlert color="primary" heading="Primary alert">
+        </UiNotification>
+        <UiNotification color="primary" heading="Primary alert">
           <p>
             This is a primary alert with some content and
             <a href="#" class="alert-link">a link</a>.
           </p>
-        </UiAlert>
-        <UiAlert color="caution" heading="Caution alert">
+        </UiNotification>
+        <UiNotification color="caution" heading="Caution alert">
           <p>
             This is a caution alert with some content and
             <a href="#" class="alert-link">a link</a>.
           </p>
-        </UiAlert>
-        <UiAlert color="danger" heading="Danger alert">
+        </UiNotification>
+        <UiNotification color="danger" heading="Danger alert">
           <p>
             This is a danger alert with some content and
             <a href="#" class="alert-link">a link</a>.
           </p>
-        </UiAlert>
-        <UiAlert color="info" heading="Info alert">
+        </UiNotification>
+        <UiNotification color="info" heading="Info alert">
           <p>
             This is an info alert with some content and
             <a href="#" class="alert-link">a link</a>.
           </p>
-        </UiAlert>
-        <UiAlert color="success" heading="Success alert">
+        </UiNotification>
+        <UiNotification color="success" heading="Success alert">
           <p>
             This is a success alert with some content and
             <a href="#" class="alert-link">a link</a>.
           </p>
-        </UiAlert>
+        </UiNotification>
       </div>
     </div>
     <div>
