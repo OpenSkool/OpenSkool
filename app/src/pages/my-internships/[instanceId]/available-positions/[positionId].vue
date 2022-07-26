@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { InternshipInstancePositionDetailQueryDocument } from '~/codegen/graphql';
 import { NotFoundLayout, useGlobalStore } from '~/domain/global';
+import { PositionApplyCard } from '~/domain/internships';
 
 const props = defineProps<{
   instanceId: string; // route param
@@ -15,6 +16,7 @@ gql`
     $positionId: ID!
   ) {
     internshipInstance(id: $instanceId) {
+      appliedForPosition(id: $positionId)
       internship {
         course {
           name
@@ -42,7 +44,7 @@ gql`
   }
 `;
 
-const { loading, onError, result } = useQuery(
+const { loading, onError, refetch, result } = useQuery(
   InternshipInstancePositionDetailQueryDocument,
   () => props,
   { fetchPolicy: 'cache-first' },
@@ -161,6 +163,15 @@ const internshipPosition = computed(() => result.value?.internshipPosition);
           </li>
         </ul>
       </UiCard>
+      <UiAlert v-if="internshipInstance.appliedForPosition" color="info">
+        <p>You have applied for this position.</p>
+      </UiAlert>
+      <PositionApplyCard
+        v-else
+        :instance-id="instanceId"
+        :position-id="positionId"
+        @applied="refetch()"
+      />
     </article>
   </template>
 </template>

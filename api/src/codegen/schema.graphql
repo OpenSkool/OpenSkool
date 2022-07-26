@@ -136,6 +136,7 @@ An instance of an internship contains all information about the internship of 1 
 """
 type InternshipInstance implements Node {
   applications: [InternshipApplication!]!
+  appliedForPosition(id: ID!): Boolean!
   assigned: InternshipPosition
   id: ID!
   internship: Internship!

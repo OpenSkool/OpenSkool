@@ -149,12 +149,18 @@ export type InternshipApplication = {
 export type InternshipInstance = Node & {
   __typename?: 'InternshipInstance';
   applications: Array<InternshipApplication>;
+  appliedForPosition: Scalars['Boolean'];
   assigned?: Maybe<InternshipPosition>;
   id: Scalars['ID'];
   internship: Internship;
   student: Person;
   supervisors: Array<Person>;
   urls: Array<Scalars['String']>;
+};
+
+/** An instance of an internship contains all information about the internship of 1 student. It is the link between 1 internship and 1 student. */
+export type InternshipInstanceAppliedForPositionArgs = {
+  id: Scalars['ID'];
 };
 
 /** An internship position is one specific position within an organisation to execute an internship. When an organisation can host multiple students for a similar positions, there as many internship positions as there are possible hosted students. */
@@ -742,6 +748,19 @@ export type MainMenuQuery = {
   }>;
 };
 
+export type ApplyForInternshipMutationMutationVariables = Exact<{
+  instanceId: Scalars['ID'];
+  positionId: Scalars['ID'];
+  priority: Scalars['Int'];
+}>;
+
+export type ApplyForInternshipMutationMutation = {
+  __typename?: 'Mutation';
+  applyForPriorityInternshipPosition: {
+    __typename: 'InternshipPriorityApplication';
+  };
+};
+
 type BaseErrorFields_InputError_Fragment = {
   __typename?: 'InputError';
   code: string;
@@ -940,6 +959,7 @@ export type InternshipInstancePositionDetailQueryQuery = {
   __typename?: 'Query';
   internshipInstance?: {
     __typename?: 'InternshipInstance';
+    appliedForPosition: boolean;
     internship: {
       __typename?: 'Internship';
       dateFrom: any;
@@ -1942,6 +1962,95 @@ export const MainMenuDocument = {
     },
   ],
 } as unknown as DocumentNode<MainMenuQuery, MainMenuQueryVariables>;
+export const ApplyForInternshipMutationDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'ApplyForInternshipMutation' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'instanceId' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'positionId' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'priority' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'applyForPriorityInternshipPosition' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'instanceId' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'instanceId' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'positionId' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'positionId' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'priority' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'priority' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  ApplyForInternshipMutationMutation,
+  ApplyForInternshipMutationMutationVariables
+>;
 export const ManageCompetencyCreateNestedCompetencyRouteDocument = {
   kind: 'Document',
   definitions: [
@@ -2642,6 +2751,20 @@ export const InternshipInstancePositionDetailQueryDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'appliedForPosition' },
+                  arguments: [
+                    {
+                      kind: 'Argument',
+                      name: { kind: 'Name', value: 'id' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'positionId' },
+                      },
+                    },
+                  ],
+                },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'internship' },

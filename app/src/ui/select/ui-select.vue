@@ -2,7 +2,7 @@
 defineProps<{
   disabled?: boolean;
   modelValue?: number | object | string;
-  selectedLabel?: string;
+  selectedLabel?: number | string;
 }>();
 
 defineEmits<

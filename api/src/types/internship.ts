@@ -1,6 +1,7 @@
 import { subject } from '@casl/ability';
 import { faker } from '@faker-js/faker';
 import * as Prisma from '@prisma/client';
+import { InternshipApplicationVariant } from '@prisma/client';
 import { z } from 'zod';
 
 import { EducationService, UserService } from '~/domain';
@@ -82,6 +83,19 @@ const InternshipInstance = builder.prismaObject('InternshipInstance', {
         return prisma.internshipInstance
           .findUnique({ where: { id: instance.id } })
           .applications();
+      },
+    }),
+    appliedForPosition: t.boolean({
+      args: {
+        id: t.arg.id(),
+      },
+      async resolve(instance, { id }) {
+        const application = await prisma.internshipApplication.findUnique({
+          where: {
+            instanceId_positionId: { instanceId: instance.id, positionId: id },
+          },
+        });
+        return application != null;
       },
     }),
     assigned: t.relation('assigned', { nullable: true }),
