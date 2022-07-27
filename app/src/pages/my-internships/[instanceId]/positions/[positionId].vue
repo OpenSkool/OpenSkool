@@ -16,8 +16,10 @@ gql`
     $positionId: ID!
   ) {
     internshipInstance(id: $instanceId) {
+      id
       appliedForPosition(id: $positionId)
       internship {
+        id
         course {
           name
         }

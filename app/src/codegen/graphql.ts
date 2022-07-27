@@ -958,8 +958,10 @@ export type InternshipInstanceDetailQueryQuery = {
   __typename?: 'Query';
   internshipInstance?: {
     __typename?: 'InternshipInstance';
+    id: string;
     internship: {
       __typename?: 'Internship';
+      id: string;
       course: { __typename?: 'Course'; name: string };
       availablePositions: Array<{
         __typename?: 'InternshipPosition';
@@ -984,9 +986,11 @@ export type InternshipInstancePositionDetailQueryQuery = {
   __typename?: 'Query';
   internshipInstance?: {
     __typename?: 'InternshipInstance';
+    id: string;
     appliedForPosition: boolean;
     internship: {
       __typename?: 'Internship';
+      id: string;
       dateFrom: any;
       dateTo: any;
       course: { __typename?: 'Course'; name: string };
@@ -2737,12 +2741,14 @@ export const InternshipInstanceDetailQueryDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'internship' },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                       {
                         kind: 'Field',
                         name: { kind: 'Name', value: 'course' },
@@ -2854,6 +2860,7 @@ export const InternshipInstancePositionDetailQueryDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'appliedForPosition' },
@@ -2874,6 +2881,7 @@ export const InternshipInstancePositionDetailQueryDocument = {
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                       {
                         kind: 'Field',
                         name: { kind: 'Name', value: 'course' },

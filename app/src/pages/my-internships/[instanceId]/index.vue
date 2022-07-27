@@ -12,7 +12,9 @@ const globalStore = useGlobalStore();
 gql`
   query InternshipInstanceDetailQuery($id: ID!) {
     internshipInstance(id: $id) {
+      id
       internship {
+        id
         course {
           name
         }
