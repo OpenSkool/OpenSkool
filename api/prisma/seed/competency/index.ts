@@ -2,11 +2,16 @@ import { faker } from '@faker-js/faker';
 import { CompetencyFramework, PrismaClient } from '@prisma/client';
 
 import { canMedsCompetencies } from './canmeds';
+import { basisCompetentiesLeerkracht } from './leerkracht';
 import { CompetencyFixture } from './types';
 
 export async function seedCompetencies(prisma: PrismaClient): Promise<void> {
   const user = faker.helpers.arrayElement(await prisma.user.findMany());
 
+  await createCompetencyFramework(
+    'Basiscompetenties leerkracht',
+    basisCompetentiesLeerkracht,
+  );
   await createCompetencyFramework('CanMEDS 2015', canMedsCompetencies);
 
   async function createCompetencyFramework(
@@ -22,7 +27,7 @@ export async function seedCompetencies(prisma: PrismaClient): Promise<void> {
           createdById: user.id,
           updatedById: user.id,
           translations: {
-            create: { languageCode: 'EN', title: 'CanMEDS 2015' },
+            create: { languageCode: 'EN', title },
           },
         },
       });
