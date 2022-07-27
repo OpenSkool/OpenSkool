@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { InternshipInstancePositionDetailQueryDocument } from '~/codegen/graphql';
 import { NotFoundLayout, useGlobalStore } from '~/domain/global';
-import { PositionApplyCard } from '~/domain/internships';
+import { InternshipPositionApplyCard } from '~/domain/internships';
 
 const props = defineProps<{
   instanceId: string; // route param
@@ -160,7 +160,7 @@ const internshipPosition = computed(() => result.value?.internshipPosition);
       <UiNotification v-if="internshipInstance.appliedForPosition" color="info">
         <p v-t="'internships.internshipApplication.appliedCard.description'" />
       </UiNotification>
-      <PositionApplyCard
+      <InternshipPositionApplyCard
         v-else
         :instance-id="instanceId"
         :position-id="positionId"

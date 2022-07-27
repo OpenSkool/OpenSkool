@@ -1,1 +1,1 @@
-export { default as PositionApplyCard } from './components/position-apply-card.vue';
+export { default as InternshipPositionApplyCard } from './components/position-apply-card.vue';

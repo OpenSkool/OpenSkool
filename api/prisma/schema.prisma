@@ -152,13 +152,13 @@ model InternshipInstance {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  applications InternshipApplication[]
-  assigned     InternshipPosition?     @relation(fields: [assignedId], references: [id])
-  assignedId   String?                 @unique
-  internship   Internship              @relation(fields: [internshipId], references: [id], onDelete: Restrict)
-  internshipId String
-  student      User?                   @relation("InternshipInstanceToStudent", fields: [studentId], references: [id])
-  studentId    String?
+  applications       InternshipApplication[]
+  assignedPosition   InternshipPosition?     @relation(fields: [assignedPositionId], references: [id])
+  assignedPositionId String?                 @unique
+  internship         Internship              @relation(fields: [internshipId], references: [id], onDelete: Restrict)
+  internshipId       String
+  student            User?                   @relation("InternshipInstanceToStudent", fields: [studentId], references: [id])
+  studentId          String?
 }
 
 model InternshipPosition {
@@ -167,11 +167,11 @@ model InternshipPosition {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  applications   InternshipApplication[]
-  assignee       InternshipInstance?
-  internships    Internship[]
-  organisation   Organisation?           @relation(fields: [organisationId], references: [id], onDelete: Restrict)
-  organisationId String?
+  applications     InternshipApplication[]
+  assignedInstance InternshipInstance?
+  internships      Internship[]
+  organisation     Organisation?           @relation(fields: [organisationId], references: [id], onDelete: Restrict)
+  organisationId   String?
 
   description String
 }

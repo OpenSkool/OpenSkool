@@ -150,7 +150,7 @@ export type InternshipInstance = Node & {
   __typename?: 'InternshipInstance';
   applications: Array<InternshipApplication>;
   appliedForPosition: Scalars['Boolean'];
-  assigned?: Maybe<InternshipPosition>;
+  assignedPosition?: Maybe<InternshipPosition>;
   id: Scalars['ID'];
   internship: Internship;
   student: Person;
