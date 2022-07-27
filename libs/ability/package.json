@@ -19,7 +19,7 @@
   ],
   "dependencies": {
     "@casl/ability": "^6.0.0",
-    "@prisma/client": "^4.0.0"
+    "@prisma/client": "^4.1.0"
   },
   "devDependencies": {
     "@types/eslint": "^8.4.5",
