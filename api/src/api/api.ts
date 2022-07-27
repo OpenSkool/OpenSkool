@@ -1,12 +1,12 @@
-import { callbackify } from 'node:util';
-
 import cookiePlugin from '@fastify/cookie';
 import corsPlugin from '@fastify/cors';
 import sessionPlugin from '@fastify/session';
 import type { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
 import * as Boom from '@hapi/boom';
 import { Type } from '@sinclair/typebox';
+import connectRedis from 'connect-redis';
 import type { FastifyPluginAsync } from 'fastify';
+import Redis from 'ioredis';
 import ms from 'ms';
 
 import { prismaPlugin } from '~/plugins/prisma';
@@ -15,11 +15,15 @@ import { authPlugin } from './auth';
 import { graphqlRoutes } from './graphql';
 import { healthPlugin } from './health';
 import { openIdPlugin } from './openid';
-import * as sessionStore from './session-store';
 
 const HTTP_NO_CONTENT = 204;
 
 const apiPlugin: FastifyPluginAsync = async (app) => {
+  // `connect-redis` is compatible with `@fastify/session`, but the types are not.
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+  const RedisStore = connectRedis(sessionPlugin as any);
+  const redisClient = new Redis();
+
   app
     .register(corsPlugin, { credentials: true, origin: true })
     .register(prismaPlugin)
@@ -34,11 +38,11 @@ const apiPlugin: FastifyPluginAsync = async (app) => {
         secure: !app.config.SESSION_ALLOW_INSECURE,
       },
       secret: app.config.SESSION_SECRET,
-      store: {
-        destroy: callbackify(sessionStore.destroy),
-        get: callbackify(sessionStore.get),
-        set: callbackify(sessionStore.set),
-      },
+      store: app.config.SESSION_STORE
+        ? (new RedisStore({
+            client: redisClient,
+          }) as unknown as sessionPlugin.SessionStore) // `connect-redis` is compatible with `@fastify/session`, but the types are not.
+        : undefined,
     })
     .register(healthPlugin)
     .register(openIdPlugin, { prefix: '/openid' })

@@ -1,4 +1,13 @@
 services:
+  api-cache:
+    container_name: os-api-cache
+    image: redis:7
+    networks:
+      - openskool
+    ports:
+      - 6379:6379
+    restart: unless-stopped
+
   api-db:
     container_name: os-api-db
     environment:
