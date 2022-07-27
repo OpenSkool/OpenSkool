@@ -153,6 +153,7 @@ export type InternshipInstance = Node & {
   assignedPosition?: Maybe<InternshipPosition>;
   id: Scalars['ID'];
   internship: Internship;
+  isPositionAssigned: Scalars['Boolean'];
   student: Person;
   supervisors: Array<Person>;
   urls: Array<Scalars['String']>;
@@ -761,6 +762,31 @@ export type ApplyForInternshipMutationMutation = {
   };
 };
 
+export type InternshipPositionListQueryQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type InternshipPositionListQueryQuery = {
+  __typename?: 'Query';
+  internshipInstance?: {
+    __typename?: 'InternshipInstance';
+    internship: {
+      __typename?: 'Internship';
+      course: { __typename?: 'Course'; name: string };
+      availablePositions: Array<{
+        __typename?: 'InternshipPosition';
+        id: string;
+        summary: string;
+        organisation?: {
+          __typename?: 'Organisation';
+          imageUrl: string;
+          name: string;
+        } | null;
+      }>;
+    };
+  } | null;
+};
+
 type BaseErrorFields_InputError_Fragment = {
   __typename?: 'InputError';
   code: string;
@@ -950,29 +976,20 @@ export type ManageCompetencyFrameworkDetailRouteQuery = {
     | null;
 };
 
-export type InternshipInstanceDetailQueryQueryVariables = Exact<{
+export type MyInternshipRouteQueryQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-export type InternshipInstanceDetailQueryQuery = {
+export type MyInternshipRouteQueryQuery = {
   __typename?: 'Query';
   internshipInstance?: {
     __typename?: 'InternshipInstance';
     id: string;
+    isPositionAssigned: boolean;
     internship: {
       __typename?: 'Internship';
       id: string;
       course: { __typename?: 'Course'; name: string };
-      availablePositions: Array<{
-        __typename?: 'InternshipPosition';
-        id: string;
-        summary: string;
-        organisation?: {
-          __typename?: 'Organisation';
-          imageUrl: string;
-          name: string;
-        } | null;
-      }>;
     };
   } | null;
 };
@@ -2055,6 +2072,109 @@ export const ApplyForInternshipMutationDocument = {
   ApplyForInternshipMutationMutation,
   ApplyForInternshipMutationMutationVariables
 >;
+export const InternshipPositionListQueryDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'InternshipPositionListQuery' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'internshipInstance' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'id' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'internship' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'course' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'name' },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'availablePositions' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' },
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'summary' },
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'organisation' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'imageUrl' },
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'name' },
+                                  },
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  InternshipPositionListQueryQuery,
+  InternshipPositionListQueryQueryVariables
+>;
 export const ManageCompetencyCreateNestedCompetencyRouteDocument = {
   kind: 'Document',
   definitions: [
@@ -2705,13 +2825,13 @@ export const ManageCompetencyFrameworkDetailRouteDocument = {
   ManageCompetencyFrameworkDetailRouteQuery,
   ManageCompetencyFrameworkDetailRouteQueryVariables
 >;
-export const InternshipInstanceDetailQueryDocument = {
+export const MyInternshipRouteQueryDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'query',
-      name: { kind: 'Name', value: 'InternshipInstanceDetailQuery' },
+      name: { kind: 'Name', value: 'MyInternshipRouteQuery' },
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
@@ -2762,42 +2882,12 @@ export const InternshipInstanceDetailQueryDocument = {
                           ],
                         },
                       },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'availablePositions' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' },
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'summary' },
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'organisation' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'imageUrl' },
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'name' },
-                                  },
-                                ],
-                              },
-                            },
-                          ],
-                        },
-                      },
                     ],
                   },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'isPositionAssigned' },
                 },
               ],
             },
@@ -2807,8 +2897,8 @@ export const InternshipInstanceDetailQueryDocument = {
     },
   ],
 } as unknown as DocumentNode<
-  InternshipInstanceDetailQueryQuery,
-  InternshipInstanceDetailQueryQueryVariables
+  MyInternshipRouteQueryQuery,
+  MyInternshipRouteQueryQueryVariables
 >;
 export const InternshipInstancePositionDetailQueryDocument = {
   kind: 'Document',

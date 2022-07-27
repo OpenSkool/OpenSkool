@@ -100,6 +100,11 @@ const InternshipInstance = builder.prismaObject('InternshipInstance', {
     }),
     assignedPosition: t.relation('assignedPosition', { nullable: true }),
     internship: t.relation('internship'),
+    isPositionAssigned: t.boolean({
+      resolve(instance) {
+        return instance.assignedPositionId != null;
+      },
+    }),
     student: t.field({
       type: Person,
       resolve(instance) {

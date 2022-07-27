@@ -12,6 +12,8 @@ import { router } from './router';
 import 'the-new-css-reset/css/reset.css';
 import 'virtual:windi.css';
 
+import './global.css';
+
 (async (): Promise<void> => {
   const auth = await initAuth();
   await i18nService.initI18n();

@@ -25,10 +25,6 @@ const { locale } = useI18n();
 </template>
 
 <style>
-html,
-body {
-  min-height: 100vh;
-}
 body {
   @apply font-sans bg-stone-100 text-base antialiased;
 }

@@ -77,6 +77,7 @@ declare module '@vue/runtime-core' {
     UiRemixIcon: typeof import('./../ui/icons/ui-remix-icon.vue')['default']
     UiSelect: typeof import('./../ui/select/ui-select.vue')['default']
     UiSelectOption: typeof import('./../ui/select/ui-select-option.vue')['default']
+    UiStepsGroup: typeof import('./../ui/steps/ui-steps-group.vue')['default']
     UiSubtitle: typeof import('./../ui/title/ui-subtitle.vue')['default']
     UiSwitch: typeof import('./../ui/switch/ui-switch.vue')['default']
     UiTab: typeof import('./../ui/tabs/ui-tab.vue')['default']

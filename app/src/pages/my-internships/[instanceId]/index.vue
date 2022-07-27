@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-import { InternshipInstanceDetailQueryDocument } from '~/codegen/graphql';
+import { MyInternshipRouteQueryDocument } from '~/codegen/graphql';
 import { NotFoundLayout, useGlobalStore } from '~/domain/global';
+import { InternshipPositionList } from '~/domain/internships';
 import { useHead } from '~/i18n';
 
 const props = defineProps<{
@@ -10,7 +11,7 @@ const props = defineProps<{
 const globalStore = useGlobalStore();
 
 gql`
-  query InternshipInstanceDetailQuery($id: ID!) {
+  query MyInternshipRouteQuery($id: ID!) {
     internshipInstance(id: $id) {
       id
       internship {
@@ -18,21 +19,14 @@ gql`
         course {
           name
         }
-        availablePositions {
-          id
-          summary
-          organisation {
-            imageUrl
-            name
-          }
-        }
       }
+      isPositionAssigned
     }
   }
 `;
 
 const { loading, onError, result } = useQuery(
-  InternshipInstanceDetailQueryDocument,
+  MyInternshipRouteQueryDocument,
   () => ({
     id: props.instanceId,
   }),
@@ -60,44 +54,31 @@ useHead(({ t }) => ({
       <p v-t="'internships.internshipInstance.error.notFound'" />
     </NotFoundLayout>
     <template v-else>
-      <UiTitle is="h1" class="text-xl mb-3">
-        {{
-          $t('internships.internshipInstance.detail.heading', {
-            courseName: internshipInstance.internship.course.name,
-          })
-        }}
-      </UiTitle>
-      <ul class="grid gap-5">
-        <li
-          v-for="position in internshipInstance.internship.availablePositions"
-          :key="position.id"
-        >
-          <UiCard>
-            <img
-              v-if="position.organisation"
-              class="bg-light-500"
-              loading="lazy"
-              :src="position.organisation.imageUrl"
-            />
-            <div class="p-5">
-              <UiTitle is="h2" class="text-lg">
-                <RouterLink
-                  class="underline"
-                  :to="`/my-internships/${instanceId}/positions/${position.id}`"
-                >
-                  {{
-                    position.organisation?.name ??
-                    $t('internships.internshipInstance.detail.heading', {
-                      courseName: internshipInstance.internship.course.name,
-                    })
-                  }}
-                </RouterLink>
-              </UiTitle>
-              <p>{{ position.summary }}</p>
-            </div>
-          </UiCard>
-        </li>
-      </ul>
+      <div class="flex flex-wrap mb-8 gap-16 justify-between">
+        <UiTitle is="h1" class="text-xl">
+          {{
+            $t('internships.internshipInstance.detail.heading', {
+              courseName: internshipInstance.internship.course.name,
+            })
+          }}
+        </UiTitle>
+        <UiStepsGroup
+          :steps="[
+            { label: 'Application', name: 'application' },
+            { label: 'Assignment', name: 'assignment' },
+            { label: 'Execution', name: 'execution' },
+            { label: 'Evaluation', name: 'evaluation' },
+          ]"
+          :current-step="
+            internshipInstance.isPositionAssigned ? 'assignment' : 'application'
+          "
+          label="The progress of your internship"
+        />
+      </div>
+      <p v-if="internshipInstance.isPositionAssigned">
+        This internship is assigned to a position.
+      </p>
+      <InternshipPositionList v-else :instance-id="instanceId" />
     </template>
   </template>
 </template>
