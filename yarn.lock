@@ -3996,18 +3996,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cross-undici-fetch@npm:0.4.5":
-  version: 0.4.5
-  resolution: "cross-undici-fetch@npm:0.4.5"
+"cross-undici-fetch@npm:^0.4.11, cross-undici-fetch@npm:^0.4.2, cross-undici-fetch@npm:~0.4.11":
+  version: 0.4.14
+  resolution: "cross-undici-fetch@npm:0.4.14"
   dependencies:
     abort-controller: ^3.0.0
     busboy: ^1.6.0
     form-data-encoder: ^1.7.1
     formdata-node: ^4.3.1
     node-fetch: ^2.6.7
-    undici: ^5.1.0
+    undici: 5.5.1
     web-streams-polyfill: ^3.2.0
-  checksum: 85564e0f8679039b6a23a7f0ccfede6f5c26849d1c2ece71eec2342af12ddf6773b847e6877d1cfd28940ed53d8bb501fa412f62ee679d61d2ae1d33124178d7
+  checksum: dde7b70cb6b033c79da6459b3de91289b0eba74cd52a39b3aef150f261919a82fd84e29b94f71d0cee1bcfea8ad9ad4b837c8a18d06ce48d823599daea541606
   languageName: node
   linkType: hard
 
@@ -9937,7 +9937,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici@npm:5.5.1, undici@npm:^5.1.0":
+"undici@npm:5.5.1":
   version: 5.5.1
   resolution: "undici@npm:5.5.1"
   checksum: c041c9093df7ec683479a9555581206a7c7bebfc1ed6e8669920e55618461fc4ce08938e2fbf8ef7d692c2813c44392b5ed25c58396ee4a72ffd1f1f953712c9

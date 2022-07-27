@@ -24,7 +24,6 @@
     "turbo": "^1.3.4"
   },
   "resolutions": {
-    "cross-undici-fetch": "0.4.5",
     "get-tsconfig": "npm:@unts/get-tsconfig@latest"
   },
   "packageManager": "yarn@3.2.1",
