@@ -1739,9 +1739,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@intlify/vite-plugin-vue-i18n@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "@intlify/vite-plugin-vue-i18n@npm:5.0.0"
+"@intlify/vite-plugin-vue-i18n@npm:^5.0.1":
+  version: 5.0.1
+  resolution: "@intlify/vite-plugin-vue-i18n@npm:5.0.1"
   dependencies:
     "@intlify/bundle-utils": next
     "@intlify/shared": next
@@ -1760,7 +1760,7 @@ __metadata:
       optional: true
     vue-i18n:
       optional: true
-  checksum: a9f813a529aed7c673d1ce01cd35ecb02de7e2c7f246dc95639c1d3495a2640392c21ed97de7bfcb81ecd83673a6b2312fa370ede95a1c26994b70e31641b976
+  checksum: ba7561ea1be2cba4cbd738064bf1b2944b7487364b83e8e8af705d8b05e39467ada16008560c7564a532c2d59cf95be83401fe8f3e6e0b3e01ecad11f42d6fa0
   languageName: node
   linkType: hard
 
@@ -1902,7 +1902,7 @@ __metadata:
     "@prisma/client": ^4.0.0
     "@types/eslint": ^8.4.5
     eslint: ^8.20.0
-    rollup: ^2.76.0
+    rollup: ^2.77.2
     rollup-plugin-dts: ^4.2.2
     rollup-plugin-esbuild: ^4.9.1
     typescript: ~4.7.4
@@ -1959,7 +1959,7 @@ __metadata:
     prisma: ^4.0.0
     quick-lru: ^6.1.1
     read-pkg-up: ^9.1.0
-    rollup: ^2.76.0
+    rollup: ^2.77.2
     rollup-plugin-esbuild: ^4.9.1
     rollup-plugin-typescript-paths: ^1.3.1
     tsx: ^3.8.0
@@ -1987,12 +1987,12 @@ __metadata:
     "@graphql-codegen/typescript-operations": ^2.5.2
     "@headlessui/vue": ^1.6.7
     "@iconify-json/ri": ^1.1.3
-    "@intlify/vite-plugin-vue-i18n": ^5.0.0
+    "@intlify/vite-plugin-vue-i18n": ^5.0.1
     "@os/ability": "workspace:*"
     "@os/eslint-config": "workspace:*"
     "@testing-library/user-event": 14.3.0
     "@testing-library/vue": ^6.6.1
-    "@vitejs/plugin-vue": 3.0.0
+    "@vitejs/plugin-vue": 3.0.1
     "@vue/apollo-composable": ^4.0.0-alpha.18
     "@vue/apollo-util": ^4.0.0-alpha.18
     "@vueuse/core": ^8.9.2
@@ -2007,12 +2007,12 @@ __metadata:
     msw: 0.44.2
     pinia: ^2.0.16
     postcss-nesting: ^10.1.10
-    rollup-plugin-visualizer: ^5.7.0
+    rollup-plugin-visualizer: ^5.7.1
     the-new-css-reset: ^1.7.2
     typescript: ~4.7.4
-    unplugin-auto-import: 0.9.3
+    unplugin-auto-import: 0.10.1
     unplugin-icons: 0.14.7
-    unplugin-vue-components: 0.21.1
+    unplugin-vue-components: 0.21.2
     vite: ^3.0.3
     vite-plugin-graphql-codegen: ^1.8.0
     vite-plugin-pages: 0.25.0
@@ -2588,13 +2588,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitejs/plugin-vue@npm:3.0.0":
-  version: 3.0.0
-  resolution: "@vitejs/plugin-vue@npm:3.0.0"
+"@vitejs/plugin-vue@npm:3.0.1":
+  version: 3.0.1
+  resolution: "@vitejs/plugin-vue@npm:3.0.1"
   peerDependencies:
     vite: ^3.0.0
     vue: ^3.2.25
-  checksum: e2c3e31afc39f83b16174ef4742e88e07b5516688f02dcbe9814afd62c859925173ec2d6a9f088c6098eb45cdae926122308596a8ece90028ffea169f15c685f
+  checksum: 8a48888f0e97bb9f0a7c59ca55546f4fcc316609850630ae27e9702ca7030b19d3c023e8a52de8631c243bc32825bf1a88b7ddd2b0f802916d47171465959159
   languageName: node
   linkType: hard
 
@@ -7319,13 +7319,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mlly@npm:^0.5.3, mlly@npm:^0.5.4":
-  version: 0.5.4
-  resolution: "mlly@npm:0.5.4"
+"mlly@npm:^0.5.3, mlly@npm:^0.5.5":
+  version: 0.5.5
+  resolution: "mlly@npm:0.5.5"
   dependencies:
-    pathe: ^0.3.1
+    pathe: ^0.3.2
     pkg-types: ^0.3.3
-  checksum: fb756e817aaf5edb94f3cd238bf608c59bb1e0f505fa4b9bd38d13a151e4120c561e8689bff4265602b0fea37cc43902b0d8e6754301b36c4ca5167926e75709
+  checksum: f7141ac6a1934c5930acef94eff25f06a42798bb58e5b20c029a14b92e345726533bc413e4ebf316022f28fb68d198cc9c1de5860d90343bac508f76e6d74194
   languageName: node
   linkType: hard
 
@@ -8067,7 +8067,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pathe@npm:^0.3.0, pathe@npm:^0.3.1, pathe@npm:^0.3.2":
+"pathe@npm:^0.3.0, pathe@npm:^0.3.2":
   version: 0.3.2
   resolution: "pathe@npm:0.3.2"
   checksum: a3fdfe2875b074d5dd20f32d89d0d2ded2341423cdccfaec820bc994ea9d76badba2de6fd522fcf580dc5e5b3adb238d3b71855001d428c5554fb61223001eed
@@ -8741,9 +8741,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup-plugin-visualizer@npm:^5.7.0":
-  version: 5.7.0
-  resolution: "rollup-plugin-visualizer@npm:5.7.0"
+"rollup-plugin-visualizer@npm:^5.7.1":
+  version: 5.7.1
+  resolution: "rollup-plugin-visualizer@npm:5.7.1"
   dependencies:
     nanoid: ^3.3.4
     open: ^8.4.0
@@ -8753,13 +8753,13 @@ __metadata:
     rollup: ^2.0.0
   bin:
     rollup-plugin-visualizer: dist/bin/cli.js
-  checksum: 7d0863087735a52e4002cf939d8b6beb7e9b29ebd84d2adb574df0f96a8e2d1980cc329115ecebf6f544896847614b655bc698f339e1ae656870336037ce4ed6
+  checksum: 8bc4ff80a149f3ac775af1307f5b1936d3d6bd31ec6969e34e7e7489105b54fe12fda05d0c9a1b682fe7a1f535468e94dd11d98ba048ca78ac733a459bdd400b
   languageName: node
   linkType: hard
 
-"rollup@npm:^2.75.6, rollup@npm:^2.76.0":
-  version: 2.76.0
-  resolution: "rollup@npm:2.76.0"
+"rollup@npm:^2.75.6, rollup@npm:^2.77.2":
+  version: 2.77.2
+  resolution: "rollup@npm:2.77.2"
   dependencies:
     fsevents: ~2.3.2
   dependenciesMeta:
@@ -8767,7 +8767,7 @@ __metadata:
       optional: true
   bin:
     rollup: dist/bin/rollup
-  checksum: 58293e1c63c11d4afcfcf619601d5c5136dd3d0c9d3bd6a0b6141fede32027edc1eb53873bbb9a9c1e95e86c67f6ad66185720031b6eadf325972174d1d8fbcb
+  checksum: 5a84fb98a6f858906bceba091430442f6c1f362b07c5fa9123b708f87e39f52640e34a189cd9a1776ceae61300055c78ba648205fa03188451539ebeb19797df
   languageName: node
   linkType: hard
 
@@ -9944,21 +9944,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"unimport@npm:^0.4.5":
-  version: 0.4.5
-  resolution: "unimport@npm:0.4.5"
+"unimport@npm:^0.6.3":
+  version: 0.6.3
+  resolution: "unimport@npm:0.6.3"
   dependencies:
     "@rollup/pluginutils": ^4.2.1
     escape-string-regexp: ^5.0.0
     fast-glob: ^3.2.11
     local-pkg: ^0.4.2
     magic-string: ^0.26.2
-    mlly: ^0.5.4
+    mlly: ^0.5.5
     pathe: ^0.3.2
     scule: ^0.2.1
     strip-literal: ^0.4.0
     unplugin: ^0.7.2
-  checksum: 76ad6061025e2c1c521a932b288c69ef25561db03530a847631a743a253a4c31a75f774ebee08e1a215d38ede890cb4a9498d26690856cbc2bb080cc385bd22a
+  checksum: 3fb3058f0112afccc8241b534375377ce0b75b2dfa6f68fe9b3d0cdad10dd878faa2f20f8b34443cb03903c297938fedb9184565382e77ffc3434de267471bf2
   languageName: node
   linkType: hard
 
@@ -9996,22 +9996,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"unplugin-auto-import@npm:0.9.3":
-  version: 0.9.3
-  resolution: "unplugin-auto-import@npm:0.9.3"
+"unplugin-auto-import@npm:0.10.1":
+  version: 0.10.1
+  resolution: "unplugin-auto-import@npm:0.10.1"
   dependencies:
     "@antfu/utils": ^0.5.2
     "@rollup/pluginutils": ^4.2.1
     local-pkg: ^0.4.2
     magic-string: ^0.26.2
-    unimport: ^0.4.5
+    unimport: ^0.6.3
     unplugin: ^0.7.2
   peerDependencies:
     "@vueuse/core": "*"
   peerDependenciesMeta:
     "@vueuse/core":
       optional: true
-  checksum: 5e6bd75809c0cc6d3a35eec1c517e57daf95b69450e0f7a3ef994a1ff6d9d9a09eecbc73b5ad4150d731fa22fd86b5e766f2e4c724f899e326bb05b2b2c5d095
+  checksum: 88ad96d9f2eb15d643d9e8ae72118fef01335d84282081f5694f1f683735f5aea50c6a371adfb517160d4d6038ba3a12dd16300d3b0e388f4fd2bbedce200736
   languageName: node
   linkType: hard
 
@@ -10044,31 +10044,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"unplugin-vue-components@npm:0.21.1":
-  version: 0.21.1
-  resolution: "unplugin-vue-components@npm:0.21.1"
+"unplugin-vue-components@npm:0.21.2":
+  version: 0.21.2
+  resolution: "unplugin-vue-components@npm:0.21.2"
   dependencies:
     "@antfu/utils": ^0.5.2
     "@rollup/pluginutils": ^4.2.1
     chokidar: ^3.5.3
     debug: ^4.3.4
     fast-glob: ^3.2.11
-    local-pkg: ^0.4.1
+    local-pkg: ^0.4.2
     magic-string: ^0.26.2
     minimatch: ^5.1.0
     resolve: ^1.22.1
-    unplugin: ^0.7.1
+    unplugin: ^0.7.2
   peerDependencies:
     "@babel/parser": ^7.15.8
     vue: 2 || 3
   peerDependenciesMeta:
     "@babel/parser":
       optional: true
-  checksum: 20b250663f84e648fb153ddb661104352433fadfdbd94c566004a16752a4e0351601db92be481bfc1bd9721618d02a2392e605ec8612646425d4d57fee10a7cc
+  checksum: 0a7807752223fdf88757971fc0290329c3cf81ca4896bc313e5b7d9830c7b287eceb96386954aad94dd4970cde90a08149f5730a574eacf6afa0ba5b7f30ba83
   languageName: node
   linkType: hard
 
-"unplugin@npm:^0.7.0, unplugin@npm:^0.7.1, unplugin@npm:^0.7.2":
+"unplugin@npm:^0.7.0, unplugin@npm:^0.7.2":
   version: 0.7.2
   resolution: "unplugin@npm:0.7.2"
   dependencies:
