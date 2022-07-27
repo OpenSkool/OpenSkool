@@ -950,6 +950,31 @@ export type ManageCompetencyFrameworkDetailRouteQuery = {
     | null;
 };
 
+export type InternshipInstanceDetailQueryQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type InternshipInstanceDetailQueryQuery = {
+  __typename?: 'Query';
+  internshipInstance?: {
+    __typename?: 'InternshipInstance';
+    internship: {
+      __typename?: 'Internship';
+      course: { __typename?: 'Course'; name: string };
+      availablePositions: Array<{
+        __typename?: 'InternshipPosition';
+        id: string;
+        summary: string;
+        organisation?: {
+          __typename?: 'Organisation';
+          imageUrl: string;
+          name: string;
+        } | null;
+      }>;
+    };
+  } | null;
+};
+
 export type InternshipInstancePositionDetailQueryQueryVariables = Exact<{
   instanceId: Scalars['ID'];
   positionId: Scalars['ID'];
@@ -983,31 +1008,6 @@ export type InternshipInstancePositionDetailQueryQuery = {
       name: string;
     } | null;
     workplace?: { __typename?: 'Workplace'; plainAddress: string } | null;
-  } | null;
-};
-
-export type InternshipInstanceDetailQueryQueryVariables = Exact<{
-  id: Scalars['ID'];
-}>;
-
-export type InternshipInstanceDetailQueryQuery = {
-  __typename?: 'Query';
-  internshipInstance?: {
-    __typename?: 'InternshipInstance';
-    internship: {
-      __typename?: 'Internship';
-      course: { __typename?: 'Course'; name: string };
-      availablePositions: Array<{
-        __typename?: 'InternshipPosition';
-        id: string;
-        summary: string;
-        organisation?: {
-          __typename?: 'Organisation';
-          imageUrl: string;
-          name: string;
-        } | null;
-      }>;
-    };
   } | null;
 };
 
@@ -2701,6 +2701,109 @@ export const ManageCompetencyFrameworkDetailRouteDocument = {
   ManageCompetencyFrameworkDetailRouteQuery,
   ManageCompetencyFrameworkDetailRouteQueryVariables
 >;
+export const InternshipInstanceDetailQueryDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'InternshipInstanceDetailQuery' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'internshipInstance' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'id' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'internship' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'course' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'name' },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'availablePositions' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' },
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'summary' },
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'organisation' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'imageUrl' },
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'name' },
+                                  },
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  InternshipInstanceDetailQueryQuery,
+  InternshipInstanceDetailQueryQueryVariables
+>;
 export const InternshipInstancePositionDetailQueryDocument = {
   kind: 'Document',
   definitions: [
@@ -2868,107 +2971,4 @@ export const InternshipInstancePositionDetailQueryDocument = {
 } as unknown as DocumentNode<
   InternshipInstancePositionDetailQueryQuery,
   InternshipInstancePositionDetailQueryQueryVariables
->;
-export const InternshipInstanceDetailQueryDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'InternshipInstanceDetailQuery' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'internshipInstance' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'id' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'id' },
-                },
-              },
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'internship' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'course' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'name' },
-                            },
-                          ],
-                        },
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'availablePositions' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' },
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'summary' },
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'organisation' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'imageUrl' },
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'name' },
-                                  },
-                                ],
-                              },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<
-  InternshipInstanceDetailQueryQuery,
-  InternshipInstanceDetailQueryQueryVariables
 >;

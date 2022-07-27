@@ -81,7 +81,7 @@ useHead(({ t }) => ({
               <UiTitle is="h2" class="text-lg">
                 <RouterLink
                   class="underline"
-                  :to="`/my-internships/${instanceId}/available-positions/${position.id}`"
+                  :to="`/my-internships/${instanceId}/positions/${position.id}`"
                 >
                   {{
                     position.organisation?.name ??
