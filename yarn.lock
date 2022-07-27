@@ -720,22 +720,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@casl/ability@npm:^5.4.4":
-  version: 5.4.4
-  resolution: "@casl/ability@npm:5.4.4"
+"@casl/ability@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "@casl/ability@npm:6.0.0"
   dependencies:
     "@ucast/mongo2js": ^1.3.0
-  checksum: d7afcf09fdd03b1908bdf009246b76327f19cf26b16d235d331231f5ad40fde51d42567fe669143c383627177f547585d6d99486eb4d4b98171cde67b5ee4cd2
+  checksum: c001aea328e4f44067e011aa942446cc011564c2c01fbe2c9c104393bebe0520d025e464970e8b1638722fce573b0fd59c02dac11109d19d273487371035c5fe
   languageName: node
   linkType: hard
 
-"@casl/vue@npm:^2.1.2":
-  version: 2.1.2
-  resolution: "@casl/vue@npm:2.1.2"
+"@casl/vue@npm:^2.1.3":
+  version: 2.1.3
+  resolution: "@casl/vue@npm:2.1.3"
   peerDependencies:
-    "@casl/ability": ^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.1.0
+    "@casl/ability": ^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.1.0 || ^6.0.0
     vue: ^3.0.0
-  checksum: e88e3dace974c74c342775f8d48af79e23c842dad993fe732801a2b2f72d34a2a6b32c202d360fe1e547c8e37f0368509d2a9142e97748e25b0ebc4a55852ee9
+  checksum: 9091a6e3b69f0247d315896dc3d863f8ae86078d3478edf677c7fce04c09cb46104a00bb52d6e6b48ea6f5f83525b044463b8f28947dfa19f7f87f682a98e298
   languageName: node
   linkType: hard
 
@@ -1898,7 +1898,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@os/ability@workspace:libs/ability"
   dependencies:
-    "@casl/ability": ^5.4.4
+    "@casl/ability": ^6.0.0
     "@prisma/client": ^4.0.0
     "@types/eslint": ^8.4.5
     eslint: ^8.20.0
@@ -1913,7 +1913,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@os/api@workspace:api"
   dependencies:
-    "@casl/ability": ^5.4.4
+    "@casl/ability": ^6.0.0
     "@envelop/response-cache": ^3.0.0
     "@faker-js/faker": ^7.3.0
     "@fastify/cookie": ^7.0.0
@@ -1976,7 +1976,7 @@ __metadata:
   resolution: "@os/app@workspace:app"
   dependencies:
     "@apollo/client": ^3.6.9
-    "@casl/vue": ^2.1.2
+    "@casl/vue": ^2.1.3
     "@formkit/core": ^1.0.0-beta.9
     "@formkit/i18n": ^1.0.0-beta.9
     "@formkit/themes": ^1.0.0-beta.9

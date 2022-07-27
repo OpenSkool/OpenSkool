@@ -21,7 +21,7 @@
     "test:ci": "tsc --noEmit && vitest run --coverage --reporter=junit --outputFile=test.xml"
   },
   "dependencies": {
-    "@casl/ability": "^5.4.4",
+    "@casl/ability": "^6.0.0",
     "@envelop/response-cache": "^3.0.0",
     "@faker-js/faker": "^7.3.0",
     "@fastify/cookie": "^7.0.0",
