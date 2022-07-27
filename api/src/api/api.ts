@@ -19,11 +19,6 @@ import { openIdPlugin } from './openid';
 const HTTP_NO_CONTENT = 204;
 
 const apiPlugin: FastifyPluginAsync = async (app) => {
-  // `connect-redis` is compatible with `@fastify/session`, but the types are not.
-  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-  const RedisStore = connectRedis(sessionPlugin as any);
-  const redisClient = new Redis();
-
   app
     .register(corsPlugin, { credentials: true, origin: true })
     .register(prismaPlugin)
@@ -38,11 +33,18 @@ const apiPlugin: FastifyPluginAsync = async (app) => {
         secure: !app.config.SESSION_ALLOW_INSECURE,
       },
       secret: app.config.SESSION_SECRET,
-      store: app.config.SESSION_STORE
-        ? (new RedisStore({
-            client: redisClient,
-          }) as unknown as sessionPlugin.SessionStore) // `connect-redis` is compatible with `@fastify/session`, but the types are not.
-        : undefined,
+      store: ((): sessionPlugin.SessionStore | undefined => {
+        if (!app.config.SESSION_STORE) {
+          return;
+        }
+        // `connect-redis` is compatible with `@fastify/session`, but the types are not.
+        /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+        const RedisStore = connectRedis(sessionPlugin as any);
+        const redisClient = new Redis();
+        return new RedisStore({
+          client: redisClient,
+        }) as unknown as sessionPlugin.SessionStore;
+      })(),
     })
     .register(healthPlugin)
     .register(openIdPlugin, { prefix: '/openid' })
