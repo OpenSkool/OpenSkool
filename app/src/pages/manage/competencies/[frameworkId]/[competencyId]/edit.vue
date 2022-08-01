@@ -4,10 +4,11 @@ import { CompetencyEdit } from '~/domain/competency-management';
 import { AuthAccessDeniedLayout } from '~/domain/global';
 import { useHead } from '~/i18n';
 
-const props = defineProps<{
-  competencyId: string; // route param
-  frameworkId: string; // route param
-}>();
+const route = useRoute();
+const competencyId = computed(
+  (): string => route.params.competencyId as string,
+);
+const frameworkId = computed((): string => route.params.frameworkId as string);
 
 const ability = useAppAbility();
 
@@ -33,7 +34,7 @@ gql`
 
 const { result } = useQuery(
   ManageCompetencyEditCompetencyRouteDocument,
-  { id: props.competencyId },
+  () => ({ id: competencyId.value }),
   { fetchPolicy: 'network-only' },
 );
 

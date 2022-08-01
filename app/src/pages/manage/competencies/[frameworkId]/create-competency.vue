@@ -4,9 +4,8 @@ import { RootCompetencyCreate } from '~/domain/competency-management';
 import { AuthAccessDeniedLayout, NotFoundLayout } from '~/domain/global';
 import { useHead } from '~/i18n';
 
-const props = defineProps<{
-  frameworkId: string; // route param
-}>();
+const route = useRoute();
+const frameworkId = computed((): string => route.params.frameworkId as string);
 
 const ability = useAppAbility();
 
@@ -29,7 +28,7 @@ gql`
 
 const { loading, result } = useQuery(
   ManageCompetencyCreateRootCompetencyRouteDocument,
-  () => ({ id: props.frameworkId }),
+  () => ({ id: frameworkId.value }),
   { fetchPolicy: 'cache-first' },
 );
 

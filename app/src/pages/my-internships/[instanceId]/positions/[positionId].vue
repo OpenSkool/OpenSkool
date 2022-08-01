@@ -3,10 +3,9 @@ import { InternshipInstancePositionDetailQueryDocument } from '~/codegen/graphql
 import { NotFoundLayout, useGlobalStore } from '~/domain/global';
 import { InternshipPositionApplyCard } from '~/domain/internships';
 
-const props = defineProps<{
-  instanceId: string; // route param
-  positionId: string; // route param
-}>();
+const route = useRoute();
+const instanceId = computed((): string => route.params.instanceId as string);
+const positionId = computed((): string => route.params.positionId as string);
 
 const globalStore = useGlobalStore();
 
@@ -48,7 +47,10 @@ gql`
 
 const { loading, onError, refetch, result } = useQuery(
   InternshipInstancePositionDetailQueryDocument,
-  () => props,
+  () => ({
+    instanceId: instanceId.value,
+    positionId: positionId.value,
+  }),
   { fetchPolicy: 'cache-first' },
 );
 onError(globalStore.handleFatalApolloError);

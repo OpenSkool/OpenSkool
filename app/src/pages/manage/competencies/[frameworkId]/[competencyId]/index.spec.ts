@@ -8,13 +8,10 @@ import { render } from '~/spec/render';
 import CompetencyDetailRoute from './index.vue';
 
 test('delete competency works', async () => {
-  render(CompetencyDetailRoute, {
-    props: {
-      competencyId: 'test-competency-id',
-      frameworkId: 'test-framework-id',
-    },
-  });
+  router.push('/manage/competencies/frameworkId/competencyId');
   await router.isReady();
+  render(CompetencyDetailRoute);
+
   const user = userEvent.setup();
   const mockRouterReplace = vi.spyOn(router, 'replace');
 

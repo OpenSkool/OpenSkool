@@ -12,9 +12,8 @@ import { useHead } from '~/i18n';
 import RiAddLine from '~icons/ri/add-line';
 import RiArrowUpDownLine from '~icons/ri/arrow-up-down-line';
 
-const props = defineProps<{
-  frameworkId: string; // route param
-}>();
+const route = useRoute();
+const frameworkId = computed((): string => route.params.frameworkId as string);
 
 const ability = useAppAbility();
 
@@ -34,7 +33,7 @@ gql`
 
 const { loading, result } = useQuery(
   ManageCompetencyFrameworkDetailRouteDocument,
-  () => ({ id: props.frameworkId }),
+  () => ({ id: frameworkId.value }),
   { fetchPolicy: 'network-only' },
 );
 const competencyFramework = computed(() =>

@@ -21,10 +21,11 @@ import RiAddLine from '~icons/ri/add-line';
 import RiArrowUpDownLine from '~icons/ri/arrow-up-down-line';
 import RiDeleteBinLine from '~icons/ri/delete-bin-line';
 
-const props = defineProps<{
-  competencyId: string; // route param
-  frameworkId: string; // route param
-}>();
+const route = useRoute();
+const competencyId = computed(
+  (): string => route.params.competencyId as string,
+);
+const frameworkId = computed((): string => route.params.frameworkId as string);
 
 const { t } = useI18n();
 const router = useRouter();
@@ -62,7 +63,10 @@ gql`
 
 const { loading, onError, result } = useQuery(
   ManageCompetencyDetailRouteDocument,
-  () => props,
+  () => ({
+    competencyId: competencyId.value,
+    frameworkId: frameworkId.value,
+  }),
   { fetchPolicy: 'network-only' },
 );
 onError(globalStore.handleApolloError);
@@ -103,14 +107,14 @@ async function deleteCompetencyHandler(): Promise<void> {
   try {
     deleteErrorMessage.value = null;
     const response = await deleteCompetency({
-      id: props.competencyId,
+      id: competencyId.value,
     });
     if (response?.data) {
       isDeleteModalOpen.value = false;
       router.replace(
         competency.value.parent == null
-          ? `/manage/competencies/${props.frameworkId}`
-          : `/manage/competencies/${props.frameworkId}/${competency.value.parent.id}`,
+          ? `/manage/competencies/${frameworkId.value}`
+          : `/manage/competencies/${frameworkId.value}/${competency.value.parent.id}`,
       );
     } else {
       deleteErrorMessage.value = t(
@@ -169,7 +173,7 @@ async function deleteCompetencyHandler(): Promise<void> {
           <ManagementLayoutLink
             v-if="ability.can('create', 'Competency')"
             :icon="RiAddLine"
-            :to="`/manage/competencies/${props.frameworkId}/${props.competencyId}/create-competency`"
+            :to="`/manage/competencies/${frameworkId}/${competencyId}/create-competency`"
           >
             {{ $t('management.competency.action.create') }}
           </ManagementLayoutLink>
