@@ -1,7 +1,10 @@
 <script lang="ts" setup>
 import { MyInternshipRouteQueryDocument } from '~/codegen/graphql';
 import { NotFoundLayout, useGlobalStore } from '~/domain/global';
-import { InternshipPositionList } from '~/domain/internships';
+import {
+  InternshipOverview,
+  InternshipPositionList,
+} from '~/domain/internships';
 import { useHead } from '~/i18n';
 
 const props = defineProps<{
@@ -75,9 +78,10 @@ useHead(({ t }) => ({
           label="The progress of your internship"
         />
       </div>
-      <p v-if="internshipInstance.isPositionAssigned">
-        This internship is assigned to a position.
-      </p>
+      <InternshipOverview
+        v-if="internshipInstance.isPositionAssigned"
+        :instance-id="instanceId"
+      />
       <InternshipPositionList v-else :instance-id="instanceId" />
     </template>
   </template>
