@@ -13,7 +13,7 @@ export function first<T>(array: T[]): T | undefined {
 }
 
 export function random(max = 1): number {
-  return Math.floor(Math.random() * max);
+  return Math.floor(Math.random() * (max + 1));
 }
 
 export function times<T>(count: number, factory: (index: number) => T): T[] {
