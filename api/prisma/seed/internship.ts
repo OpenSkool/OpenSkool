@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { Prisma, PrismaClient } from '@prisma/client';
 
-import { chance, times } from '~/utils';
+import { chance, random, times } from '~/utils';
 
 import { seedCourses } from './course';
 import { seedEducations } from './education';
@@ -56,10 +56,20 @@ export async function seedInternships(prisma: PrismaClient): Promise<void> {
               where: { studentId: user.id },
             })),
         ),
-        (): Prisma.InternshipInstanceUncheckedCreateInput => ({
-          internshipId: faker.helpers.arrayElement(internships).id,
-          studentId: user.id,
-        }),
+        (): Prisma.InternshipInstanceUncheckedCreateInput => {
+          const internshipId = faker.helpers.arrayElement(internships).id;
+          let assignedPositionId: string | undefined;
+          if (random() === 1) {
+            assignedPositionId = faker.helpers.arrayElement(
+              faker.helpers.arrayElement(internships).availablePositions,
+            ).id;
+          }
+          return {
+            internshipId,
+            studentId: user.id,
+            assignedPositionId,
+          };
+        },
       ),
     });
   }
