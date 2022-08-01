@@ -41,6 +41,7 @@ const apiPlugin: FastifyPluginAsync = async (app) => {
         /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
         const RedisStore = connectRedis(sessionPlugin as any);
         const redisClient = new Redis();
+        app.addHook('onClose', () => redisClient.quit());
         return new RedisStore({
           client: redisClient,
         }) as unknown as sessionPlugin.SessionStore;
