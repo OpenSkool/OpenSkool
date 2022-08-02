@@ -3,6 +3,7 @@ import { PrismaAbility, Subjects } from '@casl/prisma';
 import {
   Competency,
   CompetencyFramework,
+  InternshipApplication,
   InternshipInstance,
 } from '@prisma/client';
 
@@ -17,6 +18,7 @@ type AppAllSubject = 'all'; // 'all' is a special keyword in CASL representing a
 type PrismaSubjects = Subjects<{
   Competency: Competency;
   CompetencyFramework: CompetencyFramework;
+  InternshipApplication: InternshipApplication;
   InternshipInstance: InternshipInstance;
 }>;
 type AppSubject = AppAllSubject | PrismaSubjects;

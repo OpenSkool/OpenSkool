@@ -11,6 +11,7 @@ export function buildAbility(userId: string | null): AppAbility {
 
   if (userId != null) {
     can('manage', ['Competency', 'CompetencyFramework']);
+    can('manage', 'InternshipApplication'); // Verified by instanceId in code
     can('read', 'InternshipInstance', { studentId: userId });
   }
 

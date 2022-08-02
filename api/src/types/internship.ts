@@ -6,6 +6,7 @@ import { InternshipApplicationVariant } from '@prisma/client';
 import { z } from 'zod';
 
 import { EducationService, UserService } from '~/domain';
+import { AppNotFoundError, AppUnauthorizedError } from '~/errors';
 import { prisma } from '~/prisma';
 import builder from '~/schema/builder';
 import { cacheFakeData } from '~/schema/helpers';
@@ -278,13 +279,28 @@ builder.mutationField('applyForPriorityInternshipPosition', (t) =>
       positionId: t.arg.id(),
       priority: t.arg.int(),
     },
-    async resolve(root, argumentz) {
+    async resolve(root, { priority, instanceId, positionId }, ctx) {
+      if (ctx.request.auth.ability.cannot('create', 'InternshipApplication')) {
+        throw new AppUnauthorizedError(
+          'You are not allowed to create an internship application',
+        );
+      }
+      const instance = await prisma.internshipInstance.findUnique({
+        select: { studentId: true },
+        where: { id: instanceId },
+      });
+      if (
+        instance == null ||
+        instance.studentId !== ctx.request.auth.user?.id
+      ) {
+        throw new AppNotFoundError('Internship instance not found.');
+      }
       return prisma.internshipApplication.create({
         data: {
           variantType: 'Priority',
-          variantValue: argumentz.priority,
-          instanceId: argumentz.instanceId,
-          positionId: argumentz.positionId,
+          variantValue: priority,
+          instanceId,
+          positionId,
         },
       });
     },
