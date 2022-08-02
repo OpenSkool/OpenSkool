@@ -729,6 +729,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@casl/prisma@npm:^1.0.4":
+  version: 1.0.4
+  resolution: "@casl/prisma@npm:1.0.4"
+  dependencies:
+    "@ucast/core": ^1.10.0
+    "@ucast/js": ^3.0.1
+  peerDependencies:
+    "@casl/ability": ^5.3.0 || ^6.0.0
+    "@prisma/client": ^2.14.0 || ^3.0.0 || ^4.0.0
+  checksum: 04748506a0f42e91666391d20f8bcf3cc80511a855031a7e8f5b38b203f9192ce274a21e4ee599bf4bfb4fdd587e7d4e7bfb82ac8e8e097222028c3b1f27ec5f
+  languageName: node
+  linkType: hard
+
 "@casl/vue@npm:^2.1.3":
   version: 2.1.3
   resolution: "@casl/vue@npm:2.1.3"
@@ -1924,6 +1937,7 @@ __metadata:
   resolution: "@os/ability@workspace:libs/ability"
   dependencies:
     "@casl/ability": ^6.0.0
+    "@casl/prisma": ^1.0.4
     "@prisma/client": ^4.1.0
     "@types/eslint": ^8.4.5
     eslint: ^8.20.0
@@ -1939,6 +1953,7 @@ __metadata:
   resolution: "@os/api@workspace:api"
   dependencies:
     "@casl/ability": ^6.0.0
+    "@casl/prisma": ^1.0.4
     "@envelop/response-cache": ^3.0.0
     "@faker-js/faker": ^7.3.0
     "@fastify/cookie": ^7.3.1
@@ -2692,14 +2707,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ucast/core@npm:^1.0.0, @ucast/core@npm:^1.4.1, @ucast/core@npm:^1.6.1":
+"@ucast/core@npm:^1.0.0, @ucast/core@npm:^1.10.0, @ucast/core@npm:^1.4.1, @ucast/core@npm:^1.6.1":
   version: 1.10.1
   resolution: "@ucast/core@npm:1.10.1"
   checksum: 38335916421ddf44b5e37b2914ff5c7d73d1137eccbe345ad35f204e311a94e229d51dcd66dc258ac25f49c54c1f1e97534ee957e73e78a83d97fea9c3f25547
   languageName: node
   linkType: hard
 
-"@ucast/js@npm:^3.0.0":
+"@ucast/js@npm:^3.0.0, @ucast/js@npm:^3.0.1":
   version: 3.0.2
   resolution: "@ucast/js@npm:3.0.2"
   dependencies:

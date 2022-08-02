@@ -1,4 +1,5 @@
 import { subject } from '@casl/ability';
+import { accessibleBy } from '@casl/prisma';
 import { faker } from '@faker-js/faker';
 import * as Prisma from '@prisma/client';
 import { InternshipApplicationVariant } from '@prisma/client';
@@ -139,12 +140,12 @@ builder.queryField('internshipInstance', (t) =>
         where: { id },
       });
       return instance == null ||
-        ctx.request.auth.ability.cannot(
+        ctx.request.auth.ability.can(
           'read',
           subject('InternshipInstance', instance),
         )
-        ? null
-        : instance;
+        ? instance
+        : null;
     },
   }),
 );
@@ -155,7 +156,7 @@ builder.queryField('myInternshipInstances', (t) =>
     resolve(query, root, argumentz, ctx) {
       return prisma.internshipInstance.findMany({
         ...query,
-        where: { studentId: ctx.domain.userId },
+        where: accessibleBy(ctx.request.auth.ability).InternshipInstance,
       });
     },
   }),
