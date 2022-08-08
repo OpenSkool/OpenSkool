@@ -11,7 +11,7 @@ import ms from 'ms';
 
 import { prismaPlugin } from '~/plugins/prisma';
 
-import { authPlugin } from './auth';
+import { authPlugin } from './auth/plugin';
 import { graphqlRoutes } from './graphql';
 import { healthPlugin } from './health';
 import { openIdPlugin } from './openid';

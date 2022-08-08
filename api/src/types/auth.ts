@@ -1,13 +1,12 @@
 import assert from 'node:assert';
 
+import { AppRawRule } from '@os/ability';
 import { decodeJwt, JWTPayload } from 'jose';
 import ms from 'ms';
 import type { JsonObject } from 'type-fest';
 import { z } from 'zod';
 
-import { AppRawRule } from '~/api/ability';
-import type { Auth, AuthUser } from '~/api/auth';
-import { AppTokenSet } from '~/api/openid';
+import type { Auth, AuthTokenSet, AuthUser } from '~/api/auth';
 import builder from '~/schema/builder';
 import { castArray } from '~/utils';
 
@@ -26,7 +25,7 @@ const zJwtPayload = z.object({
 
 const JWT = builder.objectRef<JWTPayload & z.infer<typeof zJwtPayload>>('JWT');
 
-const TokenSet = builder.objectRef<AppTokenSet>('TokenSet');
+const TokenSet = builder.objectRef<AuthTokenSet>('TokenSet');
 
 builder.objectType(AbilityRule, {
   name: 'AbilityRule',

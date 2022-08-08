@@ -2,15 +2,10 @@ import type { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
 import { Type } from '@sinclair/typebox';
 import { FastifyPluginAsync } from 'fastify';
 import plugin from 'fastify-plugin';
-import {
-  createRemoteJWKSet,
-  decodeJwt,
-  errors as joseErrors,
-  JWTPayload,
-  jwtVerify,
-} from 'jose';
-import { Issuer, generators, TokenSet } from 'openid-client';
-import { z } from 'zod';
+import { createRemoteJWKSet, errors as joseErrors, jwtVerify } from 'jose';
+import { Issuer, generators } from 'openid-client';
+
+import { AuthTokenSet, parseTokenSet } from '~/api/auth/types';
 
 const { JOSEError: JoseError } = joseErrors;
 
@@ -19,7 +14,7 @@ declare module 'fastify' {
     openId: {
       codeVerifier?: string;
       state?: { from?: string };
-      tokenSet?: AppTokenSet;
+      tokenSet?: AuthTokenSet;
     };
   }
 }
@@ -92,7 +87,6 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
           code_challenge: generators.codeChallenge(codeVerifier),
           code_challenge_method: 'S256',
           redirect_uri: absoluteUrl('/connect/callback'),
-          scope: 'openid email profile',
         });
         return reply.redirect(authUrl);
       },
@@ -172,30 +166,3 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
     });
   },
 );
-
-const zIdToken = z.object({
-  name: z.string(),
-  sub: z.string(),
-});
-
-export type AppIdToken = JWTPayload & z.infer<typeof zIdToken>;
-
-export function decodeIdToken(token: string): AppIdToken {
-  return zIdToken.parse(decodeJwt(token));
-}
-
-const zCodeFlowTokenSet = z.object({
-  access_token: z.string(),
-  token_type: z.string(),
-  id_token: z.string(),
-  refresh_token: z.string(),
-  expires_at: z.number(),
-  session_state: z.string(),
-  scope: z.string(),
-});
-
-export type AppTokenSet = TokenSet & z.infer<typeof zCodeFlowTokenSet>;
-
-function parseTokenSet(tokenSet: TokenSet): AppTokenSet {
-  return new TokenSet(zCodeFlowTokenSet.parse(tokenSet)) as AppTokenSet;
-}

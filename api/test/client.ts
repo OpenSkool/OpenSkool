@@ -2,9 +2,10 @@ import { createServer } from '@graphql-yoga/common';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { DocumentNode, GraphQLError } from 'graphql';
 
-import { buildAbility } from '../src/api/ability';
-import schema from '../src/schema';
-import type { Context } from '../src/schema/context';
+import { buildAbility } from '~/api/auth';
+import schema from '~/schema';
+import type { Context } from '~/schema/context';
+
 import { createUserFixture } from './fixtures';
 
 export interface GraphQlResponse<TData> {
@@ -51,7 +52,14 @@ export async function execute<
       reply: {} as unknown as FastifyReply,
       request: {
         auth: {
-          ability: buildAbility(userId),
+          ability: buildAbility(
+            userId == null
+              ? null
+              : {
+                  id: userId,
+                  name: 'Test User',
+                },
+          ),
         },
       } as unknown as FastifyRequest,
     },
