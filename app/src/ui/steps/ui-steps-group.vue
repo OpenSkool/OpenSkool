@@ -65,6 +65,7 @@ li .step-indicator {
   display: flex;
   align-items: center;
   justify-content: center;
+  @apply border-gray-300;
 }
 li[data-done='true'] .step-indicator {
   @apply bg-primary-500 border-primary-500;
