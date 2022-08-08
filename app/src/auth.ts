@@ -90,6 +90,7 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   return {
+    auth,
     name: computed(() => auth.value.currentUser?.name),
     isLoggedIn: computed(() => auth.value.currentUser != null),
     refresh,
