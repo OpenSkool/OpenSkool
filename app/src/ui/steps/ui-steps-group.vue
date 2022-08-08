@@ -12,15 +12,11 @@ const props = defineProps<{
 }>();
 
 const steps = computed(() => {
-  const steps: Step[] = [];
-  let done = props.currentStep === 'done';
-  for (const step of [...props.steps].reverse()) {
-    steps.unshift({ ...step, done });
-    if (step.name === props.currentStep && props.currentStep !== 'done') {
-      done = true;
-    }
-  }
-  return steps;
+  let done = props.currentStep != null;
+  return props.steps.map((step) => {
+    done = done && step.name !== props.currentStep;
+    return { ...step, done };
+  });
 });
 </script>
 
