@@ -2,7 +2,7 @@ import { createServer } from '@graphql-yoga/common';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { DocumentNode, GraphQLError } from 'graphql';
 
-import { buildAbility } from '~/api/auth';
+import { AuthRole, buildAbility } from '~/api/auth';
 import schema from '~/schema';
 import type { Context } from '~/schema/context';
 
@@ -58,6 +58,7 @@ export async function execute<
               : {
                   id: userId,
                   name: 'Test User',
+                  roles: [AuthRole.Administrator],
                 },
           ),
         },

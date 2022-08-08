@@ -17,6 +17,10 @@ export function parseAccessToken(token: JWTPayload | string): AuthAccessToken {
   return { ...decoded, ...zAccessToken.parse(decoded) };
 }
 
+export enum AuthRole {
+  Administrator = 'administrator',
+}
+
 const zTokenSet = z.object({
   access_token: z.string(),
   token_type: z.string(),
@@ -36,4 +40,5 @@ export function parseTokenSet(tokenSet: TokenSet): AuthTokenSet {
 export interface AuthUser {
   id: string;
   name: string;
+  roles: AuthRole[];
 }

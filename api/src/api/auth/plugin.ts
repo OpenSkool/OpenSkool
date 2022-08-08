@@ -4,7 +4,7 @@ import plugin from 'fastify-plugin';
 import { prisma } from '~/prisma';
 
 import { buildAbility } from './ability';
-import { AuthUser, parseAccessToken } from './types';
+import { AuthRole, AuthUser, parseAccessToken } from './types';
 
 export interface Auth {
   ability: AppAbility;
@@ -47,6 +47,9 @@ export const authPlugin = plugin(async (app) => {
     const user: AuthUser = {
       id: accessToken.sub,
       name: accessToken.preferred_username,
+      roles: accessToken.realm_access.roles.filter((role) =>
+        Object.keys(AuthRole).includes(role),
+      ) as AuthRole[],
     };
     request.auth = {
       ability: buildAbility(user),
