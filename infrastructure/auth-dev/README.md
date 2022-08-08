@@ -3,7 +3,7 @@
 ## Build
 
 ```sh
-docker build -t registry.digitalocean.com/os-dev/auth:18.0.2 infrastructure/auth-dev/
+docker build -t registry.digitalocean.com/os-dev/auth:19.0.1 infrastructure/auth-dev/
 ```
 
 ## Push
@@ -12,7 +12,7 @@ You'll need a [personal access token](https://docs.digitalocean.com/reference/ap
 
 ```sh
 doctl registry login
-docker push registry.digitalocean.com/os-dev/auth:18.0.2
+docker push registry.digitalocean.com/os-dev/auth:19.0.1
 ```
 
 ## Deploy

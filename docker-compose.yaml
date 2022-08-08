@@ -51,7 +51,7 @@ services:
       KC_DB_USERNAME: keycloak
       KEYCLOAK_ADMIN: keycloak
       KEYCLOAK_ADMIN_PASSWORD: keycloak
-    image: quay.io/keycloak/keycloak:18.0.2
+    image: quay.io/keycloak/keycloak:19.0.1
     networks:
       - openskool
     ports:
