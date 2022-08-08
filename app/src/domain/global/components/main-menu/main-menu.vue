@@ -8,6 +8,7 @@ defineProps<{
   state: MenuState;
 }>();
 
+const ability = useAppAbility();
 const globalStore = useGlobalStore();
 
 gql`
@@ -24,7 +25,9 @@ gql`
   }
 `;
 
-const { loading, onError, result } = useQuery(MainMenuDocument);
+const { loading, onError, result } = useQuery(MainMenuDocument, null, {
+  enabled: ability.can('read', 'InternshipInstance'),
+});
 onError(globalStore.handleFatalApolloError);
 
 const internshipInstances = computed(() =>

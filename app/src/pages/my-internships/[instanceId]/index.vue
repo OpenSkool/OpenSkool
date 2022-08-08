@@ -10,6 +10,7 @@ import { useHead } from '~/i18n';
 const route = useRoute();
 const instanceId = computed((): string => route.params.instanceId as string);
 
+const ability = useAppAbility();
 const globalStore = useGlobalStore();
 
 gql`
@@ -32,7 +33,10 @@ const { loading, onError, result } = useQuery(
   () => ({
     id: instanceId.value,
   }),
-  { fetchPolicy: 'cache-first' },
+  {
+    enabled: ability.can('read', 'InternshipInstance'),
+    fetchPolicy: 'cache-first',
+  },
 );
 onError(globalStore.handleFatalApolloError);
 
