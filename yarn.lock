@@ -906,6 +906,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fastify/awilix@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@fastify/awilix@npm:3.0.0"
+  dependencies:
+    fastify-plugin: ^3.0.0
+  peerDependencies:
+    awilix: ">=4.0.0"
+    fastify: ^4.0.0-rc.3
+  checksum: 6da80f3fc06b65dd390f1d5e8917cb4d2480884151ac0f850c64fa670293537d7dda9b9778cfd354fe22b6058150963b1798e58e249e2e1a0a21a53fbb3b3ff2
+  languageName: node
+  linkType: hard
+
 "@fastify/cookie@npm:^7.3.1":
   version: 7.3.1
   resolution: "@fastify/cookie@npm:7.3.1"
@@ -1956,6 +1968,7 @@ __metadata:
     "@casl/prisma": ^1.0.4
     "@envelop/response-cache": ^3.0.0
     "@faker-js/faker": ^7.3.0
+    "@fastify/awilix": ^3.0.0
     "@fastify/cookie": ^7.3.1
     "@fastify/cors": ^8.0.0
     "@fastify/env": ^4.0.0
@@ -1978,6 +1991,7 @@ __metadata:
     "@types/is-ci": ^3.0.0
     "@types/prettier": ^2.6.4
     accept-language-parser: ^1.5.0
+    awilix: ^7.0.3
     c8: ^7.12.0
     connect-redis: ^6.1.3
     cross-undici-fetch: ~0.4.14
@@ -3440,6 +3454,16 @@ __metadata:
     fastq: ^1.6.1
     queue-microtask: ^1.1.2
   checksum: 087760a9c5c6b82526a044a3a6a12f04d5f5e4cc101427f44b2c84dd898f09f0d2910991fae11fdca03054dbd9bc3a600e7639904028e808b2ebc0dbf6ef7227
+  languageName: node
+  linkType: hard
+
+"awilix@npm:^7.0.3":
+  version: 7.0.3
+  resolution: "awilix@npm:7.0.3"
+  dependencies:
+    camel-case: ^4.1.2
+    fast-glob: ^3.2.11
+  checksum: 2f4251753a60a19a46c4af2fcbba3ea3e062506aea529375e76cd11a29c9231bffd8b352794e8ed7a3710d6a9975fa09889e18dce32f25461cf769cce21197b6
   languageName: node
   linkType: hard
 

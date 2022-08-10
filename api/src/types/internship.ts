@@ -5,7 +5,7 @@ import * as Prisma from '@prisma/client';
 import { InternshipApplicationVariant } from '@prisma/client';
 import { z } from 'zod';
 
-import { EducationService, UserService } from '~/domain';
+import { UserService } from '~/domain';
 import { AppNotFoundError, AppUnauthorizedError } from '~/errors';
 import { prisma } from '~/prisma';
 import builder from '~/schema/builder';
@@ -50,11 +50,10 @@ export const Internship = builder.prismaObject('Internship', {
     descriptionShort: t.exposeString('descriptionShort'),
     education: t.field({
       type: Education,
-      resolve(internship, argumentz, ctx) {
-        return EducationService.getEducationById(
-          internship.educationId,
-          ctx.domain,
-        );
+      resolve(internship, _arguments, ctx) {
+        const educationService =
+          ctx.request.diScope.resolve('educationService');
+        return educationService.getEducationById(internship.educationId);
       },
     }),
     title: t.exposeString('title'),
@@ -135,16 +134,13 @@ builder.queryField('internshipInstance', (t) =>
     },
     nullable: true,
     type: InternshipInstance,
-    async resolve(query, root, { id }, ctx) {
+    async resolve(query, root, { id }, { inject: { auth } }) {
       const instance = await prisma.internshipInstance.findUnique({
         ...query,
         where: { id },
       });
       return instance == null ||
-        ctx.request.auth.ability.can(
-          'read',
-          subject('InternshipInstance', instance),
-        )
+        auth.ability.can('read', subject('InternshipInstance', instance))
         ? instance
         : null;
     },
@@ -154,10 +150,10 @@ builder.queryField('internshipInstance', (t) =>
 builder.queryField('myInternshipInstances', (t) =>
   t.prismaField({
     type: ['InternshipInstance'],
-    resolve(query, root, argumentz, ctx) {
+    resolve(query, root, _arguments, { inject: { auth } }) {
       return prisma.internshipInstance.findMany({
         ...query,
-        where: accessibleBy(ctx.request.auth.ability).InternshipInstance,
+        where: accessibleBy(auth.ability).InternshipInstance,
       });
     },
   }),
@@ -279,8 +275,12 @@ builder.mutationField('applyForPriorityInternshipPosition', (t) =>
       positionId: t.arg.id(),
       priority: t.arg.int(),
     },
-    async resolve(root, { priority, instanceId, positionId }, ctx) {
-      if (ctx.request.auth.ability.cannot('create', 'InternshipApplication')) {
+    async resolve(
+      root,
+      { priority, instanceId, positionId },
+      { inject: { auth } },
+    ) {
+      if (auth.ability.cannot('create', 'InternshipApplication')) {
         throw new AppUnauthorizedError(
           'You are not allowed to create an internship application',
         );
@@ -289,10 +289,7 @@ builder.mutationField('applyForPriorityInternshipPosition', (t) =>
         select: { studentId: true },
         where: { id: instanceId },
       });
-      if (
-        instance == null ||
-        instance.studentId !== ctx.request.auth.user?.id
-      ) {
+      if (instance == null || instance.studentId !== auth.user?.id) {
         throw new AppNotFoundError('Internship instance not found.');
       }
       return prisma.internshipApplication.create({

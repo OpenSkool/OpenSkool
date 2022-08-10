@@ -1,4 +1,4 @@
-import { EducationModel, EducationService } from '~/domain';
+import type { EducationModel } from '~/domain';
 import builder from '~/schema/builder';
 
 import { Accountable } from './accountable';
@@ -17,8 +17,9 @@ builder.objectType(Education, {
 builder.queryField('allEducations', (t) =>
   t.field({
     type: [Education],
-    async resolve(root, argumentz, ctx) {
-      return EducationService.getAllEducations(ctx.domain);
+    async resolve(root, _arguments, ctx) {
+      const educationService = ctx.request.diScope.resolve('educationService');
+      return educationService.getAllEducations();
     },
   }),
 );
@@ -37,7 +38,8 @@ builder.mutationField('createEducation', (t) =>
     },
     errors: {},
     async resolve(root, { data }, ctx) {
-      return EducationService.createEducation(data, ctx.domain);
+      const educationService = ctx.request.diScope.resolve('educationService');
+      return educationService.createEducation(data);
     },
   }),
 );
@@ -51,7 +53,8 @@ builder.mutationField('updateEducation', (t) =>
     },
     errors: {},
     async resolve(root, { id, data }, ctx) {
-      return EducationService.updateEducation(id, data, ctx.domain);
+      const educationService = ctx.request.diScope.resolve('educationService');
+      return educationService.updateEducation(id, data);
     },
   }),
 );
@@ -64,7 +67,8 @@ builder.mutationField('deleteEducation', (t) =>
     },
     errors: {},
     async resolve(root, { id }, ctx) {
-      return EducationService.deleteEducation(id, ctx.domain);
+      const educationService = ctx.request.diScope.resolve('educationService');
+      return educationService.deleteEducation(id);
     },
   }),
 );

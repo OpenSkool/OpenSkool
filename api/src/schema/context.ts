@@ -1,9 +1,8 @@
-import { FastifyReply, FastifyRequest } from 'fastify';
+import type { FastifyRequest } from 'fastify';
 
-import { DomainContext } from '~/domain';
+import type { AppCradle } from '~/plugins/awilix';
 
 export interface Context {
-  domain: DomainContext;
+  inject: AppCradle;
   request: FastifyRequest;
-  reply: FastifyReply;
 }

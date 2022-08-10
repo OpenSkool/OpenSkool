@@ -53,7 +53,7 @@ describe('competency', () => {
         }
       `,
       {
-        spec: { locale: 'en' },
+        spec: { locale: Language.EN },
         variables: { id: competency.id },
       },
     );
@@ -82,7 +82,7 @@ describe('competency', () => {
         }
       `,
       {
-        spec: { locale: 'en' },
+        spec: { locale: Language.EN },
         variables: { id: competency.id },
       },
     );
@@ -111,7 +111,7 @@ describe('competency', () => {
         }
       `,
       {
-        spec: { locale: 'nl' },
+        spec: { locale: Language.NL },
         variables: { id: competency.id },
       },
     );
@@ -140,7 +140,7 @@ describe('competency', () => {
         }
       `,
       {
-        spec: { locale: 'en' },
+        spec: { locale: Language.EN },
         variables: { id: competency.id },
       },
     );
@@ -195,7 +195,7 @@ describe('CompetencyFramework', () => {
         }
       `,
       {
-        spec: { locale: 'nl' },
+        spec: { locale: Language.NL },
         variables: { id: competencyFramework.id },
       },
     );
@@ -224,7 +224,7 @@ describe('CompetencyFramework', () => {
         }
       `,
       {
-        spec: { locale: 'en' },
+        spec: { locale: Language.EN },
         variables: { id: competencyFramework.id },
       },
     );
@@ -253,7 +253,7 @@ describe('CompetencyFramework', () => {
         }
       `,
       {
-        spec: { locale: 'en' },
+        spec: { locale: Language.EN },
         variables: { id: competencyFramework.id },
       },
     );
@@ -282,7 +282,7 @@ describe('CompetencyFramework', () => {
         }
       `,
       {
-        spec: { locale: 'nl' },
+        spec: { locale: Language.NL },
         variables: { id: competencyFramework.id },
       },
     );
@@ -311,7 +311,7 @@ describe('CompetencyFramework', () => {
         }
       `,
       {
-        spec: { locale: 'en' },
+        spec: { locale: Language.EN },
         variables: { id: competencyFramework.id },
       },
     );

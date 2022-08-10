@@ -1,4 +1,5 @@
 import { AppAbility } from '@os/ability';
+import { asValue } from 'awilix';
 import plugin from 'fastify-plugin';
 
 import { prisma } from '~/prisma';
@@ -11,8 +12,8 @@ export interface Auth {
   user: AuthUser | null;
 }
 
-declare module 'fastify' {
-  interface FastifyRequest {
+declare module '@fastify/awilix' {
+  interface RequestCradle {
     auth: Auth;
   }
 }
@@ -23,12 +24,10 @@ const ANONYMOUS: Auth = {
 };
 
 export const authPlugin = plugin(async (app) => {
-  app.decorateRequest('auth', null);
-
   app.addHook('onRequest', async (request) => {
     const { tokenSet } = request.session.openId;
     if (tokenSet == null) {
-      request.auth = ANONYMOUS;
+      request.diScope.register({ auth: asValue(ANONYMOUS) });
       return;
     }
     const accessToken = parseAccessToken(tokenSet.access_token);
@@ -51,9 +50,11 @@ export const authPlugin = plugin(async (app) => {
         Object.keys(AuthRole).includes(role),
       ) as AuthRole[],
     };
-    request.auth = {
-      ability: buildAbility(user),
-      user,
-    };
+    request.diScope.register({
+      auth: asValue({
+        ability: buildAbility(user),
+        user,
+      }),
+    });
   });
 });

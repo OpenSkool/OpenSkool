@@ -2,6 +2,7 @@ import createApp from 'fastify';
 
 import apiPlugin from '~/api';
 import logger from '~/logger';
+import awilixPlugin from '~/plugins/awilix';
 import boomPlugin from '~/plugins/boom';
 import configPlugin from '~/plugins/config';
 
@@ -16,6 +17,10 @@ const app = createApp({
   logger,
 });
 
-app.register(configPlugin).register(boomPlugin).register(apiPlugin);
+app
+  .register(awilixPlugin)
+  .register(boomPlugin)
+  .register(configPlugin)
+  .register(apiPlugin);
 
 export default app;

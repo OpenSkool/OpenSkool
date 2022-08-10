@@ -2,11 +2,10 @@ import assert from 'node:assert';
 
 import { Education, EducationTranslation, Language } from '@prisma/client';
 
+import type { AppCradle } from '~/plugins/awilix';
 import { prisma } from '~/prisma';
 
-import { DomainContext } from './context';
 import { handleServiceError } from './helpers';
-import { mapLocaleToLanguageCode } from './helpers/language';
 
 export interface EducationModel
   extends Education,
@@ -16,107 +15,99 @@ type InternalEducation = Education & {
   translations: EducationTranslation[];
 };
 
-function mapToModel(
-  education: InternalEducation,
-  languageCode: Language,
-): EducationModel {
-  const { translations, ...baseData } = education;
-  const preferedTranslation = translations.find(
-    (translation) => translation.languageCode === languageCode,
-  );
-  const translation = preferedTranslation ?? translations[0];
-  assert(translation, `no translation found for education id ${education.id}`);
-  return {
-    ...baseData,
-    title: translation.title,
-  };
-}
+export class EducationService {
+  language: Language;
 
-export async function getAllEducations(
-  context: DomainContext,
-): Promise<EducationModel[]> {
-  const preferedLanguageCode = mapLocaleToLanguageCode(context.locale);
+  constructor(inject: AppCradle) {
+    this.language = inject.language;
+  }
 
-  const educations = await prisma.education.findMany({
-    include: { translations: true },
-  });
-
-  return educations.map((education) =>
-    mapToModel(education, preferedLanguageCode),
-  );
-}
-
-export async function getEducationById(
-  id: string,
-  ctx: DomainContext,
-): Promise<EducationModel> {
-  const education = await prisma.education.findUniqueOrThrow({
-    include: { translations: true },
-    where: { id },
-  });
-  return mapToModel(education, mapLocaleToLanguageCode(ctx.locale));
-}
-
-export async function createEducation(
-  data: { title: string },
-  context: DomainContext,
-): Promise<EducationModel> {
-  const languageCode = mapLocaleToLanguageCode(context.locale);
-
-  try {
-    const education = await prisma.education.create({
-      data: { translations: { create: { languageCode, ...data } } },
+  async getAllEducations(): Promise<EducationModel[]> {
+    const educations = await prisma.education.findMany({
       include: { translations: true },
     });
-    return mapToModel(education, languageCode);
-  } catch (error) {
-    handleServiceError(error);
+    return educations.map(this.mapToModel);
   }
-}
 
-export async function deleteEducation(
-  id: string,
-  context: DomainContext,
-): Promise<EducationModel> {
-  const languageCode = mapLocaleToLanguageCode(context.locale);
-
-  try {
-    const education = await prisma.education.delete({
+  async getEducationById(id: string): Promise<EducationModel> {
+    const education = await prisma.education.findUniqueOrThrow({
       include: { translations: true },
       where: { id },
     });
-    return mapToModel(education, languageCode);
-  } catch (error) {
-    handleServiceError(error);
+    return this.mapToModel(education);
   }
-}
 
-export async function updateEducation(
-  id: string,
-  data: { title: string },
-  context: DomainContext,
-): Promise<EducationModel> {
-  const languageCode = mapLocaleToLanguageCode(context.locale);
+  async createEducation(data: { title: string }): Promise<EducationModel> {
+    try {
+      const education = await prisma.education.create({
+        data: {
+          translations: {
+            create: { languageCode: this.language, ...data },
+          },
+        },
+        include: { translations: true },
+      });
+      return this.mapToModel(education);
+    } catch (error) {
+      handleServiceError(error);
+    }
+  }
 
-  const upsert = { languageCode, ...data };
-  try {
-    const education = await prisma.education.update({
-      data: {
-        translations: {
-          upsert: {
-            create: upsert,
-            update: upsert,
-            where: {
-              educationId_languageCode: { educationId: id, languageCode },
+  async deleteEducation(id: string): Promise<EducationModel> {
+    try {
+      const education = await prisma.education.delete({
+        include: { translations: true },
+        where: { id },
+      });
+      return this.mapToModel(education);
+    } catch (error) {
+      handleServiceError(error);
+    }
+  }
+
+  async updateEducation(
+    id: string,
+    data: { title: string },
+  ): Promise<EducationModel> {
+    const upsert = { languageCode: this.language, ...data };
+    try {
+      const education = await prisma.education.update({
+        data: {
+          translations: {
+            upsert: {
+              create: upsert,
+              update: upsert,
+              where: {
+                educationId_languageCode: {
+                  educationId: id,
+                  languageCode: this.language,
+                },
+              },
             },
           },
         },
-      },
-      include: { translations: true },
-      where: { id },
-    });
-    return mapToModel(education, languageCode);
-  } catch (error) {
-    handleServiceError(error);
+        include: { translations: true },
+        where: { id },
+      });
+      return this.mapToModel(education);
+    } catch (error) {
+      handleServiceError(error);
+    }
+  }
+
+  private mapToModel(education: InternalEducation): EducationModel {
+    const { translations, ...baseData } = education;
+    const preferedTranslation = translations.find(
+      (translation) => translation.languageCode === this.language,
+    );
+    const translation = preferedTranslation ?? translations[0];
+    assert(
+      translation,
+      `no translation found for education id ${education.id}`,
+    );
+    return {
+      ...baseData,
+      title: translation.title,
+    };
   }
 }

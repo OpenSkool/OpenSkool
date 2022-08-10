@@ -87,7 +87,7 @@ describe('createCompetencyFramework', () => {
         }
       `,
       {
-        spec: { locale: 'en' },
+        spec: { locale: Language.EN },
         variables: { title: 'Hello Framework!' },
       },
     );
@@ -124,7 +124,7 @@ describe('createCompetencyFramework', () => {
         }
       `,
       {
-        spec: { locale: 'nl' },
+        spec: { locale: Language.NL },
         variables: { title: 'Hello Framework!' },
       },
     );
@@ -152,7 +152,7 @@ describe('createCompetencyFramework', () => {
         }
       `,
       {
-        spec: { locale: 'nl' },
+        spec: { locale: Language.NL },
         variables: { title: 'Hello Framework!' },
       },
     );
@@ -253,7 +253,7 @@ describe('createCompetency', () => {
         }
       `,
       {
-        spec: { locale: 'en', userId: person.id },
+        spec: { locale: Language.EN, userId: person.id },
         variables: { frameworkId: framework.id, title: 'Hello Root!' },
       },
     );
@@ -291,7 +291,7 @@ describe('createCompetency', () => {
         }
       `,
       {
-        spec: { locale: 'nl', userId: user.id },
+        spec: { locale: Language.NL, userId: user.id },
         variables: { frameworkId: framework.id, title: 'Hello Root!' },
       },
     );
@@ -317,7 +317,7 @@ describe('createCompetency', () => {
         }
       `,
       {
-        spec: { locale: 'nl', userId: user.id },
+        spec: { locale: Language.NL, userId: user.id },
         variables: { frameworkId: framework.id, title: 'Hello World!' },
       },
     );
@@ -928,7 +928,7 @@ describe('renameCompetency', () => {
         }
       `,
       {
-        spec: { locale: 'nl', userId: user.id },
+        spec: { locale: Language.NL, userId: user.id },
         variables: {
           id: competency.id,
           title: 'Hallo Wereld!',

@@ -9,12 +9,14 @@ import type { FastifyPluginAsync } from 'fastify';
 import Redis from 'ioredis';
 import ms from 'ms';
 
+import { domainPlugin } from '~/domain';
 import { prismaPlugin } from '~/plugins/prisma';
 
 import { authPlugin } from './auth/plugin';
 import { graphqlRoutes } from './graphql';
 import { healthPlugin } from './health';
 import { openIdPlugin } from './openid';
+import { requestPlugin } from './request';
 
 const HTTP_NO_CONTENT = 204;
 
@@ -50,6 +52,8 @@ const apiPlugin: FastifyPluginAsync = async (app) => {
     .register(healthPlugin)
     .register(openIdPlugin, { prefix: '/openid' })
     .register(authPlugin)
+    .register(requestPlugin)
+    .register(domainPlugin)
     .register(graphqlRoutes, { prefix: '/graphql' });
 
   app.get('/', async (request, reply) => {

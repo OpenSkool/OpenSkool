@@ -71,7 +71,7 @@ builder.objectType(CurrentUser, {
     name: t.exposeString('name'),
     tokenSet: t.field({
       type: TokenSet,
-      resolve(user, argumentz, { request }) {
+      resolve(user, _arguments, { request }) {
         assert(request.session.openId.tokenSet, 'missing token set');
         return request.session.openId.tokenSet;
       },
@@ -139,7 +139,7 @@ builder.objectType(AuthRef, {
   fields: (t) => ({
     abilityRules: t.field({
       type: [AbilityRule],
-      resolve(auth, argumentz, { request }) {
+      resolve(auth, _arguments, { request }) {
         return auth.ability.rules;
       },
     }),
@@ -150,8 +150,8 @@ builder.objectType(AuthRef, {
 builder.queryField('auth', (t) =>
   t.field({
     type: AuthRef,
-    async resolve(root, argumentz, ctx) {
-      return ctx.request.auth;
+    async resolve(root, _arguments, { inject: { auth } }) {
+      return auth;
     },
   }),
 );

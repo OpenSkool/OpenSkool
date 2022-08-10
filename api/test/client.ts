@@ -1,8 +1,12 @@
 import { createServer } from '@graphql-yoga/common';
-import { FastifyReply, FastifyRequest } from 'fastify';
+import { Language } from '@prisma/client';
+import { asValue, createContainer } from 'awilix';
+import { FastifyRequest } from 'fastify';
 import { DocumentNode, GraphQLError } from 'graphql';
 
 import { AuthRole, buildAbility } from '~/api/auth';
+import { registerDomainServices } from '~/domain';
+import type { AppCradle } from '~/plugins/awilix';
 import schema from '~/schema';
 import type { Context } from '~/schema/context';
 
@@ -15,7 +19,7 @@ export interface GraphQlResponse<TData> {
 }
 
 export interface SpecContext {
-  locale?: string;
+  locale?: Language;
   userId?: string | false;
 }
 
@@ -38,31 +42,27 @@ export async function execute<
   } else if (spec.userId !== false) {
     userId = spec.userId;
   }
+  const user =
+    userId == null
+      ? null
+      : {
+          id: userId,
+          name: 'Test User',
+          roles: [AuthRole.Administrator],
+        };
   if (spec?.locale != null) {
     headers['accept-language'] = spec.locale;
   }
+  const container = createContainer<AppCradle>()
+    .register('auth', asValue({ ability: buildAbility(user), user }))
+    .register('language', asValue(spec?.locale ?? Language.EN));
+  registerDomainServices(container);
   const { executionResult } = await yoga.inject<TData, TVariables>({
     document,
     headers,
     serverContext: {
-      domain: {
-        locale: spec?.locale ?? 'en',
-        userId: userId ?? null,
-      },
-      reply: {} as unknown as FastifyReply,
-      request: {
-        auth: {
-          ability: buildAbility(
-            userId == null
-              ? null
-              : {
-                  id: userId,
-                  name: 'Test User',
-                  roles: [AuthRole.Administrator],
-                },
-          ),
-        },
-      } as unknown as FastifyRequest,
+      inject: container.cradle,
+      request: { diScope: container } as unknown as FastifyRequest,
     },
     variables,
   });

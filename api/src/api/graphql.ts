@@ -2,7 +2,6 @@ import { Readable } from 'node:stream';
 
 import { useResponseCache } from '@envelop/response-cache';
 import { createServer } from '@graphql-yoga/node';
-import acceptLanguageParser from 'accept-language-parser';
 import { create } from 'cross-undici-fetch';
 import { FastifyPluginAsync } from 'fastify';
 import ms from 'ms';
@@ -19,12 +18,8 @@ export const graphqlRoutes: FastifyPluginAsync = async (app) => {
     plugins: [
       useResponseCache({
         includeExtensionMetadata: true,
-        session: (context: Context) => {
-          const {
-            domain,
-            request: { auth },
-          } = context;
-          return `${auth.user?.id ?? 'anonymous'}-${domain.locale}`;
+        session({ inject: { auth, language } }: Context) {
+          return `${auth.user?.id ?? 'anonymous'}-${language}`;
         },
         ttl: ms('2s'),
       }),
@@ -36,18 +31,9 @@ export const graphqlRoutes: FastifyPluginAsync = async (app) => {
     url: '/',
     method: ['GET', 'POST', 'OPTIONS'],
     handler: async (request, reply) => {
-      const { 'accept-language': acceptLanguage = '' } = request.headers;
-
-      const locale =
-        acceptLanguageParser.pick(['en', 'nl'], acceptLanguage) ?? 'en';
-
       const context: Context = {
-        domain: {
-          locale,
-          userId: request.auth.user?.id ?? null,
-        },
+        inject: request.diScope.cradle,
         request,
-        reply,
       };
       const response = await yogaServer.handleIncomingMessage(request, context);
 

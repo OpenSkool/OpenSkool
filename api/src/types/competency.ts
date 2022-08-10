@@ -1,8 +1,4 @@
-import {
-  CompetencyFrameworkModel,
-  CompetencyModel,
-  CompetencyService,
-} from '~/domain';
+import { CompetencyFrameworkModel, CompetencyModel } from '~/domain';
 import {
   AppInputError,
   AppNotFoundError,
@@ -27,24 +23,23 @@ builder.objectType(Competency, {
   fields: (t) => ({
     framework: t.field({
       type: CompetencyFramework,
-      async resolve(parent, argumentz, ctx) {
-        const framework = await CompetencyService.findFrameworkById(
-          parent.frameworkId,
-          ctx.domain,
-        );
-        return framework;
+      async resolve(parent, _arguments, { inject: { competencyService } }) {
+        return competencyService.findFrameworkById(parent.frameworkId);
       },
     }),
     parent: t.field({
       type: Competency,
       nullable: true,
-      async resolve(parent, argumentz, ctx) {
+      async resolve(
+        parent,
+        _arguments,
+        { inject: { auth, competencyService } },
+      ) {
         if (parent.parentCompetencyId == null) {
           return null;
         }
-        const parentCompetency = await CompetencyService.findCompetencyById(
+        const parentCompetency = await competencyService.findCompetencyById(
           parent.parentCompetencyId,
-          ctx.domain,
         );
         return parentCompetency;
       },
@@ -52,11 +47,12 @@ builder.objectType(Competency, {
     subCompetencies: t.field({
       type: [Competency],
       nullable: true,
-      async resolve(parent, argumentz, ctx) {
-        return CompetencyService.findSubCompetenciesByParentId(
-          parent.id,
-          ctx.domain,
-        );
+      async resolve(
+        parent,
+        _arguments,
+        { inject: { auth, competencyService } },
+      ) {
+        return competencyService.findSubCompetenciesByParentId(parent.id);
       },
     }),
     title: t.exposeString('title'),
@@ -69,11 +65,12 @@ builder.objectType(CompetencyFramework, {
   fields: (t) => ({
     competencies: t.field({
       type: [Competency],
-      async resolve(parent, argumentz, ctx) {
-        return CompetencyService.getFrameworkCompetencies(
-          parent.id,
-          ctx.domain,
-        );
+      async resolve(
+        parent,
+        _arguments,
+        { inject: { auth, competencyService } },
+      ) {
+        return competencyService.getFrameworkCompetencies(parent.id);
       },
     }),
     title: t.exposeString('title'),
@@ -83,20 +80,20 @@ builder.objectType(CompetencyFramework, {
 builder.queryFields((t) => ({
   allCompetencyFrameworks: t.field({
     type: [CompetencyFramework],
-    async resolve(root, argumentz, ctx) {
-      if (ctx.request.auth.ability.cannot('read', 'CompetencyFramework')) {
+    async resolve(root, _arguments, { inject: { auth, competencyService } }) {
+      if (auth.ability.cannot('read', 'CompetencyFramework')) {
         throw new AppUnauthorizedError();
       }
-      return CompetencyService.getAllFrameworks(ctx.domain);
+      return competencyService.getAllFrameworks();
     },
   }),
   allRootCompetencies: t.field({
     type: [Competency],
-    async resolve(root, { id }, ctx) {
-      if (ctx.request.auth.ability.cannot('read', 'Competency')) {
+    async resolve(root, { id }, { inject: { auth, competencyService } }) {
+      if (auth.ability.cannot('read', 'Competency')) {
         throw new AppUnauthorizedError();
       }
-      return CompetencyService.getAllRootCompetencies(ctx.domain);
+      return competencyService.getAllRootCompetencies();
     },
   }),
   competency: t.field({
@@ -106,11 +103,11 @@ builder.queryFields((t) => ({
     errors: {
       types: [AppNotFoundError],
     },
-    async resolve(root, { id }, ctx) {
-      if (ctx.request.auth.ability.cannot('read', 'Competency')) {
+    async resolve(root, { id }, { inject: { auth, competencyService } }) {
+      if (auth.ability.cannot('read', 'Competency')) {
         throw new AppUnauthorizedError();
       }
-      return CompetencyService.findCompetencyById(id, ctx.domain);
+      return competencyService.findCompetencyById(id);
     },
   }),
   competencyFramework: t.field({
@@ -120,11 +117,11 @@ builder.queryFields((t) => ({
     errors: {
       types: [AppNotFoundError],
     },
-    async resolve(root, { id }, ctx) {
-      if (ctx.request.auth.ability.cannot('read', 'CompetencyFramework')) {
+    async resolve(root, { id }, { inject: { auth, competencyService } }) {
+      if (auth.ability.cannot('read', 'CompetencyFramework')) {
         throw new AppUnauthorizedError();
       }
-      return CompetencyService.findFrameworkById(id, ctx.domain);
+      return competencyService.findFrameworkById(id);
     },
   }),
 }));
@@ -147,14 +144,11 @@ builder.mutationField('createCompetencyFramework', (t) =>
     errors: {
       types: [AppInputError, AppUnauthorizedError],
     },
-    async resolve(root, { data }, ctx) {
-      if (ctx.request.auth.ability.cannot('create', 'CompetencyFramework')) {
+    async resolve(root, { data }, { inject: { auth, competencyService } }) {
+      if (auth.ability.cannot('create', 'CompetencyFramework')) {
         throw new AppUnauthorizedError();
       }
-      return CompetencyService.createCompetencyFramework(
-        { title: data.title },
-        ctx.domain,
-      );
+      return competencyService.createCompetencyFramework({ title: data.title });
     },
   }),
 );
@@ -178,11 +172,11 @@ builder.mutationField('createNestedCompetency', (t) =>
     errors: {
       types: [AppInputError, AppNotFoundError, AppUnauthorizedError],
     },
-    async resolve(root, { data }, ctx) {
-      if (ctx.request.auth.ability.cannot('create', 'Competency')) {
+    async resolve(root, { data }, { inject: { auth, competencyService } }) {
+      if (auth.ability.cannot('create', 'Competency')) {
         throw new AppUnauthorizedError();
       }
-      return CompetencyService.createNestedCompetency(data, ctx.domain);
+      return competencyService.createNestedCompetency(data);
     },
   }),
 );
@@ -206,11 +200,11 @@ builder.mutationField('createRootCompetency', (t) =>
     errors: {
       types: [AppInputError, AppNotFoundError, AppUnauthorizedError],
     },
-    async resolve(root, { data }, ctx) {
-      if (ctx.request.auth.ability.cannot('create', 'Competency')) {
+    async resolve(root, { data }, { inject: { auth, competencyService } }) {
+      if (auth.ability.cannot('create', 'Competency')) {
         throw new AppUnauthorizedError();
       }
-      return CompetencyService.createRootCompetency(data, ctx.domain);
+      return competencyService.createRootCompetency(data);
     },
   }),
 );
@@ -225,11 +219,11 @@ builder.mutationField('deleteCompetency', (t) =>
     errors: {
       types: [AppNotFoundError, AppUnauthorizedError],
     },
-    async resolve(root, { id }, ctx) {
-      if (ctx.request.auth.ability.cannot('delete', 'Competency')) {
+    async resolve(root, { id }, { inject: { auth, competencyService } }) {
+      if (auth.ability.cannot('delete', 'Competency')) {
         throw new AppUnauthorizedError();
       }
-      return CompetencyService.deleteCompetency(id, ctx.domain);
+      return competencyService.deleteCompetency(id);
     },
   }),
 );
@@ -250,15 +244,11 @@ builder.mutationField('renameCompetency', (t) =>
     errors: {
       types: [AppInputError, AppNotFoundError, AppUnauthorizedError],
     },
-    async resolve(root, { id, data }, ctx) {
-      if (ctx.request.auth.ability.cannot('update', 'Competency')) {
+    async resolve(root, { id, data }, { inject: { auth, competencyService } }) {
+      if (auth.ability.cannot('update', 'Competency')) {
         throw new AppUnauthorizedError();
       }
-      return CompetencyService.updateCompetencyTranslations(
-        id,
-        data,
-        ctx.domain,
-      );
+      return competencyService.updateCompetencyTranslations(id, data);
     },
   }),
 );
@@ -286,14 +276,17 @@ builder.mutationField('swapCompetencies', (t) =>
     errors: {
       types: [AppInputError, AppNotFoundError, AppUnauthorizedError],
     },
-    async resolve(root, { leftCompetencyId, rightCompetencyId }, ctx) {
-      if (ctx.request.auth.ability.cannot('update', 'Competency')) {
+    async resolve(
+      root,
+      { leftCompetencyId, rightCompetencyId },
+      { inject: { auth, competencyService } },
+    ) {
+      if (auth.ability.cannot('update', 'Competency')) {
         throw new AppUnauthorizedError();
       }
-      const [left, right] = await CompetencyService.swapCompetencies(
+      const [left, right] = await competencyService.swapCompetencies(
         leftCompetencyId,
         rightCompetencyId,
-        ctx.domain,
       );
       return { left, right };
     },
