@@ -382,7 +382,6 @@ export type Query = {
   __typename?: 'Query';
   allCompetencyFrameworks: Array<CompetencyFramework>;
   allEducations: Array<Education>;
-  allPeople: Array<Person>;
   allRootCompetencies: Array<Competency>;
   auth: Auth;
   competency?: Maybe<QueryCompetencyResult>;

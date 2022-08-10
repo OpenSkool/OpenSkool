@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import cuid from 'cuid';
 
-import { UserModel, UserService } from '~/domain';
+import { UserModel } from '~/domain';
 import builder from '~/schema/builder';
 import { cacheFakeData } from '~/schema/helpers';
 
@@ -25,13 +25,6 @@ builder.objectType(Person, {
     name: t.exposeString('name'),
   }),
 });
-
-builder.queryField('allPeople', (t) =>
-  t.field({
-    type: [Person],
-    resolve: () => UserService.getAllUsers(),
-  }),
-);
 
 export function generateFakePerson(): UserModel {
   return {

@@ -342,7 +342,6 @@ type Person implements Node {
 type Query {
   allCompetencyFrameworks: [CompetencyFramework!]!
   allEducations: [Education!]!
-  allPeople: [Person!]!
   allRootCompetencies: [Competency!]!
   auth: Auth!
   competency(id: ID!): QueryCompetencyResult
