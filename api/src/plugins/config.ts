@@ -5,9 +5,10 @@ import plugin from 'fastify-plugin';
 const schema = Type.Object({
   APP_BASE_URL: Type.String(),
   API_BASE_URL: Type.String(),
+  AUTH_BASE_URL: Type.String(),
   AUTH_CLIENT_ID: Type.String(),
   AUTH_CLIENT_SECRET: Type.String(),
-  AUTH_ISSUER: Type.String(),
+  AUTH_REALM_NAME: Type.String(),
   DATABASE_URL: Type.String(),
   HOST: Type.String(),
   NODE_ENV: Type.Union(

@@ -8,7 +8,7 @@ const HTTP_OK = 200;
 
 export const healthPlugin: FastifyPluginAsync = plugin(async (app) => {
   app.get('/health', async (request, reply) => {
-    const authApiResponse = await fetch(app.config.AUTH_ISSUER, {
+    const authApiResponse = await fetch(app.config.AUTH_BASE_URL, {
       method: 'HEAD',
     });
     const prismaMetrics = await prisma.$metrics.json();

@@ -34,7 +34,11 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
       ).toString();
     };
 
-    const authIssuer = await Issuer.discover(app.config.AUTH_ISSUER);
+    const authIssuerUrl = new URL(
+      `/realms/${app.config.AUTH_REALM_NAME}/`,
+      app.config.AUTH_BASE_URL,
+    ).toString();
+    const authIssuer = await Issuer.discover(authIssuerUrl);
 
     const openIdClient = new authIssuer.Client({
       client_id: app.config.AUTH_CLIENT_ID,
@@ -43,7 +47,7 @@ export const openIdPlugin: FastifyPluginAsync<{ prefix: string }> = plugin(
     });
 
     const JWKS = createRemoteJWKSet(
-      new URL('./protocol/openid-connect/certs', app.config.AUTH_ISSUER),
+      new URL('./protocol/openid-connect/certs', authIssuerUrl),
     );
 
     app.addHook('onRequest', async (request, reply) => {
