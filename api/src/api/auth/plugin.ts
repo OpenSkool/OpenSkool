@@ -47,7 +47,7 @@ export const authPlugin = plugin(async (app) => {
       id: accessToken.sub,
       name: accessToken.preferred_username,
       roles: accessToken.realm_access.roles.filter((role) =>
-        Object.keys(AuthRole).includes(role),
+        Object.values(AuthRole).includes(role as AuthRole),
       ) as AuthRole[],
     };
     request.diScope.register({
