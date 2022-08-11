@@ -23,23 +23,19 @@ builder.objectType(Competency, {
   fields: (t) => ({
     framework: t.field({
       type: CompetencyFramework,
-      async resolve(parent, _arguments, { inject: { competencyService } }) {
-        return competencyService.findFrameworkById(parent.frameworkId);
+      async resolve(competency, _arguments, { inject: { competencyService } }) {
+        return competencyService.findFrameworkById(competency.frameworkId);
       },
     }),
     parent: t.field({
       type: Competency,
       nullable: true,
-      async resolve(
-        parent,
-        _arguments,
-        { inject: { auth, competencyService } },
-      ) {
-        if (parent.parentCompetencyId == null) {
+      async resolve(competency, _arguments, { inject: { competencyService } }) {
+        if (competency.parentCompetencyId == null) {
           return null;
         }
         const parentCompetency = await competencyService.findCompetencyById(
-          parent.parentCompetencyId,
+          competency.parentCompetencyId,
         );
         return parentCompetency;
       },
@@ -47,12 +43,8 @@ builder.objectType(Competency, {
     subCompetencies: t.field({
       type: [Competency],
       nullable: true,
-      async resolve(
-        parent,
-        _arguments,
-        { inject: { auth, competencyService } },
-      ) {
-        return competencyService.findSubCompetenciesByParentId(parent.id);
+      async resolve(competency, _arguments, { inject: { competencyService } }) {
+        return competencyService.findSubCompetenciesByParentId(competency.id);
       },
     }),
     title: t.exposeString('title'),
@@ -65,12 +57,8 @@ builder.objectType(CompetencyFramework, {
   fields: (t) => ({
     competencies: t.field({
       type: [Competency],
-      async resolve(
-        parent,
-        _arguments,
-        { inject: { auth, competencyService } },
-      ) {
-        return competencyService.getFrameworkCompetencies(parent.id);
+      async resolve(framework, _arguments, { inject: { competencyService } }) {
+        return competencyService.getFrameworkCompetencies(framework.id);
       },
     }),
     title: t.exposeString('title'),
@@ -89,7 +77,7 @@ builder.queryFields((t) => ({
   }),
   allRootCompetencies: t.field({
     type: [Competency],
-    async resolve(root, { id }, { inject: { auth, competencyService } }) {
+    async resolve(root, _arguments, { inject: { auth, competencyService } }) {
       if (auth.ability.cannot('read', 'Competency')) {
         throw new AppUnauthorizedError();
       }
