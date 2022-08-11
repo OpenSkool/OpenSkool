@@ -5,7 +5,6 @@ import * as Prisma from '@prisma/client';
 import { InternshipApplicationVariant } from '@prisma/client';
 import { z } from 'zod';
 
-import { UserService } from '~/domain';
 import { AppNotFoundError, AppUnauthorizedError } from '~/errors';
 import { prisma } from '~/prisma';
 import builder from '~/schema/builder';
@@ -108,8 +107,8 @@ const InternshipInstance = builder.prismaObject('InternshipInstance', {
     }),
     student: t.field({
       type: Person,
-      resolve(instance) {
-        return UserService.findUserById(instance.studentId);
+      async resolve(instance, _arguments, { inject: { userService } }) {
+        return userService.findUserById(instance.studentId);
       },
     }),
     supervisors: t.field({

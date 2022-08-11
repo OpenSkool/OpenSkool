@@ -22,13 +22,19 @@ builder.objectType(Person, {
         });
       },
     }),
-    name: t.exposeString('name'),
+    name: t.string({
+      resolve(user) {
+        return user.username ?? 'Anonymous';
+      },
+    }),
   }),
 });
 
 export function generateFakePerson(): UserModel {
   return {
     id: cuid(),
-    name: faker.name.findName(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    username: faker.internet.userName(),
   };
 }

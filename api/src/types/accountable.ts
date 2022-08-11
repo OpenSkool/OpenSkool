@@ -1,4 +1,3 @@
-import { UserService } from '~/domain';
 import builder from '~/schema/builder';
 
 import { Person } from './person';
@@ -20,15 +19,15 @@ builder.interfaceType(Accountable, {
     createdAt: t.expose('createdAt', { type: 'DateTime' }),
     createdBy: t.field({
       type: Person,
-      async resolve(parent) {
-        return UserService.findUserById(parent.createdById);
+      async resolve(accountable, _arguments, { inject: { userService } }) {
+        return userService.findUserById(accountable.createdById);
       },
     }),
     updatedAt: t.expose('updatedAt', { type: 'DateTime' }),
     updatedBy: t.field({
       type: Person,
-      async resolve(parent) {
-        return UserService.findUserById(parent.updatedById);
+      async resolve(accountable, _arguments, { inject: { userService } }) {
+        return userService.findUserById(accountable.updatedById);
       },
     }),
   }),
