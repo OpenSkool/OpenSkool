@@ -1,6 +1,7 @@
 import { createServer } from '@graphql-yoga/common';
 import { Language } from '@prisma/client';
 import { asValue, createContainer } from 'awilix';
+import cuid from 'cuid';
 import { FastifyRequest } from 'fastify';
 import { DocumentNode, GraphQLError } from 'graphql';
 
@@ -9,8 +10,6 @@ import { registerDomainServices } from '~/domain';
 import type { AppCradle } from '~/plugins/awilix';
 import schema from '~/schema';
 import type { Context } from '~/schema/context';
-
-import { createUserFixture } from './fixtures';
 
 export interface GraphQlResponse<TData> {
   data: TData;
@@ -35,18 +34,11 @@ export async function execute<
     schema,
   });
   const headers: HeadersInit = {};
-  let userId: string | null = null;
-  if (spec?.userId == null) {
-    const user = await createUserFixture();
-    userId = user.id;
-  } else if (spec.userId !== false) {
-    userId = spec.userId;
-  }
   const user =
-    userId == null
+    spec?.userId === false
       ? null
       : {
-          id: userId,
+          id: spec?.userId ?? cuid(),
           name: 'Test User',
           roles: [AuthRole.Administrator],
         };

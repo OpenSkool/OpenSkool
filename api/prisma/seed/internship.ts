@@ -5,7 +5,7 @@ import { chance, random, times } from '~/utils';
 
 import { seedCourses } from './course';
 import { seedEducations } from './education';
-import { generateFakeRange } from './helpers';
+import { generateFakeRange, getUsers } from './helpers';
 import { seedOrganisations } from './organisation';
 
 export async function seedInternships(prisma: PrismaClient): Promise<void> {
@@ -44,7 +44,7 @@ export async function seedInternships(prisma: PrismaClient): Promise<void> {
   const internships = await prisma.internship.findMany({
     include: { availablePositions: true },
   });
-  const users = await prisma.user.findMany();
+  const users = await getUsers();
 
   for (const user of users) {
     await prisma.internshipInstance.createMany({

@@ -1,4 +1,3 @@
-import { faker } from '@faker-js/faker';
 import { CompetencyFramework, PrismaClient } from '@prisma/client';
 
 import { canMedsCompetencies } from './canmeds';
@@ -6,8 +5,6 @@ import { basisCompetentiesLeerkracht } from './leerkracht';
 import { CompetencyFixture } from './types';
 
 export async function seedCompetencies(prisma: PrismaClient): Promise<void> {
-  const user = faker.helpers.arrayElement(await prisma.user.findMany());
-
   await createCompetencyFramework(
     'Basiscompetenties leerkracht',
     basisCompetentiesLeerkracht,
@@ -24,8 +21,6 @@ export async function seedCompetencies(prisma: PrismaClient): Promise<void> {
     if (existingFramework == null) {
       const framework = await prisma.competencyFramework.create({
         data: {
-          createdById: user.id,
-          updatedById: user.id,
           translations: {
             create: { languageCode: 'EN', title },
           },
@@ -52,9 +47,7 @@ export async function seedCompetencies(prisma: PrismaClient): Promise<void> {
   ): Promise<void> {
     const competency = await prisma.competency.create({
       data: {
-        createdById: user.id,
         frameworkId: framework.id,
-        updatedById: user.id,
         parentCompetencyId: nesting?.parent,
         translations: { create: { languageCode: 'EN', title: fixture.title } },
       },

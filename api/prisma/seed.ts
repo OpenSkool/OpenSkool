@@ -9,11 +9,6 @@ import { seedOrganisations } from './seed/organisation';
 const prisma = new PrismaClient();
 
 try {
-  if ((await prisma.user.count()) === 0) {
-    throw new Error(
-      'No users found. Start the App and log in to create your first user.',
-    );
-  }
   await seedCompetencies(prisma);
   await seedCourses(prisma);
   await seedEducations(prisma);

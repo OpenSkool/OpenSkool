@@ -1,3 +1,4 @@
+import cuid from 'cuid';
 import gql from 'graphql-tag';
 import {
   afterAll,
@@ -10,7 +11,7 @@ import {
 
 import { prisma } from '../src/prisma';
 import { execute } from './client';
-import { createEducationFixture, createUserFixture } from './fixtures';
+import { createEducationFixture } from './fixtures';
 
 let internship: { id: string };
 
@@ -33,7 +34,6 @@ beforeAll(async () => {
 beforeEach(async () => {
   await prisma.internshipPosition.deleteMany({});
   await prisma.internshipInstance.deleteMany({});
-  await prisma.user.deleteMany({});
 });
 
 describe('myInternshipInstances', () => {
@@ -57,9 +57,9 @@ describe('myInternshipInstances', () => {
   });
 
   test('return an array internship instances', async () => {
-    const user = await createUserFixture();
+    const userId = cuid();
     await prisma.internshipInstance.create({
-      data: { studentId: user.id, internshipId: internship.id },
+      data: { studentId: userId, internshipId: internship.id },
     });
     const response = await execute<{ id: string; course: { name: string } }>(
       gql`
@@ -74,7 +74,7 @@ describe('myInternshipInstances', () => {
           }
         }
       `,
-      { spec: { userId: user.id } },
+      { spec: { userId } },
     );
     expect(response).toHaveProperty('data.myInternshipInstances', [
       {
@@ -86,11 +86,11 @@ describe('myInternshipInstances', () => {
 
 describe('internshipInstance', () => {
   test('return null if not authorized', async () => {
-    const user1 = await createUserFixture({ id: 'user-id-1' });
-    const user2 = await createUserFixture({ id: 'user-id-2' });
+    const userId1 = cuid();
+    const userId2 = cuid();
     const instance = await prisma.internshipInstance.create({
       data: {
-        student: { connect: { id: user1.id } },
+        studentId: userId1,
         internship: { connect: { id: internship.id } },
       },
     });
@@ -103,7 +103,7 @@ describe('internshipInstance', () => {
         }
       `,
       {
-        spec: { userId: user2.id },
+        spec: { userId: userId2 },
         variables: { id: instance.id },
       },
     );
@@ -111,7 +111,6 @@ describe('internshipInstance', () => {
   });
 
   test('return null if not found', async () => {
-    const user = await createUserFixture();
     const response = await execute(
       gql`
         query ($id: ID!) {
@@ -121,7 +120,7 @@ describe('internshipInstance', () => {
         }
       `,
       {
-        spec: { userId: user.id },
+        spec: { userId: cuid() },
         variables: { id: 'id-does-not-exist' },
       },
     );
@@ -129,14 +128,14 @@ describe('internshipInstance', () => {
   });
 
   test('return internship position', async () => {
-    const user = await createUserFixture();
+    const userId = cuid();
     const organisation = await prisma.organisation.create({
       data: { name: 'Organisation' },
     });
     const instance = await prisma.internshipInstance.create({
       data: {
         internshipId: internship.id,
-        studentId: user.id,
+        studentId: userId,
       },
     });
     await prisma.internshipPosition.create({
@@ -162,7 +161,7 @@ describe('internshipInstance', () => {
         }
       `,
       {
-        spec: { userId: user.id },
+        spec: { userId },
         variables: { id: instance.id },
       },
     );

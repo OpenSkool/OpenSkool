@@ -22,11 +22,9 @@ model Competency {
   id String @id @default(cuid())
 
   createdAt   DateTime @default(now())
-  createdBy   User?    @relation("CompetencyToUserCreated", fields: [createdById], references: [id])
   createdById String?
   sort        Int      @default(autoincrement())
   updatedAt   DateTime @updatedAt
-  updatedBy   User?    @relation("CompetencyToUserUpdated", fields: [updatedById], references: [id])
   updatedById String?
 
   framework          CompetencyFramework @relation(fields: [frameworkId], references: [id])
@@ -53,10 +51,8 @@ model CompetencyFramework {
   id String @id @default(cuid())
 
   createdAt   DateTime @default(now())
-  createdBy   User?    @relation("CompetencyFrameworkToUserCreated", fields: [createdById], references: [id])
   createdById String?
   updatedAt   DateTime @updatedAt
-  updatedBy   User?    @relation("CompetencyFrameworkToUserUpdated", fields: [updatedById], references: [id])
   updatedById String?
 
   competencies Competency[]
@@ -88,10 +84,8 @@ model Education {
   id String @id @default(cuid())
 
   createdAt   DateTime @default(now())
-  createdBy   User?    @relation("EducationToUserCreated", fields: [createdById], references: [id])
   createdById String?
   updatedAt   DateTime @updatedAt
-  updatedBy   User?    @relation("EducationToUserUpdated", fields: [updatedById], references: [id])
   updatedById String?
 
   internships Internship[]
@@ -157,7 +151,6 @@ model InternshipInstance {
   assignedPositionId String?                 @unique
   internship         Internship              @relation(fields: [internshipId], references: [id], onDelete: Restrict)
   internshipId       String
-  student            User?                   @relation("InternshipInstanceToStudent", fields: [studentId], references: [id])
   studentId          String?
 }
 
@@ -183,23 +176,6 @@ model Organisation {
   updatedAt DateTime @updatedAt
 
   internshipPositions InternshipPosition[]
-
-  name String
-}
-
-model User {
-  id String @id
-
-  competenciesCreated Competency[] @relation("CompetencyToUserCreated")
-  competenciesUpdated Competency[] @relation("CompetencyToUserUpdated")
-
-  competencyFrameworksCreated CompetencyFramework[] @relation("CompetencyFrameworkToUserCreated")
-  competencyFrameworksUpdated CompetencyFramework[] @relation("CompetencyFrameworkToUserUpdated")
-
-  educationsCreated Education[] @relation("EducationToUserCreated")
-  educationsUpdated Education[] @relation("EducationToUserUpdated")
-
-  internshipInstanceToStudent InternshipInstance[] @relation("InternshipInstanceToStudent")
 
   name String
 }

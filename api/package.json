@@ -98,6 +98,6 @@
     ]
   },
   "prisma": {
-    "seed": "tsx prisma/seed.ts"
+    "seed": "tsx -r dotenv-flow/config prisma/seed.ts"
   }
 }
