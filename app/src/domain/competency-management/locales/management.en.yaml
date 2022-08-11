@@ -33,7 +33,8 @@ competency:
       moveDown: Move competency down
       moveUp: Move competency up
       reorder: Reorder competencies
-    emptyDescription: This competency has no sub-competencies.
+    emptyRootDescription: This framework has no competencies.
+    emptyNestedDescription: This competency has no sub-competencies.
 
 competencyFramework:
   action:

@@ -46,16 +46,16 @@ const framework = computed(() =>
 <template>
   <template v-if="framework != null || !loading">
     <NotFoundCard v-if="framework == null">
-      {{ $t('management.competencyFramework.error.notFound') }}
+      {{ $t('management.competency.error.notFound') }}
     </NotFoundCard>
     <UiEmptyCard v-else-if="framework.competencies.length === 0">
-      <p v-t="'management.competencyFramework.list.emptyDescription'" />
+      <p v-t="'management.competency.list.emptyRootDescription'" />
       <UiButtonRouterLink
         v-if="ability.can('create', 'Competency')"
         class="my-5"
         :to="`${$route.path}/create-competency`"
       >
-        {{ $t('management.competencyFramework.action.create') }}
+        {{ $t('management.competency.action.create') }}
       </UiButtonRouterLink>
     </UiEmptyCard>
     <CompetencyList

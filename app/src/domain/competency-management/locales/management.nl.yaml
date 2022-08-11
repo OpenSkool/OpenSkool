@@ -33,7 +33,8 @@ competency:
       moveDown: Competentie omlaag bewegen
       moveUp: Competentie omhoog bewegen
       reorder: Competencies herschikken
-    emptyDescription: Deze competency heeft geen sub-competencies.
+    emptyRootDescription: Dit framework heeft geen sub-competenties.
+    emptyNestedDescription: Deze competentie heeft geen sub-competenties.
 
 competencyFramework:
   action:

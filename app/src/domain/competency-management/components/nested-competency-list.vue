@@ -50,7 +50,7 @@ const subCompetencies = computed(() => competency.value?.subCompetencies ?? []);
       {{ $t('management.competency.error.notFound') }}
     </NotFoundCard>
     <UiEmptyCard v-else-if="subCompetencies.length === 0">
-      <p v-t="'management.competency.list.emptyDescription'" />
+      <p v-t="'management.competency.list.emptyNestedDescription'" />
       <UiButtonRouterLink
         v-if="ability.can('create', 'Competency')"
         class="my-5"
