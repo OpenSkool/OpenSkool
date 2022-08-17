@@ -167,6 +167,7 @@ export type InternshipInstanceAppliedForPositionArgs = {
 /** An internship position is one specific position within an organisation to execute an internship. When an organisation can host multiple students for a similar positions, there as many internship positions as there are possible hosted students. */
 export type InternshipPosition = Node & {
   __typename?: 'InternshipPosition';
+  applications: Array<InternshipApplication>;
   description: Scalars['String'];
   id: Scalars['ID'];
   mentors: Array<Person>;
@@ -804,7 +805,12 @@ export type ApplyForInternshipMutationMutationVariables = Exact<{
 export type ApplyForInternshipMutationMutation = {
   __typename?: 'Mutation';
   applyForPriorityInternshipPosition: {
-    __typename: 'InternshipPriorityApplication';
+    __typename?: 'InternshipPriorityApplication';
+    instance: {
+      __typename?: 'InternshipInstance';
+      id: string;
+      appliedForPosition: boolean;
+    };
   };
 };
 
@@ -2292,7 +2298,30 @@ export const ApplyForInternshipMutationDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'instance' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'appliedForPosition' },
+                        arguments: [
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'id' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'positionId' },
+                            },
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                },
               ],
             },
           },

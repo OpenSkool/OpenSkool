@@ -1,12 +1,11 @@
 <script lang="ts" setup>
 import { ApplyForInternshipMutationDocument } from '~/codegen/graphql';
+import { assert } from '~/utils';
 
 const props = defineProps<{
   instanceId: string;
   positionId: string;
 }>();
-
-const emit = defineEmits<(event: 'applied') => void>();
 
 gql`
   mutation ApplyForInternshipMutation(
@@ -19,25 +18,28 @@ gql`
       positionId: $positionId
       priority: $priority
     ) {
-      __typename
+      instance {
+        id
+        appliedForPosition(id: $positionId)
+      }
     }
   }
 `;
 
-const formValues = ref<{
-  priority: number | null;
-}>({
-  priority: null,
-});
+interface FormValues {
+  priority?: number;
+}
+const formValues = ref<FormValues>({});
 
 const priorityOptions = [1, 2, 3]; // eslint-disable-line @typescript-eslint/no-magic-numbers
 
 const { loading, mutate } = useMutation(ApplyForInternshipMutationDocument);
 
 async function handleFormSubmit(): Promise<void> {
+  const { priority } = formValues.value;
+  assert(priority);
   try {
-    await mutate({ ...props, priority: 1 });
-    emit('applied');
+    await mutate({ ...props, priority });
   } catch (error) {
     console.error('could not apply for internship position', error);
   }

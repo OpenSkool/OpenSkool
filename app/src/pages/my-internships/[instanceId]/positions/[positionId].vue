@@ -45,7 +45,7 @@ gql`
   }
 `;
 
-const { loading, onError, refetch, result } = useQuery(
+const { loading, onError, result } = useQuery(
   InternshipInstancePositionDetailQueryDocument,
   () => ({
     instanceId: instanceId.value,
@@ -168,7 +168,6 @@ const internshipPosition = computed(() => result.value?.internshipPosition);
         v-else
         :instance-id="instanceId"
         :position-id="positionId"
-        @applied="refetch()"
       />
     </template>
   </article>

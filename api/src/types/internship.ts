@@ -164,6 +164,14 @@ export const InternshipPosition = builder.prismaObject('InternshipPosition', {
   interfaces: [Node],
   fields: (t) => ({
     id: t.exposeID('id'),
+    applications: t.field({
+      type: [InternshipApplication],
+      resolve(position) {
+        return prisma.internshipPosition
+          .findUnique({ where: { id: position.id } })
+          .applications();
+      },
+    }),
     description: t.exposeString('description'),
     mentors: t.field({
       type: [Person],

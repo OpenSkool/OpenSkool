@@ -150,6 +150,7 @@ type InternshipInstance implements Node {
 An internship position is one specific position within an organisation to execute an internship. When an organisation can host multiple students for a similar positions, there as many internship positions as there are possible hosted students.
 """
 type InternshipPosition implements Node {
+  applications: [InternshipApplication!]!
   description: String!
   id: ID!
   mentors: [Person!]!
