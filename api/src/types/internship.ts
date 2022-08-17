@@ -9,13 +9,13 @@ import { AppNotFoundError, AppUnauthorizedError } from '~/errors';
 import { prisma } from '~/prisma';
 import builder from '~/schema/builder';
 import { cacheFakeData } from '~/schema/helpers';
-import { Course } from '~/types/course';
-import { Education } from '~/types/education';
-import { generateFakePerson, Person } from '~/types/person';
 import { chance, times } from '~/utils';
 
+import { Course } from './course';
+import { Education } from './education';
 import { Node } from './node';
 import { generateFakeWorkplace, Workplace } from './organisation';
+import { generateFakePerson, Person } from './person';
 
 export const Internship = builder.prismaObject('Internship', {
   description:
@@ -108,7 +108,7 @@ const InternshipInstance = builder.prismaObject('InternshipInstance', {
     student: t.field({
       type: Person,
       async resolve(instance, _arguments, { inject: { userService } }) {
-        return userService.findUserById(instance.studentId);
+        return userService.findById(instance.studentId);
       },
     }),
     supervisors: t.field({
@@ -298,6 +298,38 @@ builder.mutationField('applyForPriorityInternshipPosition', (t) =>
           instanceId,
           positionId,
         },
+      });
+    },
+  }),
+);
+
+builder.mutationField('inviteInternshipPositionMentor', (t) =>
+  t.field({
+    type: InternshipPosition,
+    args: {
+      email: t.arg.string(),
+      positionId: t.arg.id(),
+    },
+    async resolve(
+      root,
+      { email, positionId },
+      { inject: { auth, userService } },
+    ) {
+      if (auth.ability.cannot('update', 'InternshipPosition')) {
+        throw new AppUnauthorizedError(
+          'You are not allowed to invite internship position mentors',
+        );
+      }
+      const position = await prisma.internshipPosition.findUnique({
+        where: { id: positionId },
+        select: { id: true },
+      });
+      if (position == null) {
+        throw new AppNotFoundError('Internship position not found.');
+      }
+      await userService.inviteOrFind(email);
+      return prisma.internshipPosition.findUniqueOrThrow({
+        where: { id: positionId },
       });
     },
   }),

@@ -5,6 +5,7 @@ import {
   CompetencyFramework,
   InternshipApplication,
   InternshipInstance,
+  InternshipPosition,
 } from '@prisma/client';
 
 export { accessibleBy } from '@casl/prisma';
@@ -20,6 +21,7 @@ type PrismaSubjects = Subjects<{
   CompetencyFramework: CompetencyFramework;
   InternshipApplication: InternshipApplication;
   InternshipInstance: InternshipInstance;
+  InternshipPosition: InternshipPosition;
 }>;
 type AppSubject = AppAllSubject | PrismaSubjects;
 

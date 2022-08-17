@@ -20,14 +20,14 @@ builder.interfaceType(Accountable, {
     createdBy: t.field({
       type: Person,
       async resolve(accountable, _arguments, { inject: { userService } }) {
-        return userService.findUserById(accountable.createdById);
+        return userService.findById(accountable.createdById);
       },
     }),
     updatedAt: t.expose('updatedAt', { type: 'DateTime' }),
     updatedBy: t.field({
       type: Person,
       async resolve(accountable, _arguments, { inject: { userService } }) {
-        return userService.findUserById(accountable.updatedById);
+        return userService.findById(accountable.updatedById);
       },
     }),
   }),

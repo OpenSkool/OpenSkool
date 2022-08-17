@@ -13,7 +13,7 @@ export function buildAbility(user: AuthUser | null): AppAbility {
   }
 
   if (user.roles.includes(AuthRole.Administrator)) {
-    can('manage', ['Competency', 'CompetencyFramework']);
+    can('manage', ['Competency', 'CompetencyFramework', 'InternshipPosition']);
   }
 
   can('manage', 'InternshipApplication'); // Verified by instanceId in code

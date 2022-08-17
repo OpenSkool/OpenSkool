@@ -1,27 +1,42 @@
 import { Language } from '@prisma/client';
 import acceptLanguageParser from 'accept-language-parser';
-import { asValue } from 'awilix';
-import type { FastifyLoggerInstance, FastifyPluginAsync } from 'fastify';
+import { asFunction, asValue } from 'awilix';
+import type {
+  FastifyInstance,
+  FastifyLoggerInstance,
+  FastifyPluginAsync,
+  FastifyRequest,
+} from 'fastify';
 import plugin from 'fastify-plugin';
 
 import { AppError } from '~/errors';
+import { AppCradle } from '~/plugins/awilix';
 
 declare module '@fastify/awilix' {
+  interface Cradle {
+    app: FastifyInstance;
+    logger: FastifyLoggerInstance;
+  }
   interface RequestCradle {
     language: Language;
-    logger: FastifyLoggerInstance;
+    request: FastifyRequest;
   }
 }
 
-export const requestPlugin: FastifyPluginAsync = plugin(async (app) => {
-  app.addHook('onRequest', async (request) => {
+export const injectPlugin: FastifyPluginAsync = plugin(async (app) => {
+  app.diContainer.register('app', asValue(app));
+
+  function getLanguage({ request }: AppCradle): Language {
     const { 'accept-language': acceptLanguage = '' } = request.headers;
     const languageString =
       acceptLanguageParser.pick(['en', 'nl'], acceptLanguage) ?? 'en';
-    const language = mapToLanguage(languageString);
+    return mapToLanguage(languageString);
+  }
+
+  app.addHook('onRequest', async (request) => {
     request.diScope.register({
-      language: asValue(language),
-      logger: asValue(request.log),
+      language: asFunction(getLanguage, { lifetime: 'SINGLETON' }),
+      request: asValue(request),
     });
   });
 });

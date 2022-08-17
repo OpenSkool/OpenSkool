@@ -205,6 +205,10 @@ type Mutation {
   ): MutationCreateRootCompetencyResult!
   deleteCompetency(id: ID!): MutationDeleteCompetencyResult
   deleteEducation(id: ID!): MutationDeleteEducationResult!
+  inviteInternshipPositionMentor(
+    email: String!
+    positionId: ID!
+  ): InternshipPosition!
   renameCompetency(
     data: RenameCompetencyInput!
     id: ID!

@@ -204,6 +204,7 @@ export type Mutation = {
   createRootCompetency: MutationCreateRootCompetencyResult;
   deleteCompetency?: Maybe<MutationDeleteCompetencyResult>;
   deleteEducation: MutationDeleteEducationResult;
+  inviteInternshipPositionMentor: InternshipPosition;
   renameCompetency: MutationRenameCompetencyResult;
   swapCompetencies: MutationSwapCompetenciesResult;
   updateEducation: MutationUpdateEducationResult;
@@ -237,6 +238,11 @@ export type MutationDeleteCompetencyArgs = {
 
 export type MutationDeleteEducationArgs = {
   id: Scalars['ID'];
+};
+
+export type MutationInviteInternshipPositionMentorArgs = {
+  email: Scalars['String'];
+  positionId: Scalars['ID'];
 };
 
 export type MutationRenameCompetencyArgs = {

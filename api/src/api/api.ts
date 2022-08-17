@@ -15,9 +15,9 @@ import { prismaPlugin } from '~/plugins/prisma';
 import { authPlugin } from './auth/plugin';
 import { graphqlRoutes } from './graphql';
 import { healthPlugin } from './health';
+import { injectPlugin } from './inject';
 import { keycloakPlugin } from './keycloak';
 import { openIdPlugin } from './openid';
-import { requestPlugin } from './request';
 
 const HTTP_NO_CONTENT = 204;
 
@@ -54,7 +54,7 @@ const apiPlugin: FastifyPluginAsync = async (app) => {
     .register(openIdPlugin, { prefix: '/openid' })
     .register(authPlugin) // After openId
     .register(keycloakPlugin) // After openId
-    .register(requestPlugin)
+    .register(injectPlugin)
     .register(domainPlugin)
     .register(graphqlRoutes, { prefix: '/graphql' });
 

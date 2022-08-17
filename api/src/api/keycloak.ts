@@ -30,10 +30,10 @@ export const keycloakPlugin = plugin(async (app) => {
     realmName: app.config.AUTH_REALM_NAME,
   });
 
-  let expiresAt = 0;
-  async function assertToken(): Promise<void> {
+  let singletonAdminTokenExpiresAt = 0;
+  async function assertSingletonAdminToken(): Promise<void> {
     const now = Math.floor(Date.now() / ONE_SECOND);
-    if (now > expiresAt - EXPIRE_MARGIN) {
+    if (now > singletonAdminTokenExpiresAt - EXPIRE_MARGIN) {
       await kcAdminClient.auth({
         clientId: app.config.AUTH_CLIENT_ID,
         clientSecret: app.config.AUTH_CLIENT_SECRET,
@@ -42,7 +42,7 @@ export const keycloakPlugin = plugin(async (app) => {
       assert(kcAdminClient.accessToken, 'accessToken is null');
       const token = decodeJwt(kcAdminClient.accessToken);
       assert(token.exp, 'token.exp is null');
-      expiresAt = token.exp; // eslint-disable-line require-atomic-updates
+      singletonAdminTokenExpiresAt = token.exp; // eslint-disable-line require-atomic-updates
     }
   }
 
@@ -52,7 +52,7 @@ export const keycloakPlugin = plugin(async (app) => {
       async <T extends (kcAdminClient: KcAdminClient) => R, R>(
         executor: T,
       ): Promise<R> => {
-        await singleConcurrency(assertToken);
+        await singleConcurrency(assertSingletonAdminToken);
         return executor(kcAdminClient);
       },
     ),
