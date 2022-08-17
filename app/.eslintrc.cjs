@@ -9,7 +9,7 @@ module.exports = {
   overrides: [
     {
       files: ['src/**/*'],
-      extends: 'noise/web-app',
+      extends: ['turbo', 'noise/web-app'],
       rules: {
         '@typescript-eslint/no-unused-expressions': [
           'error',

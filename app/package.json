@@ -55,6 +55,7 @@
     "autoprefixer": "^10.4.8",
     "c8": "^7.12.0",
     "eslint": "^8.22.0",
+    "eslint-config-turbo": "0.0.3",
     "jsdom": "^20.0.0",
     "msw": "0.44.2",
     "postcss-nesting": "^10.1.10",

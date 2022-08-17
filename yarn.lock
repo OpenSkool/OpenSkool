@@ -2129,6 +2129,7 @@ __metadata:
     colorjs.io: ^0.4.0
     cross-fetch: ^3.1.5
     eslint: ^8.22.0
+    eslint-config-turbo: 0.0.3
     graphql: ^16.5.0
     jsdom: ^20.0.0
     msw: 0.44.2
@@ -5090,6 +5091,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-config-turbo@npm:0.0.3":
+  version: 0.0.3
+  resolution: "eslint-config-turbo@npm:0.0.3"
+  dependencies:
+    eslint-plugin-turbo: 0.0.3
+  peerDependencies:
+    eslint: ^7.23.0 || ^8.0.0
+  checksum: c92255e91dd0865faeebc857eb3a862e8ca2ccb37fc54ffce93b73cd41e95ad456826ae6634772450dfa9c705b67c288f476e8e413fab3d8194dc271754528e2
+  languageName: node
+  linkType: hard
+
 "eslint-import-resolver-node@npm:^0.3.6":
   version: 0.3.6
   resolution: "eslint-import-resolver-node@npm:0.3.6"
@@ -5185,6 +5197,15 @@ __metadata:
   peerDependencies:
     eslint: ^7.0.0 || ^8.0.0
   checksum: 7e761507c51267b77e4ad710e7c8938aa4f8f69b975886034e57497a1816e9527eda364e25aac03d1b4e0df2e738ba98e49ad075d028824fcfea533a1419751c
+  languageName: node
+  linkType: hard
+
+"eslint-plugin-turbo@npm:0.0.3":
+  version: 0.0.3
+  resolution: "eslint-plugin-turbo@npm:0.0.3"
+  peerDependencies:
+    eslint: ^7.23.0 || ^8.0.0
+  checksum: 18e2b13ede03eee7635d0c67ca792cf46483e90443143bdc06555bf231045fb5f70b2f6f1d67492365b7fe47620408eea22f7548879f3afcb07ccc070aec5c15
   languageName: node
   linkType: hard
 
