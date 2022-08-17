@@ -20,8 +20,7 @@
       "cache": false
     },
     "lint": {
-      "dependsOn": ["^build", "codegen"],
-      "outputs": [".eslintcache"]
+      "dependsOn": ["^build", "codegen"]
     },
     "preview": {
       "cache": false,

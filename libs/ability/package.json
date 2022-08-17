@@ -10,9 +10,9 @@
   },
   "scripts": {
     "build": "rollup -c",
-    "clean": "rm -rf .eslintcache .turbo/ dist/",
+    "clean": "rm -rf .turbo/ dist/",
     "dev": "rollup -c -w",
-    "lint": "eslint --cache --ext .cjs,.mjs,.ts ."
+    "lint": "eslint --ext .cjs,.mjs,.ts ."
   },
   "files": [
     "dist/"
