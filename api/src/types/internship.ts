@@ -108,7 +108,7 @@ const InternshipInstance = builder.prismaObject('InternshipInstance', {
     student: t.field({
       type: Person,
       async resolve(instance, _arguments, { inject: { userService } }) {
-        return userService.findById(instance.studentId);
+        return userService.get(instance.studentId);
       },
     }),
     supervisors: t.field({
@@ -167,14 +167,14 @@ export const InternshipPosition = builder.prismaObject('InternshipPosition', {
     description: t.exposeString('description'),
     mentors: t.field({
       type: [Person],
-      resolve(position) {
-        return cacheFakeData(
-          `internship-position-${position.id}-mentors`,
-          () => {
-            return chance(5)
-              ? []
-              : times(faker.mersenne.rand(3, 1), generateFakePerson);
-          },
+      async resolve(position, input, { inject: { request, userService } }) {
+        const mentors = await prisma.internshipPosition
+          .findUnique({ where: { id: position.id } })
+          .mentors({ select: { userId: true } });
+        return userService.getMany(
+          mentors.flatMap((mentor) => {
+            return mentor.userId == null ? [] : [mentor.userId];
+          }),
         );
       },
     }),
@@ -327,7 +327,11 @@ builder.mutationField('inviteInternshipPositionMentor', (t) =>
       if (position == null) {
         throw new AppNotFoundError('Internship position not found.');
       }
-      await userService.inviteOrFind(email);
+      const user = await userService.inviteOrFind(email);
+      await prisma.internshipPosition.update({
+        data: { mentors: { create: { userId: user.id } } },
+        where: { id: positionId },
+      });
       return prisma.internshipPosition.findUniqueOrThrow({
         where: { id: positionId },
       });

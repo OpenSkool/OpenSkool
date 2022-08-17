@@ -45,14 +45,19 @@ export class UserService {
     return id;
   }
 
-  async findById(id: string | null): Promise<UserModel> {
+  async get(id: string | null): Promise<UserModel> {
     if (id == null) {
       return DELETED_USER;
     }
-    const user = await this.kcAdminExecute((client) =>
+    const representation = await this.kcAdminExecute((client) =>
       client.users.findOne({ id }),
     );
-    return user == null ? DELETED_USER : mapUserModel(user);
+    return representation == null ? DELETED_USER : mapUserModel(representation);
+  }
+
+  async getMany(ids: string[]): Promise<UserModel[]> {
+    const representations = await Promise.all(ids.map((id) => this.get(id)));
+    return representations.map(mapUserModel);
   }
 
   async findOne(query: UserQuery): Promise<UserModel | null> {
@@ -83,13 +88,13 @@ export class UserService {
     const existingUser = await this.findOne({ email });
     if (existingUser == null) {
       const newUserId = await this.invite({ email });
-      return this.findById(newUserId);
+      return this.get(newUserId);
     }
     return existingUser;
   }
 }
 
-function mapUserModel(userRepresentation: UserRepresentation): UserModel {
-  const user = zUserModel.parse(userRepresentation);
-  return { ...userRepresentation, ...user };
+function mapUserModel(representation: UserRepresentation): UserModel {
+  const user = zUserModel.parse(representation);
+  return { ...representation, ...user };
 }

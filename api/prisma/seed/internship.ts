@@ -16,6 +16,7 @@ export async function seedInternships(prisma: PrismaClient): Promise<void> {
   const courses = await prisma.course.findMany();
   const educations = await prisma.education.findMany();
   const organisations = await prisma.organisation.findMany();
+  const users = await getUsers();
 
   for (let count = await prisma.internship.count(); count <= 50; count += 1) {
     const [dateFrom, dateTo] = generateFakeRange();
@@ -25,6 +26,13 @@ export async function seedInternships(prisma: PrismaClient): Promise<void> {
         availablePositions: {
           create: times(faker.mersenne.rand(20, 10), () => ({
             description: faker.lorem.paragraphs(),
+            mentors: {
+              createMany: {
+                data: faker.helpers
+                  .arrayElements(users)
+                  .map((user) => ({ userId: user.id })),
+              },
+            },
             organisationId: chance(90)
               ? faker.helpers.arrayElement(organisations).id
               : undefined,
@@ -44,7 +52,6 @@ export async function seedInternships(prisma: PrismaClient): Promise<void> {
   const internships = await prisma.internship.findMany({
     include: { availablePositions: true },
   });
-  const users = await getUsers();
 
   for (const user of users) {
     await prisma.internshipInstance.createMany({

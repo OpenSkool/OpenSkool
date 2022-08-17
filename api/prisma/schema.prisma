@@ -163,10 +163,19 @@ model InternshipPosition {
   applications     InternshipApplication[]
   assignedInstance InternshipInstance?
   internships      Internship[]
-  organisation     Organisation?           @relation(fields: [organisationId], references: [id], onDelete: Restrict)
+  mentors          InternshipPositionMentor[]
+  organisation     Organisation?              @relation(fields: [organisationId], references: [id], onDelete: Restrict)
   organisationId   String?
 
   description String
+}
+
+model InternshipPositionMentor {
+  id String @id @default(cuid())
+
+  position   InternshipPosition @relation(fields: [positionId], references: [id], onDelete: Restrict)
+  positionId String
+  userId     String?
 }
 
 model Organisation {
