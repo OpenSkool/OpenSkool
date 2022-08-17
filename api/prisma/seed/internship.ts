@@ -29,7 +29,7 @@ export async function seedInternships(prisma: PrismaClient): Promise<void> {
             mentors: {
               createMany: {
                 data: faker.helpers
-                  .arrayElements(users)
+                  .arrayElements(users, faker.mersenne.rand(2, 1))
                   .map((user) => ({ userId: user.id })),
               },
             },
