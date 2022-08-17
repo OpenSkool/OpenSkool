@@ -6,7 +6,7 @@ import { z } from 'zod';
 import type { KeycloakAdminExecute } from '~/api/keycloak';
 import type { AppCradle } from '~/plugins/awilix';
 
-declare enum RequiredActionAlias {
+enum RequiredActionAlias {
   VERIFY_EMAIL = 'VERIFY_EMAIL',
   UPDATE_PROFILE = 'UPDATE_PROFILE',
   UPDATE_PASSWORD = 'UPDATE_PASSWORD',
