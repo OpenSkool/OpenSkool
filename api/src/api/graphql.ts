@@ -1,7 +1,7 @@
 import { Readable } from 'node:stream';
 
 import { useResponseCache } from '@envelop/response-cache';
-import { createServer } from '@graphql-yoga/node';
+import { createServer, useErrorHandler } from '@graphql-yoga/node';
 import { create } from 'cross-undici-fetch';
 import { FastifyPluginAsync } from 'fastify';
 import ms from 'ms';
@@ -16,6 +16,11 @@ export const graphqlRoutes: FastifyPluginAsync = async (app) => {
     fetchAPI: create({ useNodeFetch: false }),
     logging: app.log,
     plugins: [
+      useErrorHandler((errors) => {
+        for (const error of errors) {
+          app.log.error(error);
+        }
+      }),
       useResponseCache({
         includeExtensionMetadata: true,
         session({ inject: { auth, language } }: Context) {
