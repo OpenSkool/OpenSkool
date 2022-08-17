@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "rollup -c",
-    "clean": "rm -rf .turbo/ dist/",
+    "clean": "rm -rf .turbo/ coverage/ dist/ text.xml",
     "codegen": "tsx -r dotenv-flow/config scripts/codegen.ts",
     "dev": "FORCE_COLOR=1 NODE_ENV=development nodemon src/server.ts | pino-pretty",
     "lint": "eslint --ext .cjs,.mjs,.ts .",
