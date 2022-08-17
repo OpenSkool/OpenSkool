@@ -22,7 +22,7 @@ export const DELETED_USER: UserModel = {
   id: '__DELETED_USER__',
   firstName: 'Deleted',
   lastName: 'User',
-  username: 'deleted-user',
+  username: 'Deleted User',
 };
 
 export class UserService {
