@@ -34,9 +34,9 @@ type InternalCompetencyFramework = CompetencyFramework & {
 };
 
 export class CompetencyService {
-  auth: Auth;
+  private auth: Auth;
 
-  language: Language;
+  private language: Language;
 
   constructor(inject: AppCradle) {
     this.auth = inject.auth;

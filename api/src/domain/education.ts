@@ -16,7 +16,7 @@ type InternalEducation = Education & {
 };
 
 export class EducationService {
-  language: Language;
+  private language: Language;
 
   constructor(inject: AppCradle) {
     this.language = inject.language;
