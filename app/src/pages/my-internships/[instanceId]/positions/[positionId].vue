@@ -1,7 +1,10 @@
 <script lang="ts" setup>
 import { InternshipInstancePositionDetailQueryDocument } from '~/codegen/graphql';
 import { NotFoundLayout, useGlobalStore } from '~/domain/global';
-import { InternshipPositionApplyCard } from '~/domain/internships';
+import {
+  InternshipPositionApplyCard,
+  InternshipPositionInviteCard,
+} from '~/domain/internships';
 
 const route = useRoute();
 const instanceId = computed((): string => route.params.instanceId as string);
@@ -169,6 +172,7 @@ const internshipPosition = computed(() => result.value?.internshipPosition);
         :instance-id="instanceId"
         :position-id="positionId"
       />
+      <InternshipPositionInviteCard :position-id="positionId" />
     </template>
   </article>
   <NotFoundLayout v-else-if="!loading">

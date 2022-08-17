@@ -35,6 +35,7 @@ export function formkit(app: App): void {
       },
       inputs: {
         checkbox: createInput(FkCheckbox),
+        email: createInput(FkInputText),
         radio: createInput(FkRadio),
         select: createInput(FkSelect, { props: ['options'] }),
         text: createInput(FkInputText),
