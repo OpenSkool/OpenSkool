@@ -20,7 +20,7 @@
   "dependencies": {
     "@casl/ability": "^6.0.0",
     "@casl/prisma": "^1.0.4",
-    "@prisma/client": "^4.1.0"
+    "@prisma/client": "^4.2.1"
   },
   "devDependencies": {
     "@types/eslint": "^8.4.5",
