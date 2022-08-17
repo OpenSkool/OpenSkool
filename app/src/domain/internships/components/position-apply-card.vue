@@ -47,7 +47,10 @@ async function handleFormSubmit(): Promise<void> {
 </script>
 
 <template>
-  <UiNotification color="info" heading="Available">
+  <UiNotification
+    color="info"
+    :heading="$t('internships.internshipApplication.applyCard.heading')"
+  >
     <div class="grid gap-3 md:grid-cols-2">
       <p v-t="'internships.internshipApplication.applyCard.description'" />
       <FormKit

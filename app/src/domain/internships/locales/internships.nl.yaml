@@ -4,7 +4,7 @@ internshipApplication:
   applyCard:
     action:
       submit: Stel je kandidaat
-    heading: Available
+    heading: Beschikbaar
     description: Deze stageplaats is beschikbaar.
   field:
     priority:
