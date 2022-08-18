@@ -28,7 +28,7 @@ export async function seedOrganisations(prisma: PrismaClient): Promise<void> {
     data: times(
       Math.max(0, 50 - (await prisma.organisation.count())),
       (): Prisma.OrganisationUncheckedCreateInput => ({
-        name: faker.company.companyName(),
+        name: faker.company.name(),
       }),
     ),
   });
