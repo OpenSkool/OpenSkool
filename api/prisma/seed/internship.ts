@@ -5,7 +5,7 @@ import { chance, random, times } from '~/utils';
 
 import { seedCourses } from './course';
 import { seedEducations } from './education';
-import { generateFakeRange, getUsers } from './helpers';
+import { generateFakeRange, kc } from './helpers';
 import { seedOrganisations } from './organisation';
 
 export async function seedInternships(prisma: PrismaClient): Promise<void> {
@@ -16,7 +16,6 @@ export async function seedInternships(prisma: PrismaClient): Promise<void> {
   const courses = await prisma.course.findMany();
   const educations = await prisma.education.findMany();
   const organisations = await prisma.organisation.findMany();
-  const users = await getUsers();
 
   for (let count = await prisma.internship.count(); count <= 50; count += 1) {
     const [dateFrom, dateTo] = generateFakeRange();
@@ -29,7 +28,7 @@ export async function seedInternships(prisma: PrismaClient): Promise<void> {
             mentors: {
               createMany: {
                 data: faker.helpers
-                  .arrayElements(users, faker.mersenne.rand(2, 1))
+                  .arrayElements(kc.users, faker.mersenne.rand(2, 1))
                   .map((user) => ({ userId: user.id })),
               },
             },
@@ -53,7 +52,7 @@ export async function seedInternships(prisma: PrismaClient): Promise<void> {
     include: { availablePositions: true },
   });
 
-  for (const user of users) {
+  for (const user of kc.users) {
     await prisma.internshipInstance.createMany({
       data: times(
         Math.max(
