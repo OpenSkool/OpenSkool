@@ -1,7 +1,7 @@
 import assert from 'node:assert';
 
-import { AppRawRule } from '@os/ability';
-import { decodeJwt, JWTPayload } from 'jose';
+import type { AppRawRule } from '@os/ability';
+import { decodeJwt, type JWTPayload } from 'jose';
 import ms from 'ms';
 import type { JsonObject } from 'type-fest';
 import { z } from 'zod';

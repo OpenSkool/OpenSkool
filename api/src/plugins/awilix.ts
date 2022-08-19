@@ -1,4 +1,8 @@
-import { Cradle, fastifyAwilixPlugin, RequestCradle } from '@fastify/awilix';
+import {
+  fastifyAwilixPlugin,
+  type Cradle,
+  type RequestCradle,
+} from '@fastify/awilix';
 import plugin from 'fastify-plugin';
 
 export type AppCradle = Cradle & RequestCradle;

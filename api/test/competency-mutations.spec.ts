@@ -1,10 +1,10 @@
-import { CompetencyFramework, Language } from '@prisma/client';
+import { type CompetencyFramework, Language } from '@prisma/client';
 import cuid from 'cuid';
 import gql from 'graphql-tag';
 import { beforeAll, beforeEach, describe, expect, test } from 'vitest';
 
 import { prisma } from '../src/prisma';
-import { execute, GraphQlResponse } from './client';
+import { execute, type GraphQlResponse } from './client';
 import {
   createCompetencyFixture,
   createCompetencyFrameworkFixture,

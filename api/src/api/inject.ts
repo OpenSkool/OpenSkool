@@ -10,7 +10,7 @@ import type {
 import plugin from 'fastify-plugin';
 
 import { AppError } from '~/errors';
-import { AppCradle } from '~/plugins/awilix';
+import type { AppCradle } from '~/plugins/awilix';
 
 declare module '@fastify/awilix' {
   interface Cradle {

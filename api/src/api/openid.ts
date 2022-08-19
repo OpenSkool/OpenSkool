@@ -1,11 +1,11 @@
 import type { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
 import { Type } from '@sinclair/typebox';
-import { FastifyPluginAsync } from 'fastify';
+import type { FastifyPluginAsync } from 'fastify';
 import plugin from 'fastify-plugin';
 import { createRemoteJWKSet, errors as joseErrors, jwtVerify } from 'jose';
 import { Issuer, generators } from 'openid-client';
 
-import { AuthTokenSet, parseTokenSet } from '~/api/auth/types';
+import { type AuthTokenSet, parseTokenSet } from '~/api/auth/types';
 
 const { JOSEError: JoseError } = joseErrors;
 

@@ -1,7 +1,7 @@
 import assert from 'node:assert';
 
 import { faker } from '@faker-js/faker';
-import { Organisation, Prisma, PrismaClient } from '@prisma/client';
+import type { Organisation, Prisma, PrismaClient } from '@prisma/client';
 
 import { times } from '~/utils';
 

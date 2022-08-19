@@ -1,4 +1,4 @@
-import { decodeJwt, JWTPayload } from 'jose';
+import { type JWTPayload, decodeJwt } from 'jose';
 import { TokenSet } from 'openid-client';
 import { z } from 'zod';
 

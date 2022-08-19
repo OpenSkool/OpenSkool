@@ -1,4 +1,11 @@
-import { SetupContext, h, toRef, defineComponent, PropType, VNode } from 'vue';
+import {
+  defineComponent,
+  h,
+  toRef,
+  type PropType,
+  type SetupContext,
+  type VNode,
+} from 'vue';
 
 export default defineComponent({
   props: {

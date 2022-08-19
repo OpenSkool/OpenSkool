@@ -1,6 +1,6 @@
 import { camelCase } from '~/utils';
 
-import { Loader } from './types';
+import type { Loader } from './types';
 
 export interface ParsedGlobEntry {
   namespace: string;

@@ -1,6 +1,6 @@
 import { graphql } from 'msw';
 
-import {
+import type {
   DeleteCompetencyMutation,
   DeleteCompetencyMutationVariables,
   ManageEditCompetencyQuery,

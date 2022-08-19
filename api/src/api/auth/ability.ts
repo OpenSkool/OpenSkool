@@ -1,7 +1,7 @@
 import { AbilityBuilder } from '@casl/ability';
 import { AppAbility } from '@os/ability';
 
-import { AuthRole, AuthUser } from './types';
+import { AuthRole, type AuthUser } from './types';
 
 export function buildAbility(user: AuthUser | null): AppAbility {
   const { build, can } = new AbilityBuilder(AppAbility);

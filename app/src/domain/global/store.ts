@@ -1,4 +1,4 @@
-import { ApolloError } from '@apollo/client';
+import type { ApolloError } from '@apollo/client';
 import { logErrorMessages } from '@vue/apollo-util';
 import { acceptHMRUpdate, defineStore } from 'pinia';
 

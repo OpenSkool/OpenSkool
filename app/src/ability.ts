@@ -1,5 +1,5 @@
 import { useAbility } from '@casl/vue';
-import { AppAbility } from '@os/ability';
+import type { AppAbility } from '@os/ability';
 
 export type { AppRawRule } from '@os/ability';
 export { AppAbility } from '@os/ability';

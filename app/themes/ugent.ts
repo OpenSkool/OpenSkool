@@ -1,8 +1,8 @@
 import {
-  baseColors,
   baseTheme,
   createConfig,
   generateRange,
+  type baseColors,
 } from '../windicss';
 
 //  UGent Blue:

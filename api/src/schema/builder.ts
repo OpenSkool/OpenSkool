@@ -6,7 +6,7 @@ import type { JsonObject } from 'type-fest';
 
 import { prisma } from '~/prisma';
 
-import { Context } from './context';
+import type { Context } from './context';
 
 const builder = new SchemaBuilder<{
   Context: Context;

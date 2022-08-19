@@ -1,8 +1,8 @@
-import { CompetencyFramework, PrismaClient } from '@prisma/client';
+import type { CompetencyFramework, PrismaClient } from '@prisma/client';
 
 import { canMedsCompetencies } from './canmeds';
 import { basisCompetentiesLeerkracht } from './leerkracht';
-import { CompetencyFixture } from './types';
+import type { CompetencyFixture } from './types';
 
 export async function seedCompetencies(prisma: PrismaClient): Promise<void> {
   await createCompetencyFramework(

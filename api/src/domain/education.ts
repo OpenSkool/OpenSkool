@@ -1,6 +1,6 @@
 import assert from 'node:assert';
 
-import { Education, EducationTranslation, Language } from '@prisma/client';
+import type { Education, EducationTranslation, Language } from '@prisma/client';
 
 import type { AppCradle } from '~/plugins/awilix';
 import { prisma } from '~/prisma';

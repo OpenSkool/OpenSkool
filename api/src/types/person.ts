@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import cuid from 'cuid';
 
-import { UserModel } from '~/domain';
+import type { UserModel } from '~/domain';
 import builder from '~/schema/builder';
 import { cacheFakeData } from '~/schema/helpers';
 

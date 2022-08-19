@@ -1,7 +1,7 @@
 import {
-  Competency,
-  CompetencyFramework,
-  Education,
+  type Competency,
+  type CompetencyFramework,
+  type Education,
   Language,
 } from '@prisma/client';
 import cuid from 'cuid';

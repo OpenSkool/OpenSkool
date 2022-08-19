@@ -1,4 +1,4 @@
-import Keyv, { Store } from 'keyv';
+import Keyv, { type Store } from 'keyv';
 import QuickLRU from 'quick-lru';
 
 const lru = new QuickLRU({ maxSize: 1000 });

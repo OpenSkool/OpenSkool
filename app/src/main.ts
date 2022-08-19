@@ -1,7 +1,7 @@
 import { createHead } from '@vueuse/head';
 import { createApp } from 'vue';
 
-import { AppAbility, AppRawRule, casl } from './ability';
+import { AppAbility, casl, type AppRawRule } from './ability';
 import App from './app.vue';
 import { initAuth } from './auth';
 import { formkit } from './formkit';

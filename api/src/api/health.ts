@@ -1,5 +1,5 @@
 import { fetch } from 'cross-undici-fetch';
-import { FastifyPluginAsync } from 'fastify';
+import type { FastifyPluginAsync } from 'fastify';
 import plugin from 'fastify-plugin';
 
 import { prisma } from '~/prisma';

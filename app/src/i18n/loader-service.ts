@@ -1,7 +1,7 @@
 import { DEFAULT_LOCALE } from './constants';
 import { parseLocalesGlob } from './helpers';
 import { getLocaleString, mergeLocaleMessage } from './service';
-import { Loader, LoaderMap } from './types';
+import type { Loader, LoaderMap } from './types';
 
 const messageLoaders: {
   [namespace: string]: {

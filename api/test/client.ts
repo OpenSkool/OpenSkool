@@ -2,8 +2,8 @@ import { createServer } from '@graphql-yoga/common';
 import { Language } from '@prisma/client';
 import { asValue, createContainer } from 'awilix';
 import cuid from 'cuid';
-import { FastifyRequest } from 'fastify';
-import { DocumentNode, GraphQLError } from 'graphql';
+import type { FastifyRequest } from 'fastify';
+import type { DocumentNode, GraphQLError } from 'graphql';
 
 import { AuthRole, buildAbility } from '~/api/auth';
 import { registerDomainServices } from '~/domain';

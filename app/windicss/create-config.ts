@@ -1,10 +1,10 @@
 import windiColors from 'windicss/colors';
 import aspectRatio from 'windicss/plugin/aspect-ratio';
-import { DefaultColors } from 'windicss/types/config/colors';
-import { FullConfig } from 'windicss/types/interfaces';
+import type { DefaultColors } from 'windicss/types/config/colors';
+import type { FullConfig } from 'windicss/types/interfaces';
 
 import formkit from './plugin-formkit';
-import { OsTheme } from './tokens';
+import type { OsTheme } from './tokens';
 
 const BASE_COLORS = [
   // CSS

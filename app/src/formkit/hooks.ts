@@ -1,4 +1,4 @@
-import { FormKitVuePlugin } from '@formkit/vue';
+import type { FormKitVuePlugin } from '@formkit/vue';
 
 import { assert } from '~/utils';
 

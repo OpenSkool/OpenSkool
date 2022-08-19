@@ -1,4 +1,4 @@
-import { HeadObject, useHead as useOriginalHead } from '@vueuse/head';
+import { useHead as useOriginalHead, type HeadObject } from '@vueuse/head';
 import { useI18n } from 'vue-i18n';
 
 interface GetHeadContext {

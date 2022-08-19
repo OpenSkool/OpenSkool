@@ -1,5 +1,5 @@
 import windiColors from 'windicss/colors';
-import { Theme } from 'windicss/types/interfaces';
+import type { Theme } from 'windicss/types/interfaces';
 
 import { generateRange } from './color-helpers';
 

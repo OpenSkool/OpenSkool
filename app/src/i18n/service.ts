@@ -1,4 +1,4 @@
-import { isRef, Ref } from 'vue';
+import { isRef, type Ref } from 'vue';
 
 import {
   AVAILABLE_LOCALES,

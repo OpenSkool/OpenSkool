@@ -1,4 +1,4 @@
-import { CompetencyFixture } from './types';
+import type { CompetencyFixture } from './types';
 
 export const basisCompetentiesLeerkracht: CompetencyFixture[] = [
   {

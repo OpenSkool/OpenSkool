@@ -1,4 +1,4 @@
-import { Course } from '@prisma/client';
+import type { Course } from '@prisma/client';
 
 import { handleServiceError } from '~/domain/helpers';
 import { AppNotFoundError } from '~/errors';

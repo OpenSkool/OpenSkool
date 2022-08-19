@@ -1,4 +1,4 @@
-import { CompetencyFrameworkModel, CompetencyModel } from '~/domain';
+import type { CompetencyFrameworkModel, CompetencyModel } from '~/domain';
 import {
   AppInputError,
   AppNotFoundError,

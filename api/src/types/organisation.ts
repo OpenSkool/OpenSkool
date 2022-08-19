@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import cuid from 'cuid';
 
-import { OrganisationModel } from '~/domain';
+import type { OrganisationModel } from '~/domain';
 import builder from '~/schema/builder';
 import { cacheFakeData } from '~/schema/helpers';
 import { generateFakePerson, Person } from '~/types/person';

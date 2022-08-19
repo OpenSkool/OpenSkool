@@ -3,7 +3,7 @@ import { acceptHMRUpdate, defineStore } from 'pinia';
 import { apolloClient } from '~/apollo';
 import {
   AuthCurrentUserDocument,
-  AuthCurrentUserQuery,
+  type AuthCurrentUserQuery,
 } from '~/codegen/graphql';
 import { pinia } from '~/pinia';
 

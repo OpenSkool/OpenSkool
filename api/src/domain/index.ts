@@ -1,4 +1,4 @@
-import { asClass, AwilixContainer } from 'awilix';
+import { type AwilixContainer, asClass } from 'awilix';
 import plugin from 'fastify-plugin';
 
 import { CompetencyService } from './competency';
