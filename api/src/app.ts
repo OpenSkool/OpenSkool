@@ -1,3 +1,4 @@
+import shutdownPlugin from '@mgcrea/fastify-graceful-exit';
 import createApp from 'fastify';
 
 import apiPlugin from '~/api';
@@ -21,6 +22,7 @@ app
   .register(awilixPlugin)
   .register(boomPlugin)
   .register(configPlugin)
+  .register(shutdownPlugin)
   .register(apiPlugin);
 
 export default app;
