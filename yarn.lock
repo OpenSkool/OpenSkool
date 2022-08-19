@@ -1903,6 +1903,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mgcrea/fastify-request-logger@npm:^0.6.1":
+  version: 0.6.1
+  resolution: "@mgcrea/fastify-request-logger@npm:0.6.1"
+  dependencies:
+    chalk: ^4.1.1
+    fastify-plugin: ^3.0.1
+  checksum: 3f730dd810e3e2ed4b045f406990d0997821e2c03a967f3d6473a0183729bfe491d808b4a121d47b4f348ce99b126be8e6f18c8a34a167ce3fecd18adcbd589b
+  languageName: node
+  linkType: hard
+
+"@mgcrea/pino-pretty-compact@npm:^0.6.0":
+  version: 0.6.0
+  resolution: "@mgcrea/pino-pretty-compact@npm:0.6.0"
+  dependencies:
+    chalk: ^4.1.1
+    pino-pretty: ^8.1.0
+  checksum: 12b5eeb50af9b9c4eca998eb755487c1a25f31c3d433fc5c69d9aa7a49ee441d9ea173a93e0ba790f62c3f599433102a963cdc6515d96744f9e8622aacc8ad68
+  languageName: node
+  linkType: hard
+
 "@mswjs/cookies@npm:^0.2.2":
   version: 0.2.2
   resolution: "@mswjs/cookies@npm:0.2.2"
@@ -2027,6 +2047,8 @@ __metadata:
     "@hapi/boom": ^10.0.0
     "@keycloak/keycloak-admin-client": ^19.0.1
     "@mgcrea/fastify-graceful-exit": ^0.4.0
+    "@mgcrea/fastify-request-logger": ^0.6.1
+    "@mgcrea/pino-pretty-compact": ^0.6.0
     "@os/ability": "workspace:*"
     "@os/eslint-config": "workspace:*"
     "@os/tsconfig": "workspace:*"
@@ -8105,6 +8127,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"on-exit-leak-free@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "on-exit-leak-free@npm:1.0.0"
+  checksum: 813adf176cf95500c0e5cfef2c82f8c92969692c3837b7b939519c31aab3866e856a30254184a347c5da0c885b2a840e37ee44cc72f6432a2284525db6a8ce7f
+  languageName: node
+  linkType: hard
+
 "on-exit-leak-free@npm:^2.1.0":
   version: 2.1.0
   resolution: "on-exit-leak-free@npm:2.1.0"
@@ -8531,6 +8560,30 @@ __metadata:
     readable-stream: ^4.0.0
     split2: ^4.0.0
   checksum: 05dd0eda52dd99fd204b39fe7b62656744b63e863bc052cdd5105d25f226a236966d0a46e39a1ace4838f6e988c608837ff946d2d0bc92835ca7baa0a3bff8d8
+  languageName: node
+  linkType: hard
+
+"pino-pretty@npm:^8.1.0":
+  version: 8.1.0
+  resolution: "pino-pretty@npm:8.1.0"
+  dependencies:
+    colorette: ^2.0.7
+    dateformat: ^4.6.3
+    fast-copy: ^2.1.1
+    fast-safe-stringify: ^2.1.1
+    help-me: ^4.0.1
+    joycon: ^3.1.1
+    minimist: ^1.2.6
+    on-exit-leak-free: ^1.0.0
+    pino-abstract-transport: ^1.0.0
+    pump: ^3.0.0
+    readable-stream: ^4.0.0
+    secure-json-parse: ^2.4.0
+    sonic-boom: ^3.0.0
+    strip-json-comments: ^3.1.1
+  bin:
+    pino-pretty: bin.js
+  checksum: 6e8656cdecfd5cf23a328bbb50c5b9d3f27dee838ed797a41037845612dbe610e1083fa896128f7323cf45c862e3954441527ab315be3bab63d14095c7b4cd73
   languageName: node
   linkType: hard
 
