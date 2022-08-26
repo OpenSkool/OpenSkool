@@ -56,6 +56,7 @@ li {
 
 li .step-indicator {
   position: absolute;
+  z-index: 1;
   top: calc(-1 * var(--indicator-size));
   left: calc(50% - var(--indicator-size) / 2);
   width: var(--indicator-size);
@@ -86,7 +87,7 @@ li:before {
 
 /* Line after */
 li:after {
-  left: calc(50% + var(--indicator-size) / 2);
+  left: calc(50% + (var(--indicator-size) - var(--line-size)) / 2);
   right: 0;
 }
 li[data-done='true']:after {
@@ -98,7 +99,7 @@ li:last-child:after {
 
 /* Line before */
 li:before {
-  right: calc(50% + var(--indicator-size) / 2);
+  right: calc(50% + (var(--indicator-size) - var(--line-size)) / 2);
   left: 0;
 }
 li[data-done='true'] + li:before {
