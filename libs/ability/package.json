@@ -23,6 +23,8 @@
     "@prisma/client": "^4.2.1"
   },
   "devDependencies": {
+    "@os/eslint-config": "workspace:*",
+    "@os/tsconfig": "workspace:*",
     "@types/eslint": "^8.4.5",
     "eslint": "^8.22.0",
     "rollup": "~2.77.3",
