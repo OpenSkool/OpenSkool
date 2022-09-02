@@ -9,14 +9,14 @@
   "scripts": {
     "api": "yarn workspace @os/api",
     "app": "yarn workspace @os/app",
-    "build": "yarn turbo run build",
-    "clean": "yarn turbo run clean",
-    "codegen": "yarn turbo run codegen",
-    "dev": "yarn turbo run dev",
-    "format": "yarn prettier --write .",
-    "lint": "yarn turbo run lint",
-    "preview": "yarn turbo run preview",
-    "test": "yarn turbo run test"
+    "build": "turbo run build",
+    "clean": "turbo run clean",
+    "codegen": "turbo run codegen",
+    "dev": "turbo run dev",
+    "format": "prettier --write .",
+    "lint": "turbo run lint",
+    "preview": "turbo run preview",
+    "test": "turbo run test"
   },
   "devDependencies": {
     "prettier": "^2.7.1",
