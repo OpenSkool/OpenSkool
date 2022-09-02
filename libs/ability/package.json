@@ -6,7 +6,7 @@
   "main": "dist/index.js",
   "type": "module",
   "engines": {
-    "node": "16.15.0"
+    "node": "16.17.0"
   },
   "scripts": {
     "build": "rollup -c",
