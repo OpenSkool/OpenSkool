@@ -118,6 +118,7 @@ importers:
       openid-client: 5.1.9
       p-limit: 4.0.0
       pino: 8.4.2
+      prisma: 4.2.1
       quick-lru: 6.1.1
       read-pkg-up: 9.1.0
       zod: 3.18.0
@@ -139,7 +140,6 @@ importers:
       nodemon: 2.0.19
       pino-pretty: 9.1.0
       prettier: 2.7.1
-      prisma: 4.2.1
       rollup: 2.77.3
       rollup-plugin-esbuild: 4.10.1_rollup@2.77.3
       rollup-plugin-typescript-paths: 1.4.0_typescript@4.7.4
@@ -2141,6 +2141,7 @@ packages:
   /@prisma/engines/4.2.1:
     resolution: {integrity: sha512-0KqBwREUOjBiHwITsQzw2DWfLHjntvbqzGRawj4sBMnIiL5CXwyDUKeHOwXzKMtNr1rEjxEsypM14g0CzLRK3g==}
     requiresBuild: true
+    dev: false
 
   /@prisma/generator-helper/4.2.1:
     resolution: {integrity: sha512-6P3lJMu/he4LcvUBL+1L9IkBGpF2Z8Kgp3Qr9hyjPLbFh4gLRfMC76Wj4vIlWpOyKW/P3tQH7NwU9kH/eq6z1g==}
@@ -6931,6 +6932,7 @@ packages:
     requiresBuild: true
     dependencies:
       '@prisma/engines': 4.2.1
+    dev: false
 
   /process-warning/2.0.0:
     resolution: {integrity: sha512-+MmoAXoUX+VTHAlwns0h+kFUWFs/3FZy+ZuchkgjyOu3oioLAo2LB5aCfKPh2+P9O18i3m43tUEv3YqttSy0Ww==}

@@ -1,0 +1,8 @@
+**/codegen/
+**/coverage/
+**/dist/
+**/node_modules/
+**/.env
+**/.env.*
+**/.turbo
+**/Dockerfile
