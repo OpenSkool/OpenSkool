@@ -7,7 +7,7 @@ export default defineConfig({
   input: 'src/server.ts',
   output: [
     {
-      file: `dist/index.js`,
+      file: `dist/index.mjs`,
       format: 'es',
       sourcemap: true,
     },

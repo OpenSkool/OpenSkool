@@ -14,9 +14,9 @@
     "dev": "FORCE_COLOR=1 NODE_ENV=development nodemon src/server.ts | pino-pretty",
     "lint": "eslint --ext .cjs,.mjs,.ts .",
     "postinstall": "yarn run prisma generate",
-    "preview": "FORCE_COLOR=1 NODE_ENV=production node -r dotenv-flow/config dist/index.js",
+    "preview": "FORCE_COLOR=1 NODE_ENV=production node -r dotenv-flow/config dist/index.mjs",
     "prisma:test": "DATABASE_URL='postgresql://openskool:openskool@localhost:5433/openskool-test' prisma",
-    "start": "node dist/index.js",
+    "start": "node dist/index.mjs",
     "test": "tsc --noEmit && vitest run --coverage",
     "test:ci": "tsc --noEmit && vitest run --coverage --reporter=junit --outputFile=test.xml"
   },
