@@ -1,12 +1,11 @@
 import assert from 'node:assert';
 
-import type { AppRawRule } from '@os/ability';
 import { decodeJwt, type JWTPayload } from 'jose';
 import ms from 'ms';
 import type { JsonObject } from 'type-fest';
 import { z } from 'zod';
 
-import type { Auth, AuthTokenSet, AuthUser } from '~/api/auth';
+import type { AppRawRule, Auth, AuthTokenSet, AuthUser } from '~/api/auth';
 import builder from '~/schema/builder';
 import { castArray } from '~/utils';
 

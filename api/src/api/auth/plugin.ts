@@ -1,8 +1,7 @@
-import type { AppAbility } from '@os/ability';
 import { asValue } from 'awilix';
 import plugin from 'fastify-plugin';
 
-import { buildAbility } from './ability';
+import { type AppAbility, buildAbility } from './ability';
 import { AuthRole, type AuthUser, parseAccessToken } from './types';
 
 export interface Auth {
