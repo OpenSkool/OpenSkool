@@ -29,7 +29,7 @@ jobs:
         run: |
           echo "$CERT" | base64 --decode > ./test-db.cert
           export DATABASE_URL="${DATABASE_URL}&sslcert=$(pwd)/test-db.cert"
-          pnpm api exec prisma db push --accept-data-loss
+          pnpm --filter api exec prisma db push --accept-data-loss
           pnpm turbo run lint test:ci
 
       - name: Api Test Report
