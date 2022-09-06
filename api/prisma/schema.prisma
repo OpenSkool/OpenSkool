@@ -173,7 +173,7 @@ model InternshipPosition {
 model InternshipPositionMentor {
   id String @id @default(cuid())
 
-  position   InternshipPosition @relation(fields: [positionId], references: [id], onDelete: Restrict)
+  position   InternshipPosition @relation(fields: [positionId], references: [id], onDelete: Cascade)
   positionId String
   userId     String?
 }
