@@ -10,7 +10,6 @@ generator client {
 
 generator pothos {
   provider = "prisma-pothos-types"
-  output   = "../../node_modules/@pothos/plugin-prisma/generated.ts"
 }
 
 enum Language {

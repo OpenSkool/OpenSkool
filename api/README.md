@@ -42,25 +42,25 @@ We use [prisma migrate](https://www.prisma.io/migrate/) to manage our database s
 
 ```sh
 # Push the database schema to our database
-yarn workspace @os/api prisma db push
+pnpm api prisma db push
 # Push the database schema to our test database
-yarn workspace @os/api prisma:test db push
+pnpm api prisma:test db push
 # Reset our database
-yarn workspace @os/api prisma migrate reset
+pnpm api prisma migrate reset
 # Reset our test database
-yarn workspace @os/api prisma:test migrate reset
+pnpm api prisma:test migrate reset
 ```
 
 #### Start
 
-Run `yarn workspace @os/api dev` to start the api in development mode and log in with the user you created.
+Run `pnpm api dev` to start the api in development mode and log in with the user you created.
 
 #### First seed
 
 To have a useful app it's recommended to seed the database. It's important to do this after logging in with your user so it can be used as a reference.
 
 ```sh
-yarn workspace @os/api prisma db seed
+pnpm api prisma db seed
 ```
 
 ### Type-safety

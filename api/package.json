@@ -13,7 +13,7 @@
     "codegen": "tsx -r dotenv-flow/config scripts/codegen.ts",
     "dev": "FORCE_COLOR=1 NODE_ENV=development nodemon src/server.ts | pino-pretty",
     "lint": "eslint --ext .cjs,.mjs,.ts .",
-    "postinstall": "yarn run prisma generate",
+    "postinstall": "prisma generate",
     "preview": "FORCE_COLOR=1 NODE_ENV=production node -r dotenv-flow/config dist/index.mjs",
     "prisma:test": "DATABASE_URL='postgresql://openskool:openskool@localhost:5433/openskool-test' prisma",
     "start": "node dist/index.mjs",
@@ -97,7 +97,7 @@
     "ext": "lock,ts",
     "watch": [
       "src/",
-      "../yarn.lock"
+      "../pnpm-lock.yaml"
     ]
   },
   "prisma": {

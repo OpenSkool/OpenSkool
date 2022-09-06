@@ -1,5 +1,3 @@
-.yarn/
-.yarnrc.yml
 coverage
 dist
 

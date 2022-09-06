@@ -3,7 +3,7 @@
 Welcome to the [OpenSkool](https://openskool.be) \(technically referred to as `os`\)
 repository.
 
-The code is structured as a [monorepo](https://monorepo.tools) managed by [yarn workspaces](https://yarnpkg.com/features/workspaces)
+The code is structured as a [monorepo](https://monorepo.tools) managed by [pnpm](https://pnpm.io)
 and [turborepo](https://github.com/vercel/turborepo).
 
 You will find additional documentation per workspace.
@@ -19,10 +19,10 @@ Our build and test setup is managed by turborepo. It will take care of the topol
 of our workspaces when running scripts. Most scripts have a shortcut in the root
 `package.json`.
 
-- `yarn build`: build all workspaces
-- `yarn dev`: start all workspaces in development mode
-- `yarn lint`: lint all workspaces
-- `yarn test`: test all workspaces
+- `pnpm build`: build all workspaces
+- `pnpm dev`: start all workspaces in development mode
+- `pnpm lint`: lint all workspaces
+- `pnpm test`: test all workspaces
 
 ### `.env`
 

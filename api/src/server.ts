@@ -10,7 +10,7 @@ try {
   });
 
   if (app.config.NODE_ENV === 'development') {
-    exec('yarn run codegen', (error) => {
+    exec('pnpm run codegen', (error) => {
       if (error) {
         app.log.error(error);
       }

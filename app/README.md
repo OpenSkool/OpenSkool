@@ -2,7 +2,7 @@
 
 ## Development
 
-Run `yarn workspace @os/app dev` to start the api in development mode.
+Run `pnpm app dev` to start the api in development mode.
 
 ### Icons
 

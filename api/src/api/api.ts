@@ -4,7 +4,7 @@ import sessionPlugin from '@fastify/session';
 import type { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
 import * as Boom from '@hapi/boom';
 import { Type } from '@sinclair/typebox';
-import connectRedis from 'connect-redis';
+import connectRedis, { type Client } from 'connect-redis';
 import type { FastifyPluginAsync } from 'fastify';
 import Redis from 'ioredis';
 import ms from 'ms';
@@ -45,9 +45,10 @@ const apiPlugin: FastifyPluginAsync = async (app) => {
         const RedisStore = connectRedis(sessionPlugin as any);
         const redisClient = new Redis();
         app.addHook('onClose', () => redisClient.quit());
-        return new RedisStore({
-          client: redisClient,
-        }) as unknown as sessionPlugin.SessionStore;
+        const store = new RedisStore({
+          client: redisClient as unknown as Client,
+        });
+        return store as unknown as sessionPlugin.SessionStore;
       })(),
     })
     .register(healthPlugin)

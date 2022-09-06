@@ -31,11 +31,11 @@ const { loading, mutate } = useMutation(
   InviteInternshipPositionMentorMutationDocument,
 );
 
-async function handleFormSubmit(node: FormKitNode): Promise<void> {
+async function handleFormSubmit(node: FormKitNode | undefined): Promise<void> {
   const { email } = formValues.value;
   try {
     await mutate({ ...props, email });
-    node.reset();
+    node?.reset();
   } catch (error) {
     console.error('could not apply for internship position', error);
   }
