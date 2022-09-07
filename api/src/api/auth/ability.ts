@@ -1,5 +1,9 @@
-import { AbilityBuilder, AbilityClass, RawRuleOf } from '@casl/ability';
-import { PrismaAbility, Subjects } from '@casl/prisma';
+import {
+  AbilityBuilder,
+  type AbilityClass,
+  type RawRuleOf,
+} from '@casl/ability';
+import { PrismaAbility, type Subjects } from '@casl/prisma';
 import type {
   Competency,
   CompetencyFramework,

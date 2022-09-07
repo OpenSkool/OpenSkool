@@ -1,4 +1,4 @@
-import { Ability, AbilityClass, RawRuleOf } from '@casl/ability';
+import { Ability, type AbilityClass, type RawRuleOf } from '@casl/ability';
 import { useAbility } from '@casl/vue';
 
 type AppManageAction = 'manage'; // 'manage' is a special keyword in CASL representing any action
