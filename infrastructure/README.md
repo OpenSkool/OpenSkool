@@ -56,7 +56,7 @@ kubectl get svc -n nginx-ingress
 Add DNS records.
 
 ```dns
-A auth.dev2 [EXTERNAL-IP]
-A echo.dev2 [EXTERNAL-IP]
-A hello.dev2 [EXTERNAL-IP]
+A auth.dev [EXTERNAL-IP]
+A echo.dev [EXTERNAL-IP]
+A hello.dev [EXTERNAL-IP]
 ```
