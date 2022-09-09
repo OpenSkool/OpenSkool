@@ -16,6 +16,19 @@ kubectl apply -f issuer.yaml
 
 ## Prepare secrets
 
+### Api
+
+- Get the auth client secret from the corresponding keycloak client.
+- Get the database information from [digitalocean](https://cloud.digitalocean.com/databases).
+- Choose a sufficiently secure session secret.
+
+```sh
+kubectl create secret generic os-dev-api \
+  --from-literal="AUTH_CLIENT_SECRET=__" \
+  --from-literal="DATABASE_URL=__" \
+  --from-literal="SESSION_SECRET=__"
+```
+
 ### Auth
 
 - Get the database information from [digitalocean](https://cloud.digitalocean.com/databases).
@@ -35,6 +48,7 @@ kubectl create secret generic os-dev-auth \
 ## Install services
 
 ```sh
+kubectl apply -f api.yaml
 kubectl apply -f auth.yaml
 kubectl apply -f echo.yaml
 kubectl apply -f hello.yaml
@@ -58,6 +72,7 @@ kubectl get svc -n nginx-ingress
 Add DNS records.
 
 ```dns
+A api.dev [EXTERNAL-IP]
 A auth.dev [EXTERNAL-IP]
 A echo.dev [EXTERNAL-IP]
 A hello.dev [EXTERNAL-IP]

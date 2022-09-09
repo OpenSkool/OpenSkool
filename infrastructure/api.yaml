@@ -1,0 +1,70 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: os-dev-api
+  name: os-dev-api
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+  selector:
+    app: os-dev-api
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: os-dev-api
+  name: os-dev-api
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app: os-dev-api
+  template:
+    metadata:
+      labels:
+        app: os-dev-api
+    spec:
+      containers:
+        - command: ['/sbin/tini', '--', 'node', 'api/index.mjs']
+          env:
+            - name: API_BASE_URL
+              value: https://api.dev.openskool.dev
+            - name: APP_BASE_URL
+              value: https://dev.openskool.dev
+            - name: AUTH_BASE_URL
+              value: http://os-dev-auth
+            - name: AUTH_CLIENT_ID
+              value: os-dev-api
+            - name: AUTH_PKCE_ENABLED
+              value: 'false'
+            - name: AUTH_REALM_NAME
+              value: os-dev
+            - name: DISABLE_REQUEST_LOGGING
+              value: 'true'
+            - name: HOST
+              value: '0.0.0.0'
+            - name: PORT
+              value: '8080'
+            - name: SESSION_DOMAIN
+              value: dev.openskool.dev
+            - name: SESSION_SAME_SITE
+              value: none
+            - name: SESSION_STORE
+              value: 'false'
+          envFrom:
+            - secretRef:
+                name: os-dev-api
+          image: registry.digitalocean.com/openskool/os-api:latest
+          name: api
+          ports:
+            - name: http
+              containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
