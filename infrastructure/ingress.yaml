@@ -3,6 +3,7 @@ kind: Ingress
 metadata:
   name: os-ingress
   annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
     kubernetes.io/ingress.class: nginx
 spec:
   rules:
@@ -26,3 +27,8 @@ spec:
                 name: hello
                 port:
                   number: 80
+  tls:
+    - hosts:
+        - echo.dev2.openskool.dev
+        - hello.dev2.openskool.dev
+      secretName: os-tls
