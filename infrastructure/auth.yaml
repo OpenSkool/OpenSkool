@@ -31,39 +31,17 @@ spec:
     spec:
       containers:
         - env:
-            - name: KC_DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: auth
-                  key: db_password
             - name: KC_DB_SCHEMA
               value: public
-            - name: KC_DB_URL
-              valueFrom:
-                secretKeyRef:
-                  name: auth
-                  key: db_url
-            - name: KC_DB_USER
-              valueFrom:
-                secretKeyRef:
-                  name: auth
-                  key: db_user
             - name: KC_HOSTNAME
               value: auth.dev.openskool.dev
             - name: KC_HTTP_ENABLED
               value: 'true'
-            - name: KEYCLOAK_ADMIN
-              valueFrom:
-                secretKeyRef:
-                  name: auth
-                  key: keycloak_admin
-            - name: KEYCLOAK_ADMIN_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: auth
-                  key: keycloak_admin_password
             - name: KC_PROXY
               value: edge
+          envFrom:
+            - secretRef:
+                name: os-dev-auth
           image: registry.digitalocean.com/openskool/os-auth:19.0.1
           name: keycloak
           ports:

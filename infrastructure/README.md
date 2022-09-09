@@ -16,18 +16,20 @@ kubectl apply -f issuer.yaml
 
 ## Prepare secrets
 
+### Auth
+
 - Get the database information from [digitalocean](https://cloud.digitalocean.com/databases).
   - Remove the credentials from the URL and prefix it with `jdbc:`.
     - Eg. `jdbc:postgresql://db-postgresql-ams3-os-dev-do-user-1013788-0.b.db.ondigitalocean.com:25060/keycloak?sslmode=require`
 - Choose root admin credentials.
 
 ```sh
-kubectl create secret generic auth \
-  --from-literal="db_password=___" \
-  --from-literal="db_url=___" \
-  --from-literal="db_user=___" \
-  --from-literal="keycloak_admin=___" \
-  --from-literal="keycloak_admin_password=___"
+kubectl create secret generic os-dev-auth \
+  --from-literal="KC_DB_PASSWORD=__" \
+  --from-literal="KC_DB_URL=__" \
+  --from-literal="KC_DB_USER=__" \
+  --from-literal="KEYCLOAK_ADMIN=__" \
+  --from-literal="KEYCLOAK_ADMIN_PASSWORD=__"
 ```
 
 ## Install services
