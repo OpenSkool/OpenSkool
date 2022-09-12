@@ -63,3 +63,15 @@ jobs:
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+
+      - if: github.event_name != 'pull_request'
+        name: Save DigitalOcean kubeconfig
+        run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 os-dev
+
+      - if: github.event_name != 'pull_request'
+        name: Deploy to DigitalOcean Kubernetes
+        run: cat $GITHUB_WORKSPACE/infrastructure/api.yaml | sed "s/:latest/:${{ steps.meta.outputs.version }}/g" | kubectl apply -f -
+
+      - if: github.event_name != 'pull_request'
+        name: Verify deployment
+        run: kubectl rollout status deployment/os-dev-api
