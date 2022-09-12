@@ -2,13 +2,12 @@
 
 ## Setup cluster
 
-- Add the cluster as a trusted source for any database that needs contacting.
+- Setup DigitalOcean kubernetes cluster with at least 2 nodes.
+- Install "NGINX Ingress Controller" from the Marketplace.
 
 ```sh
-helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo add jetstack https://charts.jetstack.io
 helm repo update
-helm install nginx-ingress ingress-nginx/ingress-nginx --set controller.publishService.enabled=true
 kubectl create namespace cert-manager
 helm install cert-manager jetstack/cert-manager --namespace cert-manager --version v1.8.0 --set installCRDs=true
 kubectl apply -f issuer.yaml
