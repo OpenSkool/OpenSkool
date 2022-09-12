@@ -11,15 +11,11 @@ export async function assertRealmOrganisation(
   prisma: PrismaClient,
 ): Promise<Organisation> {
   assert(kc.realm.displayName, 'Realm display name is not set');
+  const data = { name: kc.realm.displayName };
   const existingOrganisation = await prisma.organisation.findFirst({
-    where: { name: 'Skool' },
+    where: data,
   });
-  return (
-    existingOrganisation ??
-    prisma.organisation.create({
-      data: { name: kc.realm.displayName },
-    })
-  );
+  return existingOrganisation ?? prisma.organisation.create({ data });
 }
 
 export async function seedOrganisations(prisma: PrismaClient): Promise<void> {
