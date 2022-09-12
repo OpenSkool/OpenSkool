@@ -3,7 +3,8 @@ name: Test
 on:
   push:
     branches:
-      - !infrastructure
+      - '*'
+      - '!infrastructure'
 
 jobs:
   test:
