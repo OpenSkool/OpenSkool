@@ -42,7 +42,8 @@ spec:
           envFrom:
             - secretRef:
                 name: os-dev-auth
-          image: registry.digitalocean.com/openskool/os-auth:19.0.1-r1
+          image: registry.digitalocean.com/openskool/os-auth:19.0.1
+          # imagePullPolicy: Always # Uncomment to re-release the same tag
           name: keycloak
           ports:
             - name: http
