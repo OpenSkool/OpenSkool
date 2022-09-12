@@ -3,7 +3,7 @@
 ## Build
 
 ```sh
-docker build -f auth/Dockerfile -t registry.digitalocean.com/openskool/auth:19.0.1 .
+docker build -f auth/Dockerfile -t registry.digitalocean.com/openskool/os-auth:19.0.1-r1 .
 ```
 
 ## Push
@@ -12,5 +12,5 @@ You'll need a [personal access token](https://docs.digitalocean.com/reference/ap
 
 ```sh
 doctl registry login
-docker push registry.digitalocean.com/openskool/auth:19.0.1
+docker push registry.digitalocean.com/openskool/os-auth:19.0.1-r1
 ```

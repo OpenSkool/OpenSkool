@@ -42,12 +42,17 @@ spec:
           envFrom:
             - secretRef:
                 name: os-dev-auth
-          image: registry.digitalocean.com/openskool/os-auth:19.0.1
+          image: registry.digitalocean.com/openskool/os-auth:19.0.1-r1
           name: keycloak
           ports:
             - name: http
               containerPort: 8080
+          livenessProbe:
+            initialDelaySeconds: 60
+            httpGet:
+              path: /health/live
+              port: http
           readinessProbe:
             httpGet:
-              path: /realms/master
-              port: 8080
+              path: /health/ready
+              port: http
