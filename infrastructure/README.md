@@ -50,15 +50,12 @@ kubectl create secret generic os-dev-auth \
 ```sh
 kubectl apply -f api.yaml
 kubectl apply -f auth.yaml
-kubectl apply -f echo.yaml
-kubectl apply -f hello.yaml
 ```
 
 ## Install Ingress
 
 ```sh
 kubectl apply -f ingress.yaml
-kubectl apply -f hello.yaml
 ```
 
 ## Configure DNS
@@ -74,6 +71,4 @@ Add DNS records.
 ```dns
 A api.dev [EXTERNAL-IP]
 A auth.dev [EXTERNAL-IP]
-A echo.dev [EXTERNAL-IP]
-A hello.dev [EXTERNAL-IP]
 ```
