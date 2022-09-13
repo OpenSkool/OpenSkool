@@ -20,7 +20,7 @@ metadata:
   name: os-dev-auth
 spec:
   replicas: 1
-  revisionHistoryLimit: 1
+  revisionHistoryLimit: 3
   selector:
     matchLabels:
       app: os-dev-auth
