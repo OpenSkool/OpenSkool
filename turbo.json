@@ -1,15 +1,24 @@
 {
   "$schema": "https://turborepo.org/schema.json",
-  "globalDependencies": [".env.local", ".env.*.local"],
+  "globalDependencies": [".env", ".env.*", "tsconfig.json"],
   "pipeline": {
     "build": {
       "dependsOn": ["^build", "codegen"],
+      "inputs": [
+        "prisma/**",
+        "public/**",
+        "src/**",
+        "themes/**",
+        "windi/**",
+        "*.config.ts"
+      ],
       "outputs": ["dist/**"]
     },
     "clean": {
       "cache": false
     },
     "codegen": {
+      "inputs": ["codegen.yml", "src/**"],
       "outputs": ["src/codegen/**"]
     },
     "@os/app#codegen": {
@@ -19,7 +28,9 @@
       "cache": false
     },
     "lint": {
-      "dependsOn": ["^build", "codegen"]
+      "dependsOn": ["^build", "codegen"],
+      "inputs": ["**/*.cjs", "**/*.mjs", "**/*.ts", "**/*.vue"],
+      "outputs": []
     },
     "preview": {
       "cache": false,
@@ -27,6 +38,7 @@
     },
     "test": {
       "dependsOn": ["^build", "codegen"],
+      "inputs": ["src/**", "test/**", "vite*config.ts"],
       "outputs": ["coverage/**"]
     },
     "test:ci": {
