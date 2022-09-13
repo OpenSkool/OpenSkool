@@ -42,7 +42,7 @@ jobs:
           images: |
             registry.digitalocean.com/openskool/os-api
           tags: |
-            type=raw,value=latest,enable={{is_default_branch}}
+            type=raw,value=latest,enable=${{github.ref == format('refs/heads/{0}', 'infrastructure') || github.ref == format('refs/heads/{0}', 'main')}}
             type=ref,event=pr
             type=sha
             type=semver,pattern={{version}}
