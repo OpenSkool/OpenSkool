@@ -19,7 +19,7 @@ metadata:
     app: os-dev-api
   name: os-dev-api
 spec:
-  replicas: 1
+  replicas: 2
   revisionHistoryLimit: 3
   selector:
     matchLabels:
