@@ -2,8 +2,8 @@ import { Language } from '@prisma/client';
 import acceptLanguageParser from 'accept-language-parser';
 import { asFunction, asValue } from 'awilix';
 import type {
+  FastifyBaseLogger,
   FastifyInstance,
-  FastifyLoggerInstance,
   FastifyPluginAsync,
   FastifyRequest,
 } from 'fastify';
@@ -15,7 +15,7 @@ import type { AppCradle } from '~/plugins/awilix';
 declare module '@fastify/awilix' {
   interface Cradle {
     app: FastifyInstance;
-    logger: FastifyLoggerInstance;
+    logger: FastifyBaseLogger;
   }
   interface RequestCradle {
     language: Language;
