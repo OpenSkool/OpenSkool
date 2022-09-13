@@ -30,11 +30,14 @@ jobs:
         env:
           CERT: ${{ secrets.API_TEST_DATABASE_CERTIFICATE }}
           DATABASE_URL: ${{ secrets.API_TEST_DATABASE_URL }}
+          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+          TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+          TURBO_REMOTE_ONLY: true
         run: |
           echo "$CERT" | base64 --decode > ./test-db.cert
           export DATABASE_URL="${DATABASE_URL}&sslcert=$(pwd)/test-db.cert"
           pnpm --filter api exec prisma db push --accept-data-loss
-          pnpm turbo run lint test:ci
+          pnpm exec turbo run lint test:ci
 
       - name: Api Test Report
         uses: dorny/test-reporter@v1

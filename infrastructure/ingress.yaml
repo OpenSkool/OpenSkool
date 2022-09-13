@@ -27,8 +27,19 @@ spec:
                 name: os-dev-auth
                 port:
                   number: 80
+    - host: 'turbo.openskool.dev'
+      http:
+        paths:
+          - pathType: Prefix
+            path: '/'
+            backend:
+              service:
+                name: os-dx-turbo
+                port:
+                  number: 80
   tls:
     - hosts:
         - api.dev.openskool.dev
         - auth.dev.openskool.dev
+        - turbo.openskool.dev
       secretName: os-tls

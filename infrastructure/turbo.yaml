@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: os-dx-turbo
+  name: os-dx-turbo
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 3000
+  selector:
+    app: os-dx-turbo
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: os-dx-turbo
+  name: os-dx-turbo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: os-dx-turbo
+  template:
+    metadata:
+      labels:
+        app: os-dx-turbo
+    spec:
+      containers:
+        - env:
+            - name: STORAGE_PROVIDER
+              value: local
+          envFrom:
+            - secretRef:
+                name: os-dx-turbo
+          image: fox1t/turborepo-remote-cache:1.5.1
+          name: turborepo-remote-cache
+          ports:
+            - containerPort: 3000

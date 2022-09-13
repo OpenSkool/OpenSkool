@@ -4,10 +4,12 @@ importers:
 
   .:
     specifiers:
+      dotenv-cli: ^6.0.0
       prettier: ^2.7.1
       prettier-plugin-package: ^1.3.0
       turbo: ^1.4.3
     devDependencies:
+      dotenv-cli: 6.0.0
       prettier: 2.7.1
       prettier-plugin-package: 1.3.0_prettier@2.7.1
       turbo: 1.4.3
@@ -3934,10 +3936,19 @@ packages:
       tslib: 2.4.0
     dev: true
 
+  /dotenv-cli/6.0.0:
+    resolution: {integrity: sha512-qXlCOi3UMDhCWFKe0yq5sg3X+pJAz+RQDiFN38AMSbUrnY3uZshSfDJUAge951OS7J9gwLZGfsBlWRSOYz/TRg==}
+    hasBin: true
+    dependencies:
+      cross-spawn: 7.0.3
+      dotenv: 16.0.1
+      dotenv-expand: 8.0.3
+      minimist: 1.2.6
+    dev: true
+
   /dotenv-expand/8.0.3:
     resolution: {integrity: sha512-SErOMvge0ZUyWd5B0NXMQlDkN+8r+HhVUsxgOO7IoPDOdDRD2JjExpN6y3KnFR66jsJMwSn1pqIivhU5rcJiNg==}
     engines: {node: '>=12'}
-    dev: false
 
   /dotenv-flow/3.2.0:
     resolution: {integrity: sha512-GEB6RrR4AbqDJvNSFrYHqZ33IKKbzkvLYiD5eo4+9aFXr4Y4G+QaFrB/fNp0y6McWBmvaPn3ZNjIufnj8irCtg==}
