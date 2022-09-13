@@ -30,8 +30,7 @@ spec:
         app: os-dev-api
     spec:
       containers:
-        - command: ['/sbin/tini', '--', 'node', 'api/index.mjs']
-          env:
+        - env:
             - name: API_BASE_URL
               value: https://api.dev.openskool.dev
             - name: APP_BASE_URL

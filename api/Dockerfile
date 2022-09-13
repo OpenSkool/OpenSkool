@@ -11,15 +11,14 @@ RUN pnpm fetch
 COPY . .
 RUN pnpm install --filter openskool --filter $PNPM_PACKAGE... --frozen-lockfile --offline
 RUN pnpm turbo run --filter $PNPM_PACKAGE... build
-RUN find . -name node_modules -type d -prune -exec rm -rf '{}' +
-RUN pnpm install --filter openskool --filter $PNPM_PACKAGE --frozen-lockfile --offline --prod
+RUN pnpm deploy --filter $PNPM_PACKAGE --prod pruned
+RUN find . -name .prisma | xargs -I dir mv dir pruned/node_modules
 
 FROM base AS production
-COPY --from=builder /opt/node_modules node_modules
-COPY --from=builder /opt/$PNPM_PACKAGE/node_modules $PNPM_PACKAGE/node_modules
-COPY --from=builder /opt/$PNPM_PACKAGE/dist $PNPM_PACKAGE
+COPY --from=builder /opt/pruned/dist .
+COPY --from=builder /opt/pruned/node_modules node_modules
 ENV NODE_ENV production
 EXPOSE 80
 USER node
 ENTRYPOINT ["/sbin/tini", "--"]
-CMD ["node", "$PNPM_PACKAGE/index.mjs"]
+CMD ["node", "index.mjs"]
