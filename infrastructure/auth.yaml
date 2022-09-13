@@ -54,6 +54,7 @@ spec:
               path: /health/live
               port: http
           readinessProbe:
+            initialDelaySeconds: 30
             httpGet:
               path: /health/ready
               port: http
