@@ -7,12 +7,12 @@
     "node": "16.17.0"
   },
   "scripts": {
-    "build": "vite build",
+    "build": "FORCE_COLOR=1 vite build",
     "clean": "rm -rf .turbo/ coverage/ dist/ test.xml",
     "codegen": "graphql-codegen",
     "dev": "FORCE_COLOR=1 vite",
-    "lint": "eslint --ext .cjs,.ts,.vue .",
-    "preview": "vite preview --port 4173",
+    "lint": "eslint --color --ext .cjs,.ts,.vue .",
+    "preview": "FORCE_COLOR=1 vite preview --port 4173",
     "test": "vue-tsc --noEmit && vitest run --coverage",
     "test:ci": "vue-tsc --noEmit && vitest run --coverage --reporter=junit --outputFile=test.xml"
   },
