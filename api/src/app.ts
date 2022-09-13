@@ -23,8 +23,12 @@ app
   .register(awilixPlugin)
   .register(boomPlugin)
   .register(configPlugin)
-  .register(requestLogger, {})
-  .register(shutdownPlugin)
-  .register(apiPlugin);
+  .register(shutdownPlugin);
+
+if (process.env.DISABLE_REQUEST_LOGGING !== 'true') {
+  app.register(requestLogger);
+}
+
+app.register(apiPlugin);
 
 export default app;
