@@ -23,7 +23,7 @@ const schema = Type.Object({
   SESSION_ALLOW_INSECURE: Type.Boolean({ default: false }),
   SESSION_DOMAIN: Type.String(),
   SESSION_SECRET: Type.String({ minLength: 32 }),
-  SESSION_STORE: Type.Union([Type.Boolean({ default: false }), Type.String()]),
+  SESSION_STORE: Type.Optional(Type.String()),
 });
 
 type Config = Static<typeof schema>;
