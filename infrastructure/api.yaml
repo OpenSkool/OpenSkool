@@ -59,7 +59,7 @@ spec:
             - secretRef:
                 name: os-dev-api
           image: registry.digitalocean.com/openskool/os-api:latest
-          name: api
+          name: os-api
           ports:
             - name: http
               containerPort: 8080
