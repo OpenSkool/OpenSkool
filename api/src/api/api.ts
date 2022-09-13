@@ -37,13 +37,15 @@ const apiPlugin: FastifyPluginAsync = async (app) => {
       },
       secret: app.config.SESSION_SECRET,
       store: ((): sessionPlugin.SessionStore | undefined => {
-        if (!app.config.SESSION_STORE) {
+        if (app.config.SESSION_STORE === false) {
           return;
         }
         // `connect-redis` is compatible with `@fastify/session`, but the types are not.
         /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
         const RedisStore = connectRedis(sessionPlugin as any);
-        const redisClient = new Redis();
+        const redisUrl =
+          app.config.SESSION_STORE === true ? '' : app.config.SESSION_STORE;
+        const redisClient = new Redis(redisUrl);
         app.addHook('onClose', () => redisClient.quit());
         const store = new RedisStore({
           client: redisClient as unknown as Client,
