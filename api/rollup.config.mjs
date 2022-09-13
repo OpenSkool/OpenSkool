@@ -3,7 +3,7 @@ import esbuild from 'rollup-plugin-esbuild';
 import { typescriptPaths } from 'rollup-plugin-typescript-paths';
 
 export default defineConfig({
-  external: (id) => !(id.startsWith('@os/') || /^[./~]/.test(id)),
+  external: (id) => !/^[./~]/.test(id),
   input: 'src/server.ts',
   output: [
     {
