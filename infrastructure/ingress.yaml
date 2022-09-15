@@ -7,6 +7,16 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
+    - host: 'dev.openskool.dev'
+      http:
+        paths:
+          - pathType: Prefix
+            path: '/'
+            backend:
+              service:
+                name: os-dev-app
+                port:
+                  number: 80
     - host: 'api.dev.openskool.dev'
       http:
         paths:
@@ -39,6 +49,7 @@ spec:
                   number: 80
   tls:
     - hosts:
+        - dev.openskool.dev
         - api.dev.openskool.dev
         - auth.dev.openskool.dev
         - turbo.openskool.dev

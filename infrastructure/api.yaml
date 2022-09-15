@@ -60,14 +60,14 @@ spec:
                 name: os-dev-api
           image: registry.digitalocean.com/openskool/os-api:latest
           name: os-api
-          ports:
-            - name: http
-              containerPort: 8080
           livenessProbe:
             initialDelaySeconds: 30
             httpGet:
               path: /health/live
               port: http
+          ports:
+            - name: http
+              containerPort: 8080
           readinessProbe:
             initialDelaySeconds: 10
             httpGet:
