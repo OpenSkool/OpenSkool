@@ -18,11 +18,9 @@
       "cache": false
     },
     "codegen": {
+      "dependsOn": ["^codegen"],
       "inputs": ["codegen.yml", "src/**"],
       "outputs": ["src/codegen/**"]
-    },
-    "@os/app#codegen": {
-      "dependsOn": ["@os/api#codegen"]
     },
     "dev": {
       "cache": false

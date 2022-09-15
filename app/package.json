@@ -49,6 +49,7 @@
     "@iconify-json/ri": "^1.1.3",
     "@intlify/vite-plugin-vue-i18n": "^6.0.1",
     "@os/eslint-config": "workspace:*",
+    "@os/api": "workspace:*",
     "@os/tsconfig": "workspace:*",
     "@testing-library/dom": "^8.17.1",
     "@testing-library/user-event": "14.4.3",
