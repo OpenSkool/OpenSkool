@@ -14,7 +14,7 @@
     "dev": "NODE_ENV=development nodemon src/server.ts | FORCE_COLOR=1 pino-pretty",
     "lint": "eslint --color --ext .cjs,.mjs,.ts .",
     "postinstall": "prisma generate",
-    "preview": "NODE_ENV=production node -r dotenv-flow/config dist/index.mjs",
+    "preview": "NODE_ENV=production node -r dotenv-flow/config dist/index.mjs | FORCE_COLOR=1 pino-pretty",
     "prisma:test": "DATABASE_URL='postgresql://openskool:openskool@localhost:5433/openskool-test' prisma",
     "start": "node dist/index.mjs",
     "test": "tsc --noEmit && vitest run --coverage",
