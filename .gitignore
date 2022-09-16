@@ -1,4 +1,5 @@
 .turbo/
+pruned/
 test.xml
 
 # Created by https://www.toptal.com/developers/gitignore/api/node
