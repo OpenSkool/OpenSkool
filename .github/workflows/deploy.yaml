@@ -15,8 +15,8 @@ jobs:
   build:
     name: Build & Push
     outputs:
-      apiVersion: ${{ steps.metaOutput.outputs.apiVersion }}
-      appVersion: ${{ steps.metaOutput.outputs.appVersion }}
+      apiImageSha: ${{ steps.metaOutput.outputs.apiImageSha }}
+      appImageSha: ${{ steps.metaOutput.outputs.appImageSha }}
     runs-on: ubuntu-20.04
     strategy:
       matrix:
@@ -56,12 +56,21 @@ jobs:
           tags: |
             type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'infrastructure') || github.ref == format('refs/heads/{0}', 'main') }}
             type=ref,event=pr
-            type=sha
             type=semver,pattern={{version}}
+            type=sha
 
-      - name: Docker Metadata Output
-        id: metaOutput
-        run: echo '::set-output name=${{ matrix.build.id }}Version::${{ steps.meta.outputs.version }}'
+      - name: Docker Metadata Sha
+        id: metaSha
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            registry.digitalocean.com/openskool/${{ matrix.build.image }}
+          tags: |
+            type=sha
+
+      - id: metaOutput
+        name: Docker Metadata Sha Output
+        run: echo '::set-output name=${{ matrix.build.id }}ImageSha::${{ steps.metaSha.outputs.version }}'
 
       - name: Log in to DigitalOcean
         run: doctl registry login --expiry-seconds 1200
@@ -102,8 +111,8 @@ jobs:
 
       - name: Deploy
         run: |
-          cat $GITHUB_WORKSPACE/infrastructure/api.yaml | sed "s/:latest/:${{ needs.build.outputs.apiVersion }}/g" | kubectl apply -f -
-          cat $GITHUB_WORKSPACE/infrastructure/app.yaml | sed "s/:latest/:${{ needs.build.outputs.appVersion }}/g" | kubectl apply -f -
+          cat $GITHUB_WORKSPACE/infrastructure/api.yaml | sed "s/:latest/:${{ needs.build.outputs.apiImageSha }}/g" | kubectl apply -f -
+          cat $GITHUB_WORKSPACE/infrastructure/app.yaml | sed "s/:latest/:${{ needs.build.outputs.appImageSha }}/g" | kubectl apply -f -
 
       - name: Verify
         run: |
