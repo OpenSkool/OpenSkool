@@ -13,8 +13,20 @@ on:
 
 jobs:
   build:
-    name: Build & Deploy
+    name: Build & Push
+    outputs:
+      apiVersion: ${{ steps.metaOutput.outputs.apiVersion }}
+      appVersion: ${{ steps.metaOutput.outputs.appVersion }}
     runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        build:
+          - id: api
+            image: os-api
+            workspace: api
+          - id: app
+            image: os-app
+            workspace: app
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -26,9 +38,9 @@ jobs:
         uses: actions/cache@v3
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          key: ${{ runner.os }}-${{ matrix.build.id }}-buildx-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-buildx-
+            ${{ runner.os }}-${{ matrix.build.id }}-buildx-
 
       - name: Setup doctl
         uses: digitalocean/action-doctl@v2
@@ -40,38 +52,60 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: |
-            registry.digitalocean.com/openskool/os-api
+            registry.digitalocean.com/openskool/${{ matrix.build.image }}
           tags: |
-            type=raw,value=latest,enable=${{github.ref == format('refs/heads/{0}', 'infrastructure') || github.ref == format('refs/heads/{0}', 'main')}}
+            type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'infrastructure') || github.ref == format('refs/heads/{0}', 'main') }}
             type=ref,event=pr
             type=sha
             type=semver,pattern={{version}}
 
+      - name: Docker Metadata Output
+        id: metaOutput
+        run: echo '::set-output name=${{ matrix.build.id }}Version::${{ steps.meta.outputs.version }}'
+
       - name: Log in to DigitalOcean
         run: doctl registry login --expiry-seconds 1200
 
-      - name: Build and push
+      - name: Build & Push
         uses: docker/build-push-action@v3
         with:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
-          file: api/Dockerfile
+          file: ${{ matrix.build.workspace }}/Dockerfile
           push: true
-          tags: ${{steps.meta.outputs.tags}}
+          tags: ${{ steps.meta.outputs.tags }}
 
       - name: Move cache
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
-      - if: github.event_name != 'pull_request'
-        name: Save DigitalOcean kubeconfig
+  deploy:
+    if: github.event_name != 'pull_request'
+    name: Deploy Api & App
+    needs: build
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      - name: Log in to DigitalOcean
+        run: doctl registry login --expiry-seconds 1200
+
+      - name: Save kubeconfig
         run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 os-dev
 
-      - if: github.event_name != 'pull_request'
-        name: Deploy to DigitalOcean Kubernetes
-        run: cat $GITHUB_WORKSPACE/infrastructure/api.yaml | sed "s/:latest/:${{ steps.meta.outputs.version }}/g" | kubectl apply -f -
+      - name: Deploy
+        run: |
+          cat $GITHUB_WORKSPACE/infrastructure/api.yaml | sed "s/:latest/:${{ needs.build.outputs.apiVersion }}/g" | kubectl apply -f -
+          cat $GITHUB_WORKSPACE/infrastructure/app.yaml | sed "s/:latest/:${{ needs.build.outputs.appVersion }}/g" | kubectl apply -f -
 
-      - if: github.event_name != 'pull_request'
-        name: Verify deployment
-        run: kubectl rollout status deployment/os-dev-api
+      - name: Verify
+        run: |
+          kubectl rollout status deployment/os-dev-api
+          kubectl rollout status deployment/os-dev-app
