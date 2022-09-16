@@ -1,6 +1,6 @@
 FROM node:16.17.0-alpine AS base
 ARG PNPM_PACKAGE=api
-RUN apk add bash tini --no-cache
+RUN apk add tini --no-cache
 WORKDIR /opt
 
 FROM base AS builder
