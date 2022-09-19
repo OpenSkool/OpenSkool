@@ -173,6 +173,8 @@ importers:
       '@graphql-typed-document-node/core': ^3.1.1
       '@headlessui/vue': ^1.6.7
       '@iconify-json/ri': ^1.1.3
+      '@import-meta-env/cli': ^0.1.7
+      '@import-meta-env/unplugin': ^0.1.8
       '@intlify/vite-plugin-vue-i18n': ^6.0.1
       '@os/api': workspace:*
       '@os/eslint-config': workspace:*
@@ -246,6 +248,8 @@ importers:
       '@graphql-codegen/typescript-operations': 2.5.3_graphql@16.6.0
       '@graphql-typed-document-node/core': 3.1.1_graphql@16.6.0
       '@iconify-json/ri': 1.1.3
+      '@import-meta-env/cli': 0.1.7
+      '@import-meta-env/unplugin': 0.1.8_rollup@2.78.1+vite@3.1.0
       '@intlify/vite-plugin-vue-i18n': 6.0.1_vite@3.1.0+vue-i18n@9.2.2
       '@os/api': link:../api
       '@os/eslint-config': link:../config/eslint
@@ -1841,6 +1845,35 @@ packages:
       local-pkg: 0.4.2
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /@import-meta-env/cli/0.1.7:
+    resolution: {integrity: sha512-aE/KmO1cNWvMINCsyaBG2fAAcFP8FbYmV8U7x29kMgWJDTR6O2AAtNIoEsr30tqrJ68/TxcjcxMKYQGLqKK+Rw==}
+    engines: {node: ^12.20.0 || >= 14}
+    hasBin: true
+    peerDependencies:
+      dotenv: ^11.0.0 || ^12.0.4 || ^13.0.1 || ^14.3.2 || ^15.0.1 || ^16.0.0
+    dependencies:
+      commander: 9.4.0
+      glob: 7.2.3
+      picocolors: 1.0.0
+      serialize-javascript: 6.0.0
+    dev: true
+
+  /@import-meta-env/unplugin/0.1.8_rollup@2.78.1+vite@3.1.0:
+    resolution: {integrity: sha512-BSMxFokncqHijsdMztRg/xv20LAr5FdJ+hhKFZ1wJNYRhSoF28DsMlQ119B52XKWycj5okuAQO4Bh69Lb7729Q==}
+    engines: {node: ^12.20.0 || >= 14}
+    peerDependencies:
+      dotenv: ^11.0.0 || ^12.0.4 || ^13.0.1 || ^14.3.2 || ^15.0.1 || ^16.0.0
+    dependencies:
+      object-hash: 3.0.0
+      picocolors: 1.0.0
+      unplugin: 0.3.3_rollup@2.78.1+vite@3.1.0
+    transitivePeerDependencies:
+      - esbuild
+      - rollup
+      - vite
+      - webpack
     dev: true
 
   /@intlify/bundle-utils/3.1.0_vue-i18n@9.2.2:
@@ -3598,6 +3631,11 @@ packages:
     engines: {node: '>= 0.8'}
     dependencies:
       delayed-stream: 1.0.0
+
+  /commander/9.4.0:
+    resolution: {integrity: sha512-sRPT+umqkz90UA8M1yqYfnHlZA7fF6nSphDtxeywPZ49ysjxDQybzk13CL+mXekDRG92skbcqCLVovuCusNmFw==}
+    engines: {node: ^12.20.0 || >=14}
+    dev: true
 
   /common-tags/1.8.2:
     resolution: {integrity: sha512-gk/Z852D2Wtb//0I+kRFNKKE9dIIVirjoqPoA1wJU+XePVXZfGeBpk45+A1rKO4Q43prqWBNY/MiIeRLbPWUaA==}
@@ -6438,6 +6476,11 @@ packages:
     engines: {node: '>= 6'}
     dev: false
 
+  /object-hash/3.0.0:
+    resolution: {integrity: sha512-RSn9F68PjH9HqtltsSnqYC1XXoWe9Bju5+213R98cNGttag9q9yAOTzdbsqvIa7aNm5WffBZFpWYr2aWrklWAw==}
+    engines: {node: '>= 6'}
+    dev: true
+
   /object-inspect/1.12.2:
     resolution: {integrity: sha512-z+cPxW0QGUp0mcqcsgQyLVRDoXFQbXOwBaqyF7VIgI4TWNQsDHrBpUQslRmIfAoYWdYzs6UlKJtB2XJpTaNSpQ==}
     dev: true
@@ -6996,6 +7039,12 @@ packages:
     engines: {node: '>= 0.8'}
     dev: false
 
+  /randombytes/2.1.0:
+    resolution: {integrity: sha512-vYl3iOX+4CKUWuxGi9Ukhie6fsqXqS9FE2Zaic4tNFD2N2QQaXOMFbuKK4QmDHC0JO6B1Zp41J0LpT0oR68amQ==}
+    dependencies:
+      safe-buffer: 5.2.1
+    dev: true
+
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
     dev: false
@@ -7339,6 +7388,12 @@ packages:
       no-case: 3.0.4
       tslib: 2.4.0
       upper-case-first: 2.0.2
+    dev: true
+
+  /serialize-javascript/6.0.0:
+    resolution: {integrity: sha512-Qr3TosvguFt8ePWqsvRfrKyQXIiW+nGbYpy8XK24NQHE83caxWt+mIymTT19DGFbNWNLfEwsrkSmN64lVWB9ag==}
+    dependencies:
+      randombytes: 2.1.0
     dev: true
 
   /set-blocking/2.0.0:
@@ -8167,6 +8222,28 @@ packages:
       - supports-color
       - vite
       - webpack
+    dev: true
+
+  /unplugin/0.3.3_rollup@2.78.1+vite@3.1.0:
+    resolution: {integrity: sha512-WjZWpUqqcYPQ/efR00Zm2m1+J1LitwoZ4uhHV4VdZ+IpW0Nh/qnDYtVf+nLhozXdGxslMPecOshVR7NiWFl4gA==}
+    peerDependencies:
+      esbuild: '>=0.13'
+      rollup: ^2.50.0
+      vite: ^2.3.0
+      webpack: 4 || 5
+    peerDependenciesMeta:
+      esbuild:
+        optional: true
+      rollup:
+        optional: true
+      vite:
+        optional: true
+      webpack:
+        optional: true
+    dependencies:
+      rollup: 2.78.1
+      vite: 3.1.0
+      webpack-virtual-modules: 0.4.4
     dev: true
 
   /unplugin/0.8.1_rollup@2.78.1+vite@3.1.0:

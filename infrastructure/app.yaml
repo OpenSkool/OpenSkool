@@ -30,7 +30,10 @@ spec:
         app: os-dev-app
     spec:
       containers:
-        - image: registry.digitalocean.com/openskool/os-app:latest
+        - env:
+            - name: VITE_API_BASE_URL
+              value: https://api.dev.openskool.dev
+          image: registry.digitalocean.com/openskool/os-app:latest
           name: os-app
           livenessProbe:
             initialDelaySeconds: 5

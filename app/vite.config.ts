@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
+import ImportMetaEnvPlugin from '@import-meta-env/unplugin';
 import VueI18n from '@intlify/vite-plugin-vue-i18n';
 import Vue from '@vitejs/plugin-vue';
 import visualizer from 'rollup-plugin-visualizer';
@@ -67,6 +68,7 @@ export default defineConfig({
       types: [],
     }),
     Icons({ compiler: 'vue3' }),
+    ImportMetaEnvPlugin.vite({ example: '.env.example' }),
     Pages({
       exclude: ['**/*.spec.ts'],
     }),
