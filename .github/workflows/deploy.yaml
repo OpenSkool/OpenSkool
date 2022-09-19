@@ -80,6 +80,7 @@ jobs:
         with:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
+          context: .
           file: ${{ matrix.build.workspace }}/Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
