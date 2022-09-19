@@ -24,7 +24,8 @@ kubectl -n os-dx apply -f turbo.yaml
 Get the token from a random developer.
 
 ```sh
-# .env.turbo.local
+# .env.local
+TURBO_API="https://turbo.openskool.dev"
 TURBO_TEAM="team_openskool"
 TURBO_TOKEN=""
 ```

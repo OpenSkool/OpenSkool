@@ -9,15 +9,15 @@
   "scripts": {
     "api": "pnpm --filter api",
     "app": "pnpm --filter app",
-    "build": "pnpm run turbo-run build",
-    "clean": "pnpm run turbo-run clean",
-    "codegen": "pnpm run turbo-run codegen",
-    "dev": "pnpm run turbo-run dev",
+    "build": "pnpm turbo run build",
+    "clean": "pnpm turbo run clean",
+    "codegen": "pnpm turbo run codegen",
+    "dev": "pnpm turbo run dev",
     "format": "prettier --write .",
-    "lint": "pnpm run turbo-run lint",
-    "preview": "pnpm run turbo-run preview",
-    "test": "pnpm run turbo-run test",
-    "turbo-run": "dotenv -e .env.local -- turbo run --api='https://turbo.openskool.dev'"
+    "lint": "pnpm turbo run lint",
+    "preview": "pnpm turbo run preview",
+    "test": "pnpm turbo run test",
+    "turbo": "dotenv -e .env.local -- turbo"
   },
   "devDependencies": {
     "dotenv-cli": "^6.0.0",
