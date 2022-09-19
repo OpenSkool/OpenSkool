@@ -37,10 +37,6 @@
     "test": {
       "dependsOn": ["^build", "codegen"],
       "inputs": ["src/**", "test/**", "vite*config.ts"],
-      "outputs": ["coverage/**"]
-    },
-    "test:ci": {
-      "dependsOn": ["^build", "codegen"],
       "outputs": ["coverage/**", "test.xml"]
     }
   }

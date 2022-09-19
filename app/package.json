@@ -13,8 +13,7 @@
     "dev": "FORCE_COLOR=1 vite",
     "lint": "eslint --color --ext .cjs,.ts,.vue .",
     "preview": "FORCE_COLOR=1 vite preview --port 4173",
-    "test": "vue-tsc --noEmit && vitest run --coverage",
-    "test:ci": "vue-tsc --noEmit && vitest run --coverage --reporter=junit --outputFile=test.xml"
+    "test": "vue-tsc --noEmit && vitest run --coverage --reporter=default --reporter=junit --outputFile=test.xml"
   },
   "files": [],
   "dependencies": {
