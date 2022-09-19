@@ -73,3 +73,10 @@ spec:
             httpGet:
               path: /health/ready
               port: http
+      initContainers:
+        - command: ['node_modules/.bin/prisma', 'migrate', 'deploy']
+          envFrom:
+            - secretRef:
+                name: os-dev-api
+          image: registry.digitalocean.com/openskool/os-api:latest
+          name: os-api-init

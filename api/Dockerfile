@@ -17,6 +17,8 @@ RUN find . -name .prisma | xargs -I dir mv dir pruned/node_modules
 
 FROM base AS production
 COPY --from=builder /opt/pruned/dist .
+COPY --from=builder /opt/pruned/prisma/schema.prisma prisma/
+COPY --from=builder /opt/pruned/prisma/migrations prisma/migrations
 COPY --from=builder /opt/pruned/node_modules node_modules
 ENV NODE_ENV production
 EXPOSE 80
