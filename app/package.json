@@ -28,7 +28,7 @@
     "@vue/apollo-composable": "^4.0.0-alpha.19",
     "@vue/apollo-util": "^4.0.0-alpha.18",
     "@vueuse/core": "^9.1.0",
-    "@vueuse/head": "0.7.9",
+    "@vueuse/head": "0.7.12",
     "colorjs.io": "^0.4.0",
     "cross-fetch": "^3.1.5",
     "graphql": "^16.6.0",
