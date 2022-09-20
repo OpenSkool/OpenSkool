@@ -35,7 +35,6 @@ importers:
       '@hapi/boom': ^10.0.0
       '@keycloak/keycloak-admin-client': ^19.0.2
       '@mgcrea/fastify-graceful-exit': ^0.4.0
-      '@mgcrea/fastify-request-logger': ^0.6.1
       '@os/eslint-config': workspace:*
       '@os/tsconfig': workspace:*
       '@pothos/core': ^3.21.0
@@ -103,7 +102,6 @@ importers:
       '@hapi/boom': 10.0.0
       '@keycloak/keycloak-admin-client': 19.0.2
       '@mgcrea/fastify-graceful-exit': 0.4.0
-      '@mgcrea/fastify-request-logger': 0.6.1
       '@pothos/core': 3.21.0_graphql@16.6.0
       '@pothos/plugin-errors': 3.7.0_77drd5c75cmluqqlsobcafssve
       '@pothos/plugin-prisma': 3.34.0_jpwm4dw3k5p2oph4d65t7invby
@@ -2076,13 +2074,6 @@ packages:
   /@mgcrea/fastify-graceful-exit/0.4.0:
     resolution: {integrity: sha512-dMPW+w5h/tR4COygu2dBqQeV8uUxmwF+3jEfZUr0DGlPn5kiA1eLdE1Pxi73OZN8lCOgBh5uTFEoh+Eyc0gipg==}
     dependencies:
-      fastify-plugin: 3.0.1
-    dev: false
-
-  /@mgcrea/fastify-request-logger/0.6.1:
-    resolution: {integrity: sha512-Ugz6GRTXF8ZV5Ay/XoGhoJt6V7T6nQmvevULSSwZur1q0aqF54XNC1CZFg9RNnKBXQsjPtBCmEhse5kw/3dxEw==}
-    dependencies:
-      chalk: 4.1.2
       fastify-plugin: 3.0.1
     dev: false
 

@@ -1,5 +1,4 @@
 import shutdownPlugin from '@mgcrea/fastify-graceful-exit';
-import requestLogger from '@mgcrea/fastify-request-logger';
 import createApp from 'fastify';
 
 import apiPlugin from '~/api';
@@ -15,7 +14,7 @@ const app = createApp({
       strict: 'log',
     },
   },
-  disableRequestLogging: true,
+  disableRequestLogging: process.env.DISABLE_REQUEST_LOGGING === 'true',
   logger,
 });
 
@@ -23,12 +22,7 @@ app
   .register(awilixPlugin)
   .register(boomPlugin)
   .register(configPlugin)
-  .register(shutdownPlugin);
-
-if (process.env.DISABLE_REQUEST_LOGGING !== 'true') {
-  app.register(requestLogger);
-}
-
-app.register(apiPlugin);
+  .register(shutdownPlugin)
+  .register(apiPlugin);
 
 export default app;
