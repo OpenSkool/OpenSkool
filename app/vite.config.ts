@@ -25,7 +25,6 @@ export default defineConfig({
         visualizer({ filename: path.join(__dirname, 'dist/stats.html') }),
       ],
     },
-    sourcemap: true,
   },
   define: {
     // https://vue-i18n.intlify.dev/guide/advanced/optimization.html#reduce-bundle-size-with-feature-build-flags
