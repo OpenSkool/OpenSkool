@@ -4,7 +4,7 @@
   "private": true,
   "license": "AGPL-3.0",
   "engines": {
-    "node": "16.17.0"
+    "node": "16.17.1"
   },
   "scripts": {
     "build": "FORCE_COLOR=1 vite build",
