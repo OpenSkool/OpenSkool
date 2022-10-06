@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ManageCompetencyFrameworkDetailRouteDocument } from '~/codegen/graphql';
+import { graphql } from '~/codegen';
 import { RootCompetencyList } from '~/domain/competency-management';
 import { AuthAccessDeniedLayout, NotFoundLayout } from '~/domain/global';
 import {
@@ -17,7 +17,7 @@ const frameworkId = computed((): string => route.params.frameworkId as string);
 
 const ability = useAppAbility();
 
-gql`
+const ManageCompetencyFrameworkDetailRouteDocument = graphql(`
 	query manageCompetencyFrameworkDetailRoute($id: ID!) {
 		competencyFramework(id: $id) {
 			... on QueryCompetencyFrameworkSuccess {
@@ -26,10 +26,10 @@ gql`
 					title
 				}
 			}
-			...BaseErrorFields
+			...UserErrorFragment
 		}
 	}
-`;
+`);
 
 const { loading, result } = useQuery(
 	ManageCompetencyFrameworkDetailRouteDocument,

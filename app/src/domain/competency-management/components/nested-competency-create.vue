@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { FormKitNode } from '@formkit/core';
 
-import { CreateNestedCompetencyDocument } from '~/codegen/graphql';
+import { graphql } from '~/codegen';
 
 const props = defineProps<{
 	competencyId: string;
@@ -11,7 +11,7 @@ const props = defineProps<{
 const { t } = useI18n();
 const router = useRouter();
 
-gql`
+const CreateNestedCompetencyDocument = graphql(`
 	mutation CreateNestedCompetency($data: CreateNestedCompetencyInput!) {
 		createNestedCompetency(data: $data) {
 			... on MutationCreateNestedCompetencySuccess {
@@ -19,10 +19,10 @@ gql`
 					id
 				}
 			}
-			...BaseErrorFields
+			...UserErrorFragment
 		}
 	}
-`;
+`);
 
 const { mutate: createNestedCompetency } = useMutation(
 	CreateNestedCompetencyDocument,

@@ -1,8 +1,5 @@
 <script lang="ts" setup>
-import {
-	DeleteCompetencyDocument,
-	ManageCompetencyDetailRouteDocument,
-} from '~/codegen/graphql';
+import { graphql } from '~/codegen';
 import { NestedCompetencyList } from '~/domain/competency-management';
 import {
 	AuthAccessDeniedLayout,
@@ -37,7 +34,7 @@ const isDeleteModalOpen = ref(false);
 const showReorderCompetenciesControls = ref(false);
 const deleteErrorMessage = ref<string | null>(null);
 
-gql`
+const ManageCompetencyDetailRouteDocument = graphql(`
 	query manageCompetencyDetailRoute($competencyId: ID!, $frameworkId: ID!) {
 		competency(id: $competencyId) {
 			... on QueryCompetencySuccess {
@@ -49,7 +46,7 @@ gql`
 					}
 				}
 			}
-			...BaseErrorFields
+			...UserErrorFragment
 		}
 		competencyFramework(id: $frameworkId) {
 			... on QueryCompetencyFrameworkSuccess {
@@ -59,7 +56,7 @@ gql`
 			}
 		}
 	}
-`;
+`);
 
 const { loading, onError, result } = useQuery(
 	ManageCompetencyDetailRouteDocument,
@@ -87,7 +84,7 @@ useHead(() => ({
 	title: competency.value?.title,
 }));
 
-gql`
+const DeleteCompetencyDocument = graphql(`
 	mutation deleteCompetency($id: ID!) {
 		deleteCompetency(id: $id) {
 			... on MutationDeleteCompetencySuccess {
@@ -95,10 +92,10 @@ gql`
 					id
 				}
 			}
-			...BaseErrorFields
+			...UserErrorFragment
 		}
 	}
-`;
+`);
 
 const { mutate: deleteCompetency } = useMutation(DeleteCompetencyDocument);
 

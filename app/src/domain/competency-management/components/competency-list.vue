@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { Competency, SwapCompetenciesDocument } from '~/codegen/graphql';
+import { graphql } from '~/codegen';
+import { Competency } from '~/codegen/graphql';
 
 defineProps<{
 	competencies: Array<Pick<Competency, 'id' | 'title'>>;
@@ -11,7 +12,7 @@ const emit = defineEmits<(event: 'swap') => void>();
 
 const { t } = useI18n();
 
-gql`
+const SwapCompetenciesDocument = graphql(`
 	mutation swapCompetencies($leftCompetencyId: ID!, $rightCompetencyId: ID!) {
 		swapCompetencies(
 			leftCompetencyId: $leftCompetencyId
@@ -27,10 +28,10 @@ gql`
 					}
 				}
 			}
-			...BaseErrorFields
+			...UserErrorFragment
 		}
 	}
-`;
+`);
 
 const { mutate: mutateSwapCompetencies } = useMutation(
 	SwapCompetenciesDocument,

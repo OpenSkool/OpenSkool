@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { MyInternshipRouteQueryDocument } from '~/codegen/graphql';
+import { graphql } from '~/codegen';
 import { NotFoundLayout, useGlobalStore } from '~/domain/global';
 import {
 	InternshipOverview,
@@ -13,7 +13,7 @@ const instanceId = computed((): string => route.params.instanceId as string);
 const ability = useAppAbility();
 const globalStore = useGlobalStore();
 
-gql`
+const MyInternshipRouteQueryDocument = graphql(`
 	query MyInternshipRouteQuery($id: ID!) {
 		internshipInstance(id: $id) {
 			id
@@ -26,7 +26,7 @@ gql`
 			isPositionAssigned
 		}
 	}
-`;
+`);
 
 const { loading, onError, result } = useQuery(
 	MyInternshipRouteQueryDocument,

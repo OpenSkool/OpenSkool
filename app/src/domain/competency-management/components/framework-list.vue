@@ -1,17 +1,17 @@
 <script lang="ts" setup>
-import { ManageCompetencyFrameworkListDocument } from '~/codegen/graphql';
+import { graphql } from '~/codegen';
 import { useGlobalStore } from '~/domain/global';
 
 const globalStore = useGlobalStore();
 
-gql`
+const ManageCompetencyFrameworkListDocument = graphql(`
 	query ManageCompetencyFrameworkList {
 		allCompetencyFrameworks {
 			id
 			title
 		}
 	}
-`;
+`);
 
 const { loading, onError, result } = useQuery(
 	ManageCompetencyFrameworkListDocument,

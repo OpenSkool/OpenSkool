@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ManageRootCompetenciesDocument } from '~/codegen/graphql';
+import { graphql } from '~/codegen';
 import { NotFoundCard, useGlobalStore } from '~/domain/global';
 
 import CompetencyList from './competency-list.vue';
@@ -12,7 +12,7 @@ const props = defineProps<{
 const ability = useAppAbility();
 const globalStore = useGlobalStore();
 
-gql`
+const ManageRootCompetenciesDocument = graphql(`
 	query manageRootCompetencies($id: ID!) {
 		competencyFramework(id: $id) {
 			... on QueryCompetencyFrameworkSuccess {
@@ -23,10 +23,10 @@ gql`
 					}
 				}
 			}
-			...BaseErrorFields
+			...UserErrorFragment
 		}
 	}
-`;
+`);
 
 const { loading, onError, refetch, result } = useQuery(
 	ManageRootCompetenciesDocument,

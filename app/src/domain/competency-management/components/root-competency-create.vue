@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { FormKitNode } from '@formkit/core';
 
-import { CreateRootCompetencyDocument } from '~/codegen/graphql';
+import { graphql } from '~/codegen';
 
 const props = defineProps<{
 	frameworkId: string;
@@ -10,7 +10,7 @@ const props = defineProps<{
 const { t } = useI18n();
 const router = useRouter();
 
-gql`
+const CreateRootCompetencyDocument = graphql(`
 	mutation CreateRootCompetency($data: CreateRootCompetencyInput!) {
 		createRootCompetency(data: $data) {
 			... on MutationCreateRootCompetencySuccess {
@@ -23,10 +23,10 @@ gql`
 					}
 				}
 			}
-			...BaseErrorFields
+			...UserErrorFragment
 		}
 	}
-`;
+`);
 
 const { mutate: createRootCompetency } = useMutation(
 	CreateRootCompetencyDocument,

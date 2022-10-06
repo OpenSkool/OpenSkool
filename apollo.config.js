@@ -5,6 +5,6 @@ module.exports = {
 			localSchemaFile: 'api/src/codegen/schema.graphql',
 			url: 'http://localhost:3030/graphql',
 		},
-		includes: ['app/src/**/*.{gql,vue,ts}'],
+		includes: ['app/src/**/*.{ts,vue}'],
 	},
 };

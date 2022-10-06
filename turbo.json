@@ -19,7 +19,7 @@
 		},
 		"codegen": {
 			"dependsOn": ["^codegen"],
-			"inputs": ["codegen.yml", "src/**"],
+			"inputs": ["codegen.ts", "src/**"],
 			"outputs": ["src/codegen/**"]
 		},
 		"dev": {

@@ -1,10 +1,7 @@
 <script lang="ts" setup>
 import { FormKitNode } from '@formkit/core';
 
-import {
-	ManageEditCompetencyDocument,
-	RenameCompetencyDocument,
-} from '~/codegen/graphql';
+import { graphql } from '~/codegen';
 import { useGlobalStore } from '~/domain/global';
 import { assert } from '~/utils';
 
@@ -18,7 +15,7 @@ const router = useRouter();
 
 const globalStore = useGlobalStore();
 
-gql`
+const ManageEditCompetencyDocument = graphql(`
 	query manageEditCompetency($id: ID!) {
 		competency(id: $id) {
 			... on QueryCompetencySuccess {
@@ -26,10 +23,10 @@ gql`
 					title
 				}
 			}
-			...BaseErrorFields
+			...UserErrorFragment
 		}
 	}
-`;
+`);
 
 const { loading, onError, result } = useQuery(
 	ManageEditCompetencyDocument,
@@ -44,7 +41,7 @@ const competency = computed(() =>
 		: null,
 );
 
-gql`
+const RenameCompetencyDocument = graphql(`
 	mutation renameCompetency($id: ID!, $data: RenameCompetencyInput!) {
 		renameCompetency(id: $id, data: $data) {
 			... on MutationRenameCompetencySuccess {
@@ -52,10 +49,10 @@ gql`
 					id
 				}
 			}
-			...BaseErrorFields
+			...UserErrorFragment
 		}
 	}
-`;
+`);
 
 const { mutate: renameCompetency } = useMutation(RenameCompetencyDocument);
 

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { InternshipPositionListQueryDocument } from '~/codegen/graphql';
+import { graphql } from '~/codegen';
 import { useGlobalStore } from '~/domain/global';
 
 const props = defineProps<{
@@ -8,7 +8,7 @@ const props = defineProps<{
 
 const globalStore = useGlobalStore();
 
-gql`
+const InternshipPositionListQueryDocument = graphql(`
 	query InternshipPositionListQuery($id: ID!) {
 		internshipInstance(id: $id) {
 			internship {
@@ -26,7 +26,7 @@ gql`
 			}
 		}
 	}
-`;
+`);
 
 const { loading, onError, result } = useQuery(
 	InternshipPositionListQueryDocument,

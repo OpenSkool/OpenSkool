@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ManageCompetencyCreateNestedCompetencyRouteDocument } from '~/codegen/graphql';
+import { graphql } from '~/codegen';
 import { NestedCompetencyCreate } from '~/domain/competency-management';
 import { AuthAccessDeniedLayout } from '~/domain/global';
 import { useHead } from '~/i18n';
@@ -16,7 +16,7 @@ useHead(({ t }) => ({
 	title: t('management.competency.create.heading'),
 }));
 
-gql`
+const ManageCompetencyCreateNestedCompetencyRouteDocument = graphql(`
 	query manageCompetencyCreateNestedCompetencyRoute(
 		$competencyId: ID!
 		$frameworkId: ID!
@@ -30,7 +30,7 @@ gql`
 					}
 				}
 			}
-			...BaseErrorFields
+			...UserErrorFragment
 		}
 		competencyFramework(id: $frameworkId) {
 			... on QueryCompetencyFrameworkSuccess {
@@ -38,10 +38,10 @@ gql`
 					title
 				}
 			}
-			...BaseErrorFields
+			...UserErrorFragment
 		}
 	}
-`;
+`);
 
 const { result } = useQuery(
 	ManageCompetencyCreateNestedCompetencyRouteDocument,

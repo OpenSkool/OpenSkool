@@ -1,83 +1,83 @@
 type AbilityRule {
-  action: [String!]!
-  conditions: JSON
-  fields: [String!]
-  inverted: Boolean!
-  reason: String
-  subject: [String!]!
+	action: [String!]!
+	conditions: JSON
+	fields: [String!]
+	inverted: Boolean!
+	reason: String
+	subject: [String!]!
 }
 
 """
 An accountable resource tracks when and by whom it was created and last updated.
 """
 interface Accountable {
-  createdAt: DateTime!
-  createdBy: Person!
-  updatedAt: DateTime!
-  updatedBy: Person!
+	createdAt: DateTime!
+	createdBy: Person!
+	updatedAt: DateTime!
+	updatedBy: Person!
 }
 
 type Auth {
-  abilityRules: [AbilityRule!]!
-  currentUser: CurrentUser
+	abilityRules: [AbilityRule!]!
+	currentUser: CurrentUser
 }
 
 """
 A competency can be an individual competence or a grouping of competences.
 """
 type Competency implements Accountable & Node {
-  createdAt: DateTime!
-  createdBy: Person!
-  framework: CompetencyFramework!
+	createdAt: DateTime!
+	createdBy: Person!
+	framework: CompetencyFramework!
 
-  """
-  A CUID for a resource
-  """
-  id: ID!
-  parent: Competency
-  subCompetencies: [Competency!]
-  title: String!
-  updatedAt: DateTime!
-  updatedBy: Person!
+	"""
+	A CUID for a resource
+	"""
+	id: ID!
+	parent: Competency
+	subCompetencies: [Competency!]
+	title: String!
+	updatedAt: DateTime!
+	updatedBy: Person!
 }
 
 type CompetencyFramework implements Node {
-  competencies: [Competency!]!
+	competencies: [Competency!]!
 
-  """
-  A CUID for a resource
-  """
-  id: ID!
-  title: String!
+	"""
+	A CUID for a resource
+	"""
+	id: ID!
+	title: String!
 }
 
 type Course implements Node {
-  id: ID!
-  name: String!
-  urls: [String!]!
+	id: ID!
+	name: String!
+	urls: [String!]!
 }
 
 input CreateCompetencyFrameworkInput {
-  title: String!
+	title: String!
 }
 
 input CreateNestedCompetencyInput {
-  parentId: ID!
-  title: String!
+	parentId: ID!
+	title: String!
 }
 
 input CreateRootCompetencyInput {
-  frameworkId: ID!
-  title: String!
+	frameworkId: ID!
+	title: String!
 }
 
 """
 The currently authenticated user
 """
 type CurrentUser implements Node {
-  id: ID!
-  name: String!
-  tokenSet: TokenSet!
+	id: ID!
+	name: String!
+	tokenSet: TokenSet!
 }
 
 """
@@ -86,84 +86,84 @@ A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `dat
 scalar DateTime
 
 type Education implements Accountable & Node {
-  createdAt: DateTime!
-  createdBy: Person!
+	createdAt: DateTime!
+	createdBy: Person!
 
-  """
-  A CUID for a resource
-  """
-  id: ID!
-  title: String!
-  updatedAt: DateTime!
-  updatedBy: Person!
+	"""
+	A CUID for a resource
+	"""
+	id: ID!
+	title: String!
+	updatedAt: DateTime!
+	updatedBy: Person!
 }
 
 input EducationInput {
-  title: String!
+	title: String!
 }
 
 type InputError implements UserError {
-  code: String!
-  message: String!
-  path: [String!]
+	code: String!
+	message: String!
+	path: [String!]
 }
 
 """
 An internship is part of some courses where the students executes activities within another organisation.
 """
 type Internship implements Node {
-  availablePositions: [InternshipPosition!]!
-  coordinator: Person!
-  course: Course!
-  dateFrom: DateTime!
-  dateTo: DateTime!
-  defaultSupervisor: Person!
-  descriptionLong: String!
-  descriptionShort: String!
-  education: Education!
-  id: ID!
-  title: String!
-  urls: [String!]!
+	availablePositions: [InternshipPosition!]!
+	coordinator: Person!
+	course: Course!
+	dateFrom: DateTime!
+	dateTo: DateTime!
+	defaultSupervisor: Person!
+	descriptionLong: String!
+	descriptionShort: String!
+	education: Education!
+	id: ID!
+	title: String!
+	urls: [String!]!
 }
 
 interface InternshipApplication {
-  instance: InternshipInstance!
-  position: InternshipPosition!
+	instance: InternshipInstance!
+	position: InternshipPosition!
 }
 
 """
 An instance of an internship contains all information about the internship of 1 student. It is the link between 1 internship and 1 student.
 """
 type InternshipInstance implements Node {
-  applications: [InternshipApplication!]!
-  appliedForPosition(id: ID!): Boolean!
-  assignedPosition: InternshipPosition
-  id: ID!
-  internship: Internship!
-  isPositionAssigned: Boolean!
-  student: Person!
-  supervisors: [Person!]!
-  urls: [String!]!
+	applications: [InternshipApplication!]!
+	appliedForPosition(id: ID!): Boolean!
+	assignedPosition: InternshipPosition
+	id: ID!
+	internship: Internship!
+	isPositionAssigned: Boolean!
+	student: Person!
+	supervisors: [Person!]!
+	urls: [String!]!
 }
 
 """
 An internship position is one specific position within an organisation to execute an internship. When an organisation can host multiple students for a similar positions, there as many internship positions as there are possible hosted students.
 """
 type InternshipPosition implements Node {
-  applications: [InternshipApplication!]!
-  description: String!
-  id: ID!
-  mentors: [Person!]!
-  organisation: Organisation
-  summary: String!
-  urls: [String!]!
-  workplace: Workplace
+	applications: [InternshipApplication!]!
+	description: String!
+	id: ID!
+	mentors: [Person!]!
+	organisation: Organisation
+	summary: String!
+	urls: [String!]!
+	workplace: Workplace
 }
 
 type InternshipPriorityApplication implements InternshipApplication {
-  instance: InternshipInstance!
-  position: InternshipPosition!
-  priority: Int!
+	instance: InternshipInstance!
+	position: InternshipPosition!
+	priority: Int!
 }
 
 """
@@ -172,230 +172,230 @@ The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](
 scalar JSON
 
 type JWT {
-  expiresAt: DateTime!
+	expiresAt: DateTime!
 
-  """
-  This field is for debugging purposes. If you need to know the expiration time of the JWT, use the `expiresAt` field.
-  """
-  expiresIn: String!
+	"""
+	This field is for debugging purposes. If you need to know the expiration time of the JWT, use the `expiresAt` field.
+	"""
+	expiresIn: String!
 
-  """
-  This field is for debugging purposes. If you need to know the expiration time of the JWT, use the `issuedAt` field.
-  """
-  issuedAgo: String!
-  issuedAt: DateTime!
-  issuer: String
-  subject: String
+	"""
+	This field is for debugging purposes. If you need to know the expiration time of the JWT, use the `issuedAt` field.
+	"""
+	issuedAgo: String!
+	issuedAt: DateTime!
+	issuer: String
+	subject: String
 }
 
 type Mutation {
-  applyForPriorityInternshipPosition(
-    instanceId: ID!
-    positionId: ID!
-    priority: Int!
-  ): InternshipApplication!
-  createCompetencyFramework(
-    data: CreateCompetencyFrameworkInput!
-  ): MutationCreateCompetencyFrameworkResult!
-  createEducation(data: EducationInput!): MutationCreateEducationResult!
-  createNestedCompetency(
-    data: CreateNestedCompetencyInput!
-  ): MutationCreateNestedCompetencyResult!
-  createRootCompetency(
-    data: CreateRootCompetencyInput!
-  ): MutationCreateRootCompetencyResult!
-  deleteCompetency(id: ID!): MutationDeleteCompetencyResult
-  deleteEducation(id: ID!): MutationDeleteEducationResult!
-  inviteInternshipPositionMentor(
-    email: String!
-    positionId: ID!
-  ): InternshipPosition!
-  renameCompetency(
-    data: RenameCompetencyInput!
-    id: ID!
-  ): MutationRenameCompetencyResult!
-  swapCompetencies(
-    leftCompetencyId: ID!
-    rightCompetencyId: ID!
-  ): MutationSwapCompetenciesResult!
-  updateEducation(
-    data: EducationInput!
-    id: ID!
-  ): MutationUpdateEducationResult!
+	applyForPriorityInternshipPosition(
+		instanceId: ID!
+		positionId: ID!
+		priority: Int!
+	): InternshipApplication!
+	createCompetencyFramework(
+		data: CreateCompetencyFrameworkInput!
+	): MutationCreateCompetencyFrameworkResult!
+	createEducation(data: EducationInput!): MutationCreateEducationResult!
+	createNestedCompetency(
+		data: CreateNestedCompetencyInput!
+	): MutationCreateNestedCompetencyResult!
+	createRootCompetency(
+		data: CreateRootCompetencyInput!
+	): MutationCreateRootCompetencyResult!
+	deleteCompetency(id: ID!): MutationDeleteCompetencyResult
+	deleteEducation(id: ID!): MutationDeleteEducationResult!
+	inviteInternshipPositionMentor(
+		email: String!
+		positionId: ID!
+	): InternshipPosition!
+	renameCompetency(
+		data: RenameCompetencyInput!
+		id: ID!
+	): MutationRenameCompetencyResult!
+	swapCompetencies(
+		leftCompetencyId: ID!
+		rightCompetencyId: ID!
+	): MutationSwapCompetenciesResult!
+	updateEducation(
+		data: EducationInput!
+		id: ID!
+	): MutationUpdateEducationResult!
 }
 
 union MutationCreateCompetencyFrameworkResult =
-    InputError
-  | MutationCreateCompetencyFrameworkSuccess
-  | UnauthorizedError
+	  InputError
+	| MutationCreateCompetencyFrameworkSuccess
+	| UnauthorizedError
 
 type MutationCreateCompetencyFrameworkSuccess {
-  data: CompetencyFramework!
+	data: CompetencyFramework!
 }
 
 union MutationCreateEducationResult = MutationCreateEducationSuccess
 
 type MutationCreateEducationSuccess {
-  data: Education!
+	data: Education!
 }
 
 union MutationCreateNestedCompetencyResult =
-    InputError
-  | MutationCreateNestedCompetencySuccess
-  | NotFoundError
-  | UnauthorizedError
+	  InputError
+	| MutationCreateNestedCompetencySuccess
+	| NotFoundError
+	| UnauthorizedError
 
 type MutationCreateNestedCompetencySuccess {
-  data: Competency!
+	data: Competency!
 }
 
 union MutationCreateRootCompetencyResult =
-    InputError
-  | MutationCreateRootCompetencySuccess
-  | NotFoundError
-  | UnauthorizedError
+	  InputError
+	| MutationCreateRootCompetencySuccess
+	| NotFoundError
+	| UnauthorizedError
 
 type MutationCreateRootCompetencySuccess {
-  data: Competency!
+	data: Competency!
 }
 
 union MutationDeleteCompetencyResult =
-    MutationDeleteCompetencySuccess
-  | NotFoundError
-  | UnauthorizedError
+	  MutationDeleteCompetencySuccess
+	| NotFoundError
+	| UnauthorizedError
 
 type MutationDeleteCompetencySuccess {
-  data: Competency!
+	data: Competency!
 }
 
 union MutationDeleteEducationResult = MutationDeleteEducationSuccess
 
 type MutationDeleteEducationSuccess {
-  data: Education!
+	data: Education!
 }
 
 union MutationRenameCompetencyResult =
-    InputError
-  | MutationRenameCompetencySuccess
-  | NotFoundError
-  | UnauthorizedError
+	  InputError
+	| MutationRenameCompetencySuccess
+	| NotFoundError
+	| UnauthorizedError
 
 type MutationRenameCompetencySuccess {
-  data: Competency!
+	data: Competency!
 }
 
 union MutationSwapCompetenciesResult =
-    InputError
-  | MutationSwapCompetenciesSuccess
-  | NotFoundError
-  | UnauthorizedError
+	  InputError
+	| MutationSwapCompetenciesSuccess
+	| NotFoundError
+	| UnauthorizedError
 
 type MutationSwapCompetenciesSuccess {
-  data: MutationSwapCompetenciesSuccessData!
+	data: MutationSwapCompetenciesSuccessData!
 }
 
 type MutationSwapCompetenciesSuccessData {
-  left: Competency!
-  right: Competency!
+	left: Competency!
+	right: Competency!
 }
 
 union MutationUpdateEducationResult = MutationUpdateEducationSuccess
 
 type MutationUpdateEducationSuccess {
-  data: Education!
+	data: Education!
 }
 
 """
 A node is any resource that can be identified via an ID.
 """
 interface Node {
-  """
-  A CUID for a resource
-  """
-  id: ID!
+	"""
+	A CUID for a resource
+	"""
+	id: ID!
 }
 
 type NotFoundError implements UserError {
-  code: String!
-  message: String!
-  path: [String!]
+	code: String!
+	message: String!
+	path: [String!]
 }
 
 """
 An organisation can be a commercial company, a non-profit or an educational institution.
 """
 type Organisation implements Node {
-  employees: [Person!]!
-  id: ID!
-  imageUrl: String!
-  name: String!
-  plainAddress: String!
-  urls: [String!]!
-  workplaces: [Workplace!]!
+	employees: [Person!]!
+	id: ID!
+	imageUrl: String!
+	name: String!
+	plainAddress: String!
+	urls: [String!]!
+	workplaces: [Workplace!]!
 }
 
 type Person implements Node {
-  avatarUrl: String!
+	avatarUrl: String!
 
-  """
-  A CUID for a resource
-  """
-  id: ID!
-  name: String!
+	"""
+	A CUID for a resource
+	"""
+	id: ID!
+	name: String!
 }
 
 type Query {
-  allCompetencyFrameworks: [CompetencyFramework!]!
-  allEducations: [Education!]!
-  allRootCompetencies: [Competency!]!
-  auth: Auth!
-  competency(id: ID!): QueryCompetencyResult
-  competencyFramework(id: ID!): QueryCompetencyFrameworkResult
-  internshipInstance(id: ID!): InternshipInstance
-  internshipPosition(id: ID!): InternshipPosition
-  myInternshipInstances: [InternshipInstance!]!
+	allCompetencyFrameworks: [CompetencyFramework!]!
+	allEducations: [Education!]!
+	allRootCompetencies: [Competency!]!
+	auth: Auth!
+	competency(id: ID!): QueryCompetencyResult
+	competencyFramework(id: ID!): QueryCompetencyFrameworkResult
+	internshipInstance(id: ID!): InternshipInstance
+	internshipPosition(id: ID!): InternshipPosition
+	myInternshipInstances: [InternshipInstance!]!
 }
 
 union QueryCompetencyFrameworkResult =
-    NotFoundError
-  | QueryCompetencyFrameworkSuccess
+	  NotFoundError
+	| QueryCompetencyFrameworkSuccess
 
 type QueryCompetencyFrameworkSuccess {
-  data: CompetencyFramework!
+	data: CompetencyFramework!
 }
 
 union QueryCompetencyResult = NotFoundError | QueryCompetencySuccess
 
 type QueryCompetencySuccess {
-  data: Competency!
+	data: Competency!
 }
 
 input RenameCompetencyInput {
-  title: String!
+	title: String!
 }
 
 type TokenSet {
-  accessToken: JWT!
-  idToken: JWT!
-  refreshToken: JWT!
+	accessToken: JWT!
+	idToken: JWT!
+	refreshToken: JWT!
 }
 
 type UnauthorizedError implements UserError {
-  code: String!
-  message: String!
-  path: [String!]
+	code: String!
+	message: String!
+	path: [String!]
 }
 
 interface UserError {
-  code: String!
-  message: String!
-  path: [String!]
+	code: String!
+	message: String!
+	path: [String!]
 }
 
 """
 This is the location, address where the internship will be executed,
 """
 type Workplace implements Node {
-  id: ID!
-  plainAddress: String!
+	id: ID!
+	plainAddress: String!
 }

@@ -1,10 +1,8 @@
+import type { ResultOf } from '@graphql-typed-document-node/core';
 import { acceptHMRUpdate, defineStore } from 'pinia';
 
 import { apolloClient } from '~/apollo';
-import {
-	AuthCurrentUserDocument,
-	type AuthCurrentUserQuery,
-} from '~/codegen/graphql';
+import { graphql } from '~/codegen';
 import { pinia } from '~/pinia';
 
 const ONE_MINUTE = 60_000;
@@ -19,7 +17,7 @@ export const authLogoutUrl = new URL(
 	import.meta.env.VITE_API_BASE_URL,
 );
 
-gql`
+const AuthCurrentUserDocument = graphql(`
 	query authCurrentUser {
 		auth {
 			abilityRules {
@@ -41,9 +39,9 @@ gql`
 			}
 		}
 	}
-`;
+`);
 
-type Auth = AuthCurrentUserQuery['auth'];
+type Auth = ResultOf<typeof AuthCurrentUserDocument>['auth'];
 
 export const useAuthStore = defineStore('auth', () => {
 	const auth = ref<Auth>({

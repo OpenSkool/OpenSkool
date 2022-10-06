@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import type { FormKitNode } from '@formkit/core';
 
-import { InviteInternshipPositionMentorMutationDocument } from '~/codegen/graphql';
+import { graphql } from '~/codegen';
 
 const props = defineProps<{ positionId: string }>();
 
-gql`
+const InviteInternshipPositionMentorMutationDocument = graphql(`
 	mutation InviteInternshipPositionMentorMutation(
 		$email: String!
 		$positionId: ID!
@@ -18,7 +18,7 @@ gql`
 			}
 		}
 	}
-`;
+`);
 
 interface FormValues {
 	email: string;

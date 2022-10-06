@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ApplyForInternshipMutationDocument } from '~/codegen/graphql';
+import { graphql } from '~/codegen';
 import { assert } from '~/utils';
 
 const props = defineProps<{
@@ -7,7 +7,7 @@ const props = defineProps<{
 	positionId: string;
 }>();
 
-gql`
+const ApplyForInternshipMutationDocument = graphql(`
 	mutation ApplyForInternshipMutation(
 		$instanceId: ID!
 		$positionId: ID!
@@ -24,7 +24,7 @@ gql`
 			}
 		}
 	}
-`;
+`);
 
 interface FormValues {
 	priority?: number;

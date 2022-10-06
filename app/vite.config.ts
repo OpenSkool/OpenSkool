@@ -38,7 +38,6 @@ export default defineConfig({
 				'vue',
 				'vue-router',
 				{
-					'@apollo/client/core': ['gql'],
 					'@vue/apollo-composable': [
 						'useMutation',
 						'useQuery',

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { InternshipInstancePositionDetailQueryDocument } from '~/codegen/graphql';
+import { graphql } from '~/codegen';
 import { NotFoundLayout, useGlobalStore } from '~/domain/global';
 import {
 	InternshipPositionApplyCard,
@@ -12,7 +12,7 @@ const positionId = computed((): string => route.params.positionId as string);
 
 const globalStore = useGlobalStore();
 
-gql`
+const InternshipInstancePositionDetailQueryDocument = graphql(`
 	query InternshipInstancePositionDetailQuery(
 		$instanceId: ID!
 		$positionId: ID!
@@ -46,7 +46,7 @@ gql`
 			}
 		}
 	}
-`;
+`);
 
 const { loading, onError, result } = useQuery(
 	InternshipInstancePositionDetailQueryDocument,

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ManageCompetencyEditCompetencyRouteDocument } from '~/codegen/graphql';
+import { graphql } from '~/codegen';
 import { CompetencyEdit } from '~/domain/competency-management';
 import { AuthAccessDeniedLayout } from '~/domain/global';
 import { useHead } from '~/i18n';
@@ -16,7 +16,7 @@ useHead(({ t }) => ({
 	title: t('management.competency.edit.heading'),
 }));
 
-gql`
+const ManageCompetencyEditCompetencyRouteDocument = graphql(`
 	query manageCompetencyEditCompetencyRoute($id: ID!) {
 		competency(id: $id) {
 			... on QueryCompetencySuccess {
@@ -27,10 +27,10 @@ gql`
 					}
 				}
 			}
-			...BaseErrorFields
+			...UserErrorFragment
 		}
 	}
-`;
+`);
 
 const { result } = useQuery(
 	ManageCompetencyEditCompetencyRouteDocument,

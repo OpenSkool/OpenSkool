@@ -1,4 +1,5 @@
-import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+/* eslint-disable */
+import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -495,12 +496,11 @@ export type ManageEditCompetencyQueryVariables = Exact<{
 export type ManageEditCompetencyQuery = {
 	__typename?: 'Query';
 	competency?:
-		| {
-				__typename?: 'NotFoundError';
-				code: string;
-				message: string;
-				path?: Array<string> | null;
-		  }
+		| ({ __typename?: 'NotFoundError' } & {
+				' $fragmentRefs'?: {
+					UserErrorFragment_NotFoundError_Fragment: UserErrorFragment_NotFoundError_Fragment;
+				};
+		  })
 		| {
 				__typename?: 'QueryCompetencySuccess';
 				data: { __typename?: 'Competency'; title: string };
@@ -516,28 +516,25 @@ export type RenameCompetencyMutationVariables = Exact<{
 export type RenameCompetencyMutation = {
 	__typename?: 'Mutation';
 	renameCompetency:
-		| {
-				__typename?: 'InputError';
-				code: string;
-				message: string;
-				path?: Array<string> | null;
-		  }
+		| ({ __typename?: 'InputError' } & {
+				' $fragmentRefs'?: {
+					UserErrorFragment_InputError_Fragment: UserErrorFragment_InputError_Fragment;
+				};
+		  })
 		| {
 				__typename?: 'MutationRenameCompetencySuccess';
 				data: { __typename?: 'Competency'; id: string };
 		  }
-		| {
-				__typename?: 'NotFoundError';
-				code: string;
-				message: string;
-				path?: Array<string> | null;
-		  }
-		| {
-				__typename?: 'UnauthorizedError';
-				code: string;
-				message: string;
-				path?: Array<string> | null;
-		  };
+		| ({ __typename?: 'NotFoundError' } & {
+				' $fragmentRefs'?: {
+					UserErrorFragment_NotFoundError_Fragment: UserErrorFragment_NotFoundError_Fragment;
+				};
+		  })
+		| ({ __typename?: 'UnauthorizedError' } & {
+				' $fragmentRefs'?: {
+					UserErrorFragment_UnauthorizedError_Fragment: UserErrorFragment_UnauthorizedError_Fragment;
+				};
+		  });
 };
 
 export type SwapCompetenciesMutationVariables = Exact<{
@@ -548,12 +545,11 @@ export type SwapCompetenciesMutationVariables = Exact<{
 export type SwapCompetenciesMutation = {
 	__typename?: 'Mutation';
 	swapCompetencies:
-		| {
-				__typename?: 'InputError';
-				code: string;
-				message: string;
-				path?: Array<string> | null;
-		  }
+		| ({ __typename?: 'InputError' } & {
+				' $fragmentRefs'?: {
+					UserErrorFragment_InputError_Fragment: UserErrorFragment_InputError_Fragment;
+				};
+		  })
 		| {
 				__typename?: 'MutationSwapCompetenciesSuccess';
 				data: {
@@ -562,18 +558,16 @@ export type SwapCompetenciesMutation = {
 					right: { __typename?: 'Competency'; id: string };
 				};
 		  }
-		| {
-				__typename?: 'NotFoundError';
-				code: string;
-				message: string;
-				path?: Array<string> | null;
-		  }
-		| {
-				__typename?: 'UnauthorizedError';
-				code: string;
-				message: string;
-				path?: Array<string> | null;
-		  };
+		| ({ __typename?: 'NotFoundError' } & {
+				' $fragmentRefs'?: {
+					UserErrorFragment_NotFoundError_Fragment: UserErrorFragment_NotFoundError_Fragment;
+				};
+		  })
+		| ({ __typename?: 'UnauthorizedError' } & {
+				' $fragmentRefs'?: {
+					UserErrorFragment_UnauthorizedError_Fragment: UserErrorFragment_UnauthorizedError_Fragment;
+				};
+		  });
 };
 
 export type CreateCompetencyFrameworkMutationVariables = Exact<{
@@ -583,22 +577,20 @@ export type CreateCompetencyFrameworkMutationVariables = Exact<{
 export type CreateCompetencyFrameworkMutation = {
 	__typename?: 'Mutation';
 	createCompetencyFramework:
-		| {
-				__typename?: 'InputError';
-				code: string;
-				message: string;
-				path?: Array<string> | null;
-		  }
+		| ({ __typename?: 'InputError' } & {
+				' $fragmentRefs'?: {
+					UserErrorFragment_InputError_Fragment: UserErrorFragment_InputError_Fragment;
+				};
+		  })
 		| {
 				__typename?: 'MutationCreateCompetencyFrameworkSuccess';
 				data: { __typename?: 'CompetencyFramework'; id: string };
 		  }
-		| {
-				__typename?: 'UnauthorizedError';
-				code: string;
-				message: string;
-				path?: Array<string> | null;
-		  };
+		| ({ __typename?: 'UnauthorizedError' } & {
+				' $fragmentRefs'?: {
+					UserErrorFragment_UnauthorizedError_Fragment: UserErrorFragment_UnauthorizedError_Fragment;
+				};
+		  });
 };
 
 export type ManageCompetencyFrameworkListQueryVariables = Exact<{
@@ -621,28 +613,25 @@ export type CreateNestedCompetencyMutationVariables = Exact<{
 export type CreateNestedCompetencyMutation = {
 	__typename?: 'Mutation';
 	createNestedCompetency:
-		| {
-				__typename?: 'InputError';
-				code: string;
-				message: string;
-				path?: Array<string> | null;
-		  }
+		| ({ __typename?: 'InputError' } & {
+				' $fragmentRefs'?: {
+					UserErrorFragment_InputError_Fragment: UserErrorFragment_InputError_Fragment;
+				};
+		  })
 		| {
 				__typename?: 'MutationCreateNestedCompetencySuccess';
 				data: { __typename?: 'Competency'; id: string };
 		  }
-		| {
-				__typename?: 'NotFoundError';
-				code: string;
-				message: string;
-				path?: Array<string> | null;
-		  }
-		| {
-				__typename?: 'UnauthorizedError';
-				code: string;
-				message: string;
-				path?: Array<string> | null;
-		  };
+		| ({ __typename?: 'NotFoundError' } & {
+				' $fragmentRefs'?: {
+					UserErrorFragment_NotFoundError_Fragment: UserErrorFragment_NotFoundError_Fragment;
+				};
+		  })
+		| ({ __typename?: 'UnauthorizedError' } & {
+				' $fragmentRefs'?: {
+					UserErrorFragment_UnauthorizedError_Fragment: UserErrorFragment_UnauthorizedError_Fragment;
+				};
+		  });
 };
 
 export type ManageNestedCompetenciesQueryVariables = Exact<{
@@ -652,12 +641,11 @@ export type ManageNestedCompetenciesQueryVariables = Exact<{
 export type ManageNestedCompetenciesQuery = {
 	__typename?: 'Query';
 	competency?:
-		| {
-				__typename?: 'NotFoundError';
-				code: string;
-				message: string;
-				path?: Array<string> | null;
-		  }
+		| ({ __typename?: 'NotFoundError' } & {
+				' $fragmentRefs'?: {
+					UserErrorFragment_NotFoundError_Fragment: UserErrorFragment_NotFoundError_Fragment;
+				};
+		  })
 		| {
 				__typename?: 'QueryCompetencySuccess';
 				data: {
@@ -679,12 +667,11 @@ export type CreateRootCompetencyMutationVariables = Exact<{
 export type CreateRootCompetencyMutation = {
 	__typename?: 'Mutation';
 	createRootCompetency:
-		| {
-				__typename?: 'InputError';
-				code: string;
-				message: string;
-				path?: Array<string> | null;
-		  }
+		| ({ __typename?: 'InputError' } & {
+				' $fragmentRefs'?: {
+					UserErrorFragment_InputError_Fragment: UserErrorFragment_InputError_Fragment;
+				};
+		  })
 		| {
 				__typename?: 'MutationCreateRootCompetencySuccess';
 				data: {
@@ -699,18 +686,16 @@ export type CreateRootCompetencyMutation = {
 					};
 				};
 		  }
-		| {
-				__typename?: 'NotFoundError';
-				code: string;
-				message: string;
-				path?: Array<string> | null;
-		  }
-		| {
-				__typename?: 'UnauthorizedError';
-				code: string;
-				message: string;
-				path?: Array<string> | null;
-		  };
+		| ({ __typename?: 'NotFoundError' } & {
+				' $fragmentRefs'?: {
+					UserErrorFragment_NotFoundError_Fragment: UserErrorFragment_NotFoundError_Fragment;
+				};
+		  })
+		| ({ __typename?: 'UnauthorizedError' } & {
+				' $fragmentRefs'?: {
+					UserErrorFragment_UnauthorizedError_Fragment: UserErrorFragment_UnauthorizedError_Fragment;
+				};
+		  });
 };
 
 export type ManageRootCompetenciesQueryVariables = Exact<{
@@ -720,12 +705,11 @@ export type ManageRootCompetenciesQueryVariables = Exact<{
 export type ManageRootCompetenciesQuery = {
 	__typename?: 'Query';
 	competencyFramework?:
-		| {
-				__typename?: 'NotFoundError';
-				code: string;
-				message: string;
-				path?: Array<string> | null;
-		  }
+		| ({ __typename?: 'NotFoundError' } & {
+				' $fragmentRefs'?: {
+					UserErrorFragment_NotFoundError_Fragment: UserErrorFragment_NotFoundError_Fragment;
+				};
+		  })
 		| {
 				__typename?: 'QueryCompetencyFrameworkSuccess';
 				data: {
@@ -853,31 +837,31 @@ export type InternshipPositionListQueryQuery = {
 	} | null;
 };
 
-type BaseErrorFields_InputError_Fragment = {
+type UserErrorFragment_InputError_Fragment = {
 	__typename?: 'InputError';
 	code: string;
 	message: string;
 	path?: Array<string> | null;
-};
+} & { ' $fragmentName'?: 'UserErrorFragment_InputError_Fragment' };
 
-type BaseErrorFields_NotFoundError_Fragment = {
+type UserErrorFragment_NotFoundError_Fragment = {
 	__typename?: 'NotFoundError';
 	code: string;
 	message: string;
 	path?: Array<string> | null;
-};
+} & { ' $fragmentName'?: 'UserErrorFragment_NotFoundError_Fragment' };
 
-type BaseErrorFields_UnauthorizedError_Fragment = {
+type UserErrorFragment_UnauthorizedError_Fragment = {
 	__typename?: 'UnauthorizedError';
 	code: string;
 	message: string;
 	path?: Array<string> | null;
-};
+} & { ' $fragmentName'?: 'UserErrorFragment_UnauthorizedError_Fragment' };
 
-export type BaseErrorFieldsFragment =
-	| BaseErrorFields_InputError_Fragment
-	| BaseErrorFields_NotFoundError_Fragment
-	| BaseErrorFields_UnauthorizedError_Fragment;
+export type UserErrorFragmentFragment =
+	| UserErrorFragment_InputError_Fragment
+	| UserErrorFragment_NotFoundError_Fragment
+	| UserErrorFragment_UnauthorizedError_Fragment;
 
 export type ManageCompetencyCreateNestedCompetencyRouteQueryVariables = Exact<{
 	competencyId: Scalars['ID'];
@@ -887,12 +871,11 @@ export type ManageCompetencyCreateNestedCompetencyRouteQueryVariables = Exact<{
 export type ManageCompetencyCreateNestedCompetencyRouteQuery = {
 	__typename?: 'Query';
 	competency?:
-		| {
-				__typename?: 'NotFoundError';
-				code: string;
-				message: string;
-				path?: Array<string> | null;
-		  }
+		| ({ __typename?: 'NotFoundError' } & {
+				' $fragmentRefs'?: {
+					UserErrorFragment_NotFoundError_Fragment: UserErrorFragment_NotFoundError_Fragment;
+				};
+		  })
 		| {
 				__typename?: 'QueryCompetencySuccess';
 				data: {
@@ -903,12 +886,11 @@ export type ManageCompetencyCreateNestedCompetencyRouteQuery = {
 		  }
 		| null;
 	competencyFramework?:
-		| {
-				__typename?: 'NotFoundError';
-				code: string;
-				message: string;
-				path?: Array<string> | null;
-		  }
+		| ({ __typename?: 'NotFoundError' } & {
+				' $fragmentRefs'?: {
+					UserErrorFragment_NotFoundError_Fragment: UserErrorFragment_NotFoundError_Fragment;
+				};
+		  })
 		| {
 				__typename?: 'QueryCompetencyFrameworkSuccess';
 				data: { __typename?: 'CompetencyFramework'; title: string };
@@ -923,12 +905,11 @@ export type ManageCompetencyEditCompetencyRouteQueryVariables = Exact<{
 export type ManageCompetencyEditCompetencyRouteQuery = {
 	__typename?: 'Query';
 	competency?:
-		| {
-				__typename?: 'NotFoundError';
-				code: string;
-				message: string;
-				path?: Array<string> | null;
-		  }
+		| ({ __typename?: 'NotFoundError' } & {
+				' $fragmentRefs'?: {
+					UserErrorFragment_NotFoundError_Fragment: UserErrorFragment_NotFoundError_Fragment;
+				};
+		  })
 		| {
 				__typename?: 'QueryCompetencySuccess';
 				data: {
@@ -948,12 +929,11 @@ export type ManageCompetencyDetailRouteQueryVariables = Exact<{
 export type ManageCompetencyDetailRouteQuery = {
 	__typename?: 'Query';
 	competency?:
-		| {
-				__typename?: 'NotFoundError';
-				code: string;
-				message: string;
-				path?: Array<string> | null;
-		  }
+		| ({ __typename?: 'NotFoundError' } & {
+				' $fragmentRefs'?: {
+					UserErrorFragment_NotFoundError_Fragment: UserErrorFragment_NotFoundError_Fragment;
+				};
+		  })
 		| {
 				__typename?: 'QueryCompetencySuccess';
 				data: {
@@ -987,18 +967,16 @@ export type DeleteCompetencyMutation = {
 				__typename?: 'MutationDeleteCompetencySuccess';
 				data: { __typename?: 'Competency'; id: string };
 		  }
-		| {
-				__typename?: 'NotFoundError';
-				code: string;
-				message: string;
-				path?: Array<string> | null;
-		  }
-		| {
-				__typename?: 'UnauthorizedError';
-				code: string;
-				message: string;
-				path?: Array<string> | null;
-		  }
+		| ({ __typename?: 'NotFoundError' } & {
+				' $fragmentRefs'?: {
+					UserErrorFragment_NotFoundError_Fragment: UserErrorFragment_NotFoundError_Fragment;
+				};
+		  })
+		| ({ __typename?: 'UnauthorizedError' } & {
+				' $fragmentRefs'?: {
+					UserErrorFragment_UnauthorizedError_Fragment: UserErrorFragment_UnauthorizedError_Fragment;
+				};
+		  })
 		| null;
 };
 
@@ -1009,12 +987,11 @@ export type ManageCompetencyCreateRootCompetencyRouteQueryVariables = Exact<{
 export type ManageCompetencyCreateRootCompetencyRouteQuery = {
 	__typename?: 'Query';
 	competencyFramework?:
-		| {
-				__typename?: 'NotFoundError';
-				code: string;
-				message: string;
-				path?: Array<string> | null;
-		  }
+		| ({ __typename?: 'NotFoundError' } & {
+				' $fragmentRefs'?: {
+					UserErrorFragment_NotFoundError_Fragment: UserErrorFragment_NotFoundError_Fragment;
+				};
+		  })
 		| {
 				__typename?: 'QueryCompetencyFrameworkSuccess';
 				data: { __typename?: 'CompetencyFramework'; title: string };
@@ -1029,12 +1006,11 @@ export type ManageCompetencyFrameworkDetailRouteQueryVariables = Exact<{
 export type ManageCompetencyFrameworkDetailRouteQuery = {
 	__typename?: 'Query';
 	competencyFramework?:
-		| {
-				__typename?: 'NotFoundError';
-				code: string;
-				message: string;
-				path?: Array<string> | null;
-		  }
+		| ({ __typename?: 'NotFoundError' } & {
+				' $fragmentRefs'?: {
+					UserErrorFragment_NotFoundError_Fragment: UserErrorFragment_NotFoundError_Fragment;
+				};
+		  })
 		| {
 				__typename?: 'QueryCompetencyFrameworkSuccess';
 				data: { __typename?: 'CompetencyFramework'; id: string; title: string };
@@ -1098,12 +1074,12 @@ export type InternshipInstancePositionDetailQueryQuery = {
 	} | null;
 };
 
-export const BaseErrorFieldsFragmentDoc = {
+export const UserErrorFragmentFragmentDoc = {
 	kind: 'Document',
 	definitions: [
 		{
 			kind: 'FragmentDefinition',
-			name: { kind: 'Name', value: 'BaseErrorFields' },
+			name: { kind: 'Name', value: 'UserErrorFragment' },
 			typeCondition: {
 				kind: 'NamedType',
 				name: { kind: 'Name', value: 'UserError' },
@@ -1118,7 +1094,7 @@ export const BaseErrorFieldsFragmentDoc = {
 			},
 		},
 	],
-} as unknown as DocumentNode<BaseErrorFieldsFragment, unknown>;
+} as unknown as DocumentNode<UserErrorFragmentFragment, unknown>;
 export const AuthCurrentUserDocument = {
 	kind: 'Document',
 	definitions: [
@@ -1275,7 +1251,7 @@ export const ManageEditCompetencyDocument = {
 								},
 								{
 									kind: 'FragmentSpread',
-									name: { kind: 'Name', value: 'BaseErrorFields' },
+									name: { kind: 'Name', value: 'UserErrorFragment' },
 								},
 							],
 						},
@@ -1283,7 +1259,7 @@ export const ManageEditCompetencyDocument = {
 				],
 			},
 		},
-		...BaseErrorFieldsFragmentDoc.definitions,
+		...UserErrorFragmentFragmentDoc.definitions,
 	],
 } as unknown as DocumentNode<
 	ManageEditCompetencyQuery,
@@ -1374,7 +1350,7 @@ export const RenameCompetencyDocument = {
 								},
 								{
 									kind: 'FragmentSpread',
-									name: { kind: 'Name', value: 'BaseErrorFields' },
+									name: { kind: 'Name', value: 'UserErrorFragment' },
 								},
 							],
 						},
@@ -1382,7 +1358,7 @@ export const RenameCompetencyDocument = {
 				],
 			},
 		},
-		...BaseErrorFieldsFragmentDoc.definitions,
+		...UserErrorFragmentFragmentDoc.definitions,
 	],
 } as unknown as DocumentNode<
 	RenameCompetencyMutation,
@@ -1498,7 +1474,7 @@ export const SwapCompetenciesDocument = {
 								},
 								{
 									kind: 'FragmentSpread',
-									name: { kind: 'Name', value: 'BaseErrorFields' },
+									name: { kind: 'Name', value: 'UserErrorFragment' },
 								},
 							],
 						},
@@ -1506,7 +1482,7 @@ export const SwapCompetenciesDocument = {
 				],
 			},
 		},
-		...BaseErrorFieldsFragmentDoc.definitions,
+		...UserErrorFragmentFragmentDoc.definitions,
 	],
 } as unknown as DocumentNode<
 	SwapCompetenciesMutation,
@@ -1581,7 +1557,7 @@ export const CreateCompetencyFrameworkDocument = {
 								},
 								{
 									kind: 'FragmentSpread',
-									name: { kind: 'Name', value: 'BaseErrorFields' },
+									name: { kind: 'Name', value: 'UserErrorFragment' },
 								},
 							],
 						},
@@ -1589,7 +1565,7 @@ export const CreateCompetencyFrameworkDocument = {
 				],
 			},
 		},
-		...BaseErrorFieldsFragmentDoc.definitions,
+		...UserErrorFragmentFragmentDoc.definitions,
 	],
 } as unknown as DocumentNode<
 	CreateCompetencyFrameworkMutation,
@@ -1693,7 +1669,7 @@ export const CreateNestedCompetencyDocument = {
 								},
 								{
 									kind: 'FragmentSpread',
-									name: { kind: 'Name', value: 'BaseErrorFields' },
+									name: { kind: 'Name', value: 'UserErrorFragment' },
 								},
 							],
 						},
@@ -1701,7 +1677,7 @@ export const CreateNestedCompetencyDocument = {
 				],
 			},
 		},
-		...BaseErrorFieldsFragmentDoc.definitions,
+		...UserErrorFragmentFragmentDoc.definitions,
 	],
 } as unknown as DocumentNode<
 	CreateNestedCompetencyMutation,
@@ -1783,7 +1759,7 @@ export const ManageNestedCompetenciesDocument = {
 								},
 								{
 									kind: 'FragmentSpread',
-									name: { kind: 'Name', value: 'BaseErrorFields' },
+									name: { kind: 'Name', value: 'UserErrorFragment' },
 								},
 							],
 						},
@@ -1791,7 +1767,7 @@ export const ManageNestedCompetenciesDocument = {
 				],
 			},
 		},
-		...BaseErrorFieldsFragmentDoc.definitions,
+		...UserErrorFragmentFragmentDoc.definitions,
 	],
 } as unknown as DocumentNode<
 	ManageNestedCompetenciesQuery,
@@ -1894,7 +1870,7 @@ export const CreateRootCompetencyDocument = {
 								},
 								{
 									kind: 'FragmentSpread',
-									name: { kind: 'Name', value: 'BaseErrorFields' },
+									name: { kind: 'Name', value: 'UserErrorFragment' },
 								},
 							],
 						},
@@ -1902,7 +1878,7 @@ export const CreateRootCompetencyDocument = {
 				],
 			},
 		},
-		...BaseErrorFieldsFragmentDoc.definitions,
+		...UserErrorFragmentFragmentDoc.definitions,
 	],
 } as unknown as DocumentNode<
 	CreateRootCompetencyMutation,
@@ -1987,7 +1963,7 @@ export const ManageRootCompetenciesDocument = {
 								},
 								{
 									kind: 'FragmentSpread',
-									name: { kind: 'Name', value: 'BaseErrorFields' },
+									name: { kind: 'Name', value: 'UserErrorFragment' },
 								},
 							],
 						},
@@ -1995,7 +1971,7 @@ export const ManageRootCompetenciesDocument = {
 				],
 			},
 		},
-		...BaseErrorFieldsFragmentDoc.definitions,
+		...UserErrorFragmentFragmentDoc.definitions,
 	],
 } as unknown as DocumentNode<
 	ManageRootCompetenciesQuery,
@@ -2627,7 +2603,7 @@ export const ManageCompetencyCreateNestedCompetencyRouteDocument = {
 								},
 								{
 									kind: 'FragmentSpread',
-									name: { kind: 'Name', value: 'BaseErrorFields' },
+									name: { kind: 'Name', value: 'UserErrorFragment' },
 								},
 							],
 						},
@@ -2678,7 +2654,7 @@ export const ManageCompetencyCreateNestedCompetencyRouteDocument = {
 								},
 								{
 									kind: 'FragmentSpread',
-									name: { kind: 'Name', value: 'BaseErrorFields' },
+									name: { kind: 'Name', value: 'UserErrorFragment' },
 								},
 							],
 						},
@@ -2686,7 +2662,7 @@ export const ManageCompetencyCreateNestedCompetencyRouteDocument = {
 				],
 			},
 		},
-		...BaseErrorFieldsFragmentDoc.definitions,
+		...UserErrorFragmentFragmentDoc.definitions,
 	],
 } as unknown as DocumentNode<
 	ManageCompetencyCreateNestedCompetencyRouteQuery,
@@ -2768,7 +2744,7 @@ export const ManageCompetencyEditCompetencyRouteDocument = {
 								},
 								{
 									kind: 'FragmentSpread',
-									name: { kind: 'Name', value: 'BaseErrorFields' },
+									name: { kind: 'Name', value: 'UserErrorFragment' },
 								},
 							],
 						},
@@ -2776,7 +2752,7 @@ export const ManageCompetencyEditCompetencyRouteDocument = {
 				],
 			},
 		},
-		...BaseErrorFieldsFragmentDoc.definitions,
+		...UserErrorFragmentFragmentDoc.definitions,
 	],
 } as unknown as DocumentNode<
 	ManageCompetencyEditCompetencyRouteQuery,
@@ -2876,7 +2852,7 @@ export const ManageCompetencyDetailRouteDocument = {
 								},
 								{
 									kind: 'FragmentSpread',
-									name: { kind: 'Name', value: 'BaseErrorFields' },
+									name: { kind: 'Name', value: 'UserErrorFragment' },
 								},
 							],
 						},
@@ -2931,7 +2907,7 @@ export const ManageCompetencyDetailRouteDocument = {
 				],
 			},
 		},
-		...BaseErrorFieldsFragmentDoc.definitions,
+		...UserErrorFragmentFragmentDoc.definitions,
 	],
 } as unknown as DocumentNode<
 	ManageCompetencyDetailRouteQuery,
@@ -3003,7 +2979,7 @@ export const DeleteCompetencyDocument = {
 								},
 								{
 									kind: 'FragmentSpread',
-									name: { kind: 'Name', value: 'BaseErrorFields' },
+									name: { kind: 'Name', value: 'UserErrorFragment' },
 								},
 							],
 						},
@@ -3011,7 +2987,7 @@ export const DeleteCompetencyDocument = {
 				],
 			},
 		},
-		...BaseErrorFieldsFragmentDoc.definitions,
+		...UserErrorFragmentFragmentDoc.definitions,
 	],
 } as unknown as DocumentNode<
 	DeleteCompetencyMutation,
@@ -3086,7 +3062,7 @@ export const ManageCompetencyCreateRootCompetencyRouteDocument = {
 								},
 								{
 									kind: 'FragmentSpread',
-									name: { kind: 'Name', value: 'BaseErrorFields' },
+									name: { kind: 'Name', value: 'UserErrorFragment' },
 								},
 							],
 						},
@@ -3094,7 +3070,7 @@ export const ManageCompetencyCreateRootCompetencyRouteDocument = {
 				],
 			},
 		},
-		...BaseErrorFieldsFragmentDoc.definitions,
+		...UserErrorFragmentFragmentDoc.definitions,
 	],
 } as unknown as DocumentNode<
 	ManageCompetencyCreateRootCompetencyRouteQuery,
@@ -3170,7 +3146,7 @@ export const ManageCompetencyFrameworkDetailRouteDocument = {
 								},
 								{
 									kind: 'FragmentSpread',
-									name: { kind: 'Name', value: 'BaseErrorFields' },
+									name: { kind: 'Name', value: 'UserErrorFragment' },
 								},
 							],
 						},
@@ -3178,7 +3154,7 @@ export const ManageCompetencyFrameworkDetailRouteDocument = {
 				],
 			},
 		},
-		...BaseErrorFieldsFragmentDoc.definitions,
+		...UserErrorFragmentFragmentDoc.definitions,
 	],
 } as unknown as DocumentNode<
 	ManageCompetencyFrameworkDetailRouteQuery,

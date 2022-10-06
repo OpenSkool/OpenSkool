@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import { FormKitNode } from '@formkit/core';
 
-import { CreateCompetencyFrameworkDocument } from '~/codegen/graphql';
+import { graphql } from '~/codegen';
 
 const { t } = useI18n();
 
 const router = useRouter();
 
-gql`
+const CreateCompetencyFrameworkDocument = graphql(`
 	mutation CreateCompetencyFramework($data: CreateCompetencyFrameworkInput!) {
 		createCompetencyFramework(data: $data) {
 			... on MutationCreateCompetencyFrameworkSuccess {
@@ -15,10 +15,10 @@ gql`
 					id
 				}
 			}
-			...BaseErrorFields
+			...UserErrorFragment
 		}
 	}
-`;
+`);
 
 const { mutate: createCompetencyFramework } = useMutation(
 	CreateCompetencyFrameworkDocument,

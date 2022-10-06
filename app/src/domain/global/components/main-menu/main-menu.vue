@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { MainMenuDocument } from '~/codegen/graphql';
+import { graphql } from '~/codegen';
 import { useGlobalStore } from '~/domain/global/store';
 
 import type { MenuState } from './use-menu-state';
@@ -11,7 +11,7 @@ defineProps<{
 const ability = useAppAbility();
 const globalStore = useGlobalStore();
 
-gql`
+const MainMenuDocument = graphql(`
 	query MainMenu {
 		myInternshipInstances {
 			id
@@ -23,7 +23,7 @@ gql`
 			}
 		}
 	}
-`;
+`);
 
 const { loading, onError, result } = useQuery(MainMenuDocument, null, {
 	enabled: ability.can('read', 'InternshipInstance'),
