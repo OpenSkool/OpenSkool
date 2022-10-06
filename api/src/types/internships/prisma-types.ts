@@ -68,7 +68,7 @@ export const InternshipInstance = builder.prismaObject('InternshipInstance', {
       type: [InternshipApplication],
       resolve(instance) {
         return prisma.internshipInstance
-          .findUnique({ where: { id: instance.id } })
+          .findUniqueOrThrow({ where: { id: instance.id } })
           .applications();
       },
     }),
@@ -123,7 +123,7 @@ export const InternshipPosition = builder.prismaObject('InternshipPosition', {
       type: [InternshipApplication],
       resolve(position) {
         return prisma.internshipPosition
-          .findUnique({ where: { id: position.id } })
+          .findUniqueOrThrow({ where: { id: position.id } })
           .applications();
       },
     }),
@@ -132,7 +132,7 @@ export const InternshipPosition = builder.prismaObject('InternshipPosition', {
       type: [Person],
       async resolve(position, input, { inject: { request, userService } }) {
         const mentors = await prisma.internshipPosition
-          .findUnique({ where: { id: position.id } })
+          .findUniqueOrThrow({ where: { id: position.id } })
           .mentors({ select: { userId: true } });
         return userService.getMany(
           mentors.flatMap((mentor) => {

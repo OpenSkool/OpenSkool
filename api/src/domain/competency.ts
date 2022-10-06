@@ -205,7 +205,7 @@ export class CompetencyService {
   async getFrameworkCompetencies(id: string): Promise<CompetencyModel[]> {
     try {
       const competencies = await prisma.competencyFramework
-        .findUnique({ where: { id } })
+        .findUniqueOrThrow({ where: { id } })
         .competencies({
           where: { parentCompetencyId: null },
           include: { translations: true },
@@ -239,7 +239,7 @@ export class CompetencyService {
   ): Promise<CompetencyModel[] | null> {
     try {
       const subCompetencies = await prisma.competency
-        .findUnique({ where: { id } })
+        .findUniqueOrThrow({ where: { id } })
         .subCompetencies({
           include: { translations: true },
           orderBy: { sort: 'asc' },
@@ -424,7 +424,7 @@ export class CompetencyService {
       }, []);
     } else {
       const siblings = await prisma.competency
-        .findUnique({ where: { id: parentId } })
+        .findUniqueOrThrow({ where: { id: parentId } })
         .subCompetencies({
           select: {
             translations: {
