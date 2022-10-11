@@ -91,4 +91,8 @@ const values = ref<{
 			:options="educationOptions"
 		/>
 	</FormKit>
+	<UiTitle is="h2" class="text-lg mb-3">Values</UiTitle>
+	<pre class="bg-gray-200 py-3 px-5 whitespace-pre-wrap">{{
+		JSON.stringify(values, null, 2)
+	}}</pre>
 </template>
