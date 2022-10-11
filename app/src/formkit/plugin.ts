@@ -7,6 +7,7 @@ import { createButtonStyles } from '~/ui/button/helpers';
 import FkCheckbox from '~/ui/input/fk-checkbox.vue';
 import FkInputText from '~/ui/input/fk-input-text.vue';
 import FkRadio from '~/ui/input/fk-radio.vue';
+import FkRichText from '~/ui/input/fk-rich-text.vue';
 import FkTextarea from '~/ui/input/fk-textarea.vue';
 import FkSelect from '~/ui/select/fk-select.vue';
 
@@ -40,6 +41,7 @@ export function formkit(app: App): void {
 				select: createInput(FkSelect, { props: ['options'] }),
 				text: createInput(FkInputText),
 				textarea: createInput(FkTextarea),
+				textarearich: createInput(FkRichText),
 			},
 			locales: { nl },
 		}),
