@@ -1,44 +1,39 @@
 {
-  "name": "openskool",
-  "version": "0.0.1",
-  "private": true,
-  "license": "AGPL-3.0",
-  "engines": {
-    "node": "~16.17"
-  },
-  "scripts": {
-    "api": "pnpm --filter api",
-    "app": "pnpm --filter app",
-    "build": "pnpm turbo run build",
-    "clean": "pnpm turbo run clean",
-    "codegen": "pnpm turbo run codegen",
-    "dev": "pnpm turbo run dev",
-    "format": "prettier --write .",
-    "lint": "pnpm turbo run lint",
-    "preview": "pnpm turbo run preview",
-    "test": "pnpm turbo run test",
-    "turbo": "dotenv -e .env.local -- turbo"
-  },
-  "devDependencies": {
-    "dotenv-cli": "^6.0.0",
-    "prettier": "^2.7.1",
-    "prettier-plugin-package": "^1.3.0",
-    "turbo": "^1.5.5"
-  },
-  "packageManager": "pnpm@7.9.5",
-  "pnpm": {
-    "overrides": {
-      "rollup": "^2"
-    },
-    "peerDependencyRules": {
-      "allowedVersions": {
-        "vite": "^2"
-      }
-    }
-  },
-  "prettier": {
-    "arrowParens": "always",
-    "singleQuote": true,
-    "trailingComma": "all"
-  }
+	"name": "openskool",
+	"version": "0.0.1",
+	"private": true,
+	"license": "AGPL-3.0",
+	"engines": {
+		"node": "~16.17"
+	},
+	"scripts": {
+		"api": "pnpm --filter api",
+		"app": "pnpm --filter app",
+		"build": "pnpm turbo run build",
+		"clean": "pnpm turbo run clean",
+		"codegen": "pnpm turbo run codegen",
+		"dev": "pnpm turbo run dev",
+		"format": "prettier --write .",
+		"lint": "pnpm turbo run lint",
+		"preview": "pnpm turbo run preview",
+		"test": "pnpm turbo run test",
+		"turbo": "dotenv -e .env.local -- turbo"
+	},
+	"devDependencies": {
+		"dotenv-cli": "^6.0.0",
+		"prettier": "^2.7.1",
+		"prettier-plugin-package": "^1.3.0",
+		"turbo": "^1.5.5"
+	},
+	"packageManager": "pnpm@7.9.5",
+	"pnpm": {
+		"overrides": {
+			"rollup": "^2"
+		},
+		"peerDependencyRules": {
+			"allowedVersions": {
+				"vite": "^2"
+			}
+		}
+	}
 }

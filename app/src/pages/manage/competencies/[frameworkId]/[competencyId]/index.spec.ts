@@ -8,22 +8,22 @@ import { render } from '~/spec/render';
 import CompetencyDetailRoute from './index.vue';
 
 test('delete competency works', async () => {
-  router.push('/manage/competencies/frameworkId/competencyId');
-  await router.isReady();
-  render(CompetencyDetailRoute);
+	router.push('/manage/competencies/frameworkId/competencyId');
+	await router.isReady();
+	render(CompetencyDetailRoute);
 
-  const user = userEvent.setup();
-  const mockRouterReplace = vi.spyOn(router, 'replace');
+	const user = userEvent.setup();
+	const mockRouterReplace = vi.spyOn(router, 'replace');
 
-  const openDeleteModalButton = await screen.findByRole('button', {
-    name: /action.delete/,
-  });
-  await user.click(openDeleteModalButton);
-  const deleteButton = screen.getByRole('button', { name: /action.confirm/ });
-  await user.click(deleteButton);
+	const openDeleteModalButton = await screen.findByRole('button', {
+		name: /action.delete/,
+	});
+	await user.click(openDeleteModalButton);
+	const deleteButton = screen.getByRole('button', { name: /action.confirm/ });
+	await user.click(deleteButton);
 
-  await waitFor(() => {
-    expect(mockRouterReplace).toHaveBeenCalled();
-  });
-  mockRouterReplace.mockReset();
+	await waitFor(() => {
+		expect(mockRouterReplace).toHaveBeenCalled();
+	});
+	mockRouterReplace.mockReset();
 });

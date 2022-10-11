@@ -8,32 +8,32 @@ import { render } from '~/spec/render';
 import NestedCompetencyCreate from './nested-competency-create.vue';
 
 const props = {
-  competencyId: 'test-competency-id',
-  frameworkId: 'test-framework-id',
+	competencyId: 'test-competency-id',
+	frameworkId: 'test-framework-id',
 };
 
 test('title is required', async () => {
-  render(NestedCompetencyCreate, { props });
-  const user = userEvent.setup();
+	render(NestedCompetencyCreate, { props });
+	const user = userEvent.setup();
 
-  const submitButton = screen.getByRole('button', { name: /submitButton/ });
-  await user.click(submitButton);
+	const submitButton = screen.getByRole('button', { name: /submitButton/ });
+	await user.click(submitButton);
 
-  screen.getByText(/field.name is required./);
+	screen.getByText(/field.name is required./);
 });
 
 test('create competency submit', async () => {
-  render(NestedCompetencyCreate, { props });
-  const spyRouterPush = vi.spyOn(router, 'push');
-  const user = userEvent.setup();
+	render(NestedCompetencyCreate, { props });
+	const spyRouterPush = vi.spyOn(router, 'push');
+	const user = userEvent.setup();
 
-  const titleInput = screen.getByRole('textbox', { name: /field.name/ });
-  await user.type(titleInput, 'Hello World!');
-  const submitButton = screen.getByRole('button', { name: /submitButton/ });
-  await user.click(submitButton);
+	const titleInput = screen.getByRole('textbox', { name: /field.name/ });
+	await user.type(titleInput, 'Hello World!');
+	const submitButton = screen.getByRole('button', { name: /submitButton/ });
+	await user.click(submitButton);
 
-  await waitFor(() => {
-    expect(spyRouterPush).toHaveBeenCalled();
-  });
-  spyRouterPush.mockRestore();
+	await waitFor(() => {
+		expect(spyRouterPush).toHaveBeenCalled();
+	});
+	spyRouterPush.mockRestore();
 });

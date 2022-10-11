@@ -7,7 +7,7 @@ import { useInitFormkit } from '~/formkit';
 import { useHead } from '~/i18n';
 
 useHead(({ t }) => ({
-  title: t('global.meta.title'),
+	title: t('global.meta.title'),
 }));
 useInitFormkit();
 
@@ -17,15 +17,15 @@ const { locale } = useI18n();
 </script>
 
 <template>
-  <Suspense>
-    <RootLayout :key="locale">
-      <RouterView />
-    </RootLayout>
-  </Suspense>
+	<Suspense>
+		<RootLayout :key="locale">
+			<RouterView />
+		</RootLayout>
+	</Suspense>
 </template>
 
 <style>
 body {
-  @apply font-sans bg-stone-100 text-base antialiased;
+	@apply font-sans bg-stone-100 text-base antialiased;
 }
 </style>

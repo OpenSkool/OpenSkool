@@ -1,5 +1,5 @@
 fragment BaseErrorFields on UserError {
-  code
-  message
-  path
+	code
+	message
+	path
 }

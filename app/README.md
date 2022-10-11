@@ -16,7 +16,7 @@ Find your prefered icon in the Remix Icon search and insert into the App as foll
 import Home4Line from '~icons/ri/home-4-line';
 </script>
 <template>
-  <home-4-line />
+	<home-4-line />
 </template>
 ```
 

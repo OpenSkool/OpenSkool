@@ -1,5 +1,5 @@
 <template>
-  <MenuButton as="div">
-    <slot />
-  </MenuButton>
+	<MenuButton as="div">
+		<slot />
+	</MenuButton>
 </template>

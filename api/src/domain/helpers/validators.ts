@@ -7,16 +7,16 @@ const CHAR_REMOVE = new RegExp(`[${CHAR_CONTROL}${CHAR_ZERO_WIDTH}]`, 'g');
 const CHARS_MULTIPLE_SEQUENTIAL_SPACES = /\s\s+/g;
 
 export function validateSingleLineString(input: string): string {
-  const output = input
-    .replace(CHAR_REMOVE, '')
-    .replace(CHARS_MULTIPLE_SEQUENTIAL_SPACES, ' ')
-    .trim();
-  if (output === '') {
-    throw new AppInputError(
-      SchemaInputErrorCode.VALUE_NOT_VALID,
-      'title cannot be empty',
-      { path: ['title'] },
-    );
-  }
-  return output;
+	const output = input
+		.replace(CHAR_REMOVE, '')
+		.replace(CHARS_MULTIPLE_SEQUENTIAL_SPACES, ' ')
+		.trim();
+	if (output === '') {
+		throw new AppInputError(
+			SchemaInputErrorCode.VALUE_NOT_VALID,
+			'title cannot be empty',
+			{ path: ['title'] },
+		);
+	}
+	return output;
 }

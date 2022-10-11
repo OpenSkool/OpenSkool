@@ -8,21 +8,21 @@ import boomPlugin from '~/plugins/boom';
 import configPlugin from '~/plugins/config';
 
 const app = createApp({
-  ajv: {
-    customOptions: {
-      keywords: ['kind', 'modifier'],
-      strict: 'log',
-    },
-  },
-  disableRequestLogging: process.env.DISABLE_REQUEST_LOGGING === 'true',
-  logger,
+	ajv: {
+		customOptions: {
+			keywords: ['kind', 'modifier'],
+			strict: 'log',
+		},
+	},
+	disableRequestLogging: process.env.DISABLE_REQUEST_LOGGING === 'true',
+	logger,
 });
 
 app
-  .register(awilixPlugin)
-  .register(boomPlugin)
-  .register(configPlugin)
-  .register(shutdownPlugin)
-  .register(apiPlugin);
+	.register(awilixPlugin)
+	.register(boomPlugin)
+	.register(configPlugin)
+	.register(shutdownPlugin)
+	.register(apiPlugin);
 
 export default app;

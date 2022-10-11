@@ -2,10 +2,10 @@
 import { i18nLoaderService, LoaderMap } from '~/i18n';
 
 await i18nLoaderService.loadGlob(
-  import.meta.glob('~/domain/internships/locales/*.yaml') as LoaderMap,
+	import.meta.glob('~/domain/internships/locales/*.yaml') as LoaderMap,
 );
 </script>
 
 <template>
-  <RouterView />
+	<RouterView />
 </template>

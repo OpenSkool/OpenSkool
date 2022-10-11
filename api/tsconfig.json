@@ -1,12 +1,12 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig",
-  "extends": "@os/tsconfig/node.json",
-  "display": "api",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "~/*": ["src/*"]
-    }
-  },
-  "include": ["src", "scripts", "test", "*.ts", "prisma"]
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"extends": "@os/tsconfig/node.json",
+	"display": "api",
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"~/*": ["src/*"]
+		}
+	},
+	"include": ["src", "scripts", "test", "*.ts", "prisma"]
 }

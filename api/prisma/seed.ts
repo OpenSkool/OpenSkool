@@ -9,13 +9,13 @@ import { seedOrganisations } from './seed/organisation';
 const prisma = new PrismaClient();
 
 try {
-  await seedCompetencies(prisma);
-  await seedCourses(prisma);
-  await seedEducations(prisma);
-  await seedInternships(prisma);
-  await seedOrganisations(prisma);
+	await seedCompetencies(prisma);
+	await seedCourses(prisma);
+	await seedEducations(prisma);
+	await seedInternships(prisma);
+	await seedOrganisations(prisma);
 } catch (error) {
-  console.error(error);
+	console.error(error);
 } finally {
-  prisma.$disconnect();
+	prisma.$disconnect();
 }

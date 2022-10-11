@@ -2,25 +2,25 @@
 import VSwitch from './v-switch';
 
 defineProps<{
-  icon: string;
+	icon: string;
 }>();
 </script>
 
 <template>
-  <VSwitch :value="icon">
-    <template #ri-add-line>
-      <RiAddLine aria-hidden />
-    </template>
-    <template #ri-delete-bin-line>
-      <RiDeleteBinLine aria-hidden />
-    </template>
-    <template #ri-arrow-up-down-line>
-      <RiArrowUpDownLine aria-hidden />
-    </template>
-    <template #default>
-      <RiQuestionMark aria-hidden />
-    </template>
-  </VSwitch>
+	<VSwitch :value="icon">
+		<template #ri-add-line>
+			<RiAddLine aria-hidden />
+		</template>
+		<template #ri-delete-bin-line>
+			<RiDeleteBinLine aria-hidden />
+		</template>
+		<template #ri-arrow-up-down-line>
+			<RiArrowUpDownLine aria-hidden />
+		</template>
+		<template #default>
+			<RiQuestionMark aria-hidden />
+		</template>
+	</VSwitch>
 </template>
 
 <!-- <script lang="ts" setup>

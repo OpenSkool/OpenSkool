@@ -8,31 +8,31 @@ import { render } from '~/spec/render';
 import RootCompetencyCreate from './root-competency-create.vue';
 
 const props = {
-  frameworkId: 'test-framework-id',
+	frameworkId: 'test-framework-id',
 };
 
 test('title is required', async () => {
-  render(RootCompetencyCreate, { props });
-  const user = userEvent.setup();
+	render(RootCompetencyCreate, { props });
+	const user = userEvent.setup();
 
-  const submitButton = screen.getByRole('button', { name: /submitButton/ });
-  await user.click(submitButton);
+	const submitButton = screen.getByRole('button', { name: /submitButton/ });
+	await user.click(submitButton);
 
-  screen.getByText(/field.name is required./);
+	screen.getByText(/field.name is required./);
 });
 
 test('create rootCompetency submit', async () => {
-  render(RootCompetencyCreate, { props });
-  const spyRouterPush = vi.spyOn(router, 'push');
-  const user = userEvent.setup();
+	render(RootCompetencyCreate, { props });
+	const spyRouterPush = vi.spyOn(router, 'push');
+	const user = userEvent.setup();
 
-  const titleInput = screen.getByRole('textbox', { name: /field.name/ });
-  await user.type(titleInput, 'Hello World!');
-  const submitButton = screen.getByRole('button', { name: /submitButton/ });
-  await user.click(submitButton);
+	const titleInput = screen.getByRole('textbox', { name: /field.name/ });
+	await user.type(titleInput, 'Hello World!');
+	const submitButton = screen.getByRole('button', { name: /submitButton/ });
+	await user.click(submitButton);
 
-  await waitFor(() => {
-    expect(spyRouterPush).toHaveBeenCalled();
-  });
-  spyRouterPush.mockRestore();
+	await waitFor(() => {
+		expect(spyRouterPush).toHaveBeenCalled();
+	});
+	spyRouterPush.mockRestore();
 });

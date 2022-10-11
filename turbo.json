@@ -1,43 +1,43 @@
 {
-  "$schema": "https://turborepo.org/schema.json",
-  "globalDependencies": ["tsconfig.json"],
-  "pipeline": {
-    "build": {
-      "dependsOn": ["^build", "codegen"],
-      "inputs": [
-        "prisma/**",
-        "public/**",
-        "src/**",
-        "themes/**",
-        "windi/**",
-        "*.config.ts"
-      ],
-      "outputs": ["dist/**"]
-    },
-    "clean": {
-      "cache": false
-    },
-    "codegen": {
-      "dependsOn": ["^codegen"],
-      "inputs": ["codegen.yml", "src/**"],
-      "outputs": ["src/codegen/**"]
-    },
-    "dev": {
-      "cache": false
-    },
-    "lint": {
-      "dependsOn": ["^build", "codegen"],
-      "inputs": ["**/*.cjs", "**/*.mjs", "**/*.ts", "**/*.vue"],
-      "outputs": []
-    },
-    "preview": {
-      "cache": false,
-      "dependsOn": ["build"]
-    },
-    "test": {
-      "dependsOn": ["^build", "codegen"],
-      "inputs": ["src/**", "test/**", "vite*config.ts"],
-      "outputs": ["coverage/**", "test.xml"]
-    }
-  }
+	"$schema": "https://turborepo.org/schema.json",
+	"globalDependencies": ["tsconfig.json"],
+	"pipeline": {
+		"build": {
+			"dependsOn": ["^build", "codegen"],
+			"inputs": [
+				"prisma/**",
+				"public/**",
+				"src/**",
+				"themes/**",
+				"windi/**",
+				"*.config.ts"
+			],
+			"outputs": ["dist/**"]
+		},
+		"clean": {
+			"cache": false
+		},
+		"codegen": {
+			"dependsOn": ["^codegen"],
+			"inputs": ["codegen.yml", "src/**"],
+			"outputs": ["src/codegen/**"]
+		},
+		"dev": {
+			"cache": false
+		},
+		"lint": {
+			"dependsOn": ["^build", "codegen"],
+			"inputs": ["**/*.cjs", "**/*.mjs", "**/*.ts", "**/*.vue"],
+			"outputs": []
+		},
+		"preview": {
+			"cache": false,
+			"dependsOn": ["build"]
+		},
+		"test": {
+			"dependsOn": ["^build", "codegen"],
+			"inputs": ["src/**", "test/**", "vite*config.ts"],
+			"outputs": ["coverage/**", "test.xml"]
+		}
+	}
 }

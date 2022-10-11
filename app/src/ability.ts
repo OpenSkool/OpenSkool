@@ -7,12 +7,12 @@ type AppAction = AppManageAction | AppCrudAction;
 
 type AppAllSubject = 'all'; // 'all' is a special keyword in CASL representing any subject
 type AppSubject =
-  | AppAllSubject
-  | 'Competency'
-  | 'CompetencyFramework'
-  | 'InternshipApplication'
-  | 'InternshipInstance'
-  | 'InternshipPosition';
+	| AppAllSubject
+	| 'Competency'
+	| 'CompetencyFramework'
+	| 'InternshipApplication'
+	| 'InternshipInstance'
+	| 'InternshipPosition';
 
 export type AppAbility = Ability<[AppAction, AppSubject]>;
 // eslint-disable-next-line @typescript-eslint/no-redeclare -- intentionally naming the variable the same as the type
@@ -23,5 +23,5 @@ export type AppRawRule = RawRuleOf<AppAbility>;
 export { abilitiesPlugin as casl } from '@casl/vue';
 
 export function useAppAbility(): AppAbility {
-  return useAbility<AppAbility>();
+	return useAbility<AppAbility>();
 }

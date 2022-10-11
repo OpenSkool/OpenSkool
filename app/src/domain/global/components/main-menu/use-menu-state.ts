@@ -3,48 +3,48 @@ import { useBreakpoints } from '~/hooks/use-breakpoints';
 // https://stately.ai/viz/82f45962-5a70-4836-b062-217a1d2dee8b
 
 export interface MenuState {
-  opened: boolean;
-  overlay: boolean;
+	opened: boolean;
+	overlay: boolean;
 }
 
 export function useMenuState(): {
-  menuState: MenuState;
-  toggleMenu: () => void;
+	menuState: MenuState;
+	toggleMenu: () => void;
 } {
-  const breakpoints = useBreakpoints();
+	const breakpoints = useBreakpoints();
 
-  // FSS initial
-  const menuState = reactive<MenuState>({
-    opened: breakpoints.lg.value,
-    overlay: !breakpoints.md.value,
-  });
+	// FSS initial
+	const menuState = reactive<MenuState>({
+		opened: breakpoints.lg.value,
+		overlay: !breakpoints.md.value,
+	});
 
-  const router = useRouter();
-  router.beforeResolve(() => {
-    if (!breakpoints.lg.value) {
-      menuState.opened = false;
-    }
-  });
+	const router = useRouter();
+	router.beforeResolve(() => {
+		if (!breakpoints.lg.value) {
+			menuState.opened = false;
+		}
+	});
 
-  watch(breakpoints.md, (isMedium) => {
-    if (isMedium) {
-      // FSS transition GROW_TO_MEDIUM
-      menuState.overlay = false;
-    } else {
-      // FSS transition SHRINK_TO_SMALL
-      menuState.opened = false;
-      menuState.overlay = true;
-    }
-  });
-  watch(breakpoints.lg, (isLarge) => {
-    // FSS transition GROW_TO_LARGE / SHRINK_TO_MEDIUM
-    menuState.opened = isLarge;
-  });
+	watch(breakpoints.md, (isMedium) => {
+		if (isMedium) {
+			// FSS transition GROW_TO_MEDIUM
+			menuState.overlay = false;
+		} else {
+			// FSS transition SHRINK_TO_SMALL
+			menuState.opened = false;
+			menuState.overlay = true;
+		}
+	});
+	watch(breakpoints.lg, (isLarge) => {
+		// FSS transition GROW_TO_LARGE / SHRINK_TO_MEDIUM
+		menuState.opened = isLarge;
+	});
 
-  return {
-    menuState,
-    toggleMenu(): void {
-      menuState.opened = !menuState.opened;
-    },
-  };
+	return {
+		menuState,
+		toggleMenu(): void {
+			menuState.opened = !menuState.opened;
+		},
+	};
 }

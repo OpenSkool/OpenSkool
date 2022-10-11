@@ -1,16 +1,16 @@
 {
-  "$schema": "https://json.schemastore.org/web-manifest-combined.json",
-  "name": "OpenSkool",
-  "short_name": "OpenSkool",
-  "description": "OpenSkool is een open data platform en modulair ecosysteem waar levenslang leren, verbondenheid en veiligheid centraal staan.",
-  "background_color": "#fff",
-  "theme_color": "#2A6DF7",
-  "display": "standalone",
-  "icons": [
-    {
-      "src": "/icon-180.png",
-      "sizes": "180x180",
-      "type": "image/png"
-    }
-  ]
+	"$schema": "https://json.schemastore.org/web-manifest-combined.json",
+	"name": "OpenSkool",
+	"short_name": "OpenSkool",
+	"description": "OpenSkool is een open data platform en modulair ecosysteem waar levenslang leren, verbondenheid en veiligheid centraal staan.",
+	"background_color": "#fff",
+	"theme_color": "#2A6DF7",
+	"display": "standalone",
+	"icons": [
+		{
+			"src": "/icon-180.png",
+			"sizes": "180x180",
+			"type": "image/png"
+		}
+	]
 }

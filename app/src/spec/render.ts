@@ -1,7 +1,7 @@
 import {
-  render as originalRender,
-  type RenderOptions,
-  type RenderResult,
+	render as originalRender,
+	type RenderOptions,
+	type RenderResult,
 } from '@testing-library/vue';
 import { DefaultApolloClient } from '@vue/apollo-composable';
 import { createHead } from '@vueuse/head';
@@ -15,26 +15,26 @@ import { pinia } from '~/pinia';
 import { router } from '~/router';
 
 export function render(
-  component: Component,
-  options?: Pick<RenderOptions, 'props'>,
+	component: Component,
+	options?: Pick<RenderOptions, 'props'>,
 ): RenderResult {
-  const ability = new AppAbility([{ action: 'manage', subject: 'all' }]);
-  return originalRender(component, {
-    global: {
-      plugins: [
-        [casl, ability],
-        createHead(),
-        createI18n({
-          legacy: false,
-          fallbackWarn: false,
-          missingWarn: false,
-        }),
-        formkit,
-        pinia,
-        router,
-      ],
-      provide: { [DefaultApolloClient]: apolloClient },
-    },
-    ...options,
-  });
+	const ability = new AppAbility([{ action: 'manage', subject: 'all' }]);
+	return originalRender(component, {
+		global: {
+			plugins: [
+				[casl, ability],
+				createHead(),
+				createI18n({
+					legacy: false,
+					fallbackWarn: false,
+					missingWarn: false,
+				}),
+				formkit,
+				pinia,
+				router,
+			],
+			provide: { [DefaultApolloClient]: apolloClient },
+		},
+		...options,
+	});
 }

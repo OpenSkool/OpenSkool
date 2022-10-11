@@ -1,12 +1,12 @@
 {
-  "recommendations": [
-    "antfu.iconify",
-    "apollographql.vscode-apollo",
-    "dbaeumer.vscode-eslint",
-    "esbenp.prettier-vscode",
-    "lokalise.i18n-ally",
-    "Prisma.prisma",
-    "voorjaar.windicss-intellisense",
-    "Vue.volar"
-  ]
+	"recommendations": [
+		"antfu.iconify",
+		"apollographql.vscode-apollo",
+		"dbaeumer.vscode-eslint",
+		"esbenp.prettier-vscode",
+		"lokalise.i18n-ally",
+		"Prisma.prisma",
+		"voorjaar.windicss-intellisense",
+		"Vue.volar"
+	]
 }

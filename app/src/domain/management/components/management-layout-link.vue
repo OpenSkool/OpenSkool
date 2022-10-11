@@ -5,12 +5,12 @@ import { RouterLink } from 'vue-router';
 import ManagementLayoutItem from './management-layout-item.vue';
 
 defineProps<{
-  icon: FunctionalComponent<SVGAttributes>;
+	icon: FunctionalComponent<SVGAttributes>;
 }>();
 </script>
 
 <template>
-  <ManagementLayoutItem :is="RouterLink" :icon="icon">
-    <slot />
-  </ManagementLayoutItem>
+	<ManagementLayoutItem :is="RouterLink" :icon="icon">
+		<slot />
+	</ManagementLayoutItem>
 </template>

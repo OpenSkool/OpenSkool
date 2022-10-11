@@ -9,20 +9,20 @@ import { prisma } from '~/prisma';
 import type { Context } from './context';
 
 const builder = new SchemaBuilder<{
-  Context: Context;
-  DefaultInputFieldRequiredness: true;
-  PrismaTypes: PrismaTypes;
-  Scalars: {
-    ID: { Input: string; Output: string };
-    DateTime: { Input: Date; Output: Date };
-    JSON: { Input: JsonObject; Output: JsonObject };
-  };
+	Context: Context;
+	DefaultInputFieldRequiredness: true;
+	PrismaTypes: PrismaTypes;
+	Scalars: {
+		ID: { Input: string; Output: string };
+		DateTime: { Input: Date; Output: Date };
+		JSON: { Input: JsonObject; Output: JsonObject };
+	};
 }>({
-  defaultInputFieldRequiredness: true,
-  plugins: [ErrorsPlugin, PrismaPlugin],
-  prisma: {
-    client: prisma,
-  },
+	defaultInputFieldRequiredness: true,
+	plugins: [ErrorsPlugin, PrismaPlugin],
+	prisma: {
+		client: prisma,
+	},
 });
 
 builder.mutationType({});

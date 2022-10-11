@@ -6,21 +6,21 @@ import { EducationService } from './education';
 import { UserService } from './user';
 
 declare module '@fastify/awilix' {
-  interface Cradle {
-    competencyService: CompetencyService;
-    educationService: EducationService;
-    userService: UserService;
-  }
+	interface Cradle {
+		competencyService: CompetencyService;
+		educationService: EducationService;
+		userService: UserService;
+	}
 }
 
 export const domainPlugin = plugin(async (app) => {
-  registerDomainServices(app.diContainer);
+	registerDomainServices(app.diContainer);
 });
 
 export function registerDomainServices(container: AwilixContainer): void {
-  container.register('competencyService', asClass(CompetencyService));
-  container.register('educationService', asClass(EducationService));
-  container.register('userService', asClass(UserService));
+	container.register('competencyService', asClass(CompetencyService));
+	container.register('educationService', asClass(EducationService));
+	container.register('userService', asClass(UserService));
 }
 
 export * from './types.d';

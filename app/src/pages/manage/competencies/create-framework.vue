@@ -4,25 +4,25 @@ import { AuthAccessDeniedLayout } from '~/domain/global';
 import { useHead } from '~/i18n';
 
 useHead(({ t }) => ({
-  title: t('management.competencyFramework.create.heading'),
+	title: t('management.competencyFramework.create.heading'),
 }));
 
 const ability = useAppAbility();
 </script>
 
 <template>
-  <UiBreadcrumb>
-    <UiBreadcrumbItem link-to="/manage/competencies">
-      {{ $t('management.competencyFramework.list.heading') }}
-    </UiBreadcrumbItem>
-  </UiBreadcrumb>
-  <AuthAccessDeniedLayout
-    v-if="ability.cannot('create', 'CompetencyFramework')"
-  />
-  <template v-else>
-    <UiTitle is="h1" class="text-xl mb-3">
-      {{ $t('management.competencyFramework.create.heading') }}
-    </UiTitle>
-    <CompetencyFrameworkCreate />
-  </template>
+	<UiBreadcrumb>
+		<UiBreadcrumbItem link-to="/manage/competencies">
+			{{ $t('management.competencyFramework.list.heading') }}
+		</UiBreadcrumbItem>
+	</UiBreadcrumb>
+	<AuthAccessDeniedLayout
+		v-if="ability.cannot('create', 'CompetencyFramework')"
+	/>
+	<template v-else>
+		<UiTitle is="h1" class="text-xl mb-3">
+			{{ $t('management.competencyFramework.create.heading') }}
+		</UiTitle>
+		<CompetencyFrameworkCreate />
+	</template>
 </template>

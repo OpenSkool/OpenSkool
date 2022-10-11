@@ -1,4 +1,4 @@
 export interface CompetencyFixture {
-  children?: CompetencyFixture[];
-  title: string;
+	children?: CompetencyFixture[];
+	title: string;
 }
