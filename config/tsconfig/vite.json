@@ -6,7 +6,6 @@
 		"jsx": "preserve",
 		"lib": ["DOM", "DOM.Iterable", "ESNext"],
 		"module": "ESNext",
-		"noEmit": true,
 		"sourceMap": true,
 		"target": "ESNext",
 		"types": ["vite/client"]

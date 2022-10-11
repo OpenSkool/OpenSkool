@@ -1,7 +1,6 @@
 {
 	"$schema": "https://json.schemastore.org/tsconfig",
 	"extends": "@os/tsconfig/vite.json",
-	"display": "app",
 	"compilerOptions": {
 		"baseUrl": ".",
 		"paths": {
