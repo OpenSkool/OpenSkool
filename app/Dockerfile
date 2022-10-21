@@ -1,4 +1,4 @@
-FROM node:16.17.1-alpine AS base
+FROM node:18.12.0-alpine AS base
 RUN apk add tini --no-cache
 WORKDIR /opt
 
@@ -14,7 +14,7 @@ RUN pnpm install --filter openskool --filter app... --frozen-lockfile --offline
 RUN pnpm turbo run --filter app... build
 RUN npx pkg \
   -o import-meta-env \
-  -t node16-alpine \
+  -t node18-alpine \
   app/node_modules/@import-meta-env/cli/bin/import-meta-env.js
 
 FROM nginx:1.23.1-alpine AS production

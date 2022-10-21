@@ -1,4 +1,4 @@
-FROM node:16.17.1-alpine AS base
+FROM node:18.12.0-alpine AS base
 RUN apk add tini --no-cache
 WORKDIR /opt
 
