@@ -12,7 +12,7 @@ withDefaults(
 <template>
 	<Component
 		:is="is"
-		class="bg-white rounded-md border-1 border-gray-200 shadow-md py-2 px-3 root inline-block focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-primary-700) "
+		class="bg-white rounded-md border-1 border-gray-200 shadow-md py-2 px-3 root inline-block focus:outline-none focus-visible:(ring-2 ring-offset-2 ring-primary-700)"
 	>
 		<slot />
 	</Component>
