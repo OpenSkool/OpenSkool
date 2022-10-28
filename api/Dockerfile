@@ -1,9 +1,9 @@
-FROM node:18.12.0-alpine AS base
-RUN apk add tini --no-cache
+FROM node:18.12.0-bullseye-slim AS base
+RUN apt-get update && apt-get install tini && rm -rf /var/lib/apt/lists/*
 WORKDIR /opt
 
 FROM base AS source
-RUN apk add git --no-cache
+RUN apt-get update && apt-get install --yes git
 COPY package.json pnpm-lock.yaml .
 RUN corepack enable && corepack prepare --activate
 RUN pnpm fetch
@@ -23,5 +23,5 @@ COPY --from=builder /opt/pruned/node_modules node_modules
 ENV NODE_ENV production
 EXPOSE 80
 USER node
-ENTRYPOINT ["/sbin/tini", "--"]
+ENTRYPOINT ["/usr/bin/tini", "--"]
 CMD ["node", "index.mjs"]
